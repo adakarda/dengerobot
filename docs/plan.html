@@ -1,0 +1,305 @@
+<title>CDTP Denge Robotu Planı</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: tek sütun teknik dosya, solda bölüm numarası (gerçek sıra: incele -> bağla -> yaz -> test et -> takvim) */
+:root{
+  --bg:#f5f6f4; --panel:#ffffff; --fg:#1b2127; --muted:#5b6670; --line:#d6dbd8;
+  --ink:#1f4fa3; --ink-soft:#e5ecf8;
+  --v12:#c0392b; --v5:#d68910; --v33:#1e8449; --gnd:#2c3e50; --sig:#7d3c98; --chg:#b9770e;
+  --ok:#1e8449; --ok-bg:#e3f2e8; --warn:#b9770e; --warn-bg:#fbf0dc; --bad:#b03a2e; --bad-bg:#f8e3e0;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13171b; --panel:#1b2026; --fg:#e4e8ec; --muted:#9aa5ae; --line:#2e363e;
+  --ink:#7fa8f0; --ink-soft:#1f2b40;
+  --v12:#ec7063; --v5:#f0b252; --v33:#58d68d; --gnd:#aeb6bf; --sig:#c39bd3; --chg:#f5b041;
+  --ok:#58d68d; --ok-bg:#183326; --warn:#f0b252; --warn-bg:#3a2d14; --bad:#ec7063; --bad-bg:#3d1d1a;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13171b; --panel:#1b2026; --fg:#e4e8ec; --muted:#9aa5ae; --line:#2e363e;
+  --ink:#7fa8f0; --ink-soft:#1f2b40;
+  --v12:#ec7063; --v5:#f0b252; --v33:#58d68d; --gnd:#aeb6bf; --sig:#c39bd3; --chg:#f5b041;
+  --ok:#58d68d; --ok-bg:#183326; --warn:#f0b252; --warn-bg:#3a2d14; --bad:#ec7063; --bad-bg:#3d1d1a;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.1;margin:0}
+h1{font-size:2.6rem;font-weight:700;letter-spacing:.01em}
+h2{font-size:1.85rem;font-weight:600}
+h3{font-size:1.25rem;font-weight:600;margin-top:6px}
+p{margin:0;max-width:68ch}
+a{color:var(--ink)}
+code,.mono{font-family:var(--mono);font-size:.86em}
+.eyebrow{font-family:var(--mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+header{display:flex;flex-direction:column;gap:12px;border-bottom:2px solid var(--fg);padding-bottom:20px}
+.lede{font-size:1.1rem;color:var(--muted)}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;font-family:var(--mono);font-size:.82rem}
+.facts b{color:var(--ink)}
+section{display:flex;flex-direction:column;gap:16px}
+.sec-head{display:flex;gap:14px;align-items:baseline}
+.sec-num{font-family:var(--mono);font-size:.85rem;color:var(--ink);border:1.5px solid var(--ink);border-radius:3px;padding:1px 7px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.box h3{margin:0}
+ul{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:4px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:.85rem;white-space:nowrap}
+.pill{display:inline-block;font-family:var(--mono);font-size:.72rem;font-weight:600;padding:1px 8px;border-radius:99px;white-space:nowrap}
+.p-ok{color:var(--ok);background:var(--ok-bg)}
+.p-warn{color:var(--warn);background:var(--warn-bg)}
+.p-bad{color:var(--bad);background:var(--bad-bg)}
+.p-ink{color:var(--ink);background:var(--ink-soft)}
+.diagram{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px}
+.diagram svg{display:block;min-width:760px;width:100%;height:auto}
+svg text{font-family:var(--mono);fill:var(--fg)}
+svg .sub{fill:var(--muted)}
+svg .node{fill:var(--panel);stroke:var(--fg);stroke-width:1.3}
+svg .node.new{stroke:var(--ink);stroke-dasharray:5 3;stroke-width:1.6}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.legend i{display:inline-block;width:22px;height:3px;vertical-align:middle;margin-right:6px}
+figure{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0}
+figure img{border:1px solid var(--line);border-radius:6px;background:#fff}
+figcaption{font-size:.85rem;color:var(--muted)}
+.note{border-left:3px solid var(--ink);padding:4px 0 4px 14px;color:var(--fg)}
+.steps{counter-reset:s;list-style:none;padding:0;gap:10px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:2.2em 1fr;gap:6px}
+.steps li::before{content:counter(s);font-family:var(--mono);font-weight:600;color:var(--ink)}
+.week{font-family:var(--mono);font-size:.8rem;color:var(--ink);white-space:nowrap}
+footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:560px){h1{font-size:2rem}h2{font-size:1.5rem}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">YTÜ EEF ÇDTP · 2026-27 Güz · Kontrol ve Otomasyon</span>
+  <h1>İki tekerlekli hasta destek robotu: denge, hareket ve yanaşma planı</h1>
+  <p class="lede">Şartname v14, takımın parça sitesi ve yazılan kod üzerinden çıkarıldı. Robotun tüm karar mantığı tek bir C++ çekirdeğinde; aynı kod hem ESP32'de hem de PC simülasyonunda koşuyor. Simülasyonda 20 kabul testinin 20'si geçti. Robot ve eldiven firmware'i hatasız ve uyarısız derleniyor (robot: flash %80, RAM %17; eldiven: flash %56). Gerçek robotta henüz denenmedi.</p>
+  <div class="facts">
+    <span>Kontrol: <b>LQR, 200 Hz</b></span>
+    <span>Ana kart: <b>ESP32-WROOM-32D</b></span>
+    <span>Eldiven: <b>ESP32-C3 + MPU6050</b></span>
+    <span>Pil: <b>3S Li-ion, 12,6 V</b></span>
+    <span>Simülasyon: <b>20/20 geçti</b></span>
+    <span>Derleme: <b>robot ve eldiven, hatasız</b></span>
+  </div>
+</header>
+
+<section id="gorevler">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Sana düşen işler</h2></div>
+  <p>Şartnamede Kontrol bölümünün işi: robot dinamiği ve durum kestirimi, denge kontrolcüsü, ileri/geri ve dönüş, yükle kararlılık, istasyona kontrollü yaklaşma ve durma. Takım sitesinde bunlara bağlı açık görevler aşağıda; her birinin karşılığı repoda hazır.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Görev</th><th>Hafta</th><th>Repoda karşılığı</th><th>Durum</th></tr></thead>
+    <tbody>
+      <tr><td>CDTP-6 Şasi ölçüleri, kütle merkezi</td><td class="week">H3</td><td>KM teker ekseninin 7–14 cm üstünde olabilir; simülasyon bu aralığın hepsinde geçti. Bataryayı orta kata koyun.</td><td><span class="pill p-ink">ölçülecek</span></td></tr>
+      <tr><td>CDTP-10 IMU + tümleyen filtre</td><td class="week">H4</td><td><code>imu_filter.h</code>: 0,98/0,02 filtre, ivmeölçer 1 g'den saparsa güveni düşer</td><td><span class="pill p-ok">kod hazır</span></td></tr>
+      <tr><td>CDTP-11 Enkoder, motor yönü, PWM</td><td class="week">H4</td><td><code>hw.h</code>: PCNT 4x sayım, 20 kHz 10 bit PWM; README'de 4 adımlı yön kontrolü</td><td><span class="pill p-ok">kod hazır</span></td></tr>
+      <tr><td>CDTP-14 Ters sarkaç modeli, ilk kazanç</td><td class="week">H5</td><td><code>tools/lqr_design.py</code> modeli kurar, LQR kazancını <code>gains.h</code>'ye yazar</td><td><span class="pill p-ok">hazır</span></td></tr>
+      <tr><td>CDTP-15 30 s statik denge</td><td class="week">H6</td><td>Sim: en büyük eğim 0,85°, kayma 2 cm (kutulu)</td><td><span class="pill p-ok">sim geçti</span></td></tr>
+      <tr><td>CDTP-19 ±10° toparlanma, pasif ön test</td><td class="week">H7</td><td>Sim: 1,5 s'de toparlanır; enerjisizken 0,3 s'de düşer</td><td><span class="pill p-ok">sim geçti</span></td></tr>
+      <tr><td>CDTP-22 1 m ileri/geri, 90° dönüş</td><td class="week">H8</td><td>Adım modu: her eldiven jesti 0,5 m ya da 90°</td><td><span class="pill p-ok">sim geçti</span></td></tr>
+      <tr><td>CDTP-24 Eldivenle sürüş</td><td class="week">H9</td><td>Tepki 0,3–0,8 s (sınır 2 s); eldiven 0,3 s susarsa robot durur</td><td><span class="pill p-ok">sim geçti</span></td></tr>
+      <tr><td>CDTP-25 IR ile otonom yanaşma</td><td class="week">H9</td><td>ARA → HİZALAN → YAKLAŞ → YERLEŞ → ŞARJ; 63 başlangıç noktasının 63'ü</td><td><span class="pill p-warn">istasyon değişikliği gerekli</span></td></tr>
+      <tr><td>CDTP-28 Kutu yuvası</td><td class="week">H10</td><td>Simülasyonda 30–100 g kutu, eksenden 20 cm yukarıda</td><td><span class="pill p-ink">mekanik</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="denetim">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Elektrik denetimi: sitedeki tasarıma eklenenler</h2></div>
+  <p>Sitedeki güç ağacı, BMS sırası, bölücüler, JP1 köprüsü ve BTS7960'ın 3,3 V mantık beslemesi doğru. Aşağıdakiler veri sayfalarına ve simülasyona göre bulunan ek konular. Elektrik ve Elektronik ekibiyle konuşulmalı.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Önem</th><th>Konu</th><th>Bulgu</th><th>Öneri</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p-bad">yüksek</span></td><td>Şarj teması</td><td>Düz istasyon yüzünde yan yana iki plaka, robot 30°'den fazla açıyla gelirse oturmuyor. Şartname ±45°'lik bölgeden başlatıyor. Simülasyonda bu tasarımla 63 başlangıcın 35'i başarılı oldu.</td><td>Yuvarlak dikey direk (Ø40 mm PVC): üstte + halka, altta − halka (bakır bant, 15 mm boşlukla), IR işaret direğin tepesinde. Robotun önünde V-yuva ve içinde iki yaylı pogo pin. Direk yuvarlak olduğu için yaklaşma açısı önemsiz. Bu tasarımla 63/63.</td></tr>
+      <tr><td><span class="pill p-bad">yüksek</span></td><td>IR alıcı seçimi</td><td>Sitedeki "çıplak TSOP1838" alternatifi 4,5–5,5 V ister; 3,3 V'ta çalışmaz, 5 V'ta çıkışı ESP32 pinini aşar.</td><td>VS1838B modülü ya da TSOP38238 (2,5–5,5 V) alın, 3,3 V ile besleyin.</td></tr>
+      <tr><td><span class="pill p-warn">orta</span></td><td>IR göz açısı</td><td>±25° dışa bakan gözlerin ortak görüş alanı dar; hizalama sağ-sol arası salınıyor (simülasyonda 30 s boyunca hizalanamadı).</td><td>Gözleri ±15° dışa çevirin, boru ile ±30° görüşe daraltın.</td></tr>
+      <tr><td><span class="pill p-warn">orta</span></td><td>GPIO36/39 hatası</td><td>ESP32 errata 3.11: ADC veya radyo açıkken bu pinlerde ~80 ns'lik düşük darbeler olur. Kesmeyle sayılırsa sahte IR darbesi görülür.</td><td>Firmware IR'yi kesmeyle değil PCNT + 12,8 µs filtreyle sayıyor. Pin değişikliği gerekmiyor.</td></tr>
+      <tr><td><span class="pill p-warn">orta</span></td><td>Motor hattı kondansatörü</td><td>BTS7960 kartlarında büyük kondansatör yok. Acil stop açılınca ya da BMS keserken motorun geri beslediği akım gerilimi zıplatır.</td><td>Acil stoptan sonra, BTS7960 B+/B− arasına 470–1000 µF 25 V düşük ESR elektrolitik.</td></tr>
+      <tr><td><span class="pill p-warn">orta</span></td><td>Acil stop bırakılınca</td><td>Acil stop yalnız motor hattını keser; ESP32 kontrol etmeye devam eder. Robot elde dik tutulurken stop bırakılırsa motorlar bir anda büyük komutla döner.</td><td>Acil stop sonrası 12 V'u 100k/33k bölücüyle GPIO23'e alın. Firmware hat yoksa BEKLE moduna geçer, yeniden dik tutulunca dengeye girer.</td></tr>
+      <tr><td><span class="pill p-ink">kontrol et</span></td><td>Enkoder besleme</td><td>JGB37-520 enkoder kartlarının çoğu 3,3–5 V çalışır; A3144 gibi bazı Hall sensörleri en az 4,5 V ister.</td><td>Motor gelince 3,3 V'ta tekeri çevirip sayımı görün. Saymıyorsa 5 V ile besleyin ve çıkışlara 10k/20k bölücü koyun.</td></tr>
+      <tr><td><span class="pill p-ink">kontrol et</span></td><td>ESP-NOW ve BLE</td><td>Telefon BLE ile bağlıyken radyo zaman paylaşır; eldiven paketlerinde kayıp artabilir.</td><td>BLE bağlıyken seri porta <code>stat</code> yazıp kayıp sayısına bakın. 0,3 s eldiven zaman aşımı 5 ardışık kaybı tolere eder.</td></tr>
+      <tr><td><span class="pill p-ink">kontrol et</span></td><td>İstasyon halkalarında gerilim</td><td>Direk tasarımında şarj kartının çıkışı halkalarda açıkta olur (yaklaşık 12,6 V, akım sınırlı).</td><td>Şarj kartı OUT+ ile üst halka arasına 1,1 A polyfuse (PTC). Robot tarafındaki pinler SR5100 sayesinde gerilimsiz kalır.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="guc">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Robot güç ve sinyal bağlantısı</h2></div>
+  <p>Sitedeki kablo listesi (W1–W40) aynen geçerli. Kesik çizgili kutular bu plandaki eklemeler. Tüm GND'ler WAGO yıldız noktasında birleşir; güç hattında jumper kullanılmaz.</p>
+  <div class="legend"><span><i style="background:var(--v12)"></i>12 V pil</span><span><i style="background:var(--v5)"></i>5 V</span><span><i style="background:var(--v33)"></i>3,3 V</span><span><i style="background:var(--chg)"></i>şarj</span><span><i style="background:var(--sig)"></i>sinyal</span></div>
+  <div class="diagram">
+    <svg viewBox="0 0 960 430" role="img" aria-label="Robot güç ağacı">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs>
+      <!-- 12 V ana hat -->
+      <g stroke="var(--v12)" stroke-width="2.4" fill="none">
+        <path d="M150 60 H190"/><path d="M310 60 H350"/><path d="M450 60 H490"/><path d="M590 60 H630"/>
+        <path d="M730 60 H770"/><path d="M750 60 V140 H770"/>
+        <path d="M540 80 V160"/>
+      </g>
+      <g stroke="var(--v5)" stroke-width="2.4" fill="none"><path d="M590 180 H630"/></g>
+      <g stroke="var(--v33)" stroke-width="2.4" fill="none"><path d="M730 180 H770"/></g>
+      <g stroke="var(--chg)" stroke-width="2.4" fill="none"><path d="M150 300 H190"/><path d="M310 300 H400 V80"/></g>
+      <g stroke="var(--sig)" stroke-width="1.6" fill="none" stroke-dasharray="4 3"><path d="M680 80 V120 H860 V200"/><path d="M250 320 V380 H680 V200"/></g>
+      <!-- kutular -->
+      <rect class="node" x="20" y="35" width="130" height="50" rx="5"/><text x="30" y="56" font-size="13">3S 18650</text><text class="sub" x="30" y="74" font-size="11">11,1 V · dolu 12,6</text>
+      <rect class="node" x="190" y="35" width="120" height="50" rx="5"/><text x="200" y="56" font-size="13">BMS 3S 10A</text><text class="sub" x="200" y="74" font-size="11">B+ = P+, P−</text>
+      <rect class="node" x="350" y="35" width="100" height="50" rx="5"/><text x="360" y="56" font-size="13">XT60</text><text class="sub" x="360" y="74" font-size="11">şarj girişi</text>
+      <rect class="node" x="490" y="35" width="100" height="50" rx="5"/><text x="500" y="56" font-size="13">Sigorta 5A</text><text class="sub" x="500" y="74" font-size="11">WAGO-12V</text>
+      <rect class="node" x="630" y="35" width="100" height="50" rx="5"/><text x="640" y="56" font-size="13">Acil stop</text><text class="sub" x="640" y="74" font-size="11">NC, 10 A</text>
+      <rect class="node" x="770" y="35" width="170" height="50" rx="5"/><text x="780" y="56" font-size="13">BTS7960 sol + sağ</text><text class="sub" x="780" y="74" font-size="11">B+/B− → motorlar</text>
+      <rect class="node new" x="770" y="118" width="170" height="44" rx="5"/><text x="780" y="137" font-size="12">470–1000 µF 25 V</text><text class="sub" x="780" y="153" font-size="11">motor hattı (yeni)</text>
+      <rect class="node" x="490" y="160" width="100" height="50" rx="5"/><text x="500" y="181" font-size="13">LM2596</text><text class="sub" x="500" y="199" font-size="11">12 → 5,0 V</text>
+      <rect class="node" x="630" y="160" width="100" height="50" rx="5"/><text x="640" y="181" font-size="13">ESP32 VIN</text><text class="sub" x="640" y="199" font-size="11">JP1 köprüsü</text>
+      <rect class="node" x="770" y="160" width="170" height="50" rx="5"/><text x="780" y="181" font-size="13">3V3 çevre</text><text class="sub" x="780" y="199" font-size="11">IMU, IR, enkoder, BTS VCC</text>
+      <rect class="node new" x="20" y="275" width="130" height="50" rx="5"/><text x="30" y="296" font-size="13">V-yuva pimleri</text><text class="sub" x="30" y="314" font-size="11">üst +, alt − (yeni)</text>
+      <rect class="node" x="190" y="275" width="120" height="50" rx="5"/><text x="200" y="296" font-size="13">SR5100</text><text class="sub" x="200" y="314" font-size="11">ters akım engeli</text>
+      <rect class="node new" x="560" y="230" width="230" height="44" rx="5"/><text x="570" y="249" font-size="12">100k/33k → GPIO23</text><text class="sub" x="570" y="265" font-size="11">acil stop sonrası hat (yeni)</text>
+      <text class="sub" x="260" y="372" font-size="11">plaka + → 100k/27k → GPIO34 (şarj algılama)</text>
+      <text class="sub" x="560" y="140" font-size="11">GPIO35: pil gerilimi</text>
+      <text class="sub" x="410" y="140" font-size="11">acil stoptan önce</text>
+      <text class="sub" x="20" y="410" font-size="11">Acil stop yalnız motorları keser; ESP32 açık kalır, telefona telemetri akmaya devam eder.</text>
+    </svg>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>ESP32 pini</th><th>Bağlandığı yer</th><th>Not</th></tr></thead>
+    <tbody>
+      <tr><td class="num">21 / 22 / 19</td><td>MPU6050 SDA / SCL / INT</td><td>AD0 → GND (0x68). INT her 5 ms'de denge döngüsünü tetikler.</td></tr>
+      <tr><td class="num">27 / 14</td><td>Sol BTS7960 RPWM / LPWM</td><td>20 kHz, 10 bit. İki yarım köprü asla aynı anda sürülmez.</td></tr>
+      <tr><td class="num">16 / 17</td><td>Sağ BTS7960 RPWM / LPWM</td><td>WROVER kartta bu pinler PSRAM'e gider; WROOM-32D alın.</td></tr>
+      <tr><td class="num">4</td><td>İki kartın R_EN + L_EN</td><td>10 kΩ ile GND: açılışta motorlar kapalı.</td></tr>
+      <tr><td class="num">32 / 33</td><td>Sol enkoder A / B</td><td>PCNT birim 0, iç pull-up açık</td></tr>
+      <tr><td class="num">25 / 26</td><td>Sağ enkoder A / B</td><td>PCNT birim 1</td></tr>
+      <tr><td class="num">36 / 39</td><td>Sol / sağ IR gözü</td><td>PCNT birim 2/3, 12,8 µs filtre</td></tr>
+      <tr><td class="num">35 / 34</td><td>Pil / şarj plakası bölücüsü</td><td>100k/27k, 100 nF GND'ye. ADC1.</td></tr>
+      <tr><td class="num">23</td><td>Acil stop sonrası 12 V (öneri)</td><td>100k/33k: 12,6 V → 3,1 V</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="kontrol">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Kontrolcü</h2></div>
+  <div class="grid2">
+    <div class="box">
+      <h3>Neden LQR</h3>
+      <p>Sitedeki iç içe PD+PI yapısı da çalışır. Ama dört kazancı elle ayarlamak yerine, motor modelini de içeren tam durum geri beslemesi kurduk: durum <code>[x, v, θ, ω]</code>, giriş motor gerilimi. Kazançlar modelden hesaplanıyor; parçalar tartılınca yeniden üretilir.</p>
+      <p class="mono" style="font-size:.84rem">u = 49,0·x + 60,7·v + 108,0·θ + 13,4·ω  [V]</p>
+      <p>Gerilim, ölçülen pil gerilimine bölünerek PWM'e çevrilir; pil boşaldıkça kazanç değişmez.</p>
+    </div>
+    <div class="box">
+      <h3>Döngüler</h3>
+      <ul>
+        <li>200 Hz, MPU6050 veri-hazır kesmesiyle, çekirdek 1'de</li>
+        <li>Hız: enkoder farkı 4 örnek (20 ms) üzerinden; tek sayımın gürültüsünü 4'e böler</li>
+        <li>Yön: jiroskop Z ile PD, sapma referansı</li>
+        <li>Referans: trapez profil + 5 rad/s kritik sönümlü süzgeç; ivme ön-beslemesi basamak yapmaz</li>
+        <li>Zıt-EMK ön-beslemesi: hedef hızda gereken gerilim önden eklenir</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Modlar</h3>
+      <ul>
+        <li><b>BEKLE</b>: motorlar kapalı. Elle ±3° içinde 0,5 s tutulunca DENGE.</li>
+        <li><b>DENGE</b>: eldiven komutları, yanaşma tetiği</li>
+        <li><b>YANAŞMA</b>: eldiven yok sayılır (şartname)</li>
+        <li><b>ŞARJ</b>: motorlar kapalı, direğe yaslı. Eldivenle "geri" deyince ayrılır.</li>
+        <li><b>DÜŞTÜ</b>: |θ| > 40° 50 ms → motorlar kapanır</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Eldiven komutları: adım modu</h3>
+      <p>Her "ileri/geri" jesti 0,5 m, her "sola/sağa" 90°. El düzleşince ("dur") adım yarıda kesilmez, robot adımı bitirip durur. Böylece C2'deki "yaklaşık 0,5 m / 90°" eldiveni tutma süresine bağlı kalmaz. 1 m için iki kez "ileri". Adım sürerken başka bir hareket jesti ya da 0,3 s eldiven sessizliği adımı yumuşakça keser.</p>
+      <p>Takım sürekli sürüşü (el eğik kaldıkça git) isterse: <code>glove=cont</code>.</p>
+    </div>
+  </div>
+  <p class="note">Yanaşma tetiği görev seçimine bağlı. Telefondan "şarj" seçildiyse robot dengeye girdikten 1 s sonra istasyonu arar. "Bütünleşik görev"de eldiven 6 s boşta kalmalı ve işaret görülmeli; böylece hedefte 5 s beklerken istasyona erken gitmez. "Statik denge" ve "yönlendirme" görevlerinde yanaşma kapalı, yani masadaki istasyon C1/C2 testlerini bozamaz.</p>
+</section>
+
+<section id="test">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Simülasyon sonuçları</h2></div>
+  <p>Model: doğrusal olmayan teker-sarkaç dinamiği, JGB37-520 motoru (zıt-EMK, sürtünme), 10 bit PWM, pil iç direnci, MPU6050 gürültüsü ve 42 Hz süzgeci, ivmeölçerin titreşimi, enkoder kuantalaması, 38 kHz işaretin 78 ms çerçevesi, %3–5 eldiven paket kaybı. Robot ESP32'sindeki <code>RobotLogic</code> sınıfı aynen koşuyor.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Test</th><th>Ölçülen</th><th>Sonuç</th></tr></thead>
+    <tbody>
+      <tr><td>Ön test: enerjisiz ±10°</td><td class="num">0,28 s'de 40°'yi geçiyor (pasif kararsız)</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C1.1 30 s statik denge, kutulu</td><td class="num">en büyük eğim 0,85°, kayma 2,0 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C1.2 1 m ileri + 3 s dur</td><td class="num">1,013 m; durmada ±17,7 mm</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C1.3 1 m geri + 3 s dur</td><td class="num">1,004 m; durmada ±12,3 mm</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C1.4 ±10°'den toparlanma</td><td class="num">1,53 s / 1,53 s, 14 cm yol</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C2.1–2.4 eldiven ileri/geri/sol/sağ</td><td class="num">0,49 m · 0,49 m · 90,0° · 90,0°; tepki ≤ 0,8 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C2.5 dur, yerinde kalma</td><td class="num">3 s'de 13,5 mm</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>Eldiven bağlantısı koptu</td><td class="num">adım 0,30 m'de kesildi, robot durdu</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>Acil stop basıldı</td><td class="num">BEKLE moduna geçti, motor çıkışı kapandı</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C3.1–3.2 yanaşma, 63 başlangıç (30 cm / 90°, ±30° bakış)</td><td class="num">63/63, en uzun 14,5 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C3.3 temas → şarj modu, motor durur</td><td class="num">0,50 s (sınır 5 s)</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>İstasyon arkada başlangıç</td><td class="num">3/3 (90°, −90°, 180°)</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C5 bütünleşik görev × 4</td><td class="num">4/4; hedefte 5,6 s bekledi, erken yanaşma yok</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>Belirsizlik: 40 rastgele robot (kütle ±25 %, KM 7–14 cm, R ±20 %, pil 10,4–12,6 V, IMU ofseti ±1,5°)</td><td class="num">statik 40/40, toparlanma 40/40 (en uzun 9,8 s), 1 m 40/40</td><td><span class="pill p-ok">geçti</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Belirsizlik testinde en kötü toparlanma 9,8 s, sınır 10 s. Bu, modelden çok farklı bir robotta kazançların zorlandığını gösterir. Parçalar gelince gövdeyi tartıp kütle merkezini ölçün ve <code>lqr_design.py</code>'yi gerçek değerlerle yeniden çalıştırın.</p>
+  <div class="grid2">
+    <figure><img src="img/c1_ileri.png" alt="1 m ileri hareketinde yol, eğim ve PWM grafiği"><figcaption>C1.2: iki "ileri" komutu, sonra durma. Eğim ±5° içinde.</figcaption></figure>
+    <figure><img src="img/c1_toparlanma.png" alt="+10 ve -10 derece toparlanma grafiği"><figcaption>C1.4: ±10°'den bırakılınca 1,5 s'de ±3° bandına giriyor.</figcaption></figure>
+    <figure><img src="img/c2_eldiven.png" alt="Eldiven komut dizisi grafiği"><figcaption>C2: ileri, geri, sola, sağa, dur.</figcaption></figure>
+    <figure><img src="img/yanasma_yolu.png" alt="Üstten görünüşte yanaşma yolları"><figcaption>Üstten: C3 yanaşması ve C5 görevinin yolu.</figcaption></figure>
+  </div>
+</section>
+
+<section id="sira">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Parça gelince ilk çalıştırma sırası</h2></div>
+  <ol class="steps">
+    <li><span><b>Tezgâhta güç.</b> BMS sırası B− → B1 → B2 → B+. LM2596'yı ESP32 bağlamadan 5,0–5,1 V'a ayarlayın. Sitedeki tezgâh testleri tablosu.</span></li>
+    <li><span><b>EN kablosu takılı değilken yükleme.</b> JP1 çıkık. Seri monitörde jiroskop kalibrasyonu ve <code>Robot MAC</code> satırı görünmeli; MAC'i eldiven koduna yazın.</span></li>
+    <li><span><b>IMU yönü.</b> Robotu öne eğin, telemetride <code>tilt</code> artmalı. Sola çevirin, <code>yaw</code> artmalı. Ters ise <code>AxisMap</code> işaretleri.</span></li>
+    <li><span><b>Enkoder.</b> Tekeri elle 10 tur ileri: <code>x</code> ≈ 2,04 m. Tutmazsa <code>ENC_COUNTS_PER_REV</code> ve yön bayrakları.</span></li>
+    <li><span><b>Model.</b> Gövdeyi tartın, kütle merkezini ipe asarak bulun. <code>lqr_design.py</code> → <code>run_sim.sh</code> → hepsi geçiyorsa yükleyin.</span></li>
+    <li><span><b>İlk denge.</b> Kutusuz, bir kişi iki eliyle yakında. Elle dik tutun, 0,5 s sonra denge başlar. Robot hep bir yöne kayıyorsa en rahat durduğu açıda tutup <code>cal</code>.</span></li>
+    <li><span><b>Sonra sırayla:</b> kutulu denge, ±10°, eldiven adımları, istasyon (önce 38 kHz ayarı ve göz menzili), bütünleşik görev.</span></li>
+    <li><span><b>Final öncesi</b> <code>FREEZE = true</code>: şartname gereği finalde parametre değiştirilemez.</span></li>
+  </ol>
+</section>
+
+<section id="ek">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Siparişe eklenecekler</h2></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Parça</th><th>Adet</th><th>Neden</th></tr></thead>
+    <tbody>
+      <tr><td>470–1000 µF 25 V düşük ESR elektrolitik</td><td class="num">1</td><td>Motor hattı</td></tr>
+      <tr><td>100 kΩ + 33 kΩ direnç</td><td class="num">1+1</td><td>Acil stop sonrası hat algılama</td></tr>
+      <tr><td>Ø40 mm PVC boru, 20 cm + taban</td><td class="num">1</td><td>Yuvarlak istasyon direği</td></tr>
+      <tr><td>Bakır bant (sitede var) ile iki halka</td><td class="num">—</td><td>Üst +, alt −</td></tr>
+      <tr><td>1,1 A polyfuse (PTC)</td><td class="num">1</td><td>Şarj kartı çıkışı</td></tr>
+      <tr><td>VS1838B ya da TSOP38238</td><td class="num">2</td><td>TSOP1838 yerine (3,3 V uyumlu)</td></tr>
+    </tbody>
+  </table></div>
+  <p>Pogo pinler sitedeki gibi alınır; yalnız istasyon yerine robotun V-yuvasına takılır.</p>
+</section>
+
+<section id="repo">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Kod nerede</h2></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Yol</th><th>İçerik</th></tr></thead>
+    <tbody>
+      <tr><td class="num">common/cdtp_core/</td><td>Ortak çekirdek: <code>robot_logic</code>, <code>dock_fsm.h</code>, <code>gesture.h</code>, <code>protocol.h</code>, <code>cdtp_config.h</code></td></tr>
+      <tr><td class="num">firmware/robot/</td><td>Robot ESP32 (PlatformIO)</td></tr>
+      <tr><td class="num">firmware/glove/</td><td>Eldiven ESP32-C3 (PlatformIO)</td></tr>
+      <tr><td class="num">tools/lqr_design.py</td><td>Model + LQR → <code>gains.h</code></td></tr>
+      <tr><td class="num">sim/</td><td>Fizik modeli, kabul testleri; <code>bash tools/run_sim.sh</code></td></tr>
+      <tr><td class="num">docs/BLE_PROTOKOL.md</td><td>Telefon uygulaması için UUID'ler ve telemetri alanları</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<footer>Takım reposu (Festus26/CDTP-patient-assistance-robot) gizli olduğu için okunamadı; bu plan şartname v14 ve cdtp-robot.netlify.app verisine dayanıyor. Simülasyon sonuçları gerçek donanımın yerini tutmaz.</footer>
+</div>

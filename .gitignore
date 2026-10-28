@@ -1,0 +1,8 @@
+# PlatformIO derleme ciktilari
+.pio/
+.vscode/
+# PC simulasyon derlemesi
+build/
+# Simulasyon izleri (tools/run_sim.sh yeniden uretir); ozet ve log tutulur
+sim/results/*.csv
+__pycache__/

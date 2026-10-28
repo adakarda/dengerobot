@@ -1,0 +1,7 @@
+{
+  "name": "cdtp_core",
+  "version": "1.0.0",
+  "description": "CDTP denge robotu: donanimdan bagimsiz kontrol, gorev ve protokol kodu. Hem ESP32 firmware'i hem PC simulasyonu bunu kullanir.",
+  "frameworks": "*",
+  "platforms": "*"
+}
