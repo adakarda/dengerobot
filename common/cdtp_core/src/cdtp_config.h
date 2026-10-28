@@ -7,7 +7,7 @@ namespace cfg {
 
 // ---- Mekanik (OLC) ----
 constexpr float WHEEL_RADIUS_M   = 0.0325f;  // 65 mm teker
-constexpr float TRACK_WIDTH_M    = 0.170f;   // iki teker temas noktasi arasi (OLC)
+constexpr float TRACK_WIDTH_M    = 0.190f;   // iki teker temas noktasi arasi (sasi cizimi; OLC)
 constexpr float ENC_COUNTS_PER_REV = 836.0f; // 11 darbe x ~19 disli x 4 kenar (OLC: tekeri 10 tur cevir)
 constexpr bool  ENC_LEFT_INVERT  = false;
 constexpr bool  ENC_RIGHT_INVERT = true;     // sag motor ayna takili

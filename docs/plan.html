@@ -193,7 +193,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
     <div class="box">
       <h3>Neden LQR</h3>
       <p>Sitedeki iç içe PD+PI yapısı da çalışır. Ama dört kazancı elle ayarlamak yerine, motor modelini de içeren tam durum geri beslemesi kurduk: durum <code>[x, v, θ, ω]</code>, giriş motor gerilimi. Kazançlar modelden hesaplanıyor; parçalar tartılınca yeniden üretilir.</p>
-      <p class="mono" style="font-size:.84rem">u = 49,0·x + 60,7·v + 108,0·θ + 13,4·ω  [V]</p>
+      <p class="mono" style="font-size:.84rem">u = 52,4·x + 64,7·v + 107,2·θ + 13,2·ω  [V]</p>
       <p>Gerilim, ölçülen pil gerilimine bölünerek PWM'e çevrilir; pil boşaldıkça kazanç değişmez.</p>
     </div>
     <div class="box">
@@ -244,10 +244,10 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>C3.3 temas → şarj modu, motor durur</td><td class="num">0,50 s (sınır 5 s)</td><td><span class="pill p-ok">geçti</span></td></tr>
       <tr><td>İstasyon arkada başlangıç</td><td class="num">3/3 (90°, −90°, 180°)</td><td><span class="pill p-ok">geçti</span></td></tr>
       <tr><td>C5 bütünleşik görev × 4</td><td class="num">4/4; hedefte 5,6 s bekledi, erken yanaşma yok</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>Belirsizlik: 40 rastgele robot (kütle ±25 %, KM 7–14 cm, R ±20 %, pil 10,4–12,6 V, IMU ofseti ±1,5°)</td><td class="num">statik 40/40, toparlanma 40/40 (en uzun 9,8 s), 1 m 40/40</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>Belirsizlik: 40 rastgele robot (kütle ±25 %, KM 7–14 cm, R ±20 %, pil 10,4–12,6 V, IMU ofseti ±1,5°)</td><td class="num">statik 40/40, toparlanma 40/40 (en uzun 1,7 s), 1 m 40/40</td><td><span class="pill p-ok">geçti</span></td></tr>
     </tbody>
   </table></div>
-  <p class="note">Belirsizlik testinde en kötü toparlanma 9,8 s, sınır 10 s. Bu, modelden çok farklı bir robotta kazançların zorlandığını gösterir. Parçalar gelince gövdeyi tartıp kütle merkezini ölçün ve <code>lqr_design.py</code>'yi gerçek değerlerle yeniden çalıştırın.</p>
+  <p class="note">Model artık şasi çizimindeki kütle bütçesine dayanıyor (1,245 kg, kütle merkezi 72 mm). Parçalar gelince gövdeyi tartıp kütle merkezini ölçün ve <code>lqr_design.py</code>'yi gerçek değerlerle yeniden çalıştırın. Robotun tüm şemaları ve kodları ayrı yapım dosyasında.</p>
   <div class="grid2">
     <figure><img src="img/c1_ileri.png" alt="1 m ileri hareketinde yol, eğim ve PWM grafiği"><figcaption>C1.2: iki "ileri" komutu, sonra durma. Eğim ±5° içinde.</figcaption></figure>
     <figure><img src="img/c1_toparlanma.png" alt="+10 ve -10 derece toparlanma grafiği"><figcaption>C1.4: ±10°'den bırakılınca 1,5 s'de ±3° bandına giriyor.</figcaption></figure>

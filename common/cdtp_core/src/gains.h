@@ -4,13 +4,13 @@
 #pragma once
 namespace cdtp {
 namespace gains {
-constexpr float K_X = -49.00149f;
-constexpr float K_V = -60.66344f;
-constexpr float K_TH = -108.01479f;
-constexpr float K_OM = -13.37860f;
-constexpr float YAW_KP = 3.05882f;
-constexpr float YAW_KD = 0.68824f;
+constexpr float K_X = -52.40356f;
+constexpr float K_V = -64.68360f;
+constexpr float K_TH = -107.16416f;
+constexpr float K_OM = -13.15230f;
+constexpr float YAW_KP = 2.73684f;
+constexpr float YAW_KD = 0.61579f;
 // a_ref -> egim on-besleme (rad / (m/s^2))
-constexpr float TH_PER_ACC = 0.13864f;
+constexpr float TH_PER_ACC = 0.15266f;
 }  // namespace gains
 }  // namespace cdtp

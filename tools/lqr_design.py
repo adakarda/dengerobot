@@ -12,13 +12,16 @@ import pathlib
 import numpy as np
 from scipy.linalg import expm, solve_discrete_are
 
+import mass_budget
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 # ---- Fiziksel model (OLC) ----
 P = dict(
-    m_body=1.25,        # kg, tekerler haric her sey (motor govdeleri dahil)
-    l_com=0.10,         # m, teker ekseninden govde kutle merkezine
-    I_body=0.0065,      # kg m^2, kutle merkezi etrafinda yunuslama ataleti
+    # govde degerleri tools/mass_budget.py'deki parca listesinden (kutu haric; kutuyu simulasyon ekler)
+    m_body=round(mass_budget.m, 3),   # kg, tekerler haric her sey (motor govdeleri dahil)
+    l_com=round(mass_budget.l, 4),    # m, teker ekseninden govde kutle merkezine
+    I_body=round(mass_budget.I, 5),   # kg m^2, kutle merkezi etrafinda yunuslama ataleti
     m_wheel=0.045,      # kg, tek teker + gobek
     r=0.0325,           # m
     J_rotor=5.0e-7,     # kg m^2, motor rotoru (disli oncesi)
@@ -27,7 +30,7 @@ P = dict(
     R=4.5,              # ohm, sargi + surucu
     b_visc=0.002,       # N m s/rad, disli viskoz surtunme (motor basina)
     tau_coulomb=0.02,   # N m, disli kuru surtunme (motor basina)
-    track=0.17,         # m
+    track=0.19,         # m, teker merkezleri arasi (sasi cizimi; OLC)
     I_yaw=0.012,        # kg m^2
     vbat=11.1,
 )

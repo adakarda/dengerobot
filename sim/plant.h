@@ -13,7 +13,7 @@ struct PlantParams {
   double Ke = PlantNominal::Ke, R = PlantNominal::R, b_visc = PlantNominal::b_visc, tau_c = PlantNominal::tau_coulomb;
   double track = PlantNominal::track, I_yaw = PlantNominal::I_yaw;
   double voc = 12.0, r_int = 0.15;   // paket bos gerilim, ic direnc
-  double box_mass = 0.06, box_h = 0.20;  // ilac kutusu (eksenden yukseklik)
+  double box_mass = 0.06, box_h = 0.215;  // ilac kutusu (eksenden yukseklik)
   double h_imu = 0.05;               // IMU'nun eksenden yuksekligi
   double imu_offset_deg = 0.0;       // IMU montaj hatasi
   double gyro_bias_dps = 0.0;        // kalibrasyon sonrasi kalan bias

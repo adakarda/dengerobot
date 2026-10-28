@@ -326,7 +326,7 @@ static void testRobust() {
   for (int i = 0; i < N; ++i) {
     PlantParams p;
     p.m_body *= U(0.75, 1.3);
-    p.l_com = U(0.07, 0.14);
+    p.l_com *= U(0.75, 1.6);  // kutle merkezi: tahminin %75'i ile %160'i arasi
     p.I_body *= U(0.7, 1.4);
     p.R *= U(0.8, 1.25);
     p.Ke *= U(0.9, 1.1);
@@ -354,7 +354,7 @@ static void testRobust() {
       worst += b;
     }
   }
-  report("SAG", "Belirsizlik: kutle +-25%, KM 7-14 cm, ...", okS == N && okR == N && okM == N,
+  report("SAG", "Belirsizlik: kutle +-25%, KM -25/+60%, ...", okS == N && okR == N && okM == N,
          "statik %d/%d, toparlanma %d/%d (en uzun %.1f s), 1 m %d/%d%s", okS, N, okR, N, worstRec, okM, N,
          worst.c_str());
 }

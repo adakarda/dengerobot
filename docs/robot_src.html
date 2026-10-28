@@ -1,0 +1,721 @@
+<title>CDTP Robot Yapım Dosyası</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: teknik yapım dosyası; üstte içindekiler, bölümler yapım sırasıyla (parça -> şema -> kablo -> mekanik -> kod -> test) */
+:root{
+  --bg:#f5f6f4; --panel:#ffffff; --fg:#1b2127; --muted:#5b6670; --line:#d6dbd8;
+  --ink:#1f4fa3; --ink-soft:#e5ecf8; --plate:#eef3f8; --plate-edge:#8aa4c4;
+  --v12:#c0392b; --v5:#d68910; --v33:#1e8449; --gnd:#2c3e50; --sig:#7d3c98; --chg:#b9770e; --mot:#16a085;
+  --ok:#1e8449; --ok-bg:#e3f2e8; --warn:#b9770e; --warn-bg:#fbf0dc; --bad:#b03a2e; --bad-bg:#f8e3e0;
+  --code-bg:#f0f2f1;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13171b; --panel:#1b2026; --fg:#e4e8ec; --muted:#9aa5ae; --line:#2e363e;
+  --ink:#7fa8f0; --ink-soft:#1f2b40; --plate:#1f2833; --plate-edge:#5a7699;
+  --v12:#ec7063; --v5:#f0b252; --v33:#58d68d; --gnd:#aeb6bf; --sig:#c39bd3; --chg:#f5b041; --mot:#48c9b0;
+  --ok:#58d68d; --ok-bg:#183326; --warn:#f0b252; --warn-bg:#3a2d14; --bad:#ec7063; --bad-bg:#3d1d1a;
+  --code-bg:#161a1f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13171b; --panel:#1b2026; --fg:#e4e8ec; --muted:#9aa5ae; --line:#2e363e;
+  --ink:#7fa8f0; --ink-soft:#1f2b40; --plate:#1f2833; --plate-edge:#5a7699;
+  --v12:#ec7063; --v5:#f0b252; --v33:#58d68d; --gnd:#aeb6bf; --sig:#c39bd3; --chg:#f5b041; --mot:#48c9b0;
+  --ok:#58d68d; --ok-bg:#183326; --warn:#f0b252; --warn-bg:#3a2d14; --bad:#ec7063; --bad-bg:#3d1d1a;
+  --code-bg:#161a1f; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
+.wrap{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:46px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.1;margin:0}
+h1{font-size:2.6rem;font-weight:700}
+h2{font-size:1.85rem;font-weight:600}
+h3{font-size:1.25rem;font-weight:600}
+p{margin:0;max-width:70ch}
+code,.mono{font-family:var(--mono);font-size:.86em}
+.eyebrow{font-family:var(--mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+header{display:flex;flex-direction:column;gap:12px;border-bottom:2px solid var(--fg);padding-bottom:20px}
+.lede{font-size:1.08rem;color:var(--muted)}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;font-family:var(--mono);font-size:.82rem}
+.facts b{color:var(--ink)}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 8px}
+nav.toc a{font-family:var(--mono);font-size:.8rem;text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--panel);border-radius:4px;padding:3px 9px}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--ink);outline:none}
+section{display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px}
+.sec-head{display:flex;gap:14px;align-items:baseline}
+.sec-num{font-family:var(--mono);font-size:.85rem;color:var(--ink);border:1.5px solid var(--ink);border-radius:3px;padding:1px 7px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+ul,ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:7px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+tr.grp td{font-family:var(--mono);font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);background:var(--ink-soft)}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:.84rem;white-space:nowrap}
+td.r{text-align:right}
+.pill{display:inline-block;font-family:var(--mono);font-size:.7rem;font-weight:600;padding:1px 8px;border-radius:99px;white-space:nowrap}
+.p-ok{color:var(--ok);background:var(--ok-bg)} .p-warn{color:var(--warn);background:var(--warn-bg)} .p-new{color:var(--ink);background:var(--ink-soft)}
+.diagram{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram svg.w9{min-width:900px} .diagram svg.w7{min-width:700px} .diagram svg.w6{min-width:600px}
+svg text{font-family:var(--mono);fill:var(--fg)}
+svg .sub{fill:var(--muted)}
+svg .n{fill:var(--panel);stroke:var(--fg);stroke-width:1.3}
+svg .nn{fill:var(--panel);stroke:var(--ink);stroke-width:1.6;stroke-dasharray:5 3}
+svg .plate{fill:var(--plate);stroke:var(--plate-edge);stroke-width:1.3}
+svg .dim{stroke:var(--muted);stroke-width:.9;fill:none}
+svg .pin{fill:var(--chg)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.legend i{display:inline-block;width:22px;height:3px;vertical-align:middle;margin-right:6px}
+.note{border-left:3px solid var(--ink);padding:4px 0 4px 14px}
+.warnnote{border-left:3px solid var(--warn);padding:4px 0 4px 14px}
+figure{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0}
+figure img{border:1px solid var(--line);border-radius:6px;background:#fff}
+figcaption{font-size:.85rem;color:var(--muted)}
+details.code{background:var(--panel);border:1px solid var(--line);border-radius:6px}
+details.code summary{cursor:pointer;padding:9px 14px;font-family:var(--mono);font-size:.86rem;display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap}
+details.code summary span{color:var(--muted)}
+details.code summary:focus-visible{outline:2px solid var(--ink)}
+details.code pre{margin:0;max-height:560px;overflow:auto;background:var(--code-bg);border-top:1px solid var(--line);padding:12px 14px;font-family:var(--mono);font-size:.78rem;line-height:1.45}
+.codehead{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.copy{font-family:var(--mono);font-size:.74rem;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:4px;padding:2px 8px;cursor:pointer}
+.copy:focus-visible{outline:2px solid var(--ink)}
+footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:560px){h1{font-size:2rem}h2{font-size:1.5rem}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">YTÜ EEF ÇDTP · Modül A + robot tarafı · Kontrol ve Otomasyon</span>
+  <h1>Denge robotu yapım dosyası</h1>
+  <p class="lede">Yalnız robot: parçalar, güç ve sinyal şemaları, ana kart yerleşimi, kablo listesi, şasi ölçüleri, şarj teması, tüm firmware kodu ve testler. Eldiven, istasyon ve telefon uygulaması bu dosyada yok; robotun onlarla konuştuğu arayüzler var.</p>
+  <div class="facts">
+    <span>Gövde: <b>1,245 kg</b> + 60 g kutu</span>
+    <span>Kütle merkezi: <b>eksenin 72 mm üstü</b></span>
+    <span>İz genişliği: <b>190 mm</b></span>
+    <span>Kontrol: <b>LQR, 200 Hz</b></span>
+    <span>Simülasyon: <b>20/20</b></span>
+    <span>Derleme: <b>hatasız</b></span>
+  </div>
+  <nav class="toc" aria-label="İçindekiler">
+    <a href="#parcalar">Parçalar</a><a href="#blok">Blok şema</a><a href="#guc">Güç şeması</a><a href="#sinyal">Sinyal şeması</a>
+    <a href="#anakart">Ana kart</a><a href="#kablo">Kablo listesi</a><a href="#bms">BMS</a><a href="#sasi">Şasi</a>
+    <a href="#tema">Şarj teması</a><a href="#montaj">Montaj</a><a href="#firmware">Firmware</a><a href="#ayar">Ayar</a><a href="#test">Testler</a><a href="#kod">Kodlar</a>
+  </nav>
+</header>
+
+<!-- ================= PARÇALAR ================= -->
+<section id="parcalar">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Robot parça listesi</h2></div>
+  <p>Fiyatlar takım sitesinden (9–10 Ekim 2026, KDV dahil). "Yeni" işaretliler bu dosyanın eklemeleri. Kütleler tahmin; parça gelince tartıp <code>tools/mass_budget.py</code>'ye yazın.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Parça</th><th>Adet</th><th>Birim TL</th><th>Satıcı</th><th>Not</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="5">Beyin ve sensörler</td></tr>
+      <tr><td>ESP32 WROOM-32D geliştirme kartı (38 pin)</td><td class="num">1</td><td class="num r">455</td><td>Robotistan</td><td>WROVER değil: GPIO16/17 kullanılıyor</td></tr>
+      <tr><td>MPU6050 GY-521</td><td class="num">1</td><td class="num r">109</td><td>Robotzade</td><td>Kat 1 üstü, teker ekseni hizasında, ortada</td></tr>
+      <tr><td>38 kHz IR alıcı kartı (VS1838B)</td><td class="num">2</td><td class="num r">41</td><td>Robotistan</td><td>TSOP1838 almayın: 3,3 V'ta çalışmaz</td></tr>
+      <tr class="grp"><td colspan="5">Hareket</td></tr>
+      <tr><td>JGB37-520 12 V 530 RPM, Hall enkoderli</td><td class="num">2</td><td class="num r">639</td><td>Direnc.net</td><td>6 mm D mil</td></tr>
+      <tr><td>BTS7960 motor sürücü kartı</td><td class="num">2</td><td class="num r">162</td><td>Robotzade</td><td>VCC → 3,3 V</td></tr>
+      <tr><td>37 mm motor tutucu (L braket)</td><td class="num">2</td><td class="num r">114</td><td>Keskinler</td><td></td></tr>
+      <tr><td>65 mm lastik tekerlek</td><td class="num">2</td><td class="num r">175</td><td>Robotistan</td><td>Göbek 6 mm D'ye uymalı</td></tr>
+      <tr><td>6 mm kaplin (2'li)</td><td class="num">1</td><td class="num r">170</td><td>Robotistan</td><td>Göbek mile doğrudan oturuyorsa alınmaz</td></tr>
+      <tr class="grp"><td colspan="5">Güç</td></tr>
+      <tr><td>Orion 18650P 2450 mAh 12C</td><td class="num">3</td><td class="num r">201</td><td>Direnc.net</td><td>Üçü aynı partiden</td></tr>
+      <tr><td>18650 3'lü pil yuvası</td><td class="num">1</td><td class="num r">47</td><td>Ulutaş</td><td>İçten seri</td></tr>
+      <tr><td>3S 10 A BMS (HX-3S-01)</td><td class="num">1</td><td class="num r">102</td><td>Motorobit</td><td>Şartname gereği zorunlu</td></tr>
+      <tr><td>LM2596 5 V 3 A regülatör</td><td class="num">1</td><td class="num r">161</td><td>Robotistan</td><td>Ayarlıysa önce 5,0 V'a ayarlayın</td></tr>
+      <tr><td>Bıçak sigorta yuvası + 5 A (yedek 7,5 A)</td><td class="num">1</td><td class="num r">40</td><td>Motorobit</td><td>Zorunlu</td></tr>
+      <tr><td>Acil stop Chint NP2-BE102, NC, 10 A</td><td class="num">1</td><td class="num r">300</td><td>Motorobit</td><td>Zorunlu, kat 3'te</td></tr>
+      <tr><td>WAGO 221-415 (5'li)</td><td class="num">2</td><td class="num r">30</td><td>Robotistan</td><td>WAGO-12V ve WAGO-GND</td></tr>
+      <tr><td>XT60 takımı</td><td class="num">2</td><td class="num r">26</td><td>Direnc.net</td><td></td></tr>
+      <tr><td>SR5100 Schottky diyot</td><td class="num">3</td><td class="num r">6</td><td>Motorobit</td><td>Şarj girişi</td></tr>
+      <tr><td>1000 µF 25 V düşük ESR elektrolitik <span class="pill p-new">yeni</span></td><td class="num">1</td><td class="num r">~20</td><td>Karaköy</td><td>Motor hattı (C5)</td></tr>
+      <tr><td>18 AWG silikon kablo kırmızı / siyah, 1 m</td><td class="num">2+2</td><td class="num r">35</td><td>Motorobit</td><td></td></tr>
+      <tr class="grp"><td colspan="5">Ana kart ve bağlantı</td></tr>
+      <tr><td>5×10 cm delikli plaket</td><td class="num">1</td><td class="num r">16</td><td>Direnc.net</td><td></td></tr>
+      <tr><td>Dişi + erkek pin header 1×40</td><td class="num">1</td><td class="num r">45</td><td>Robotistan</td><td>ESP32 sokete takılır</td></tr>
+      <tr><td>Dirençler: 100k ×3, 27k ×2, 33k ×1 <span class="pill p-new">33k yeni</span>, 10k ×1</td><td class="num">—</td><td class="num r">~30</td><td>Robotistan</td><td>¼ W</td></tr>
+      <tr><td>Kondansatör: 100 µF 16 V ×1, 100 nF ×3</td><td class="num">—</td><td class="num r">~15</td><td>Robotistan</td><td></td></tr>
+      <tr><td>2'li 5,08 mm PCB klemens</td><td class="num">3</td><td class="num r">8,72</td><td>Direnc.net</td><td>J1, J9, J10</td></tr>
+      <tr><td>Dişi-dişi jumper 20 cm (40'lı)</td><td class="num">1</td><td class="num r">59</td><td>Direnc.net</td><td>Yalnız sinyal</td></tr>
+      <tr class="grp"><td colspan="5">Gövde, yük, şarj teması</td></tr>
+      <tr><td>3 mm pleksi (3 kat + V-yuva + kutu yuvası)</td><td class="num">1</td><td class="num r">400</td><td>Trendyol</td><td>İstasyonla ortak levha</td></tr>
+      <tr><td>M3 30 mm + 50 mm dişi-dişi distans</td><td class="num">8+8</td><td class="num r">9,5 / 13,5</td><td>Motorobit</td><td>Her köşede 30+50 = 80 mm</td></tr>
+      <tr><td>M3 10 mm vida (10'lu)</td><td class="num">4</td><td class="num r">7,5</td><td>Motorobit</td><td></td></tr>
+      <tr><td>5 mm pogo pin (10'lu) <span class="pill p-new">robot tarafında</span></td><td class="num">1</td><td class="num r">87</td><td>Direnc.net</td><td>V-yuvada 2 adet, istasyonla paket ortak</td></tr>
+      <tr><td>Kapaklı ilaç kutusu</td><td class="num">1</td><td class="num r">60</td><td>Eczane</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <p>Robot tarafının toplamı yaklaşık <b>6.050 TL</b> (pleksi ve pogo paketi istasyonla paylaşılırsa ~5.700 TL).</p>
+</section>
+
+<!-- ================= BLOK ================= -->
+<section id="blok">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Blok şema</h2></div>
+  <p>Tek beyin ESP32. Çekirdek 1 denge döngüsünü 200 Hz koşturur; çekirdek 0 radyoları (eldivenden ESP-NOW, telefona BLE) ve seri konsolu yönetir.</p>
+  <div class="diagram"><svg class="w9" viewBox="0 0 960 330" role="img" aria-label="Robot blok şeması">
+    <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs>
+    <rect class="n" x="370" y="110" width="220" height="110" rx="6"/>
+    <text x="390" y="138" font-size="15" font-weight="600">ESP32-WROOM-32D</text>
+    <text class="sub" x="390" y="160" font-size="11">çekirdek 1: LQR 200 Hz</text>
+    <text class="sub" x="390" y="178" font-size="11">çekirdek 0: ESP-NOW, BLE</text>
+    <text class="sub" x="390" y="196" font-size="11">PCNT ×4, LEDC ×4, ADC1 ×2</text>
+    <g font-size="12">
+      <rect class="n" x="20" y="20" width="190" height="46" rx="5"/><text x="32" y="40">MPU6050</text><text class="sub" x="32" y="56" font-size="10">I2C 400 kHz + INT</text>
+      <rect class="n" x="20" y="84" width="190" height="46" rx="5"/><text x="32" y="104">Enkoder sol / sağ</text><text class="sub" x="32" y="120" font-size="10">Hall A/B, 836 sayım/tur</text>
+      <rect class="n" x="20" y="148" width="190" height="46" rx="5"/><text x="32" y="168">IR göz sol / sağ</text><text class="sub" x="32" y="184" font-size="10">VS1838B, ±15°</text>
+      <rect class="n" x="20" y="212" width="190" height="46" rx="5"/><text x="32" y="232">Gerilim ölçümü</text><text class="sub" x="32" y="248" font-size="10">pil, şarj pimi, motor hattı</text>
+      <rect class="n" x="750" y="20" width="190" height="46" rx="5"/><text x="762" y="40">BTS7960 sol</text><text class="sub" x="762" y="56" font-size="10">→ sol motor</text>
+      <rect class="n" x="750" y="84" width="190" height="46" rx="5"/><text x="762" y="104">BTS7960 sağ</text><text class="sub" x="762" y="120" font-size="10">→ sağ motor (ayna)</text>
+      <rect class="n" x="750" y="168" width="190" height="46" rx="5"/><text x="762" y="188">Eldiven (ESP-NOW)</text><text class="sub" x="762" y="204" font-size="10">20 Hz komut, kanal 1</text>
+      <rect class="n" x="750" y="232" width="190" height="46" rx="5"/><text x="762" y="252">Telefon (BLE)</text><text class="sub" x="762" y="268" font-size="10">1 Hz telemetri, görev</text>
+      <rect class="n" x="370" y="262" width="220" height="46" rx="5"/><text x="382" y="282">İstasyon direği</text><text class="sub" x="382" y="298" font-size="10">IR işaret + şarj halkaları</text>
+    </g>
+    <g stroke="var(--sig)" stroke-width="1.6" fill="none" marker-end="url(#a1)">
+      <path d="M210 43 H300 V130 H368"/><path d="M210 107 H290 V150 H368"/><path d="M210 171 H368"/><path d="M210 235 H300 V200 H368"/>
+      <path d="M592 140 H680 V43 H748"/><path d="M592 160 H700 V107 H748"/>
+      <path d="M748 191 H660 V185 H592"/>
+    </g>
+    <path d="M592 205 H680 V255 H748" stroke="var(--sig)" stroke-width="1.6" fill="none" marker-start="url(#a1)" marker-end="url(#a1)"/>
+    <path d="M440 262 V228" stroke="var(--chg)" stroke-width="1.6" fill="none" stroke-dasharray="4 3" marker-end="url(#a1)"/>
+    <text class="sub" x="448" y="250" font-size="10">IR 38 kHz, temas</text>
+  </svg></div>
+</section>
+
+<!-- ================= GÜÇ ================= -->
+<section id="guc">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Güç şeması</h2></div>
+  <p>Her kutuda gerçek uç adları var. Sigorta, regülatörü ve acil stopu birlikte korur. Acil stop yalnız motor hattını keser; ESP32 açık kalır. Şarj girişi sigortayı atlar, çünkü şarj kartı akımı zaten sınırlar.</p>
+  <div class="legend"><span><i style="background:var(--v12)"></i>12 V pil (18 AWG)</span><span><i style="background:var(--mot)"></i>motor</span><span><i style="background:var(--v5)"></i>5 V</span><span><i style="background:var(--v33)"></i>3,3 V</span><span><i style="background:var(--gnd)"></i>GND</span><span><i style="background:var(--chg)"></i>şarj</span><span><i style="background:var(--sig)"></i>ölçüm</span></div>
+  <div class="diagram"><svg class="w9" viewBox="0 0 980 560" role="img" aria-label="Robot güç şeması">
+    <!-- hücreler -->
+    <g font-size="11">
+      <rect class="n" x="20" y="30" width="120" height="150" rx="5"/><text x="30" y="50" font-size="12" font-weight="600">3S paket</text>
+      <rect x="40" y="62" width="80" height="24" rx="3" fill="none" stroke="var(--fg)"/><text x="48" y="78">Hücre 3</text>
+      <rect x="40" y="98" width="80" height="24" rx="3" fill="none" stroke="var(--fg)"/><text x="48" y="114">Hücre 2</text>
+      <rect x="40" y="134" width="80" height="24" rx="3" fill="none" stroke="var(--fg)"/><text x="48" y="150">Hücre 1</text>
+      <rect class="n" x="200" y="30" width="110" height="150" rx="5"/><text x="210" y="50" font-size="12" font-weight="600">BMS 3S</text>
+      <text x="210" y="74">B+</text><text x="210" y="110">B2</text><text x="210" y="138">B1</text><text x="210" y="166">B−</text>
+      <text x="275" y="74">P+</text><text x="275" y="166">P−</text>
+    </g>
+    <g stroke="var(--v12)" stroke-width="2.2" fill="none"><path d="M120 74 H200"/></g>
+    <g stroke="var(--fg)" stroke-width="1" fill="none"><path d="M120 106 H160 V106 H200"/><path d="M120 140 H200"/></g>
+    <g stroke="var(--gnd)" stroke-width="2.2" fill="none"><path d="M120 155 H160 V162 H200"/></g>
+    <!-- XT60 -->
+    <rect class="n" x="360" y="40" width="80" height="140" rx="5"/><text x="370" y="60" font-size="12" font-weight="600">XT60</text>
+    <text x="370" y="78" font-size="11">+</text><text x="370" y="168" font-size="11">−</text>
+    <g stroke="var(--v12)" stroke-width="2.2" fill="none"><path d="M310 74 H360"/><path d="M440 74 H490"/></g>
+    <g stroke="var(--gnd)" stroke-width="2.2" fill="none"><path d="M310 162 H360"/><path d="M440 162 H470 V470"/></g>
+    <!-- sigorta -->
+    <rect class="n" x="490" y="56" width="90" height="36" rx="5"/><text x="500" y="79" font-size="12">Sigorta 5 A</text>
+    <g stroke="var(--v12)" stroke-width="2.2" fill="none"><path d="M580 74 H620"/></g>
+    <!-- WAGO 12 -->
+    <rect class="n" x="620" y="40" width="90" height="140" rx="5"/><text x="630" y="60" font-size="12" font-weight="600">WAGO-12V</text><text class="sub" x="630" y="76" font-size="10">5'li klemens</text>
+    <g stroke="var(--v12)" stroke-width="2.2" fill="none"><path d="M710 74 H760"/><path d="M710 130 H735 V330 H690"/></g>
+    <g stroke="var(--sig)" stroke-width="1.3" fill="none" stroke-dasharray="4 3"><path d="M665 180 V250 H600"/></g>
+    <!-- acil stop -->
+    <rect class="n" x="760" y="52" width="90" height="44" rx="5"/><text x="770" y="70" font-size="12">Acil stop</text><text class="sub" x="770" y="86" font-size="10">NC1 → NC2</text>
+    <g stroke="var(--v12)" stroke-width="2.2" fill="none"><path d="M850 74 H900 V130"/></g>
+    <!-- BTS -->
+    <rect class="n" x="860" y="130" width="110" height="64" rx="5"/><text x="868" y="150" font-size="12">BTS7960 sol</text><text class="sub" x="868" y="166" font-size="10">B+ B−  M+ M−</text>
+    <rect class="n" x="860" y="214" width="110" height="64" rx="5"/><text x="868" y="234" font-size="12">BTS7960 sağ</text><text class="sub" x="868" y="250" font-size="10">B+ B−  M+ M−</text>
+    <g stroke="var(--v12)" stroke-width="2.2" fill="none"><path d="M900 194 V214"/></g>
+    <rect class="nn" x="760" y="140" width="80" height="48" rx="5"/><text x="768" y="160" font-size="11">C5</text><text class="sub" x="768" y="176" font-size="10">1000µF 25V</text>
+    <g stroke="var(--v12)" stroke-width="1.6" fill="none"><path d="M840 155 H860"/></g>
+    <g stroke="var(--gnd)" stroke-width="2.2" fill="none"><path d="M915 278 V300 H800 V470"/><path d="M800 188 V300"/></g>
+    <g stroke="var(--mot)" stroke-width="2.2" fill="none"><path d="M970 162 H975 V330"/><path d="M970 246 H978"/></g>
+    <rect class="n" x="860" y="330" width="110" height="44" rx="5"/><text x="868" y="350" font-size="12">Motorlar</text><text class="sub" x="868" y="366" font-size="10">M1/M2, sağ ayna</text>
+    <!-- motor sense -->
+    <rect class="nn" x="760" y="210" width="80" height="44" rx="5"/><text x="768" y="228" font-size="11">J10</text><text class="sub" x="768" y="244" font-size="10">→ GPIO23</text>
+    <g stroke="var(--sig)" stroke-width="1.3" fill="none" stroke-dasharray="4 3"><path d="M860 230 H840"/></g>
+    <!-- LM2596 -->
+    <rect class="n" x="560" y="306" width="130" height="50" rx="5"/><text x="570" y="326" font-size="12">LM2596</text><text class="sub" x="570" y="344" font-size="10">IN+ IN− / OUT 5,0 V</text>
+    <g stroke="var(--v5)" stroke-width="2.2" fill="none"><path d="M560 331 H500 V400 H420"/></g>
+    <g stroke="var(--gnd)" stroke-width="2" fill="none"><path d="M625 356 V470"/></g>
+    <!-- main board -->
+    <rect class="n" x="200" y="380" width="220" height="110" rx="5"/><text x="210" y="400" font-size="12" font-weight="600">Ana kart</text>
+    <text class="sub" x="210" y="418" font-size="10">J1 5 V → C1 100µF → JP1 → ESP32 5V</text>
+    <text class="sub" x="210" y="434" font-size="10">ESP32 AMS1117 → 3V3 çevre</text>
+    <text class="sub" x="210" y="450" font-size="10">J9-1 pil → R1/R2 → GPIO35</text>
+    <text class="sub" x="210" y="466" font-size="10">J9-2 şarj → R3/R4 → GPIO34</text>
+    <text class="sub" x="210" y="482" font-size="10">J10 motor → R6/R7 → GPIO23</text>
+    <g stroke="var(--v33)" stroke-width="2" fill="none"><path d="M310 380 V350 H120"/></g>
+    <text class="sub" x="40" y="344" font-size="10">3V3: IMU, IR, enkoder, BTS VCC</text>
+    <g stroke="var(--sig)" stroke-width="1.3" fill="none" stroke-dasharray="4 3"><path d="M600 250 H520 V440 H420"/></g>
+    <text class="sub" x="525" y="270" font-size="10">W19 pil ölçümü</text>
+    <!-- şarj -->
+    <rect class="nn" x="20" y="230" width="140" height="60" rx="5"/><text x="30" y="250" font-size="12">V-yuva pimleri</text><text class="sub" x="30" y="266" font-size="10">üst pim +</text><text class="sub" x="30" y="280" font-size="10">alt pim −</text>
+    <rect class="n" x="200" y="230" width="110" height="40" rx="5"/><text x="210" y="255" font-size="12">SR5100</text>
+    <g stroke="var(--chg)" stroke-width="2.2" fill="none"><path d="M160 250 H200"/><path d="M310 250 H340 V100 H460 V74"/></g>
+    <g stroke="var(--gnd)" stroke-width="2.2" fill="none"><path d="M90 290 V470"/></g>
+    <g stroke="var(--sig)" stroke-width="1.3" fill="none" stroke-dasharray="4 3"><path d="M180 250 V466 H200"/></g>
+    <!-- GND bus -->
+    <g stroke="var(--gnd)" stroke-width="3" fill="none"><path d="M60 470 H820"/></g>
+    <rect class="n" x="470" y="500" width="150" height="40" rx="5"/><text x="480" y="525" font-size="12">WAGO-GND (yıldız)</text>
+    <g stroke="var(--gnd)" stroke-width="3" fill="none"><path d="M545 470 V500"/></g>
+    <g stroke="var(--gnd)" stroke-width="2" fill="none"><path d="M310 470 V490"/></g>
+  </svg></div>
+  <div class="grid2">
+    <div class="box"><h3>Gerilimler ve akımlar</h3><ul>
+      <li>Paket: 9,9 V boş, 11,1 V nominal, 12,6 V dolu. Şartname sınırı 24 V.</li>
+      <li>Motor hattı tepe: iki motor kilitli ~5 A, normal dengede 0,3–1,5 A</li>
+      <li>5 V hattı: ~0,6 A tepe (radyo), LM2596'nın 3 A'inin beşte biri</li>
+      <li>3,3 V: ESP32 kartındaki AMS1117, ~0,31 A, 0,5 W ısı</li>
+      <li>Şarj: ~1 A, diyot 0,4 V düşürür, paket ~12,2 V'ta (%90) durur</li>
+    </ul></div>
+    <div class="box"><h3>Bölücüler</h3><ul>
+      <li>R1/R2 = 100k/27k: 12,6 V → 2,68 V (GPIO35, ADC1, 11 dB)</li>
+      <li>R3/R4 = 100k/27k: şarj pimi → GPIO34. 9 V üstü = şarj var.</li>
+      <li>R6/R7 = 100k/33k: acil stop sonrası 12,6 V → 3,13 V, 9,9 V → 2,46 V (GPIO23, dijital)</li>
+      <li>Her ölçüm pinine GND'ye 100 nF (C2, C3, C4)</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ================= SİNYAL ================= -->
+<section id="sinyal">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Sinyal şeması: ESP32 pinleri</h2></div>
+  <p>Kullanılmayan pinler: 0, 2, 5, 12, 15 açılış ayar pinleri (2 yalnız karttaki LED); 6–11 flash belleğe ait. 34–39 yalnız giriş, iç pull-up yok.</p>
+  <div class="diagram"><svg class="w9" viewBox="0 0 960 520" role="img" aria-label="ESP32 pin bağlantıları">
+    <rect class="n" x="360" y="30" width="240" height="460" rx="8"/>
+    <text x="400" y="56" font-size="14" font-weight="600">ESP32 DevKit (38 pin)</text>
+    <text class="sub" x="400" y="74" font-size="10">üstten görünüş, USB aşağıda</text>
+    <g font-size="11">
+      <!-- sol kenar pinleri -->
+      <text x="370" y="110">3V3</text><text x="370" y="140">GPIO36 VP</text><text x="370" y="170">GPIO39 VN</text><text x="370" y="200">GPIO34</text><text x="370" y="230">GPIO35</text>
+      <text x="370" y="260">GPIO32</text><text x="370" y="290">GPIO33</text><text x="370" y="320">GPIO25</text><text x="370" y="350">GPIO26</text>
+      <text x="370" y="380">GPIO27</text><text x="370" y="410">GPIO14</text><text x="370" y="440">GND</text><text x="370" y="470">5V (VIN)</text>
+      <!-- sağ kenar -->
+      <text x="510" y="110">GPIO23</text><text x="510" y="140">GPIO22</text><text x="510" y="170">GPIO21</text><text x="510" y="200">GPIO19</text>
+      <text x="510" y="230">GPIO17</text><text x="510" y="260">GPIO16</text><text x="510" y="290">GPIO4</text><text x="510" y="320">GPIO2</text><text x="510" y="440">GND</text>
+    </g>
+    <!-- sol modüller -->
+    <g font-size="11">
+      <rect class="n" x="20" y="120" width="200" height="60" rx="5"/><text x="30" y="140">J6 · Sol IR göz</text><text class="sub" x="30" y="156" font-size="10">VCC 3V3 · GND · OUT</text><text class="sub" x="30" y="170" font-size="10">PCNT u2, 12,8 µs süzgeç</text>
+      <rect class="n" x="20" y="190" width="200" height="50" rx="5"/><text x="30" y="210">J7 · Sağ IR göz</text><text class="sub" x="30" y="226" font-size="10">PCNT u3</text>
+      <rect class="n" x="20" y="250" width="200" height="50" rx="5"/><text x="30" y="270">J4 · Sol enkoder</text><text class="sub" x="30" y="286" font-size="10">C1=A, C2=B · PCNT u0</text>
+      <rect class="n" x="20" y="310" width="200" height="50" rx="5"/><text x="30" y="330">J5 · Sağ enkoder</text><text class="sub" x="30" y="346" font-size="10">PCNT u1, yön yazılımda ters</text>
+      <rect class="n" x="20" y="370" width="200" height="50" rx="5"/><text x="30" y="390">J3 · BTS7960 sol</text><text class="sub" x="30" y="406" font-size="10">RPWM ileri · LPWM geri</text>
+      <rect class="n" x="20" y="40" width="200" height="60" rx="5"/><text x="30" y="60">J9 · Ölçüm</text><text class="sub" x="30" y="76" font-size="10">R3/R4 → 34 (şarj)</text><text class="sub" x="30" y="90" font-size="10">R1/R2 → 35 (pil)</text>
+    </g>
+    <g stroke="var(--sig)" stroke-width="1.5" fill="none">
+      <path d="M220 136 H366"/><path d="M220 166 H366"/>
+      <path d="M220 66 H300 V196 H366"/><path d="M220 86 H290 V226 H366"/>
+      <path d="M220 266 H366"/><path d="M220 286 H366"/><path d="M220 326 H366"/><path d="M220 346 H366"/>
+      <path d="M220 386 H310 V376 H366"/><path d="M220 406 H366"/>
+    </g>
+    <!-- sağ modüller -->
+    <g font-size="11">
+      <rect class="n" x="740" y="80" width="200" height="60" rx="5"/><text x="750" y="100">J10 · Motor hattı</text><text class="sub" x="750" y="116" font-size="10">R6/R7 100k/33k → 23</text><text class="sub" x="750" y="130" font-size="10">HAS_MOTOR_SENSE=true</text>
+      <rect class="n" x="740" y="150" width="200" height="66" rx="5"/><text x="750" y="170">J2 · MPU6050</text><text class="sub" x="750" y="186" font-size="10">SCL 22 · SDA 21 · INT 19</text><text class="sub" x="750" y="200" font-size="10">AD0 → GND (0x68)</text>
+      <rect class="n" x="740" y="226" width="200" height="56" rx="5"/><text x="750" y="246">J8 · BTS7960 sağ</text><text class="sub" x="750" y="262" font-size="10">RPWM 16 · LPWM 17</text>
+      <rect class="n" x="740" y="292" width="200" height="60" rx="5"/><text x="750" y="312">EN ortak: GPIO4</text><text class="sub" x="750" y="328" font-size="10">iki kartın R_EN+L_EN</text><text class="sub" x="750" y="342" font-size="10">R5 10k → GND</text>
+    </g>
+    <g stroke="var(--sig)" stroke-width="1.5" fill="none">
+      <path d="M740 106 H600"/><path d="M740 176 H660 V136 H600"/><path d="M740 190 H650 V166 H600"/><path d="M740 204 H640 V196 H600"/>
+      <path d="M740 252 H630 V226 H600"/><path d="M740 266 H620 V256 H600"/><path d="M740 316 H610 V286 H600"/>
+    </g>
+    <g stroke="var(--v33)" stroke-width="2" fill="none"><path d="M366 106 H340 V500 H760"/></g>
+    <text class="sub" x="420" y="512" font-size="10">3V3 hattı: tüm modüllerin VCC'si · GND ortak</text>
+    <g stroke="var(--v5)" stroke-width="2" fill="none"><path d="M366 466 H330 V500"/></g>
+  </svg></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Pin</th><th>Görev</th><th>Yapılandırma</th></tr></thead>
+    <tbody>
+      <tr><td class="num">19</td><td>MPU6050 INT</td><td>Yükselen kenar kesmesi, 200 Hz, denge döngüsünü tetikler</td></tr>
+      <tr><td class="num">21 / 22</td><td>I2C SDA / SCL</td><td>400 kHz; GY-521 üstünde 4,7k pull-up var</td></tr>
+      <tr><td class="num">27, 14 / 16, 17</td><td>Sol / sağ RPWM, LPWM</td><td>LEDC kanal 0–3, 20 kHz, 10 bit. GPIO14 açılışta kısa darbe verir; EN kapalıyken zararsız.</td></tr>
+      <tr><td class="num">4</td><td>EN (iki kart)</td><td>Çıkış; 10k GND'ye: açılışta ve ESP32 sıfırlanırken motorlar kapalı</td></tr>
+      <tr><td class="num">32, 33 / 25, 26</td><td>Enkoder A, B</td><td>PCNT dörtlü sayım (4x), 1,25 µs süzgeç, iç pull-up</td></tr>
+      <tr><td class="num">36 / 39</td><td>IR göz sol / sağ</td><td>PCNT düşen kenar, 12,8 µs süzgeç (errata 3.11'deki 80 ns darbeleri sayılmaz)</td></tr>
+      <tr><td class="num">35 / 34</td><td>Pil / şarj pimi gerilimi</td><td>ADC1, 11 dB, 50 Hz, <code>analogReadMilliVolts</code></td></tr>
+      <tr><td class="num">23</td><td>Acil stop sonrası motor hattı</td><td>Dijital giriş; 0 ise robot BEKLE moduna geçer</td></tr>
+      <tr><td class="num">2</td><td>Karttaki LED</td><td>Dengede sabit, beklerken yanıp söner. Şarj göstergesi değil.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ================= ANA KART ================= -->
+<section id="anakart">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Ana kart yerleşimi (5×10 cm delikli plaket)</h2></div>
+  <p>Üstten görünüş, 2,54 mm aralık, 20 × 38 delik. ESP32 iki sıra dişi header üstünde; arızada sökmeden değişir. Anten kart kenarından taşar, altından kablo geçirmeyin. Kalın çizgiler lehim tarafındaki kalaylı hatlar.</p>
+  <div class="diagram"><svg class="w7" viewBox="0 0 800 440" role="img" aria-label="Ana kart yerleşimi">
+    <rect x="20" y="20" width="760" height="400" rx="8" class="plate"/>
+    <!-- delik deseni: canvas yerine seyrek nokta deseni -->
+    <defs><pattern id="holes" width="19" height="19" patternUnits="userSpaceOnUse"><circle cx="9.5" cy="9.5" r="1.6" fill="var(--plate-edge)"/></pattern></defs>
+    <rect x="30" y="30" width="740" height="380" fill="url(#holes)"/>
+    <!-- raylar -->
+    <path d="M40 46 H760" stroke="var(--v33)" stroke-width="4" opacity=".8"/><text x="44" y="40" font-size="10" fill="var(--v33)">3V3 rayı</text>
+    <path d="M40 396 H760" stroke="var(--gnd)" stroke-width="4" opacity=".8"/><text x="44" y="414" font-size="10" class="sub">GND rayı</text>
+    <!-- ESP32 -->
+    <rect x="250" y="120" width="300" height="190" rx="6" fill="var(--panel)" stroke="var(--ink)" stroke-width="1.6"/>
+    <text x="330" y="210" font-size="15" font-weight="600">U1 · ESP32</text><text class="sub" x="300" y="230" font-size="10">2 × 19 pin dişi header, 25,4 mm aralık</text>
+    <rect x="550" y="170" width="40" height="90" fill="none" stroke="var(--muted)" stroke-dasharray="3 3"/><text class="sub" x="555" y="290" font-size="9">anten →</text>
+    <!-- headerlar -->
+    <g font-size="11">
+      <rect x="40" y="70" width="120" height="28" rx="3" fill="var(--panel)" stroke="var(--fg)"/><text x="48" y="89">J2 IMU (5)</text>
+      <rect x="40" y="110" width="120" height="28" rx="3" fill="var(--panel)" stroke="var(--fg)"/><text x="48" y="129">J3 BTS sol (5)</text>
+      <rect x="40" y="150" width="120" height="28" rx="3" fill="var(--panel)" stroke="var(--fg)"/><text x="48" y="169">J4 enk. sol (4)</text>
+      <rect x="40" y="190" width="120" height="28" rx="3" fill="var(--panel)" stroke="var(--fg)"/><text x="48" y="209">J5 enk. sağ (4)</text>
+      <rect x="40" y="230" width="120" height="28" rx="3" fill="var(--panel)" stroke="var(--fg)"/><text x="48" y="249">J6 IR sol (3)</text>
+      <rect x="40" y="270" width="120" height="28" rx="3" fill="var(--panel)" stroke="var(--fg)"/><text x="48" y="289">J7 IR sağ (3)</text>
+      <rect x="40" y="310" width="120" height="28" rx="3" fill="var(--panel)" stroke="var(--fg)"/><text x="48" y="329">J8 BTS sağ (5)</text>
+      <rect x="620" y="70" width="140" height="34" rx="3" fill="var(--panel)" stroke="var(--v5)"/><text x="628" y="92">J1 5 V klemens</text>
+      <rect x="620" y="116" width="60" height="26" rx="3" fill="var(--panel)" stroke="var(--v5)"/><text x="628" y="134">JP1</text>
+      <circle cx="720" cy="130" r="13" fill="var(--panel)" stroke="var(--fg)"/><text x="700" y="160" font-size="10">C1 100µ</text>
+      <rect x="620" y="300" width="140" height="34" rx="3" fill="var(--panel)" stroke="var(--fg)"/><text x="628" y="322">J9 ölçüm klemens</text>
+      <rect x="620" y="346" width="140" height="34" rx="3" fill="var(--panel)" stroke="var(--fg)"/><text x="628" y="368">J10 motor klemens</text>
+    </g>
+    <!-- dirençler -->
+    <g font-size="10">
+      <rect x="600" y="190" width="44" height="12" rx="6" fill="var(--panel)" stroke="var(--fg)"/><text x="650" y="200">R1 100k</text>
+      <rect x="600" y="210" width="44" height="12" rx="6" fill="var(--panel)" stroke="var(--fg)"/><text x="650" y="220">R2 27k</text>
+      <rect x="600" y="230" width="44" height="12" rx="6" fill="var(--panel)" stroke="var(--fg)"/><text x="650" y="240">R3 100k</text>
+      <rect x="600" y="250" width="44" height="12" rx="6" fill="var(--panel)" stroke="var(--fg)"/><text x="650" y="260">R4 27k</text>
+      <rect x="600" y="270" width="44" height="12" rx="6" fill="var(--panel)" stroke="var(--fg)"/><text x="650" y="280">R6 100k / R7 33k</text>
+      <rect x="250" y="330" width="44" height="12" rx="6" fill="var(--panel)" stroke="var(--fg)"/><text x="300" y="340">R5 10k (GPIO4→GND)</text>
+      <rect x="470" y="330" width="14" height="14" fill="var(--panel)" stroke="var(--fg)"/><text x="490" y="342">C2 C3 C4 100n</text>
+    </g>
+    <path d="M160 84 H250" stroke="var(--sig)" stroke-width="1.4" stroke-dasharray="3 2"/>
+  </svg></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Header</th><th>Pin sırası (beyaz kare = 1. pin)</th><th>Gittiği yer</th></tr></thead>
+    <tbody>
+      <tr><td class="num">J1</td><td>+5V, GND</td><td>LM2596 OUT+ / OUT− (22 AWG)</td></tr>
+      <tr><td class="num">JP1</td><td>2 pin + jumper</td><td>5 V'u ESP32'ye verir. <b>Kod yüklerken çıkarın</b> (USB ve LM2596 çakışmasın).</td></tr>
+      <tr><td class="num">J2</td><td>3V3, GND, G22, G21, G19</td><td>MPU6050: VCC, GND, SCL, SDA, INT</td></tr>
+      <tr><td class="num">J3</td><td>G27, G14, G4, 3V3, GND</td><td>BTS sol: RPWM, LPWM, R_EN+L_EN (köprülü), VCC, GND. IS uçları boş.</td></tr>
+      <tr><td class="num">J8</td><td>G16, G17, G4, 3V3, GND</td><td>BTS sağ: aynı sıra</td></tr>
+      <tr><td class="num">J4</td><td>3V3, GND, G32, G33</td><td>Sol enkoder: VCC, GND, C1 (A), C2 (B)</td></tr>
+      <tr><td class="num">J5</td><td>3V3, GND, G25, G26</td><td>Sağ enkoder</td></tr>
+      <tr><td class="num">J6 / J7</td><td>3V3, GND, G36 / G39</td><td>Sol / sağ IR göz: VCC, GND, OUT</td></tr>
+      <tr><td class="num">J9</td><td>1: pil, 2: şarj pimi</td><td>1 → WAGO-12V (W19), 2 → üst şarj pimi (W23)</td></tr>
+      <tr><td class="num">J10</td><td>1: motor hattı</td><td>Acil stop NC2 / BTS sol B+ (W43). GND J1'den.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ================= KABLO ================= -->
+<section id="kablo">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Kablo listesi</h2></div>
+  <p>Takım sitesinin numaraları korunur. W20–W23 şarj teması değiştiği için yeniden yazıldı, W41–W44 yeni. Her kablonun iki ucuna numarasını kâğıt bantla yazın. Güç hattında jumper kullanmayın; her lehime makaron.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>No</th><th>Nereden</th><th>Nereye</th><th>Taşıdığı</th><th>Kablo</th><th>Bağlantı</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="6">Pil ve BMS (bağlama sırası için bölüm 07)</td></tr>
+      <tr><td class="num">W1</td><td>Hücre 1 −</td><td>BMS B−</td><td>Pil −</td><td>18 AWG siyah</td><td>Lehim</td></tr>
+      <tr><td class="num">W2</td><td>Hücre 1+/2− köprüsü</td><td>BMS B1</td><td>3,7 V denge</td><td>22–26 AWG</td><td>Lehim (yuvanın köprüsüne)</td></tr>
+      <tr><td class="num">W3</td><td>Hücre 2+/3− köprüsü</td><td>BMS B2</td><td>7,4 V denge</td><td>22–26 AWG</td><td>Lehim</td></tr>
+      <tr><td class="num">W4</td><td>Hücre 3 +</td><td>BMS B+</td><td>12,6 V</td><td>18 AWG kırmızı</td><td>Lehim</td></tr>
+      <tr><td class="num">W5</td><td>BMS B+ (= P+)</td><td>XT60 dişi +</td><td>Paket çıkışı</td><td>18 AWG kırmızı</td><td>Lehim + makaron</td></tr>
+      <tr><td class="num">W6</td><td>BMS P−</td><td>XT60 dişi −</td><td>Paket çıkışı</td><td>18 AWG siyah</td><td>Lehim + makaron</td></tr>
+      <tr class="grp"><td colspan="6">12 V dağıtım</td></tr>
+      <tr><td class="num">W7</td><td>XT60 erkek +</td><td>Sigorta girişi</td><td>12,6 V</td><td>18 AWG kırmızı</td><td>Lehim</td></tr>
+      <tr><td class="num">W8</td><td>Sigorta çıkışı</td><td>WAGO-12V</td><td>Sigortalı 12 V</td><td>18 AWG kırmızı</td><td>Klemens</td></tr>
+      <tr><td class="num">W9</td><td>WAGO-12V</td><td>Acil stop NC1</td><td>12 V</td><td>18 AWG kırmızı</td><td>Vidalı</td></tr>
+      <tr><td class="num">W10</td><td>Acil stop NC2</td><td>BTS sol B+</td><td>Motor beslemesi</td><td>18 AWG kırmızı</td><td>Vidalı</td></tr>
+      <tr><td class="num">W11</td><td>BTS sol B+</td><td>BTS sağ B+</td><td>Motor beslemesi</td><td>18 AWG kırmızı</td><td>Zincirleme</td></tr>
+      <tr><td class="num">W12</td><td>WAGO-12V</td><td>LM2596 IN+</td><td>12 V, stoptan önce</td><td>18 AWG kırmızı</td><td>Lehim</td></tr>
+      <tr><td class="num">W13</td><td>XT60 erkek −</td><td>WAGO-GND</td><td>GND</td><td>18 AWG siyah</td><td>Klemens</td></tr>
+      <tr><td class="num">W14</td><td>WAGO-GND</td><td>BTS sol B− ve sağ B−</td><td>GND</td><td>18 AWG siyah ×2</td><td>Vidalı</td></tr>
+      <tr><td class="num">W15</td><td>WAGO-GND</td><td>LM2596 IN−</td><td>GND</td><td>18 AWG siyah</td><td>Lehim</td></tr>
+      <tr><td class="num">W16</td><td>BTS sol M+ / M−</td><td>Sol motor M1 / M2</td><td>Motor</td><td>Motorun kablosu, bükülü</td><td>Vidalı</td></tr>
+      <tr><td class="num">W17</td><td>BTS sağ M+ / M−</td><td>Sağ motor M1 / M2</td><td>Motor</td><td>Motorun kablosu, bükülü</td><td>Vidalı</td></tr>
+      <tr><td class="num">W18</td><td>LM2596 OUT+ / OUT−</td><td>Ana kart J1</td><td>5 V</td><td>22 AWG</td><td>Klemens</td></tr>
+      <tr><td class="num">W19</td><td>WAGO-12V</td><td>J9-1</td><td>Pil ölçümü</td><td>26 AWG</td><td>Klemens</td></tr>
+      <tr class="grp"><td colspan="6">Şarj teması (değişti)</td></tr>
+      <tr><td class="num">W20</td><td>Üst pogo pim (+)</td><td>SR5100 anot</td><td>Şarj +</td><td>18 AWG kırmızı</td><td>Lehim</td></tr>
+      <tr><td class="num">W21</td><td>SR5100 katot (çizgili)</td><td>XT60 erkek + hattı (W7 başı)</td><td>Şarj +, sigortadan önce</td><td>18 AWG kırmızı</td><td>Lehim + makaron</td></tr>
+      <tr><td class="num">W22</td><td>Alt pogo pim (−)</td><td>WAGO-GND</td><td>Şarj −</td><td>18 AWG siyah</td><td>Klemens</td></tr>
+      <tr><td class="num">W23</td><td>Üst pogo pim (+)</td><td>J9-2</td><td>Şarj algılama</td><td>26 AWG</td><td>Klemens</td></tr>
+      <tr class="grp"><td colspan="6">Sinyal (dişi-dişi jumper)</td></tr>
+      <tr><td class="num">W24</td><td>J2</td><td>MPU6050</td><td>I2C + INT</td><td>5 jumper</td><td>Header, AD0 → GND</td></tr>
+      <tr><td class="num">W25</td><td>J3</td><td>BTS sol</td><td>PWM + EN</td><td>5 jumper</td><td>Header</td></tr>
+      <tr><td class="num">W26</td><td>J8</td><td>BTS sağ</td><td>PWM + EN</td><td>5 jumper</td><td>Header</td></tr>
+      <tr><td class="num">W27</td><td>J4</td><td>Sol enkoder</td><td>Enkoder</td><td>4 jumper</td><td>Motor soketi</td></tr>
+      <tr><td class="num">W28</td><td>J5</td><td>Sağ enkoder</td><td>Enkoder</td><td>4 jumper</td><td>Motor soketi</td></tr>
+      <tr><td class="num">W29</td><td>J6</td><td>Sol IR göz</td><td>IR</td><td>3 jumper</td><td>Header</td></tr>
+      <tr><td class="num">W30</td><td>J7</td><td>Sağ IR göz</td><td>IR</td><td>3 jumper</td><td>Header</td></tr>
+      <tr class="grp"><td colspan="6">Yeni</td></tr>
+      <tr><td class="num">W41</td><td>BTS sol B+</td><td>C5 + (1000 µF)</td><td>Motor hattı</td><td>Kısa, 18 AWG</td><td>Vidalı, kutup dikkat</td></tr>
+      <tr><td class="num">W42</td><td>C5 −</td><td>BTS sol B−</td><td>GND</td><td>Kısa, 18 AWG</td><td>Vidalı</td></tr>
+      <tr><td class="num">W43</td><td>BTS sol B+</td><td>J10-1</td><td>Motor hattı algılama</td><td>26 AWG</td><td>Klemens</td></tr>
+      <tr><td class="num">W44</td><td>Ana kart GND rayı</td><td>WAGO-GND</td><td>Sinyal GND referansı</td><td>22 AWG</td><td>J1 üzerinden</td></tr>
+    </tbody>
+  </table></div>
+  <p class="warnnote">Motor kablolarını iki teli birbirine sararak götürün; enkoder ve I2C kablolarından en az 2 cm uzak tutun. Jumper uçlarını ilk denemeden sonra ESP32 tarafında sıcak silikonla sabitleyin; denge titreşimi gevşetir.</p>
+</section>
+
+<!-- ================= BMS ================= -->
+<section id="bms">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Pil ve BMS bağlama</h2></div>
+  <div class="grid2">
+    <div class="box"><h3>Sıra</h3><ol>
+      <li>Hücreleri tek tek ölçün: 3,0–4,2 V, aralarında ≤ 0,05 V fark.</li>
+      <li>B− (W1), sonra B1 (W2), B2 (W3), en son B+ (W4). Sökerken tersi.</li>
+      <li>B1 ve B2'yi yuvanın hücre arası metal köprülerine lehimleyin, hücreye değil.</li>
+      <li>B−→B1, B1→B2, B2→B+ her biri 3,0–4,2 V olmalı.</li>
+      <li>P− ile B+ arası 0 V görünürse BMS uykudadır; bir kez şarj gerilimi verince uyanır.</li>
+    </ol></div>
+    <div class="box"><h3>Kurallar</h3><ul>
+      <li>Hiçbir yükü doğrudan B−'ye bağlamayın: BMS devre dışı kalır.</li>
+      <li>Yük ve şarj aynı uçtan: B+ (=P+) ile P−.</li>
+      <li>Bu BMS dengeleme yapmaz; ayda bir hücreleri ölçün.</li>
+      <li>Pil yuvası kat 2'de ortada, cırt bantla değil M3 vidayla sabit.</li>
+      <li>Robotu kullanmadığınızda XT60'ı çıkarın: ESP32 ve LM2596 sürekli ~0,3 A çeker.</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ================= ŞASİ ================= -->
+<section id="sasi">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Şasi ölçüleri</h2></div>
+  <p>Üç kat 3 mm pleksi, 150 × 110 mm, köşelerde 30+50 mm distans (katlar arası 80 mm). Ölçüler milimetre; z, teker ekseninden yukarı. Motorlar alt katın altına L braketle asılır, mil ekseni teker eksenidir.</p>
+  <div class="grid2">
+    <div class="diagram"><svg class="w6" viewBox="0 0 520 470" role="img" aria-label="Önden görünüş ölçülü">
+      <text x="14" y="20" font-size="12" font-weight="600">Önden görünüş</text>
+      <!-- zemin -->
+      <path d="M20 430 H500" stroke="var(--muted)" stroke-width="1.2"/>
+      <!-- tekerler: 65 mm çap -> ölçek 1.6 px/mm. eksen y=430-32.5*1.6=378 -->
+      <rect x="62" y="326" width="42" height="104" rx="8" fill="var(--panel)" stroke="var(--fg)"/>
+      <rect x="374" y="326" width="42" height="104" rx="8" fill="var(--panel)" stroke="var(--fg)"/>
+      <!-- motorlar -->
+      <rect x="110" y="364" width="118" height="30" rx="4" fill="var(--panel)" stroke="var(--mot)"/><text x="122" y="383" font-size="10">sol motor</text>
+      <rect x="250" y="364" width="118" height="30" rx="4" fill="var(--panel)" stroke="var(--mot)"/><text x="262" y="383" font-size="10">sağ motor</text>
+      <!-- plakalar: z=21..24 -> y=378-24*1.6=340 ; kat2 z=104 -> y=211 ; kat3 z=184 -> y=84 -->
+      <rect class="plate" x="119" y="339" width="240" height="5"/>
+      <rect class="plate" x="119" y="211" width="240" height="5"/>
+      <rect class="plate" x="119" y="83" width="240" height="5"/>
+      <g stroke="var(--muted)" stroke-width="3"><path d="M125 216 V339"/><path d="M353 216 V339"/><path d="M125 88 V211"/><path d="M353 88 V211"/></g>
+      <!-- içerik -->
+      <rect x="140" y="304" width="60" height="35" fill="var(--panel)" stroke="var(--fg)"/><text x="146" y="325" font-size="9">BTS sol</text>
+      <rect x="280" y="304" width="60" height="35" fill="var(--panel)" stroke="var(--fg)"/><text x="286" y="325" font-size="9">BTS sağ</text>
+      <rect x="228" y="330" width="22" height="9" fill="var(--panel)" stroke="var(--ink)"/><text x="212" y="326" font-size="9" fill="var(--ink)">IMU</text>
+      <rect x="160" y="176" width="160" height="35" rx="4" fill="var(--panel)" stroke="var(--v12)"/><text x="186" y="198" font-size="10">3 × 18650 + BMS</text>
+      <rect x="215" y="50" width="48" height="33" rx="4" fill="var(--panel)" stroke="var(--bad)"/><text x="219" y="45" font-size="9">acil stop</text>
+      <rect x="140" y="60" width="62" height="23" fill="var(--panel)" stroke="var(--fg)"/><text x="144" y="75" font-size="9">kutu</text>
+      <!-- ölçüler -->
+      <g class="dim"><path d="M83 448 H395"/><path d="M83 440 V456"/><path d="M395 440 V456"/></g>
+      <text x="200" y="465" font-size="11">iz 190</text>
+      <g class="dim"><path d="M119 300 H359" stroke-dasharray="2 2"/></g>
+      <text x="196" y="296" font-size="10" class="sub">plaka 150</text>
+      <g class="dim"><path d="M470 378 V430"/><path d="M462 378 H478"/><path d="M462 430 H478"/></g><text x="430" y="408" font-size="10">32,5</text>
+      <g class="dim"><path d="M470 214 V378"/><path d="M462 214 H478"/></g><text x="438" y="300" font-size="10">104</text>
+      <g class="dim"><path d="M490 86 V378"/><path d="M482 86 H498"/></g><text x="456" y="150" font-size="10">184</text>
+      <circle cx="239" cy="263" r="5" fill="var(--bad)"/><text x="250" y="267" font-size="10" fill="var(--bad)">KM z≈72 (kutulu 79)</text>
+      <path d="M40 378 H470" stroke="var(--ink)" stroke-dasharray="6 4" stroke-width=".8"/><text x="24" y="374" font-size="9" fill="var(--ink)">eksen</text>
+    </svg></div>
+    <div class="diagram"><svg class="w6" viewBox="0 0 520 470" role="img" aria-label="Yandan görünüş ölçülü">
+      <text x="14" y="20" font-size="12" font-weight="600">Yandan görünüş (ön sağda)</text>
+      <path d="M20 430 H500" stroke="var(--muted)" stroke-width="1.2"/>
+      <circle cx="240" cy="378" r="52" fill="var(--panel)" stroke="var(--fg)"/><circle cx="240" cy="378" r="4" fill="var(--fg)"/>
+      <rect class="plate" x="152" y="339" width="176" height="5"/>
+      <rect class="plate" x="152" y="211" width="176" height="5"/>
+      <rect class="plate" x="152" y="83" width="176" height="5"/>
+      <g stroke="var(--muted)" stroke-width="3"><path d="M158 216 V339"/><path d="M322 216 V339"/><path d="M158 88 V211"/><path d="M322 88 V211"/></g>
+      <!-- V-yuva ve pimler -->
+      <path d="M328 236 L360 252 L360 330 L328 314 Z" fill="var(--panel)" stroke="var(--ink)" stroke-width="1.4"/>
+      <rect x="352" y="268" width="14" height="6" class="pin"/><text x="372" y="274" font-size="10">+ pim, zemin 102</text>
+      <rect x="352" y="308" width="14" height="6" class="pin"/><text x="372" y="314" font-size="10">− pim, zemin 77</text>
+      <!-- IR gözleri -->
+      <rect x="322" y="190" width="20" height="16" fill="var(--panel)" stroke="var(--sig)"/><text x="350" y="200" font-size="10">IR gözleri, zemin 147</text>
+      <!-- kutu -->
+      <rect x="196" y="56" width="72" height="27" fill="var(--panel)" stroke="var(--fg)"/><text x="206" y="74" font-size="9">ilaç kutusu</text>
+      <path d="M190 56 V83 M274 56 V83" stroke="var(--plate-edge)" stroke-width="3"/>
+      <rect x="160" y="50" width="30" height="33" rx="4" fill="var(--panel)" stroke="var(--bad)"/>
+      <g class="dim"><path d="M152 448 H328"/><path d="M152 440 V456"/><path d="M328 440 V456"/></g><text x="214" y="465" font-size="11">110</text>
+      <text x="40" y="120" font-size="10" class="sub">Kat 3: acil stop (arka),</text><text x="40" y="134" font-size="10" class="sub">kutu yuvası (ön-orta)</text>
+      <text x="40" y="190" font-size="10" class="sub">Kat 2: pil, BMS, ana kart,</text><text x="40" y="204" font-size="10" class="sub">XT60 arkada</text>
+      <text x="40" y="300" font-size="10" class="sub">Kat 1 üstü: BTS ×2, IMU,</text><text x="40" y="314" font-size="10" class="sub">LM2596, sigorta, WAGO ×2,</text><text x="40" y="328" font-size="10" class="sub">C5, SR5100 (önde)</text>
+    </svg></div>
+  </div>
+  <div class="grid2">
+    <div class="box"><h3>Kesim listesi (3 mm pleksi)</h3><ul>
+      <li>Kat 1, 2, 3: 150 × 110 mm, köşelerden 6 mm içeride Ø3,2 delik</li>
+      <li>Kat 1: motor braketleri için 4 × Ø3,2; kablo için ortada 20 × 40 mm pencere</li>
+      <li>V-yuva: 2 adet 40 × 80 mm kanat, 90° açıyla; arkada pimler için 20 × 80 mm dikey şerit, Ø5 delik 2 adet (25 mm aralık)</li>
+      <li>Kutu yuvası: kutunun 2 mm büyüğü cep, 4 duvar 25 mm. Kutu vidalanmaz, cebe oturur.</li>
+      <li>IR göz tutucu: iki gözü ±15° dışa bakacak açılı küçük braket, her göze 15 mm siyah büzüşmeli makaron tüp</li>
+    </ul></div>
+    <div class="box"><h3>Kütle bütçesi</h3><ul>
+      <li>Motorlar + braketler 380 g (z 0)</li>
+      <li>Kat 1 ve üstü 255 g (z 24–45)</li>
+      <li>Kat 2 ve üstü 330 g (z 90–120)</li>
+      <li>Kat 3 ve üstü 160 g (z 184–205)</li>
+      <li>Distans, vida, kablo 120 g</li>
+      <li><b>Toplam 1,245 kg, KM 72 mm</b>; kutuyla 1,305 kg, 79 mm</li>
+    </ul><p class="sub" style="font-size:.88rem;color:var(--muted)">Sitedeki öneri 80–120 mm. Simülasyon 54–115 mm arasında geçti. Daha yavaş düşen (kolay dengelenen) robot isterseniz pili kat 3'e alın.</p></div>
+  </div>
+</section>
+
+<!-- ================= ŞARJ TEMASI ================= -->
+<section id="tema">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Şarj teması: V-yuva ve direk</h2></div>
+  <p>Robot önündeki V-yuvayla istasyonun yuvarlak direğine yaslanır. Direk yuvarlak olduğu için hangi açıdan gelirse gelsin temas aynıdır; V-yuva yanal ±3 cm hatayı kendisi ortalar. Pimler robotta, halkalar direkte. Pimler SR5100 diyotun arkasında olduğu için robotta açıkta pil gerilimi yoktur.</p>
+  <div class="diagram"><svg class="w7" viewBox="0 0 760 300" role="img" aria-label="V-yuva ve direk üstten ve yandan">
+    <text x="14" y="20" font-size="12" font-weight="600">Üstten</text>
+    <rect x="40" y="60" width="200" height="160" class="plate"/><text x="80" y="145" font-size="11">robot (kat 1)</text>
+    <path d="M240 90 L290 140 L240 190" fill="none" stroke="var(--ink)" stroke-width="3"/>
+    <text x="246" y="80" font-size="10" fill="var(--ink)">V-yuva 90°</text>
+    <circle cx="300" cy="140" r="18" fill="var(--panel)" stroke="var(--fg)" stroke-width="2"/><text x="324" y="144" font-size="10">direk Ø40</text>
+    <rect x="276" y="136" width="8" height="8" class="pin"/>
+    <path d="M60 250 H230" stroke="var(--muted)" marker-end="url(#a1)"/><text x="90" y="268" font-size="10" class="sub">ileri: robot direğe doğru</text>
+    <text x="420" y="20" font-size="12" font-weight="600">Yandan (zeminden mm)</text>
+    <path d="M410 280 H740" stroke="var(--muted)"/>
+    <rect x="610" y="60" width="40" height="220" fill="var(--panel)" stroke="var(--fg)"/>
+    <rect x="606" y="150" width="48" height="26" fill="var(--v12)" opacity=".75"/><text x="662" y="166" font-size="10">+ halka 94–110</text>
+    <rect x="606" y="190" width="48" height="26" fill="var(--gnd)" opacity=".75"/><text x="662" y="206" font-size="10">− halka 69–85</text>
+    <rect x="612" y="74" width="36" height="14" fill="var(--panel)" stroke="var(--sig)"/><text x="662" y="85" font-size="10">IR işaret 147</text>
+    <path d="M560 120 L600 140 L600 230 L560 210 Z" fill="var(--panel)" stroke="var(--ink)" stroke-width="1.4"/>
+    <rect x="596" y="158" width="14" height="6" class="pin"/><text x="440" y="164" font-size="10">+ pim 102 →</text>
+    <rect x="596" y="198" width="14" height="6" class="pin"/><text x="440" y="204" font-size="10">− pim 77 →</text>
+  </svg></div>
+  <div class="grid2">
+    <div class="box"><h3>Robot tarafı</h3><ul>
+      <li>Pogo pimler V-yuvanın arka şeridine geçirilir, arkasından lehimlenip sıcak silikonla sabitlenir; uçlar şeritten 3 mm dışarıda.</li>
+      <li>Üst pim → SR5100 → XT60 + hattı (W20, W21) ve J9-2 (W23). Alt pim → WAGO-GND (W22).</li>
+      <li>Robot dengede ±2° sallanır; pim yüksekliği ±0,5 mm değişir, halka 16 mm.</li>
+    </ul></div>
+    <div class="box"><h3>Direk tarafı (Elektrik ekibine)</h3><ul>
+      <li>Ø40 mm PVC boru, 200 mm, ağır taban (robot 6° yaslanır).</li>
+      <li>Halkalar bakır banttan, aralarında 9 mm boşluk. Şarj kartı OUT+ → 1,1 A PTC → üst halka, OUT− → alt halka.</li>
+      <li>IR LED'ler 147 mm'de, ±20° açılı, robot gözleriyle aynı yükseklikte.</li>
+      <li>Robot bölgesine bakan yarım çevrede halkalar; arka yarım bant olmadan bırakılabilir.</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ================= MONTAJ ================= -->
+<section id="montaj">
+  <div class="sec-head"><span class="sec-num">10</span><h2>Montaj ve tezgâh testleri</h2></div>
+  <ol>
+    <li><b>Pil:</b> bölüm 07'deki sıra. B+ ile P− arası paket gerilimi.</li>
+    <li><b>Regülatör yüksüz:</b> LM2596'yı sigortadan besleyin, çıkışı 5,0–5,1 V'a ayarlayın. ESP32 takılı değil.</li>
+    <li><b>Ana kart:</b> ESP32 takılı değilken J1'e 5 V verin, soketteki 5V ve 3V3 noktalarını ölçün (3V3 boş: ESP32 regülatörü takılınca gelir). GPIO4 ile GND arası 10k.</li>
+    <li><b>ESP32 tak, JP1 çıkık, USB ile yükle</b> (bölüm 11). Seri monitörde MPU6050 ve <code>Robot MAC</code> görünmeli.</li>
+    <li><b>Ölçümler:</b> <code>stat</code> ve telemetride <code>v</code> değerini multimetreyle karşılaştırın; fark %3'ten büyükse <code>vscale=</code>.</li>
+    <li><b>Motor hattı:</b> EN kablosu takılmadan acil stopa basıp bırakın; J10 gerilimi 0 ↔ ~3,1 V olmalı.</li>
+    <li><b>Motorlar havada:</b> robotu tekerler boşta kalacak şekilde destekleyin, EN'i takın, <code>mtest</code>: önce sol, sonra sağ teker 1 s ileri.</li>
+    <li><b>Kilit akımı:</b> tekeri elle 1 s tutun, sürücü girişinde akım 2,5 A'i geçmiyorsa 5 A sigorta yeter.</li>
+    <li><b>Enkoder:</b> tekeri elle 10 tur ileri; <code>x</code> ≈ 2,04 m.</li>
+    <li><b>IMU:</b> robotu öne eğin <code>tilt</code> artar; sola çevirin <code>yaw</code> artar.</li>
+  </ol>
+</section>
+
+<!-- ================= FIRMWARE ================= -->
+<section id="firmware">
+  <div class="sec-head"><span class="sec-num">11</span><h2>Firmware</h2></div>
+  <div class="grid2">
+    <div class="box"><h3>Yükleme</h3><ol>
+      <li>VS Code + PlatformIO eklentisi.</li>
+      <li><code>firmware/robot</code> klasörünü açın. <code>platformio.ini</code> ESP32 platform 6.9.0 (Arduino 2.0.17) ve NimBLE 1.4.3'ü kendisi indirir.</li>
+      <li>JP1'i çıkarın, USB'yi takın, Upload.</li>
+      <li>Seri monitör 115200. Açılışta robot kıpırdamasın: jiroskop 2 s kalibre olur.</li>
+    </ol><p>Derleme: flash %80, RAM %17, uyarı yok.</p></div>
+    <div class="box"><h3>Çalışma</h3><ul>
+      <li>MPU6050 her 5 ms'de INT verir → kesme → çekirdek 1'deki görev uyanır.</li>
+      <li>IMU, enkoder (PCNT), IR sayaçları, ADC (50 Hz), eldiven paketi okunur.</li>
+      <li><code>RobotLogic::step()</code> çıkışı: EN ve iki PWM oranı.</li>
+      <li>Her 200 adımda bir telemetri JSON'u üretilir; çekirdek 0 BLE ile yollar.</li>
+      <li>IMU 3 kez üst üste okunamazsa motorlar kapanır.</li>
+    </ul></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Mod</th><th>Ne yapar</th><th>Geçiş</th></tr></thead>
+    <tbody>
+      <tr><td><b>BEKLE</b></td><td>Motorlar kapalı</td><td>Elle ±3° içinde 0,5 s tutulunca DENGE. Şarj gerilimi varsa ŞARJ.</td></tr>
+      <tr><td><b>DENGE</b></td><td>LQR denge; eldiven adımları</td><td>Görev uygunsa ve işaret görülürse YANAŞMA. |θ| > 40° → DÜŞTÜ. Acil stop → BEKLE.</td></tr>
+      <tr><td><b>YANAŞMA</b></td><td>ARA → HİZALAN → YAKLAŞ → YERLEŞ</td><td>Pimde 9 V'tan fazla 0,1 s → 4° öne eğilip motorları keser → ŞARJ. 60 s'de bitmezse DENGE.</td></tr>
+      <tr><td><b>ŞARJ</b></td><td>Motorlar kapalı, direğe yaslı</td><td>Eldivenle "geri" → DENGE + 0,5 m geri. Şarj 2 s kesilirse BEKLE.</td></tr>
+      <tr><td><b>DÜŞTÜ</b></td><td>Motorlar kapalı</td><td>|θ| < 20° olunca BEKLE.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Seri / BLE komutu</th><th>Etki</th></tr></thead>
+    <tbody>
+      <tr><td class="num">stat</td><td>Döngü süresi, IMU hata, eldiven paket/kayıp sayısı</td></tr>
+      <tr><td class="num">mtest</td><td>BEKLE'deyken sol, sonra sağ teker 1 s %15 ileri</td></tr>
+      <tr><td class="num">task=0..3</td><td>Statik / yönlendirme / şarj / bütünleşik (NVS'e kaydedilir)</td></tr>
+      <tr><td class="num">glove=step | cont</td><td>Adım modu (0,5 m / 90°) ya da sürekli sürüş</td></tr>
+      <tr><td class="num">cal</td><td>Şu anki eğimi denge noktası kabul et (NVS)</td></tr>
+      <tr><td class="num">vscale=1.000</td><td>Pil ölçüm katsayısı</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ================= AYAR ================= -->
+<section id="ayar">
+  <div class="sec-head"><span class="sec-num">12</span><h2>Ölçülecek ve ayarlanacaklar</h2></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Parametre</th><th>Dosya</th><th>Şu an</th><th>Nasıl bulunur</th></tr></thead>
+    <tbody>
+      <tr><td>Gövde kütlesi, KM, atalet</td><td class="num">tools/mass_budget.py</td><td class="num">1,245 kg, 72 mm</td><td>Parçaları tartın; KM için robotu ipe iki noktadan asın</td></tr>
+      <tr><td>Enkoder sayım/tur</td><td class="num">cdtp_config.h</td><td class="num">836</td><td>Tekeri 10 tur çevirip sayımı okuyun</td></tr>
+      <tr><td>İz genişliği</td><td class="num">cdtp_config.h + lqr_design.py</td><td class="num">0,190 m</td><td>Teker temas noktaları arası; yerinde 10 tur dönüp enkoder farkından</td></tr>
+      <tr><td>Motor yönleri, enkoder yönleri</td><td class="num">cdtp_config.h</td><td class="num">sağ ters</td><td><code>mtest</code> ve elle çevirme</td></tr>
+      <tr><td>IMU eksenleri</td><td class="num">imu_filter.h AxisMap</td><td class="num">X ileri, Z yukarı</td><td>MPU6050'yi X ileri bakacak yapıştırın, <code>tilt</code> ve <code>yaw</code> işaretini kontrol edin</td></tr>
+      <tr><td>Olu bölge gerilimi</td><td class="num">cdtp_config.h</td><td class="num">0,45 V</td><td>Teker havada; PWM'i yavaş artırıp dönmeye başladığı gerilim</td></tr>
+      <tr><td>Denge noktası ofseti</td><td class="num">NVS (<code>cal</code>)</td><td class="num">0</td><td>Robotu en rahat durduğu açıda tutup <code>cal</code></td></tr>
+      <tr><td>Motor Ke, R</td><td class="num">lqr_design.py</td><td class="num">0,216, 4,5 Ω</td><td>Ke = 12 V / boşta hız (rad/s); R = 12 V / kilit akımı</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Bir değer değişince: <code>python tools/lqr_design.py</code> → <code>bash tools/run_sim.sh</code> (hepsi geçmeli) → firmware'i yükleyin. Final öncesi <code>main.cpp</code>'de <code>FREEZE = true</code>.</p>
+</section>
+
+<!-- ================= TESTLER ================= -->
+<section id="test">
+  <div class="sec-head"><span class="sec-num">13</span><h2>Simülasyon testleri (bu şasiyle)</h2></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Test</th><th>Ölçülen</th><th>Sonuç</th></tr></thead>
+    <tbody>
+      <tr><td>Enerjisiz ±10°'den bırakma</td><td class="num">0,30 s'de 40°'yi geçer</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C1.1 30 s statik denge, kutulu</td><td class="num">eğim ≤ 0,52°, kayma 1,4 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C1.2 / C1.3 1 m ileri / geri + 3 s dur</td><td class="num">1,002 m / 1,002 m; durmada ≤ 12 mm</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C1.4 ±10°'den toparlanma</td><td class="num">1,42 s / 1,44 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>Acil stop</td><td class="num">BEKLE, motor çıkışı kapalı</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C2 ileri / geri / sola / sağa / dur</td><td class="num">0,494 m · 0,491 m · 90,0° · 90,0°; tepki ≤ 0,8 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>Eldiven sustu</td><td class="num">adım 0,30 m'de kesildi, durdu</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C3 yanaşma, 63 başlangıç</td><td class="num">63/63, en uzun 14,8 s; temas → motor kesme 0,5 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>C5 bütünleşik × 4</td><td class="num">4/4, hedefte 5,6 s bekledi</td><td><span class="pill p-ok">geçti</span></td></tr>
+      <tr><td>40 rastgele robot (kütle ±25 %, KM −25/+60 %, motor ±20 %, pil 10,4–12,6 V)</td><td class="num">statik 40/40, toparlanma 40/40 (≤ 1,7 s), 1 m 40/40</td><td><span class="pill p-ok">geçti</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <figure><img src="img/c1_ileri.png" alt="1 m ileri: yol, eğim ve PWM"><figcaption>C1.2: iki "ileri" adımı ve 3 s durma</figcaption></figure>
+    <figure><img src="img/c1_toparlanma.png" alt="±10 derece toparlanma"><figcaption>C1.4: ±10°'den toparlanma</figcaption></figure>
+    <figure><img src="img/c2_eldiven.png" alt="Eldiven komut dizisi"><figcaption>C2: beş komut</figcaption></figure>
+    <figure><img src="img/yanasma_yolu.png" alt="Yanaşma yolu üstten"><figcaption>C3 ve C5 yolları, üstten</figcaption></figure>
+  </div>
+  <p class="warnnote">Simülasyon gerçek robotun yerini tutmaz. Gerçek robotta ilk denge denemesini kutusuz, iki el yakında yapın.</p>
+</section>
+
+<!-- ================= KODLAR ================= -->
+<section id="kod">
+  <div class="sec-head"><span class="sec-num">14</span><h2>Robotun bütün kodları</h2></div>
+  <p>Robotta çalışan her dosya. Ortak çekirdek (<code>common/cdtp_core</code>) robot firmware'inin parçasıdır; <code>protocol.h</code> ve <code>gesture.h</code> eldivenle paylaşılır. Her dosya açılır ve kopyalanır.</p>
+<!--KOD-->
+</section>
+
+<footer>Kaynak: şartname v14, cdtp-robot.netlify.app ve <code>cdtp-denge-robotu</code> deposu (v1.1). Eldiven, istasyon ve telefon uygulaması bu dosyanın kapsamı dışında.</footer>
+</div>
+
+<script>
+document.querySelectorAll('.copy').forEach(function(b){
+  b.addEventListener('click',function(e){
+    e.preventDefault();
+    var pre=document.getElementById(b.dataset.target);
+    var done=function(){b.textContent='kopyalandı';setTimeout(function(){b.textContent='kopyala'},1500)};
+    try{navigator.clipboard.writeText(pre.textContent).then(done,function(){sel(pre);b.textContent='seçildi, Ctrl+C'})}catch(err){sel(pre);b.textContent='seçildi, Ctrl+C'}
+  });
+});
+function sel(el){var r=document.createRange();r.selectNodeContents(el);var s=window.getSelection();s.removeAllRanges();s.addRange(r)}
+</script>
