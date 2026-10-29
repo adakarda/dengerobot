@@ -90,7 +90,7 @@ num = lambda name: float(re.search(rf"{name}\s*=\s*([\d.]+)f", cfg)[1])
 gains = rd("common/cdtp_core/src/gains.h")
 g = {k: float(v) for k, v in re.findall(r"constexpr float (\w+) = (-?[\d.]+)f;", gains)}
 plan = rd("docs/plan.html")
-check("Iz genisligi (kod <-> belge 190 mm)", 190, round(num("TRACK_WIDTH_M") * 1000), "iz 190" in doc and num("TRACK_WIDTH_M") == 0.19)
+check("Iz genisligi (kod <-> belge 190 mm)", 190, round(num("TRACK_WIDTH_M") * 1000), "İz genişliği: <b>190 mm</b>" in doc and num("TRACK_WIDTH_M") == 0.19)
 check("Enkoder sayim/tur (kod <-> belge 836)", 836, int(num("ENC_COUNTS_PER_REV")), "836" in doc)
 check("Dusme acisi 40 deg", 40, int(num("FALL_ANGLE_DEG")), "40°" in doc)
 check("Dengeye girme +-3 deg, 0,5 s", "3 / 0.5", f"{num('ARM_ANGLE_DEG'):g} / {num('ARM_HOLD_S'):g}", "±3° içinde 0,5 s" in doc)
@@ -116,6 +116,25 @@ v_top = 12.6 * float(div[2]) / (float(div[1]) + float(div[2]))
 check("12,6 V -> ADC gerilimi < 3,1 V", "< 3.1", f"{v_top:.2f}", v_top < 3.1)
 v_ms = 12.6 * 33 / 133
 check("Motor hatti bolucu 100k/33k -> < 3,3 V", "< 3.3", f"{v_ms:.2f}", v_ms < 3.3 and "100k/33k" in doc)
+
+# ---- 6. 3B model ve KiCad semasi ----
+sys.path.insert(0, str(ROOT / "tools"))
+import mass_budget as mb  # noqa: E402
+km = round(mb.l * 1000)
+check("Kutle merkezi (mass_budget <-> robot dosyasi)", f"{km} mm", "belgede var" if f"eksenin {km} mm üstü" in doc else "YOK",
+      f"eksenin {km} mm üstü" in doc and f"KM {km} mm" in doc)
+for ad, yol in (("3B montaj denetimi (cad/kontrol.md)", "cad/kontrol.md"), ("KiCad sema denetimi (sema_kontrol.md)", "elektronik/sema_kontrol.md")):
+    p_ = ROOT / yol
+    t = p_.read_text(encoding="utf-8") if p_.exists() else ""
+    n_ok, n_bad = t.count("| GECTI |"), t.count("| KALDI |")
+    check(ad, "hepsi gecti", f"{n_ok} gecti, {n_bad} kaldi", n_ok > 0 and n_bad == 0)
+olcu = rd("cad/olcu.py")
+iz = float(re.search(r"^IZ = ([\d.]+)", olcu, re.M)[1])
+check("Iz genisligi (cad/olcu.py <-> cdtp_config.h)", f"{iz / 1000:g}", f"{num('TRACK_WIDTH_M'):g}", abs(iz / 1000 - num("TRACK_WIDTH_M")) < 1e-6)
+sch = rd("elektronik/cdtp_robot.kicad_sch") if (ROOT / "elektronik/cdtp_robot.kicad_sch").exists() else ""
+for ref, deger in (("R1", "100k"), ("R2", "27k"), ("R6", "100k"), ("R7", "33k"), ("F1", "5 A")):
+    var = re.search(rf'"Reference"\s+"{ref}".{{0,600}}?"Value"\s+"{deger}[ "]', sch, re.S) is not None
+    check(f"KiCad {ref} = {deger}", deger, "semada var" if var else "YOK", var)
 
 # ---- rapor ----
 bad = [r for r in rows if r[3] != "uygun"]

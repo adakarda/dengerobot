@@ -1,0 +1,1856 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>C:\Users\arda_\cdtp-denge-robotu\elektronik\cdtp_robot.kicad_sch</source>
+    <date>2026-10-29T20:32:16</date>
+    <tool>Eeschema 10.0.6</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>CDTP denge robotu - robot elektronigi</title>
+        <company>YTU EEF CDTP</company>
+        <rev>v1.3</rev>
+        <date>2026-10-29</date>
+        <source>cdtp_robot.kicad_sch</source>
+        <comment number="1" value="Uretici: tools/kicad_sema.py (elle duzenlemeyin; betigi degistirip yeniden uretin)"/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="A1">
+      <value>GY-521</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="GY521_MPU6050" description="GY-521 MPU6050 modulu (kart uzerinde 3,3 V LDO ve 4,7k pull-up)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8e4d60ae-5d76-5164-9502-ee17550eda66</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="A2">
+      <value>BTS7960 sol</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="BTS7960_Modul" description="IBT-2 BTS7960 43 A H-kopru modulu"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ab3a321c-9ecd-5b2c-b47e-bdc772f72fed</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="11"/>
+            <pin num="12"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="A3">
+      <value>BTS7960 sag</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="BTS7960_Modul" description="IBT-2 BTS7960 43 A H-kopru modulu"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>703f3ebb-955c-50d9-bae5-626263e6ec92</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="11"/>
+            <pin num="12"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="A4">
+      <value>IR goz sol (+15 deg)</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="IR_Alici_VS1838B" description="38 kHz IR alici modulu, VS1838B (3,3 V'ta calisir)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a8e02800-f4f1-5810-9479-4a738545455f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="A5">
+      <value>IR goz sag (-15 deg)</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="IR_Alici_VS1838B" description="38 kHz IR alici modulu, VS1838B (3,3 V'ta calisir)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7b9693c8-5505-506a-8ab9-3b5da96d698e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="BT1">
+      <value>18650 hucre 1</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="Battery_Cell" description="Single-cell battery"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="battery cell"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6da994fd-8a2d-506b-80d6-5c741b9ade0c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="BT2">
+      <value>18650 hucre 2</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="Battery_Cell" description="Single-cell battery"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="battery cell"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>056fed76-6a88-57e6-85f8-21253ad6ab61</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="BT3">
+      <value>18650 hucre 3</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="Battery_Cell" description="Single-cell battery"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="battery cell"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6334e13e-5a0f-59fd-81ec-eb4ede9f25fb</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C1">
+      <value>100uF 16V</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b9c53c66-298a-5e29-a9ed-6dbf4d2fd58f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C2">
+      <value>100nF</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3c2aee33-737f-5c58-a5c2-8eb2c7ed7caf</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C3">
+      <value>100nF</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4cccc4b8-f01c-59e5-af70-8b14cee1d33a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C4">
+      <value>100nF</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>381358dc-c567-56dc-9f0a-4171b84ed6c4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C5">
+      <value>1000uF 25V</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>38c0c074-d0a2-5228-915c-62df49bd0059</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D1">
+      <value>SR5100</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="D_Schottky" description="Schottky diode"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="diode Schottky"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>aeab3b5a-c5e1-5a32-abdb-efdcc33b792b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="F1">
+      <value>5 A bicak</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="Fuse" description="Fuse"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="fuse"/>
+      <property name="ki_fp_filters" value="*Fuse*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6ed5a399-ce36-56f8-a52c-b64ff0b0af08</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J1">
+      <value>5 V klemens</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3820d2f2-d17e-5223-9ecf-d776fd56440d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J2">
+      <value>IMU</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x05" description="Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d54b358c-5173-55d8-b32e-7a314fccc272</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J3">
+      <value>BTS sol</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x05" description="Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>cd20b640-019a-5fd6-b90f-d2da6df4b134</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J4">
+      <value>Enkoder sol</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x04" description="Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b989f559-e23d-588d-b81f-89e1d4afc618</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J5">
+      <value>Enkoder sag</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x04" description="Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d90fa889-480b-5215-beee-093c0b02c534</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J6">
+      <value>IR sol</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x03" description="Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f8cc0359-28af-56db-9072-45ee99826902</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J7">
+      <value>IR sag</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x03" description="Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>09599c26-945c-5311-886e-b6719bd0af47</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J8">
+      <value>BTS sag</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x05" description="Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>fe0422ba-51a9-54ad-b560-df5228abe683</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J9">
+      <value>Olcum klemens</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e289ae90-50e0-5a9e-b576-6619d906e825</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J10">
+      <value>Motor hatti klemens</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>95b1678b-a459-506f-9b40-5ddaaeca226b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J11">
+      <value>XT60 disi (pil)</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="XT60" description="XT60 konnektor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>cb66d4e7-af4a-51cb-afb6-fe82736e0ff7</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J12">
+      <value>XT60 erkek (robot)</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="XT60" description="XT60 konnektor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>406e58ea-4448-51b5-82d7-314beef5191c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="JP1">
+      <value>USB'de cikar</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Jumper" part="Jumper_2_Open" description="Jumper, 2-pole, open"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="Jumper SPST"/>
+      <property name="ki_fp_filters" value="Jumper* TestPoint*2Pads* TestPoint*Bridge*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c8a5484f-5473-5440-9947-f615b134d89b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="M1">
+      <value>JGB37-520 sol</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="Motor_JGB37_Enkoder" description="JGB37-520 12 V 530 RPM, Hall enkoder (11 darbe/tur x 19 = 836 sayim/tur, 4x)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>151c605c-c6bc-52eb-9a13-2ddc396c8ae3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="6"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="M2">
+      <value>JGB37-520 sag</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="Motor_JGB37_Enkoder" description="JGB37-520 12 V 530 RPM, Hall enkoder (11 darbe/tur x 19 = 836 sayim/tur, 4x)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c0263a69-287d-5ae6-90cc-39f9f9a5d316</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="6"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="P1">
+      <value>Pogo + (ust, zeminden 102)</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="Pogo_Pim" description="V-yuvadaki 5 mm pogo pim"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>934c2523-d05b-5c43-b783-276975bec288</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="P2">
+      <value>Pogo - (alt, zeminden 77)</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="Pogo_Pim" description="V-yuvadaki 5 mm pogo pim"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5b4bcdff-59ca-524e-b367-ad9c512b3070</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R1">
+      <value>100k</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e98bc5ce-e414-5ad3-aad6-e682c02497a2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R2">
+      <value>27k</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>112c1500-d15c-53fc-af77-05de19ee9990</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R3">
+      <value>100k</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>14ac74c1-5d10-5b9f-be09-e1e0ed360e27</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R4">
+      <value>27k</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3071a8ac-2731-5f66-91ce-54704762cdb5</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R5">
+      <value>10k</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>133e0411-ef40-5ee0-a154-c6f6040c7861</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R6">
+      <value>100k</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>84386a1d-64f1-553e-8e43-97ff292cb38f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R7">
+      <value>33k</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3d8b19cc-5f12-5b26-8e69-424c2910a4ad</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="S1">
+      <value>NP2-BE102 NC</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="AcilStop_NC" description="Chint NP2-BE102 mantar buton, 1 NC kontak, 10 A"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d2104044-307a-5454-ba95-8db8548b13e6</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U1">
+      <value>ESP32-WROOM-32D DevKitC</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="ESP32_DevKitC_38" description="ESP32-WROOM-32D DevKitC 38 pin, ustten (USB asagida). Sol 1-19, sag 20-38 ustten asagi."/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>04265e1f-7840-55cb-8a33-6d8e39878365</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="11"/>
+            <pin num="12"/>
+            <pin num="13"/>
+            <pin num="14"/>
+            <pin num="15"/>
+            <pin num="16"/>
+            <pin num="17"/>
+            <pin num="18"/>
+            <pin num="19"/>
+            <pin num="20"/>
+            <pin num="21"/>
+            <pin num="22"/>
+            <pin num="23"/>
+            <pin num="24"/>
+            <pin num="25"/>
+            <pin num="26"/>
+            <pin num="27"/>
+            <pin num="28"/>
+            <pin num="29"/>
+            <pin num="30"/>
+            <pin num="31"/>
+            <pin num="32"/>
+            <pin num="33"/>
+            <pin num="34"/>
+            <pin num="35"/>
+            <pin num="36"/>
+            <pin num="37"/>
+            <pin num="38"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U2">
+      <value>HX-3S-01</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="BMS_3S_HX3S01" description="HX-3S-01 3S 10 A koruma karti; P+ = B+"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>dc6e308c-85d6-5e02-ba17-3bddb46195ff</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U3">
+      <value>LM2596 5,0 V</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="LM2596_Modul" description="LM2596 3 A dusurucu, cikis 5,0 V'a ayarli"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5ae6b17f-b713-51e1-a0b9-ad67d689a70a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="X1">
+      <value>WAGO-12V</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="WAGO_221_415" description="WAGO 221-415, 5 uc ic tarafta kisa devre"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f876e2ae-a583-5b8f-ab3f-813b6e10f196</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="X2">
+      <value>WAGO-GND (yildiz)</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="cdtp" part="WAGO_221_415" description="WAGO 221-415, 5 uc ic tarafta kisa devre"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9c3a0d99-bbdb-5174-a740-f58296caf5eb</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Connector_Generic" part="Conn_01x02">
+      <description>Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x02</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x03">
+      <description>Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x03</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x04">
+      <description>Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x04</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x05">
+      <description>Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x05</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="Battery_Cell">
+      <description>Single-cell battery</description>
+      <fields>
+        <field name="Reference">BT</field>
+        <field name="Value">Battery_Cell</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Single-cell battery</field>
+        <field name="Sim.Device">V</field>
+        <field name="Sim.Type">DC</field>
+        <field name="Sim.Pins">1=+ 2=-</field>
+      </fields>
+      <pins>
+        <pin num="1" name="+" type="passive"/>
+        <pin num="2" name="-" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C_Polarized">
+      <description>Polarized capacitor</description>
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C_Polarized</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="D_Schottky">
+      <description>Schottky diode</description>
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">D_Schottky</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Schottky diode</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="Fuse">
+      <description>Fuse</description>
+      <footprints>
+        <fp>*Fuse*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">F</field>
+        <field name="Value">Fuse</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Fuse</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Jumper" part="Jumper_2_Open">
+      <description>Jumper, 2-pole, open</description>
+      <footprints>
+        <fp>Jumper*</fp>
+        <fp>TestPoint*2Pads*</fp>
+        <fp>TestPoint*Bridge*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">JP</field>
+        <field name="Value">Jumper_2_Open</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Jumper, 2-pole, open</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A" type="passive"/>
+        <pin num="2" name="B" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="cdtp" part="AcilStop_NC">
+      <description>Chint NP2-BE102 mantar buton, 1 NC kontak, 10 A</description>
+      <fields>
+        <field name="Reference">A</field>
+        <field name="Value">AcilStop_NC</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Chint NP2-BE102 mantar buton, 1 NC kontak, 10 A</field>
+      </fields>
+      <pins>
+        <pin num="1" name="NC1" type="passive"/>
+        <pin num="2" name="NC2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="cdtp" part="BMS_3S_HX3S01">
+      <description>HX-3S-01 3S 10 A koruma karti; P+ = B+</description>
+      <fields>
+        <field name="Reference">A</field>
+        <field name="Value">BMS_3S_HX3S01</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">HX-3S-01 3S 10 A koruma karti; P+ = B+</field>
+      </fields>
+      <pins>
+        <pin num="1" name="B-" type="passive"/>
+        <pin num="2" name="B1" type="passive"/>
+        <pin num="3" name="B2" type="passive"/>
+        <pin num="4" name="B+" type="passive"/>
+        <pin num="5" name="P-" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="cdtp" part="BTS7960_Modul">
+      <description>IBT-2 BTS7960 43 A H-kopru modulu</description>
+      <fields>
+        <field name="Reference">A</field>
+        <field name="Value">BTS7960_Modul</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">IBT-2 BTS7960 43 A H-kopru modulu</field>
+      </fields>
+      <pins>
+        <pin num="1" name="RPWM" type="passive"/>
+        <pin num="2" name="LPWM" type="passive"/>
+        <pin num="3" name="R_EN" type="passive"/>
+        <pin num="4" name="L_EN" type="passive"/>
+        <pin num="5" name="R_IS" type="passive"/>
+        <pin num="6" name="L_IS" type="passive"/>
+        <pin num="7" name="VCC" type="passive"/>
+        <pin num="8" name="GND" type="passive"/>
+        <pin num="9" name="B+" type="passive"/>
+        <pin num="10" name="B-" type="passive"/>
+        <pin num="11" name="M+" type="passive"/>
+        <pin num="12" name="M-" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="cdtp" part="ESP32_DevKitC_38">
+      <description>ESP32-WROOM-32D DevKitC 38 pin, ustten (USB asagida). Sol 1-19, sag 20-38 ustten asagi.</description>
+      <fields>
+        <field name="Reference">A</field>
+        <field name="Value">ESP32_DevKitC_38</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">ESP32-WROOM-32D DevKitC 38 pin, ustten (USB asagida). Sol 1-19, sag 20-38 ustten asagi.</field>
+      </fields>
+      <pins>
+        <pin num="1" name="3V3" type="passive"/>
+        <pin num="2" name="EN" type="passive"/>
+        <pin num="3" name="GPIO36_VP" type="passive"/>
+        <pin num="4" name="GPIO39_VN" type="passive"/>
+        <pin num="5" name="GPIO34" type="passive"/>
+        <pin num="6" name="GPIO35" type="passive"/>
+        <pin num="7" name="GPIO32" type="passive"/>
+        <pin num="8" name="GPIO33" type="passive"/>
+        <pin num="9" name="GPIO25" type="passive"/>
+        <pin num="10" name="GPIO26" type="passive"/>
+        <pin num="11" name="GPIO27" type="passive"/>
+        <pin num="12" name="GPIO14" type="passive"/>
+        <pin num="13" name="GPIO12" type="passive"/>
+        <pin num="14" name="GND" type="passive"/>
+        <pin num="15" name="GPIO13" type="passive"/>
+        <pin num="16" name="SD2" type="passive"/>
+        <pin num="17" name="SD3" type="passive"/>
+        <pin num="18" name="CMD" type="passive"/>
+        <pin num="19" name="5V" type="passive"/>
+        <pin num="20" name="GND" type="passive"/>
+        <pin num="21" name="GPIO23" type="passive"/>
+        <pin num="22" name="GPIO22" type="passive"/>
+        <pin num="23" name="TX_GPIO1" type="passive"/>
+        <pin num="24" name="RX_GPIO3" type="passive"/>
+        <pin num="25" name="GPIO21" type="passive"/>
+        <pin num="26" name="GND" type="passive"/>
+        <pin num="27" name="GPIO19" type="passive"/>
+        <pin num="28" name="GPIO18" type="passive"/>
+        <pin num="29" name="GPIO5" type="passive"/>
+        <pin num="30" name="GPIO17" type="passive"/>
+        <pin num="31" name="GPIO16" type="passive"/>
+        <pin num="32" name="GPIO4" type="passive"/>
+        <pin num="33" name="GPIO0" type="passive"/>
+        <pin num="34" name="GPIO2" type="passive"/>
+        <pin num="35" name="GPIO15" type="passive"/>
+        <pin num="36" name="SD1" type="passive"/>
+        <pin num="37" name="SD0" type="passive"/>
+        <pin num="38" name="CLK" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="cdtp" part="GY521_MPU6050">
+      <description>GY-521 MPU6050 modulu (kart uzerinde 3,3 V LDO ve 4,7k pull-up)</description>
+      <fields>
+        <field name="Reference">A</field>
+        <field name="Value">GY521_MPU6050</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">GY-521 MPU6050 modulu (kart uzerinde 3,3 V LDO ve 4,7k pull-up)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VCC" type="passive"/>
+        <pin num="2" name="GND" type="passive"/>
+        <pin num="3" name="SCL" type="passive"/>
+        <pin num="4" name="SDA" type="passive"/>
+        <pin num="5" name="XDA" type="passive"/>
+        <pin num="6" name="XCL" type="passive"/>
+        <pin num="7" name="AD0" type="passive"/>
+        <pin num="8" name="INT" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="cdtp" part="IR_Alici_VS1838B">
+      <description>38 kHz IR alici modulu, VS1838B (3,3 V'ta calisir)</description>
+      <fields>
+        <field name="Reference">A</field>
+        <field name="Value">IR_Alici_VS1838B</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">38 kHz IR alici modulu, VS1838B (3,3 V'ta calisir)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="OUT" type="passive"/>
+        <pin num="2" name="GND" type="passive"/>
+        <pin num="3" name="VCC" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="cdtp" part="LM2596_Modul">
+      <description>LM2596 3 A dusurucu, cikis 5,0 V'a ayarli</description>
+      <fields>
+        <field name="Reference">A</field>
+        <field name="Value">LM2596_Modul</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">LM2596 3 A dusurucu, cikis 5,0 V'a ayarli</field>
+      </fields>
+      <pins>
+        <pin num="1" name="IN+" type="passive"/>
+        <pin num="2" name="IN-" type="passive"/>
+        <pin num="3" name="OUT+" type="passive"/>
+        <pin num="4" name="OUT-" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="cdtp" part="Motor_JGB37_Enkoder">
+      <description>JGB37-520 12 V 530 RPM, Hall enkoder (11 darbe/tur x 19 = 836 sayim/tur, 4x)</description>
+      <fields>
+        <field name="Reference">A</field>
+        <field name="Value">Motor_JGB37_Enkoder</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">JGB37-520 12 V 530 RPM, Hall enkoder (11 darbe/tur x 19 = 836 sayim/tur, 4x)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="M1" type="passive"/>
+        <pin num="2" name="GND" type="passive"/>
+        <pin num="3" name="C1" type="passive"/>
+        <pin num="4" name="C2" type="passive"/>
+        <pin num="5" name="VCC" type="passive"/>
+        <pin num="6" name="M2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="cdtp" part="Pogo_Pim">
+      <description>V-yuvadaki 5 mm pogo pim</description>
+      <fields>
+        <field name="Reference">A</field>
+        <field name="Value">Pogo_Pim</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">V-yuvadaki 5 mm pogo pim</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="cdtp" part="WAGO_221_415">
+      <description>WAGO 221-415, 5 uc ic tarafta kisa devre</description>
+      <fields>
+        <field name="Reference">A</field>
+        <field name="Value">WAGO_221_415</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">WAGO 221-415, 5 uc ic tarafta kisa devre</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+        <pin num="3" name="" type="passive"/>
+        <pin num="4" name="" type="passive"/>
+        <pin num="5" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="cdtp" part="XT60">
+      <description>XT60 konnektor</description>
+      <fields>
+        <field name="Reference">A</field>
+        <field name="Value">XT60</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">XT60 konnektor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="+" type="passive"/>
+        <pin num="2" name="-" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector_Generic">
+      <uri>${KICAD10_SYMBOL_DIR}/Connector_Generic.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>${KICAD10_SYMBOL_DIR}/Device.kicad_sym</uri>
+    </library>
+    <library logical="Jumper">
+      <uri>${KICAD10_SYMBOL_DIR}/Jumper.kicad_sym</uri>
+    </library>
+    <library logical="cdtp">
+      <uri>${KIPRJMOD}/cdtp.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="/+3V3" class="Default">
+      <node ref="A1" pin="1" pinfunction="VCC_1" pintype="passive"/>
+      <node ref="A2" pin="7" pinfunction="VCC_7" pintype="passive"/>
+      <node ref="A3" pin="7" pinfunction="VCC_7" pintype="passive"/>
+      <node ref="A4" pin="3" pinfunction="VCC_3" pintype="passive"/>
+      <node ref="A5" pin="3" pinfunction="VCC_3" pintype="passive"/>
+      <node ref="J2" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="J3" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
+      <node ref="J4" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="J5" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="J6" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="J7" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="J8" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
+      <node ref="M1" pin="5" pinfunction="VCC_5" pintype="passive"/>
+      <node ref="M2" pin="5" pinfunction="VCC_5" pintype="passive"/>
+      <node ref="U1" pin="1" pinfunction="3V3_1" pintype="passive"/>
+    </net>
+    <net code="2" name="/+5V" class="Default">
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="J1" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="JP1" pin="1" pinfunction="A_1" pintype="passive"/>
+      <node ref="U3" pin="3" pinfunction="OUT+_3" pintype="passive"/>
+    </net>
+    <net code="3" name="/+5V_ESP" class="Default">
+      <node ref="JP1" pin="2" pinfunction="B_2" pintype="passive"/>
+      <node ref="U1" pin="19" pinfunction="5V_19" pintype="passive"/>
+    </net>
+    <net code="4" name="/+12V" class="Default">
+      <node ref="F1" pin="2" pintype="passive"/>
+      <node ref="J9" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="R1" pin="1" pintype="passive"/>
+      <node ref="S1" pin="1" pinfunction="NC1_1" pintype="passive"/>
+      <node ref="U3" pin="1" pinfunction="IN+_1" pintype="passive"/>
+      <node ref="X1" pin="1" pintype="passive"/>
+      <node ref="X1" pin="2" pintype="passive"/>
+      <node ref="X1" pin="3" pintype="passive"/>
+      <node ref="X1" pin="4" pintype="passive"/>
+      <node ref="X1" pin="5" pintype="passive"/>
+    </net>
+    <net code="5" name="/+12V_MOT" class="Default">
+      <node ref="A2" pin="9" pinfunction="B+_9" pintype="passive"/>
+      <node ref="A3" pin="9" pinfunction="B+_9" pintype="passive"/>
+      <node ref="C5" pin="1" pintype="passive"/>
+      <node ref="J10" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="R6" pin="1" pintype="passive"/>
+      <node ref="S1" pin="2" pinfunction="NC2_2" pintype="passive"/>
+    </net>
+    <net code="6" name="/B-" class="Default">
+      <node ref="BT1" pin="2" pinfunction="-_2" pintype="passive"/>
+      <node ref="U2" pin="1" pinfunction="B-_1" pintype="passive"/>
+    </net>
+    <net code="7" name="/B1" class="Default">
+      <node ref="BT1" pin="1" pinfunction="+_1" pintype="passive"/>
+      <node ref="BT2" pin="2" pinfunction="-_2" pintype="passive"/>
+      <node ref="U2" pin="2" pinfunction="B1_2" pintype="passive"/>
+    </net>
+    <net code="8" name="/B2" class="Default">
+      <node ref="BT2" pin="1" pinfunction="+_1" pintype="passive"/>
+      <node ref="BT3" pin="2" pinfunction="-_2" pintype="passive"/>
+      <node ref="U2" pin="3" pinfunction="B2_3" pintype="passive"/>
+    </net>
+    <net code="9" name="/BAT+" class="Default">
+      <node ref="D1" pin="1" pinfunction="K_1" pintype="passive"/>
+      <node ref="F1" pin="1" pintype="passive"/>
+      <node ref="J12" pin="1" pinfunction="+_1" pintype="passive"/>
+    </net>
+    <net code="10" name="/CHG+" class="Default">
+      <node ref="D1" pin="2" pinfunction="A_2" pintype="passive"/>
+      <node ref="J9" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="P1" pin="1" pintype="passive"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+    </net>
+    <net code="11" name="/ENC_L_A" class="Default">
+      <node ref="J4" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+      <node ref="M1" pin="3" pinfunction="C1_3" pintype="passive"/>
+      <node ref="U1" pin="7" pinfunction="GPIO32_7" pintype="passive"/>
+    </net>
+    <net code="12" name="/ENC_L_B" class="Default">
+      <node ref="J4" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
+      <node ref="M1" pin="4" pinfunction="C2_4" pintype="passive"/>
+      <node ref="U1" pin="8" pinfunction="GPIO33_8" pintype="passive"/>
+    </net>
+    <net code="13" name="/ENC_R_A" class="Default">
+      <node ref="J5" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+      <node ref="M2" pin="3" pinfunction="C1_3" pintype="passive"/>
+      <node ref="U1" pin="9" pinfunction="GPIO25_9" pintype="passive"/>
+    </net>
+    <net code="14" name="/ENC_R_B" class="Default">
+      <node ref="J5" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
+      <node ref="M2" pin="4" pinfunction="C2_4" pintype="passive"/>
+      <node ref="U1" pin="10" pinfunction="GPIO26_10" pintype="passive"/>
+    </net>
+    <net code="15" name="/GND" class="Default">
+      <node ref="A1" pin="2" pinfunction="GND_2" pintype="passive"/>
+      <node ref="A1" pin="7" pinfunction="AD0_7" pintype="passive"/>
+      <node ref="A2" pin="10" pinfunction="B-_10" pintype="passive"/>
+      <node ref="A2" pin="8" pinfunction="GND_8" pintype="passive"/>
+      <node ref="A3" pin="10" pinfunction="B-_10" pintype="passive"/>
+      <node ref="A3" pin="8" pinfunction="GND_8" pintype="passive"/>
+      <node ref="A4" pin="2" pinfunction="GND_2" pintype="passive"/>
+      <node ref="A5" pin="2" pinfunction="GND_2" pintype="passive"/>
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="C2" pin="2" pintype="passive"/>
+      <node ref="C3" pin="2" pintype="passive"/>
+      <node ref="C4" pin="2" pintype="passive"/>
+      <node ref="C5" pin="2" pintype="passive"/>
+      <node ref="J1" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="J12" pin="2" pinfunction="-_2" pintype="passive"/>
+      <node ref="J2" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="J3" pin="5" pinfunction="Pin_5_5" pintype="passive"/>
+      <node ref="J4" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="J5" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="J6" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="J7" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="J8" pin="5" pinfunction="Pin_5_5" pintype="passive"/>
+      <node ref="M1" pin="2" pinfunction="GND_2" pintype="passive"/>
+      <node ref="M2" pin="2" pinfunction="GND_2" pintype="passive"/>
+      <node ref="P2" pin="1" pintype="passive"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+      <node ref="R4" pin="2" pintype="passive"/>
+      <node ref="R5" pin="2" pintype="passive"/>
+      <node ref="R7" pin="2" pintype="passive"/>
+      <node ref="U1" pin="14" pinfunction="GND_14" pintype="passive"/>
+      <node ref="U1" pin="20" pinfunction="GND_20" pintype="passive"/>
+      <node ref="U1" pin="26" pinfunction="GND_26" pintype="passive"/>
+      <node ref="U3" pin="2" pinfunction="IN-_2" pintype="passive"/>
+      <node ref="U3" pin="4" pinfunction="OUT-_4" pintype="passive"/>
+      <node ref="X2" pin="1" pintype="passive"/>
+      <node ref="X2" pin="2" pintype="passive"/>
+      <node ref="X2" pin="3" pintype="passive"/>
+      <node ref="X2" pin="4" pintype="passive"/>
+      <node ref="X2" pin="5" pintype="passive"/>
+    </net>
+    <net code="16" name="/I2C_SCL" class="Default">
+      <node ref="A1" pin="3" pinfunction="SCL_3" pintype="passive"/>
+      <node ref="J2" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+      <node ref="U1" pin="22" pinfunction="GPIO22_22" pintype="passive"/>
+    </net>
+    <net code="17" name="/I2C_SDA" class="Default">
+      <node ref="A1" pin="4" pinfunction="SDA_4" pintype="passive"/>
+      <node ref="J2" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
+      <node ref="U1" pin="25" pinfunction="GPIO21_25" pintype="passive"/>
+    </net>
+    <net code="18" name="/IMU_INT" class="Default">
+      <node ref="A1" pin="8" pinfunction="INT_8" pintype="passive"/>
+      <node ref="J2" pin="5" pinfunction="Pin_5_5" pintype="passive"/>
+      <node ref="U1" pin="27" pinfunction="GPIO19_27" pintype="passive"/>
+    </net>
+    <net code="19" name="/IR_L" class="Default">
+      <node ref="A4" pin="1" pinfunction="OUT_1" pintype="passive"/>
+      <node ref="J6" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+      <node ref="U1" pin="3" pinfunction="GPIO36_VP_3" pintype="passive"/>
+    </net>
+    <net code="20" name="/IR_R" class="Default">
+      <node ref="A5" pin="1" pinfunction="OUT_1" pintype="passive"/>
+      <node ref="J7" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+      <node ref="U1" pin="4" pinfunction="GPIO39_VN_4" pintype="passive"/>
+    </net>
+    <net code="21" name="/L_LPWM" class="Default">
+      <node ref="A2" pin="2" pinfunction="LPWM_2" pintype="passive"/>
+      <node ref="J3" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="U1" pin="12" pinfunction="GPIO14_12" pintype="passive"/>
+    </net>
+    <net code="22" name="/L_RPWM" class="Default">
+      <node ref="A2" pin="1" pinfunction="RPWM_1" pintype="passive"/>
+      <node ref="J3" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="U1" pin="11" pinfunction="GPIO27_11" pintype="passive"/>
+    </net>
+    <net code="23" name="/MOTOR_EN" class="Default">
+      <node ref="A2" pin="3" pinfunction="R_EN_3" pintype="passive"/>
+      <node ref="A2" pin="4" pinfunction="L_EN_4" pintype="passive"/>
+      <node ref="A3" pin="3" pinfunction="R_EN_3" pintype="passive"/>
+      <node ref="A3" pin="4" pinfunction="L_EN_4" pintype="passive"/>
+      <node ref="J3" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+      <node ref="J8" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+      <node ref="R5" pin="1" pintype="passive"/>
+      <node ref="U1" pin="32" pinfunction="GPIO4_32" pintype="passive"/>
+    </net>
+    <net code="24" name="/MOTOR_SENSE" class="Default">
+      <node ref="C4" pin="1" pintype="passive"/>
+      <node ref="R6" pin="2" pintype="passive"/>
+      <node ref="R7" pin="1" pintype="passive"/>
+      <node ref="U1" pin="21" pinfunction="GPIO23_21" pintype="passive"/>
+    </net>
+    <net code="25" name="/MOT_L+" class="Default">
+      <node ref="A2" pin="11" pinfunction="M+_11" pintype="passive"/>
+      <node ref="M1" pin="1" pinfunction="M1_1" pintype="passive"/>
+    </net>
+    <net code="26" name="/MOT_L-" class="Default">
+      <node ref="A2" pin="12" pinfunction="M-_12" pintype="passive"/>
+      <node ref="M1" pin="6" pinfunction="M2_6" pintype="passive"/>
+    </net>
+    <net code="27" name="/MOT_R+" class="Default">
+      <node ref="A3" pin="11" pinfunction="M+_11" pintype="passive"/>
+      <node ref="M2" pin="1" pinfunction="M1_1" pintype="passive"/>
+    </net>
+    <net code="28" name="/MOT_R-" class="Default">
+      <node ref="A3" pin="12" pinfunction="M-_12" pintype="passive"/>
+      <node ref="M2" pin="6" pinfunction="M2_6" pintype="passive"/>
+    </net>
+    <net code="29" name="/PACK+" class="Default">
+      <node ref="BT3" pin="1" pinfunction="+_1" pintype="passive"/>
+      <node ref="J11" pin="1" pinfunction="+_1" pintype="passive"/>
+      <node ref="U2" pin="4" pinfunction="B+_4" pintype="passive"/>
+    </net>
+    <net code="30" name="/PACK-" class="Default">
+      <node ref="J11" pin="2" pinfunction="-_2" pintype="passive"/>
+      <node ref="U2" pin="5" pinfunction="P-_5" pintype="passive"/>
+    </net>
+    <net code="31" name="/R_LPWM" class="Default">
+      <node ref="A3" pin="2" pinfunction="LPWM_2" pintype="passive"/>
+      <node ref="J8" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="U1" pin="30" pinfunction="GPIO17_30" pintype="passive"/>
+    </net>
+    <net code="32" name="/R_RPWM" class="Default">
+      <node ref="A3" pin="1" pinfunction="RPWM_1" pintype="passive"/>
+      <node ref="J8" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="U1" pin="31" pinfunction="GPIO16_31" pintype="passive"/>
+    </net>
+    <net code="33" name="/VBAT_ADC" class="Default">
+      <node ref="C2" pin="1" pintype="passive"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+      <node ref="R2" pin="1" pintype="passive"/>
+      <node ref="U1" pin="6" pinfunction="GPIO35_6" pintype="passive"/>
+    </net>
+    <net code="34" name="/VCHG_ADC" class="Default">
+      <node ref="C3" pin="1" pintype="passive"/>
+      <node ref="R3" pin="2" pintype="passive"/>
+      <node ref="R4" pin="1" pintype="passive"/>
+      <node ref="U1" pin="5" pinfunction="GPIO34_5" pintype="passive"/>
+    </net>
+    <net code="35" name="unconnected-(A1-XCL-Pad6)" class="Default">
+      <node ref="A1" pin="6" pinfunction="XCL_6" pintype="passive+no_connect"/>
+    </net>
+    <net code="36" name="unconnected-(A1-XDA-Pad5)" class="Default">
+      <node ref="A1" pin="5" pinfunction="XDA_5" pintype="passive+no_connect"/>
+    </net>
+    <net code="37" name="unconnected-(A2-L_IS-Pad6)" class="Default">
+      <node ref="A2" pin="6" pinfunction="L_IS_6" pintype="passive+no_connect"/>
+    </net>
+    <net code="38" name="unconnected-(A2-R_IS-Pad5)" class="Default">
+      <node ref="A2" pin="5" pinfunction="R_IS_5" pintype="passive+no_connect"/>
+    </net>
+    <net code="39" name="unconnected-(A3-L_IS-Pad6)" class="Default">
+      <node ref="A3" pin="6" pinfunction="L_IS_6" pintype="passive+no_connect"/>
+    </net>
+    <net code="40" name="unconnected-(A3-R_IS-Pad5)" class="Default">
+      <node ref="A3" pin="5" pinfunction="R_IS_5" pintype="passive+no_connect"/>
+    </net>
+    <net code="41" name="unconnected-(J10-Pin_2-Pad2)" class="Default">
+      <node ref="J10" pin="2" pinfunction="Pin_2_2" pintype="passive+no_connect"/>
+    </net>
+    <net code="42" name="unconnected-(U1-CLK-Pad38)" class="Default">
+      <node ref="U1" pin="38" pinfunction="CLK_38" pintype="passive+no_connect"/>
+    </net>
+    <net code="43" name="unconnected-(U1-CMD-Pad18)" class="Default">
+      <node ref="U1" pin="18" pinfunction="CMD_18" pintype="passive+no_connect"/>
+    </net>
+    <net code="44" name="unconnected-(U1-EN-Pad2)" class="Default">
+      <node ref="U1" pin="2" pinfunction="EN_2" pintype="passive+no_connect"/>
+    </net>
+    <net code="45" name="unconnected-(U1-GPIO0-Pad33)" class="Default">
+      <node ref="U1" pin="33" pinfunction="GPIO0_33" pintype="passive+no_connect"/>
+    </net>
+    <net code="46" name="unconnected-(U1-GPIO2-Pad34)" class="Default">
+      <node ref="U1" pin="34" pinfunction="GPIO2_34" pintype="passive+no_connect"/>
+    </net>
+    <net code="47" name="unconnected-(U1-GPIO5-Pad29)" class="Default">
+      <node ref="U1" pin="29" pinfunction="GPIO5_29" pintype="passive+no_connect"/>
+    </net>
+    <net code="48" name="unconnected-(U1-GPIO12-Pad13)" class="Default">
+      <node ref="U1" pin="13" pinfunction="GPIO12_13" pintype="passive+no_connect"/>
+    </net>
+    <net code="49" name="unconnected-(U1-GPIO13-Pad15)" class="Default">
+      <node ref="U1" pin="15" pinfunction="GPIO13_15" pintype="passive+no_connect"/>
+    </net>
+    <net code="50" name="unconnected-(U1-GPIO15-Pad35)" class="Default">
+      <node ref="U1" pin="35" pinfunction="GPIO15_35" pintype="passive+no_connect"/>
+    </net>
+    <net code="51" name="unconnected-(U1-GPIO18-Pad28)" class="Default">
+      <node ref="U1" pin="28" pinfunction="GPIO18_28" pintype="passive+no_connect"/>
+    </net>
+    <net code="52" name="unconnected-(U1-RX_GPIO3-Pad24)" class="Default">
+      <node ref="U1" pin="24" pinfunction="RX_GPIO3_24" pintype="passive+no_connect"/>
+    </net>
+    <net code="53" name="unconnected-(U1-SD0-Pad37)" class="Default">
+      <node ref="U1" pin="37" pinfunction="SD0_37" pintype="passive+no_connect"/>
+    </net>
+    <net code="54" name="unconnected-(U1-SD1-Pad36)" class="Default">
+      <node ref="U1" pin="36" pinfunction="SD1_36" pintype="passive+no_connect"/>
+    </net>
+    <net code="55" name="unconnected-(U1-SD2-Pad16)" class="Default">
+      <node ref="U1" pin="16" pinfunction="SD2_16" pintype="passive+no_connect"/>
+    </net>
+    <net code="56" name="unconnected-(U1-SD3-Pad17)" class="Default">
+      <node ref="U1" pin="17" pinfunction="SD3_17" pintype="passive+no_connect"/>
+    </net>
+    <net code="57" name="unconnected-(U1-TX_GPIO1-Pad23)" class="Default">
+      <node ref="U1" pin="23" pinfunction="TX_GPIO1_23" pintype="passive+no_connect"/>
+    </net>
+  </nets>
+</export>

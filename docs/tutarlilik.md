@@ -1,6 +1,6 @@
 # Belge ve kod tutarlilik denetimi
 
-41 kontrol, 0 uyumsuz.
+50 kontrol, 0 uyumsuz.
 
 | Konu | Beklenen | Bulunan | Durum |
 |---|---|---|---|
@@ -38,10 +38,19 @@
 | Adim 0,5 m / 90 deg | 0.5 / 90 | 0.5 / 90 | uygun |
 | Sarj algilama esigi 9 V | 9 | 9.0 | uygun |
 | Butunlesik gorevde bos bekleme 6 s | 6 | 6.0 | uygun |
-| LQR kazanclari (gains.h <-> plan sayfasi) | u = 52,4·x + 64,7·v + 107,2·θ + 13,2·ω | plan sayfasinda var | uygun |
+| LQR kazanclari (gains.h <-> plan sayfasi) | u = 53,0·x + 65,6·v + 108,6·θ + 13,5·ω | plan sayfasinda var | uygun |
 | BLE CDTP_SVC_UUID | 6e400001-cd7b-4e3a-9a40-2026cd7b0001 | belgede var | uygun |
 | BLE CDTP_TELEM_UUID | 6e400002-cd7b-4e3a-9a40-2026cd7b0001 | belgede var | uygun |
 | BLE CDTP_CMD_UUID | 6e400003-cd7b-4e3a-9a40-2026cd7b0001 | belgede var | uygun |
 | Pil boluculeri 100k/27k | 100/27 | 100/27 | uygun |
 | 12,6 V -> ADC gerilimi < 3,1 V | < 3.1 | 2.68 | uygun |
 | Motor hatti bolucu 100k/33k -> < 3,3 V | < 3.3 | 3.13 | uygun |
+| Kutle merkezi (mass_budget <-> robot dosyasi) | 70 mm | belgede var | uygun |
+| 3B montaj denetimi (cad/kontrol.md) | hepsi gecti | 10 gecti, 0 kaldi | uygun |
+| KiCad sema denetimi (sema_kontrol.md) | hepsi gecti | 5 gecti, 0 kaldi | uygun |
+| Iz genisligi (cad/olcu.py <-> cdtp_config.h) | 0.19 | 0.19 | uygun |
+| KiCad R1 = 100k | 100k | semada var | uygun |
+| KiCad R2 = 27k | 27k | semada var | uygun |
+| KiCad R6 = 100k | 100k | semada var | uygun |
+| KiCad R7 = 33k | 33k | semada var | uygun |
+| KiCad F1 = 5 A | 5 A | semada var | uygun |

@@ -32,13 +32,14 @@ B_VISC, TAU_C = 0.002, 0.02
 CPR = 836
 VOC, RINT = 12.0, 0.15
 MAGNET_N, MAGNET_RANGE = 10.0, 0.006  # V-yuvadaki miknatis ile direkteki celik serit: temasta ~10 N, 6 mm'de sifir
+KX, KY = 0.016, 0.027  # ilac kutusu cebinin konumu (on, sol)
 PHYS_DT, CTRL_EVERY = 0.0005, 10  # 2 kHz fizik, 200 Hz kontrol
 TASKS = {"statik": 0, "yonlendirme": 1, "sarj": 2, "butunlesik": 3}
 CMD = {"yok": 0, "ileri": 1, "geri": 2, "sol": 3, "sag": 4, "dur": 5}
 
 # parca boyutlari (yari olcu, m) mass_budget isimlerine gore
 SIZES = {
-    "Kat": (0.055, 0.075, 0.0015),
+    "Kat": (0.055, 0.075, 0.002),
     "BTS": (0.025, 0.030, 0.015),
     "3x18650": (0.035, 0.040, 0.012),
     "Ana kart": (0.025, 0.050, 0.008),
@@ -64,7 +65,7 @@ def build_xml(post_xy=None, box=True):
         if name.startswith("2x JGB37"):
             # iki motor teker ekseninde, y boyunca
             for s in (1, -1):
-                geoms.append(f'<geom type="cylinder" size="0.0185 0.035" pos="0 {s*0.045} 0" euler="90 0 0" mass="{m/2}" rgba=".3 .5 .5 1"/>')
+                geoms.append(f'<geom type="cylinder" size="0.0185 0.035" pos="0 {s*0.045} -0.007" euler="90 0 0" mass="{m/2}" rgba=".3 .5 .5 1"/>')
             continue
         sx, sy, sz = size_for(name)
         # yalniz katlar carpisir (yere dusme, direk); diger parcalar kutle/atalet tasir, kutu cebine girmez
@@ -72,8 +73,10 @@ def build_xml(post_xy=None, box=True):
         geoms.append(f'<geom type="box" size="{sx} {sy} {sz}" pos="{x} 0 {z}" mass="{m}" rgba=".6 .7 .8 1"{coll}/>')
     # kutu cebi (kat 3 ustunde, 4 duvar, kutle kutu yuvasi parcasinda sayildi)
     pocket = []
-    zc = 0.184 + 0.0015 + 0.0125
-    for px, py, hx, hy in ((0.0365, 0, 0.0015, 0.025), (-0.0365, 0, 0.0015, 0.025), (0, 0.024, 0.038, 0.0015), (0, -0.024, 0.038, 0.0015)):
+    # cad/robot_cad.py ile ayni: kat 3 ustu z=0.194, cep ici 72x47 mm, merkez y=+0.027 (sagda acil stop)
+    zc = 0.194 + 0.0125
+    for px, py, hx, hy in ((KX + 0.0372, KY, 0.0012, 0.0259), (KX - 0.0372, KY, 0.0012, 0.0259),
+                           (KX, KY + 0.0247, 0.0384, 0.0012), (KX, KY - 0.0247, 0.0384, 0.0012)):
         pocket.append(f'<geom type="box" size="{hx} {hy} 0.0125" pos="{px} {py} {zc}" mass="0.0001" rgba=".8 .8 .9 .5"/>')
     # V-yuva (belgedeki gibi): arkada 20 mm genis dikey serit (pimler burada, x=0.058), iki yanda 45 derece kanat
     vee = ['<geom type="box" size="0.0015 0.010 0.025" pos="0.0575 0 0.06" mass="0.0001" rgba=".2 .3 .9 1"/>']
@@ -87,7 +90,7 @@ def build_xml(post_xy=None, box=True):
                 f'rgba=".5 .5 .5 1"/></body>')
     box_body = ""
     if box:
-        box_body = (f'<body name="pillbox" pos="0 0 {R_WHEEL + zc + 0.001}"><freejoint/>'
+        box_body = (f'<body name="pillbox" pos="{KX} {KY} {R_WHEEL + zc + 0.001}"><freejoint/>'
                     f'<geom type="box" size="0.035 0.0225 0.0125" mass="0.06" rgba=".9 .3 .3 1" friction="0.6 0.005 0.0001"/></body>')
     arm = J_ROTOR * GEAR**2
     xml = f"""
@@ -140,7 +143,7 @@ class Twin:
         if box:
             bj = self.m.joint(self.m.body("pillbox").jntadr[0])
             a = bj.qposadr[0]
-            q[a:a + 3] = [x, y, q[a + 2]]
+            q[a:a + 3] = [x + KX * math.cos(yaw) - KY * math.sin(yaw), y + KX * math.sin(yaw) + KY * math.cos(yaw), q[a + 2]]
             q[a + 3:a + 7] = q[3:7]
             self.box_adr = a
         self.has_box = box
@@ -198,7 +201,7 @@ class Twin:
         bp = self.d.qpos[self.box_adr:self.box_adr + 3]
         cid = self.m.body("chassis").id
         local = self.rot().T @ (bp - self.d.xpos[cid])
-        return abs(local[0]) < 0.03 and abs(local[1]) < 0.03 and local[2] > 0.18
+        return abs(local[0] - KX) < 0.03 and abs(local[1] - KY) < 0.03 and local[2] > 0.18
 
     # ---- sensorler ----
     def sensors(self):

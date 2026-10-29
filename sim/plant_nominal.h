@@ -2,8 +2,8 @@
 #pragma once
 struct PlantNominal {
   static constexpr double m_body = 1.245;
-  static constexpr double l_com = 0.0724;
-  static constexpr double I_body = 0.00703;
+  static constexpr double l_com = 0.0702;
+  static constexpr double I_body = 0.00737;
   static constexpr double m_wheel = 0.045;
   static constexpr double r = 0.0325;
   static constexpr double J_rotor = 5e-07;

@@ -8,3 +8,7 @@ sim/results/*.csv
 __pycache__/
 # Dijital ikiz izleri (python twin/twin.py yeniden uretir)
 twin/results/*.csv
+# KiCad yerel dosyalari
+elektronik/*-backups/
+elektronik/*.kicad_prl
+elektronik/fp-info-cache

@@ -9,8 +9,12 @@ import html
 import pathlib
 import re
 import subprocess
+import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+import build_robot_doc  # noqa: E402
+
 rd = lambda p: (ROOT / p).read_text(encoding="utf-8")
 esc = html.escape
 
@@ -27,6 +31,7 @@ CODE = [
                           "tools/run_sim.sh", "tools/plot_sim.py"]),
     ("C++ simülasyonu", ["sim/plant.h", "sim/harness.h", "sim/sim_main.cpp", "sim/unit_tests.h"]),
     ("MuJoCo dijital ikizi", ["twin/twin.py", "twin/bridge.cpp", "tools/plot_twin.py"]),
+    ("3B baskı ve KiCad şeması", ["cad/olcu.py", "cad/robot_cad.py", "cad/ciz.py", "tools/kicad_sema.py"]),
 ]
 
 
@@ -108,12 +113,12 @@ TUTORIALS = r"""
 <section class="chapter" id="e2">
 <h2>Eğitim 2 · Montaj sırası</h2>
 <ol class="steps">
-<li><b>Pleksi kesimi:</b> 3 kat 150 × 110 mm, köşe delikleri Ø3,2; V-yuva kanatları ve kutu yuvası (bölüm "Şasi ölçüleri").</li>
-<li><b>Motorlar:</b> L braketlerle kat 1'in altına; mil ekseni = teker ekseni. Tekerleri 6 mm D göbekle takın, vidaları sıkın (gevşek göbek denge döngüsünde boşluk yapar).</li>
-<li><b>Kat 1 üstü:</b> BTS7960 × 2 (sol/sağ), MPU6050 tam ortada ve teker ekseni hizasında (X ileri, bileşenler yukarı), LM2596, sigorta, WAGO × 2, C5 (1000 µF), SR5100.</li>
-<li><b>Kat 2:</b> pil yuvası ortada, BMS yanında, ana kart, XT60 arkada. IR gözleri ön kenarda, ±15° dışa, 15 mm tüplü.</li>
-<li><b>V-yuva:</b> kat 1 ile kat 2 arasına önde; pogo pimler zeminden 102 mm (+) ve 77 mm (−).</li>
-<li><b>Kat 3:</b> acil stop arkada, kutu yuvası ön ortada.</li>
+<li><b>Baskı:</b> 3 kat, V-yuva ve 2 motor tutucu (Eğitim 7, bölüm "Şasi: 3B baskı parçaları").</li>
+<li><b>Motorlar:</b> baskı tutucularla kat 1'in altına; mil eksantrik, motor gövdesi milin 7 mm altında. Tekerleri 6 mm D göbekle takın, vidaları sıkın (gevşek göbek denge döngüsünde boşluk yapar).</li>
+<li><b>Kat 1 üstü:</b> BTS7960 × 2 arkada, MPU6050 tam ortada ve teker ekseni hizasında (X ileri, bileşenler yukarı), önde LM2596, sigorta, WAGO × 2, C5 (1000 µF). SR5100 kablo üstünde, makaronlu.</li>
+<li><b>V-yuva:</b> kat 1 ile kat 2 arasına önde; pogo pimler zeminden 102 mm (+) ve 77 mm (−), mıknatıslar ortada 89,5 mm.</li>
+<li><b>Kat 2:</b> altta ana kart (10 mm naylon distans, ESP32 aşağı bakar); üstte pil yuvası, BMS, XT60 ve ±15° IR göz tutucuları.</li>
+<li><b>Kat 3:</b> ilaç kutusu cebi solda, acil stop sağda; ikisi de öne kaydırılmış (kütle merkezi eksen üstünde).</li>
 <li><b>Kablolama:</b> Kablo listesindeki sırayla (W1 → W44). Önce pil/BMS (W1–W6), sonra 12 V (W7–W19), şarj (W20–W23), en son sinyal (W24–W30).</li>
 <li><b>Tezgâh testleri:</b> "Montaj ve tezgâh testleri" bölümündeki 10 adım. Hepsi geçmeden motorlara EN vermeyin.</li>
 </ol>
@@ -172,6 +177,32 @@ TUTORIALS = r"""
 <tr><td>Sigorta atıyor</td><td>Kilit akımı yüksek</td><td>Tekeri tutup akım ölçün; 2,5 A üstü ise 7,5 A sigorta</td></tr>
 <tr><td>MPU6050 bulunamadı</td><td>I2C kablosu, AD0</td><td>SDA 21, SCL 22, AD0 → GND, 3V3 besleme</td></tr>
 </tbody></table></div>
+</section>
+
+<section class="chapter" id="e7">
+<h2>Eğitim 7 · 3B baskı parçaları</h2>
+<ol class="steps">
+<li>Parçalar gelince kumpasla ölçün. <code>cad/olcu.py</code>'de <code>(OLC)</code> yazan her satırı kendi parçanızla karşılaştırın: BTS7960 delik aralığı, motor ön yüzü delikleri ve burç çapı, pogo pim çapı, ana kart delikleri, pil yuvası.</li>
+<li>Gerekli paketler: <code>pip install manifold3d trimesh matplotlib</code>. Sonra <code>python cad/robot_cad.py</code>. Çıktının sonunda <code>TUMU GECTI</code> görünmeli; bir denetim kalırsa hangi parçanın neye girdiği yazar.</li>
+<li><code>python cad/ciz.py</code> önizleme resimlerini yeniler. Montajı döndürerek görmek için <code>cad/montaj.glb</code>'yi herhangi bir 3B görüntüleyicide açın (Windows 3D Viewer, Blender, gltf-viewer).</li>
+<li><code>cad/stl/</code> altındaki altı dosyayı dilimleyiciye alın. Dosyalar zaten baskı yönünde, destek kapalı. PLA/PETG, 0,2 mm katman, 3 duvar, %30 gyroid dolgu.</li>
+<li>Önce <code>motor_tutucu_sol.stl</code>'yi basıp motoru takarak deneyin: 6 delik ve burç oturmalı. Oturmazsa <code>MOTOR_DELIK_ACI0</code> ve <code>MOTOR_BURC_D</code>'yi düzeltip yeniden üretin.</li>
+<li>Katları basın, modülleri ceplerine kuru takın. Sıkıysa <code>BOSLUK</code>'u 0,1 mm artırın.</li>
+<li>Montaj sırası: motor tutucular kat 1'in altına, V-yuva kat 1'e, kat 1 modülleri, 30 mm distanslar, ana kart kat 2'nin altına (10 mm naylon distans), V-yuva üst kaması kat 2'ye, kat 2 modülleri, 50 mm distanslar, kat 3, acil stop ve kutu.</li>
+<li>Yerleşim veya parça değişirse <code>tools/mass_budget.py</code>'deki konumları güncelleyin. Betik, kütle bütçesini 3B modelle karşılaştırır. Sonra Eğitim 4'teki gibi kazançları yeniden üretin.</li>
+</ol>
+</section>
+
+<section class="chapter" id="e8">
+<h2>Eğitim 8 · KiCad şeması</h2>
+<ol class="steps">
+<li>KiCad 10'u kurun (kicad.org ya da <code>winget install KiCad.KiCad</code>).</li>
+<li>KiCad'de <b>Dosya → Proje aç</b> → <code>elektronik/cdtp_robot.kicad_pro</code> → şema düzenleyicisi. Modül sembolleri proje kütüphanesinden (<code>cdtp</code>) kendiliğinden yüklenir.</li>
+<li>Bir hattı bulmak için etikete tıklayın: KiCad aynı adlı bütün etiketleri vurgular. Kablo numaraları ve pin sırası için robot dosyasındaki kablo listesine bakın.</li>
+<li>Bağlantı değişirse <code>tools/kicad_sema.py</code>'deki <code>GRUPLAR</code> listesini değiştirin ve <code>python tools/kicad_sema.py</code> çalıştırın. Betik KiCad'in ERC'sini koşar, netlisti çıkarır ve her ESP32 pinini <code>pins.h</code> ile, güç hatlarını kablo listesiyle karşılaştırır.</li>
+<li>Firmware'de bir pin değişirse önce <code>pins.h</code>'yi, sonra şemayı güncelleyin. Biri unutulursa denetim "ESP32 pinleri = pins.h" satırında kalır.</li>
+<li>Şemanın A3 çıktısı bu kitabın son sayfasıdır; ayrıca <code>elektronik/cdtp_robot.pdf</code>.</li>
+</ol>
 </section>
 """
 
@@ -248,6 +279,7 @@ def main():
     body = re.sub(r"<header>.*?</header>", "", body, flags=re.S)
     body = re.sub(r'<!-- =+ KODLAR =+ -->.*', "", body, flags=re.S)
     body = body.replace("<!--TESTLER-->", test_tables())
+    body = build_robot_doc.ekler(body)
     sections = re.findall(r'<section id="(\w+)">\s*<div class="sec-head"><span class="sec-num">\d+</span><h2>(.*?)</h2>', body)
     verify = VERIFY_INTRO.replace("<!--GITHUB-->", github_table()).replace("<!--TUTARLILIK-->", md_table("docs/tutarlilik.md"))
     imgs = ""
@@ -259,15 +291,16 @@ def main():
     verify = verify.replace("<!--IKIZGRAF-->", f'<div class="grid2">{imgs}</div>' if imgs else "")
     today = datetime.date.today().strftime("%d.%m.%Y")
     toc = ['<li>Eğitim 1 · Geliştirme ortamı</li>', '<li>Eğitim 2 · Montaj sırası</li>', '<li>Eğitim 3 · İlk çalıştırma ve kalibrasyon</li>',
-           '<li>Eğitim 4 · Model ve kazançlar</li>', '<li>Eğitim 5 · Telefon ve eldiven arayüzü</li>', '<li>Eğitim 6 · Sorun giderme</li>']
+           '<li>Eğitim 4 · Model ve kazançlar</li>', '<li>Eğitim 5 · Telefon ve eldiven arayüzü</li>', '<li>Eğitim 6 · Sorun giderme</li>',
+           '<li>Eğitim 7 · 3B baskı parçaları</li>', '<li>Eğitim 8 · KiCad şeması</li>']
     toc += [f"<li>{esc(re.sub('<.*?>', '', t))}</li>" for _, t in sections]
-    toc += ["<li>Doğrulama: dijital ikiz, GitHub, tutarlılık</li>", "<li>Ek: tüm kodlar</li>"]
+    toc += ["<li>Doğrulama: dijital ikiz, GitHub, tutarlılık</li>", "<li>Ek: tüm kodlar</li>", "<li>Ek: KiCad şeması (A3, son sayfa)</li>"]
     cover = f"""
 <div class="cover">
   <span class="eyebrow">YTÜ EEF ÇDTP · 2026-27 Güz · Kontrol ve Otomasyon</span>
   <h1>İki tekerlekli denge robotu<br>yapım kitabı</h1>
-  <p class="lede">Eğitimler, parça listesi, güç ve sinyal şemaları, ana kart, kablo listesi, şasi, şarj teması, firmware, testler, dijital ikiz doğrulaması ve robotun tüm kaynak kodu.</p>
-  <div class="facts"><span>Sürüm: <b>v1.2</b></span><span>Tarih: <b>{today}</b></span><span>Depo: <b>cdtp-denge-robotu</b></span></div>
+  <p class="lede">Eğitimler, parça listesi, güç ve sinyal şemaları, KiCad şeması, ana kart, kablo listesi, 3B baskı şasi, şarj teması, firmware, testler, dijital ikiz doğrulaması ve robotun tüm kaynak kodu.</p>
+  <div class="facts"><span>Sürüm: <b>v1.3</b></span><span>Tarih: <b>{today}</b></span><span>Depo: <b>cdtp-denge-robotu</b></span></div>
   <h3>İçindekiler</h3><ol class="toc2">{''.join(toc)}</ol>
 </div>"""
     code = f'<section class="chapter" id="kodlar"><h2>Ek · Tüm kodlar</h2><p>Robotta çalışan firmware, ortak çekirdek, tasarım araçları, simülasyon ve dijital ikiz.</p>{code_appendix()}</section>'
@@ -283,6 +316,15 @@ def main():
                             f"--print-to-pdf={pdf}", out_html.as_uri()], check=True, timeout=180,
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             break
+    sema = ROOT / "elektronik/cdtp_robot.pdf"
+    if pdf.exists() and sema.exists():
+        try:
+            import pymupdf
+            kitap = pymupdf.open(pdf)
+            kitap.insert_pdf(pymupdf.open(sema))
+            kitap.save(pdf, incremental=True, encryption=0)
+        except ImportError:
+            print("pymupdf yok: KiCad semasi kitaba eklenmedi (pip install pymupdf)")
     print("yazildi:", out_html.name, pdf.name if pdf.exists() else "(PDF yok)", f"{pdf.stat().st_size//1024} KB" if pdf.exists() else "")
 
 

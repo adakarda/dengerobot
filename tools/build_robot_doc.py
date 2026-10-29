@@ -25,6 +25,9 @@ FILES = [
     ("tools/lqr_design.py", "Model ve LQR tasarimi"),
     ("twin/twin.py", "MuJoCo dijital ikizi"),
     ("twin/bridge.cpp", "Ikiz koprusu (RobotLogic <-> MuJoCo)"),
+    ("cad/olcu.py", "3B parca olculeri"),
+    ("cad/robot_cad.py", "3B baski parcalari ve montaj denetimi"),
+    ("tools/kicad_sema.py", "KiCad semasi uretici ve denetimi"),
 ]
 
 
@@ -46,6 +49,33 @@ def tests():
     return "\n".join(out)
 
 
+def md_tablo(path):
+    """Kontrol | Sonuc | Ayrinti tablolarini (kontrol.md) HTML'e cevirir."""
+    p = ROOT / path
+    if not p.exists():
+        return ""
+    out = []
+    for blok in p.read_text(encoding="utf-8").split("\n\n"):
+        satir = [l for l in blok.splitlines() if l.startswith("|")]
+        if len(satir) < 3:
+            continue
+        bas = [c.strip() for c in satir[0].strip("|").split("|")]
+        out.append('<div class="tbl"><table><thead><tr>' + "".join(f"<th>{html.escape(c)}</th>" for c in bas) + "</tr></thead><tbody>")
+        for l in satir[2:]:
+            h = [c.strip() for c in l.strip("|").split("|")]
+            h = [('<span class="pill p-ok">geçti</span>' if c == "GECTI" else '<span class="pill p-warn">kaldı</span>' if c == "KALDI" else html.escape(c)) for c in h]
+            out.append("<tr>" + "".join(f"<td>{c}</td>" for c in h) + "</tr>")
+        out.append("</tbody></table></div>")
+    return "\n".join(out)
+
+
+def ekler(src):
+    """Belgedeki isaretleri uretilen tablolarla doldurur (robot.html ve kitap ortak)."""
+    src = src.replace("<!--TESTLER-->", tests())
+    src = src.replace("<!--CAD-->", "<h3>3B montaj denetimi ve parçalar</h3>\n" + md_tablo("cad/kontrol.md"))
+    return src.replace("<!--SEMA-->", md_tablo("elektronik/sema_kontrol.md"))
+
+
 def main():
     blocks = []
     total = 0
@@ -59,7 +89,7 @@ def main():
             f'<pre id="src{i}">{html.escape(text)}</pre></details>'
         )
     src = (ROOT / "docs/robot_src.html").read_text(encoding="utf-8")
-    src = src.replace("<!--TESTLER-->", tests())
+    src = ekler(src)
     out = src.replace("<!--KOD-->", f'<p class="mono">{len(FILES)} dosya, {total} satır</p>\n' + "\n".join(blocks))
     (ROOT / "docs/robot.html").write_text(out, encoding="utf-8")
     print(f"docs/robot.html: {len(FILES)} dosya, {total} satir")

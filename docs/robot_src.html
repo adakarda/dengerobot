@@ -75,7 +75,7 @@ svg .pin{fill:var(--chg)}
 .note{border-left:3px solid var(--ink);padding:4px 0 4px 14px}
 .warnnote{border-left:3px solid var(--warn);padding:4px 0 4px 14px}
 figure{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0}
-figure img{border:1px solid var(--line);border-radius:6px;background:#fff}
+figure img{border:1px solid var(--line);border-radius:6px;background:#fff;max-width:100%;height:auto}
 figcaption{font-size:.85rem;color:var(--muted)}
 details.code{background:var(--panel);border:1px solid var(--line);border-radius:6px}
 details.code summary{cursor:pointer;padding:9px 14px;font-family:var(--mono);font-size:.86rem;display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap}
@@ -95,18 +95,18 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 <header>
   <span class="eyebrow">YTÜ EEF ÇDTP · Modül A + robot tarafı · Kontrol ve Otomasyon</span>
   <h1>Denge robotu yapım dosyası</h1>
-  <p class="lede">Yalnız robot: parçalar, güç ve sinyal şemaları, ana kart yerleşimi, kablo listesi, şasi ölçüleri, şarj teması, tüm firmware kodu ve testler. Eldiven, istasyon ve telefon uygulaması bu dosyada yok; robotun onlarla konuştuğu arayüzler var.</p>
+  <p class="lede">Yalnız robot: parçalar, güç ve sinyal şemaları, KiCad şeması, ana kart yerleşimi, kablo listesi, 3B baskı şasi, şarj teması, tüm firmware kodu ve testler. Eldiven, istasyon ve telefon uygulaması bu dosyada yok; robotun onlarla konuştuğu arayüzler var.</p>
   <div class="facts">
     <span>Gövde: <b>1,245 kg</b> + 60 g kutu</span>
-    <span>Kütle merkezi: <b>eksenin 72 mm üstü</b></span>
+    <span>Kütle merkezi: <b>eksenin 70 mm üstü</b></span>
     <span>İz genişliği: <b>190 mm</b></span>
     <span>Kontrol: <b>LQR, 200 Hz</b></span>
     <span>Simülasyon: <b>20/20</b></span>
     <span>Derleme: <b>hatasız</b></span>
   </div>
   <nav class="toc" aria-label="İçindekiler">
-    <a href="#parcalar">Parçalar</a><a href="#blok">Blok şema</a><a href="#guc">Güç şeması</a><a href="#sinyal">Sinyal şeması</a>
-    <a href="#anakart">Ana kart</a><a href="#kablo">Kablo listesi</a><a href="#bms">BMS</a><a href="#sasi">Şasi</a>
+    <a href="#parcalar">Parçalar</a><a href="#blok">Blok şema</a><a href="#guc">Güç şeması</a><a href="#sinyal">Sinyal şeması</a><a href="#kicad">KiCad</a>
+    <a href="#anakart">Ana kart</a><a href="#kablo">Kablo listesi</a><a href="#bms">BMS</a><a href="#sasi">3B şasi</a>
     <a href="#tema">Şarj teması</a><a href="#montaj">Montaj</a><a href="#firmware">Firmware</a><a href="#ayar">Ayar</a><a href="#test">Testler</a><a href="#kod">Kodlar</a>
   </nav>
 </header>
@@ -125,7 +125,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr class="grp"><td colspan="5">Hareket</td></tr>
       <tr><td>JGB37-520 12 V 530 RPM, Hall enkoderli</td><td class="num">2</td><td class="num r">639</td><td>Direnc.net</td><td>6 mm D mil</td></tr>
       <tr><td>BTS7960 motor sürücü kartı</td><td class="num">2</td><td class="num r">162</td><td>Robotzade</td><td>VCC → 3,3 V</td></tr>
-      <tr><td>37 mm motor tutucu (L braket)</td><td class="num">2</td><td class="num r">114</td><td>Keskinler</td><td></td></tr>
+      <tr><td>Motor tutucu, 3B baskı <span class="pill p-new">yeni</span></td><td class="num">2</td><td class="num r">—</td><td>Kendi baskınız</td><td>L braket yerine; <code>cad/stl/motor_tutucu_*.stl</code></td></tr>
       <tr><td>65 mm lastik tekerlek</td><td class="num">2</td><td class="num r">175</td><td>Robotistan</td><td>Göbek 6 mm D'ye uymalı</td></tr>
       <tr><td>6 mm kaplin (2'li)</td><td class="num">1</td><td class="num r">170</td><td>Robotistan</td><td>Göbek mile doğrudan oturuyorsa alınmaz</td></tr>
       <tr class="grp"><td colspan="5">Güç</td></tr>
@@ -148,15 +148,16 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>2'li 5,08 mm PCB klemens</td><td class="num">3</td><td class="num r">8,72</td><td>Direnc.net</td><td>J1, J9, J10</td></tr>
       <tr><td>Dişi-dişi jumper 20 cm (40'lı)</td><td class="num">1</td><td class="num r">59</td><td>Direnc.net</td><td>Yalnız sinyal</td></tr>
       <tr class="grp"><td colspan="5">Gövde, yük, şarj teması</td></tr>
-      <tr><td>3 mm pleksi (3 kat + V-yuva + kutu yuvası)</td><td class="num">1</td><td class="num r">400</td><td>Trendyol</td><td>İstasyonla ortak levha</td></tr>
+      <tr><td>PLA ya da PETG filament, ~0,25 kg <span class="pill p-new">yeni</span></td><td class="num">1</td><td class="num r">~150</td><td>—</td><td>3 kat, V-yuva, 2 motor tutucu (bölüm 09). Pleksi artık yalnız istasyon için.</td></tr>
       <tr><td>M3 30 mm + 50 mm dişi-dişi distans</td><td class="num">8+8</td><td class="num r">9,5 / 13,5</td><td>Motorobit</td><td>Her köşede 30+50 = 80 mm</td></tr>
       <tr><td>M3 10 mm vida (10'lu)</td><td class="num">4</td><td class="num r">7,5</td><td>Motorobit</td><td></td></tr>
+      <tr><td>M3 10 mm naylon distans + M3 somun (10'lu) <span class="pill p-new">yeni</span></td><td class="num">4 + 1</td><td class="num r">~5 / ~5</td><td>Motorobit</td><td>Ana kart kat 2'nin altında; somunlar motor tutucu ve pil yuvası için</td></tr>
       <tr><td>5 mm pogo pin (10'lu) <span class="pill p-new">robot tarafında</span></td><td class="num">1</td><td class="num r">87</td><td>Direnc.net</td><td>V-yuvada 2 adet, istasyonla paket ortak</td></tr>
       <tr><td>Neodyum mıknatıs Ø10×3 mm N52 <span class="pill p-new">yeni</span></td><td class="num">2</td><td class="num r">~40</td><td>Trendyol</td><td>V-yuvanın arka şeridine, pimlerin arasına; direkteki çelik şeride tutunur</td></tr>
       <tr><td>Kapaklı ilaç kutusu</td><td class="num">1</td><td class="num r">60</td><td>Eczane</td><td></td></tr>
     </tbody>
   </table></div>
-  <p>Robot tarafının toplamı yaklaşık <b>6.090 TL</b> (pleksi ve pogo paketi istasyonla paylaşılırsa ~5.740 TL).</p>
+  <p>Robot tarafının toplamı yaklaşık <b>5.640 TL</b> (L braket ve pleksi çıktı, filament ve distans girdi; pogo paketi istasyonla paylaşılırsa ~5.550 TL).</p>
 </section>
 
 <!-- ================= BLOK ================= -->
@@ -345,9 +346,30 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
   </table></div>
 </section>
 
+<!-- ================= KICAD ================= -->
+<section id="kicad">
+  <div class="sec-head"><span class="sec-num">05</span><h2>KiCad şeması</h2></div>
+  <p>Robotun bütün devresi tek sayfa bir KiCad 10 projesidir: <code>elektronik/cdtp_robot.kicad_pro</code>. Bağlantılar etiketle yapılır: aynı adlı etiketler aynı hattır. ESP32, BTS7960, MPU6050, LM2596, BMS, motor, IR gözü, XT60, WAGO ve acil stop sembolleri <code>elektronik/cdtp.kicad_sym</code> kütüphanesindedir. Direnç, kondansatör, diyot, sigorta, pil hücresi ve konnektörler KiCad'in kendi kütüphanesinden gelir.</p>
+  <figure><a href="img/sema_kicad.svg"><img src="img/sema_kicad.svg" alt="KiCad şeması, tek sayfa A3"></a><figcaption>Tek sayfa A3. Büyütmek için resme tıklayın; yazdırılabilir hâli <code>elektronik/cdtp_robot.pdf</code>.</figcaption></figure>
+  <h3>Şema denetimi</h3>
+  <!--SEMA-->
+  <div class="grid2">
+    <div class="box"><h3>Dosyalar</h3><ul>
+      <li><code>cdtp_robot.kicad_sch</code>: şema. <code>cdtp_robot.pdf</code> / <code>.svg</code>: çıktı.</li>
+      <li><code>cdtp.kicad_sym</code> ve <code>sym-lib-table</code>: modül sembolleri; proje açılınca kendiliğinden yüklenir.</li>
+      <li><code>netlist.xml</code>, <code>erc.json</code>, <code>sema_kontrol.md</code>: denetim çıktıları.</li>
+    </ul></div>
+    <div class="box"><h3>Değiştirme</h3><ul>
+      <li>Şemayı <code>tools/kicad_sema.py</code> üretir. Bir bağlantı değişirse oradaki listeyi düzeltip <code>python tools/kicad_sema.py</code> çalıştırın: ERC ve pins.h karşılaştırması yeniden koşar.</li>
+      <li>KiCad'de elle düzenlerseniz betiği bir daha çalıştırmayın; üzerine yazar.</li>
+      <li>Baskı devre kartı çizilmedi: ana kart delikli plakettir (bölüm 06). Sembollerin footprint alanı bu yüzden boş.</li>
+    </ul></div>
+  </div>
+</section>
+
 <!-- ================= ANA KART ================= -->
 <section id="anakart">
-  <div class="sec-head"><span class="sec-num">05</span><h2>Ana kart yerleşimi (5×10 cm delikli plaket)</h2></div>
+  <div class="sec-head"><span class="sec-num">06</span><h2>Ana kart yerleşimi (5×10 cm delikli plaket)</h2></div>
   <p>Üstten görünüş, 2,54 mm aralık, 20 × 38 delik. ESP32 iki sıra dişi header üstünde; arızada sökmeden değişir. Anten kart kenarından taşar, altından kablo geçirmeyin. Kalın çizgiler lehim tarafındaki kalaylı hatlar.</p>
   <div class="diagram"><svg class="w7" viewBox="0 0 800 440" role="img" aria-label="Ana kart yerleşimi">
     <rect x="20" y="20" width="760" height="400" rx="8" class="plate"/>
@@ -407,12 +429,12 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 
 <!-- ================= KABLO ================= -->
 <section id="kablo">
-  <div class="sec-head"><span class="sec-num">06</span><h2>Kablo listesi</h2></div>
+  <div class="sec-head"><span class="sec-num">07</span><h2>Kablo listesi</h2></div>
   <p>Takım sitesinin numaraları korunur. W20–W23 şarj teması değiştiği için yeniden yazıldı, W41–W44 yeni. Her kablonun iki ucuna numarasını kâğıt bantla yazın. Güç hattında jumper kullanmayın; her lehime makaron.</p>
   <div class="tbl"><table>
     <thead><tr><th>No</th><th>Nereden</th><th>Nereye</th><th>Taşıdığı</th><th>Kablo</th><th>Bağlantı</th></tr></thead>
     <tbody>
-      <tr class="grp"><td colspan="6">Pil ve BMS (bağlama sırası için bölüm 07)</td></tr>
+      <tr class="grp"><td colspan="6">Pil ve BMS (bağlama sırası için bölüm 08)</td></tr>
       <tr><td class="num">W1</td><td>Hücre 1 −</td><td>BMS B−</td><td>Pil −</td><td>18 AWG siyah</td><td>Lehim</td></tr>
       <tr><td class="num">W2</td><td>Hücre 1+/2− köprüsü</td><td>BMS B1</td><td>3,7 V denge</td><td>22–26 AWG</td><td>Lehim (yuvanın köprüsüne)</td></tr>
       <tr><td class="num">W3</td><td>Hücre 2+/3− köprüsü</td><td>BMS B2</td><td>7,4 V denge</td><td>22–26 AWG</td><td>Lehim</td></tr>
@@ -458,7 +480,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 
 <!-- ================= BMS ================= -->
 <section id="bms">
-  <div class="sec-head"><span class="sec-num">07</span><h2>Pil ve BMS bağlama</h2></div>
+  <div class="sec-head"><span class="sec-num">08</span><h2>Pil ve BMS bağlama</h2></div>
   <div class="grid2">
     <div class="box"><h3>Sıra</h3><ol>
       <li>Hücreleri tek tek ölçün: 3,0–4,2 V, aralarında ≤ 0,05 V fark.</li>
@@ -479,88 +501,46 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 
 <!-- ================= ŞASİ ================= -->
 <section id="sasi">
-  <div class="sec-head"><span class="sec-num">08</span><h2>Şasi ölçüleri</h2></div>
-  <p>Üç kat 3 mm pleksi, 150 × 110 mm, köşelerde 30+50 mm distans (katlar arası 80 mm). Ölçüler milimetre; z, teker ekseninden yukarı. Motorlar alt katın altına L braketle asılır, mil ekseni teker eksenidir.</p>
+  <div class="sec-head"><span class="sec-num">09</span><h2>Şasi: 3B baskı parçaları</h2></div>
+  <p>Gövde altı baskı parçasıdır: üç kat, V-yuva ve iki motor tutucu. Her modülün kendi cebi var; köşe duvarları modülü yerinde tutar, kenarlar kablolar için açıktır. Bütün ölçüler tek dosyada: <code>cad/olcu.py</code>. <code>python cad/robot_cad.py</code> STL'leri baskı yönünde üretir, 38 parçalık montajı kurar ve aşağıdaki denetimleri yapar. Ölçüler mm; z teker ekseninden yukarı, zemin z = −32,5.</p>
+  <figure><img src="img/cad_montaj.png" alt="3B montaj: önden-sağdan, önden, yandan"><figcaption>Montaj. Gri: baskı katları, mavi: V-yuva, turuncu: motor tutucular, yeşil: kartlar, kırmızı: acil stop ve ilaç kutusu, sarı: distans, pim, mıknatıs.</figcaption></figure>
+  <figure><img src="img/cad_parcalar.png" alt="Baskı parçaları"><figcaption>STL dosyaları, tablaya konduğu yönde. Hiçbiri destek istemez.</figcaption></figure>
+  <!--CAD-->
   <div class="grid2">
-    <div class="diagram"><svg class="w6" viewBox="0 0 520 470" role="img" aria-label="Önden görünüş ölçülü">
-      <text x="14" y="20" font-size="12" font-weight="600">Önden görünüş</text>
-      <!-- zemin -->
-      <path d="M20 430 H500" stroke="var(--muted)" stroke-width="1.2"/>
-      <!-- tekerler: 65 mm çap -> ölçek 1.6 px/mm. eksen y=430-32.5*1.6=378 -->
-      <rect x="62" y="326" width="42" height="104" rx="8" fill="var(--panel)" stroke="var(--fg)"/>
-      <rect x="374" y="326" width="42" height="104" rx="8" fill="var(--panel)" stroke="var(--fg)"/>
-      <!-- motorlar -->
-      <rect x="110" y="364" width="118" height="30" rx="4" fill="var(--panel)" stroke="var(--mot)"/><text x="122" y="383" font-size="10">sol motor</text>
-      <rect x="250" y="364" width="118" height="30" rx="4" fill="var(--panel)" stroke="var(--mot)"/><text x="262" y="383" font-size="10">sağ motor</text>
-      <!-- plakalar: z=21..24 -> y=378-24*1.6=340 ; kat2 z=104 -> y=211 ; kat3 z=184 -> y=84 -->
-      <rect class="plate" x="119" y="339" width="240" height="5"/>
-      <rect class="plate" x="119" y="211" width="240" height="5"/>
-      <rect class="plate" x="119" y="83" width="240" height="5"/>
-      <g stroke="var(--muted)" stroke-width="3"><path d="M125 216 V339"/><path d="M353 216 V339"/><path d="M125 88 V211"/><path d="M353 88 V211"/></g>
-      <!-- içerik -->
-      <rect x="140" y="304" width="60" height="35" fill="var(--panel)" stroke="var(--fg)"/><text x="146" y="325" font-size="9">BTS sol</text>
-      <rect x="280" y="304" width="60" height="35" fill="var(--panel)" stroke="var(--fg)"/><text x="286" y="325" font-size="9">BTS sağ</text>
-      <rect x="228" y="330" width="22" height="9" fill="var(--panel)" stroke="var(--ink)"/><text x="212" y="326" font-size="9" fill="var(--ink)">IMU</text>
-      <rect x="160" y="176" width="160" height="35" rx="4" fill="var(--panel)" stroke="var(--v12)"/><text x="186" y="198" font-size="10">3 × 18650 + BMS</text>
-      <rect x="215" y="50" width="48" height="33" rx="4" fill="var(--panel)" stroke="var(--bad)"/><text x="219" y="45" font-size="9">acil stop</text>
-      <rect x="140" y="60" width="62" height="23" fill="var(--panel)" stroke="var(--fg)"/><text x="144" y="75" font-size="9">kutu</text>
-      <!-- ölçüler -->
-      <g class="dim"><path d="M83 448 H395"/><path d="M83 440 V456"/><path d="M395 440 V456"/></g>
-      <text x="200" y="465" font-size="11">iz 190</text>
-      <g class="dim"><path d="M119 300 H359" stroke-dasharray="2 2"/></g>
-      <text x="196" y="296" font-size="10" class="sub">plaka 150</text>
-      <g class="dim"><path d="M470 378 V430"/><path d="M462 378 H478"/><path d="M462 430 H478"/></g><text x="430" y="408" font-size="10">32,5</text>
-      <g class="dim"><path d="M470 214 V378"/><path d="M462 214 H478"/></g><text x="438" y="300" font-size="10">104</text>
-      <g class="dim"><path d="M490 86 V378"/><path d="M482 86 H498"/></g><text x="456" y="150" font-size="10">184</text>
-      <circle cx="239" cy="263" r="5" fill="var(--bad)"/><text x="250" y="267" font-size="10" fill="var(--bad)">KM z≈72 (kutulu 79)</text>
-      <path d="M40 378 H470" stroke="var(--ink)" stroke-dasharray="6 4" stroke-width=".8"/><text x="24" y="374" font-size="9" fill="var(--ink)">eksen</text>
-    </svg></div>
-    <div class="diagram"><svg class="w6" viewBox="0 0 520 470" role="img" aria-label="Yandan görünüş ölçülü">
-      <text x="14" y="20" font-size="12" font-weight="600">Yandan görünüş (ön sağda)</text>
-      <path d="M20 430 H500" stroke="var(--muted)" stroke-width="1.2"/>
-      <circle cx="240" cy="378" r="52" fill="var(--panel)" stroke="var(--fg)"/><circle cx="240" cy="378" r="4" fill="var(--fg)"/>
-      <rect class="plate" x="152" y="339" width="176" height="5"/>
-      <rect class="plate" x="152" y="211" width="176" height="5"/>
-      <rect class="plate" x="152" y="83" width="176" height="5"/>
-      <g stroke="var(--muted)" stroke-width="3"><path d="M158 216 V339"/><path d="M322 216 V339"/><path d="M158 88 V211"/><path d="M322 88 V211"/></g>
-      <!-- V-yuva ve pimler -->
-      <path d="M328 236 L360 252 L360 330 L328 314 Z" fill="var(--panel)" stroke="var(--ink)" stroke-width="1.4"/>
-      <rect x="352" y="268" width="14" height="6" class="pin"/><text x="372" y="274" font-size="10">+ pim, zemin 102</text>
-      <rect x="352" y="308" width="14" height="6" class="pin"/><text x="372" y="314" font-size="10">− pim, zemin 77</text>
-      <!-- IR gözleri -->
-      <rect x="322" y="190" width="20" height="16" fill="var(--panel)" stroke="var(--sig)"/><text x="350" y="200" font-size="10">IR gözleri, zemin 147</text>
-      <!-- kutu -->
-      <rect x="196" y="56" width="72" height="27" fill="var(--panel)" stroke="var(--fg)"/><text x="206" y="74" font-size="9">ilaç kutusu</text>
-      <path d="M190 56 V83 M274 56 V83" stroke="var(--plate-edge)" stroke-width="3"/>
-      <rect x="160" y="50" width="30" height="33" rx="4" fill="var(--panel)" stroke="var(--bad)"/>
-      <g class="dim"><path d="M152 448 H328"/><path d="M152 440 V456"/><path d="M328 440 V456"/></g><text x="214" y="465" font-size="11">110</text>
-      <text x="40" y="120" font-size="10" class="sub">Kat 3: acil stop (arka),</text><text x="40" y="134" font-size="10" class="sub">kutu yuvası (ön-orta)</text>
-      <text x="40" y="190" font-size="10" class="sub">Kat 2: pil, BMS, ana kart,</text><text x="40" y="204" font-size="10" class="sub">XT60 arkada</text>
-      <text x="40" y="300" font-size="10" class="sub">Kat 1 üstü: BTS ×2, IMU,</text><text x="40" y="314" font-size="10" class="sub">LM2596, sigorta, WAGO ×2,</text><text x="40" y="328" font-size="10" class="sub">C5, SR5100 (önde)</text>
-    </svg></div>
-  </div>
-  <div class="grid2">
-    <div class="box"><h3>Kesim listesi (3 mm pleksi)</h3><ul>
-      <li>Kat 1, 2, 3: 150 × 110 mm, köşelerden 6 mm içeride Ø3,2 delik</li>
-      <li>Kat 1: motor braketleri için 4 × Ø3,2; kablo için ortada 20 × 40 mm pencere</li>
-      <li>V-yuva: 2 adet 40 × 80 mm kanat, 90° açıyla; arkada pimler için 20 × 80 mm dikey şerit, Ø5 delik 2 adet (25 mm aralık)</li>
-      <li>Kutu yuvası: kutunun 2 mm büyüğü cep, 4 duvar 25 mm. Kutu vidalanmaz, cebe oturur.</li>
-      <li>IR göz tutucu: iki gözü ±15° dışa bakacak açılı küçük braket, her göze 15 mm siyah büzüşmeli makaron tüp</li>
+    <div class="box"><h3>Katlara yerleşim</h3><ul>
+      <li><b>Kat 1 altı:</b> iki motor tutucu. JGB37'nin mili eksantrik; motor gövdesi milin 7 mm altında kalır. Tutucu başına 2 × M3 vida, somun tutucunun cebinde.</li>
+      <li><b>Kat 1 üstü (z 26):</b> BTS7960 ×2 arkada (4 ayak, M3 vida), MPU6050 tam ortada (köpük bant, uzun kenar ileri), önde LM2596, sigorta, WAGO ×2 ve C5 beşiği. Arkada 20 × 26 mm kablo penceresi.</li>
+      <li><b>Kat 1–2 arası, önde:</b> V-yuva. Alt flanş kat 1'e, üst kama kat 2'ye ikişer M3 ile.</li>
+      <li><b>Kat 2 altı:</b> ana kart, 10 mm naylon distansla ters asılı; ESP32 aşağı bakar, USB arkadan erişilir.</li>
+      <li><b>Kat 2 üstü (z 110):</b> 3×18650 yuvası (orta hatta 2 × M3), BMS, XT60, ±15° IR göz tutucuları, 8 × 28 mm kablo penceresi.</li>
+      <li><b>Kat 3 üstü (z 194):</b> ilaç kutusu cebi solda (iç 72 × 47, duvar 25 mm, iki parmak oyuğu), acil stop sağda (Ø22,3 delik + dönme kilidi çentiği). İkisi de öne kaydırıldı; böylece kütle merkezi tam teker ekseninin üstünde.</li>
+    </ul></div>
+    <div class="box"><h3>Baskı</h3><ul>
+      <li>PLA ya da PETG, 0,4 mm nozul, 0,2 mm katman, 3 duvar, %30 dolgu (gyroid). Tabla en az 180 × 180 mm.</li>
+      <li>Destek gerekmez: katlar düz, V-yuva dik (üst kaması 45°), motor tutucunun teker tarafı tablada.</li>
+      <li>M3 vidalar plastiğe doğrudan girer (Ø2,8 kılavuz delik). Sık sökülecekse <code>KILAVUZ_D</code>'yi 4,0 yapıp ısıyla gömme somun kullanın.</li>
+      <li>Mıknatıs cebi V-yuvanın arkasından açılır; önde 0,8 mm plastik kalır. İki mıknatısı üst üste bastırın, arkasına bir damla yapıştırıcı sürün.</li>
+      <li>Pogo pimler Ø5,2 deliğe arkadan girer. Uç şeritten 3 mm dışarıda kalacak şekilde sıcak silikonla sabitleyin.</li>
+    </ul></div>
+    <div class="box"><h3>Basmadan önce ölçün</h3><ul>
+      <li>Satıcıya göre değişen ölçüler <code>olcu.py</code>'de <code>(OLC)</code> işaretli. En önemlileri: BTS7960 delik aralığı (43 mm), motor ön yüzündeki 6 deliğin açısı ve mil burcu çapı (12,5 mm), pogo pim çapı, ana kart delikleri (94 × 44 mm), pil yuvası (78 × 60 mm).</li>
+      <li>Ölçü farklıysa <code>olcu.py</code>'yi düzeltip betiği yeniden çalıştırın. Denetimlerin hepsi yine geçmeli.</li>
+      <li>İz genişliği 190 mm. Teker göbeği mile farklı oturursa <code>IZ</code> ile birlikte <code>cdtp_config.h &gt; TRACK_WIDTH_M</code>'yi de değiştirin.</li>
     </ul></div>
     <div class="box"><h3>Kütle bütçesi</h3><ul>
-      <li>Motorlar + braketler 380 g (z 0)</li>
-      <li>Kat 1 ve üstü 255 g (z 24–45)</li>
-      <li>Kat 2 ve üstü 330 g (z 90–120)</li>
-      <li>Kat 3 ve üstü 160 g (z 184–205)</li>
+      <li>Motorlar + tutucular 380 g (z −6)</li>
+      <li>Kat 1 ve üstü 255 g (z 24–49)</li>
+      <li>Kat 2, pil ve ana kart 330 g (z 87–121)</li>
+      <li>Kat 3, acil stop, kutu cebi 160 g (z 192–205)</li>
       <li>Distans, vida, kablo 120 g</li>
-      <li><b>Toplam 1,245 kg, KM 72 mm</b>; kutuyla 1,305 kg, 79 mm</li>
-    </ul><p class="sub" style="font-size:.88rem;color:var(--muted)">Sitedeki öneri 80–120 mm. Simülasyon 54–115 mm arasında geçti. Daha yavaş düşen (kolay dengelenen) robot isterseniz pili kat 3'e alın.</p></div>
+      <li><b>Toplam 1,245 kg, KM 70 mm</b>; kutuyla 1,305 kg, 76 mm</li>
+    </ul><p class="sub" style="font-size:.88rem;color:var(--muted)">Konumlar 3B modelden alınır ve denetlenir. Pil kat 2'nin altına asıldığında KM 68 mm'ye iniyordu; o zaman belirsizlik testinde 40 rastgele robottan biri 1 m sonra 5,6 cm kaydı. Pil üstte, ana kart altta iken 40/40.</p></div>
   </div>
 </section>
 
 <!-- ================= ŞARJ TEMASI ================= -->
 <section id="tema">
-  <div class="sec-head"><span class="sec-num">09</span><h2>Şarj teması: V-yuva ve direk</h2></div>
+  <div class="sec-head"><span class="sec-num">10</span><h2>Şarj teması: V-yuva ve direk</h2></div>
   <p>Robot önündeki V-yuvayla istasyonun yuvarlak direğine yaslanır. Direk yuvarlak olduğu için hangi açıdan gelirse gelsin temas aynıdır; V-yuva yanal ±3 cm hatayı kendisi ortalar. Pimler robotta, halkalar direkte. Pimler SR5100 diyotun arkasında olduğu için robotta açıkta pil gerilimi yoktur.</p>
   <p class="warnnote">Motorlar kesilince tekerler serbest kalır ve robot yuvarlak direkten geri yuvarlanır. Dijital ikizde eğim 11,6°'ye çıktı ve pim temastan ayrıldı. Bu yüzden V-yuvanın arka şeridinde iki neodyum mıknatıs, direkte halkaların arasında çelik şerit var. Şartname manyetik sabitlemeye izin veriyor. Mıknatıs ~10 N tutar; elle çekmek ve motorla geri gitmek (en fazla ~35 N) bunu rahat yener.</p>
   <div class="diagram"><svg class="w7" viewBox="0 0 760 300" role="img" aria-label="V-yuva ve direk üstten ve yandan">
@@ -587,7 +567,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <li>Üst pim → SR5100 → XT60 + hattı (W20, W21) ve J9-2 (W23). Alt pim → WAGO-GND (W22).</li>
       <li>Robot dengede ±2° sallanır; pim yüksekliği ±0,5 mm değişir, halka 16 mm.</li>
       <li>Arka şerit 20 mm geniş olmalı: Ø40 direk önce şeride (pimlere) değer, kanatlar yalnız yanal hatayı düzeltir. Sivri V'de direk pimlere 8 mm kala kanatlara takılır (ikizde görüldü).</li>
-      <li>İki Ø10×3 mm mıknatıs şeridin üstüne ve altına, pimlerle aynı hizada yapıştırılır.</li>
+      <li>İki Ø10×3 mm mıknatıs üst üste, iki pimin tam ortasında (zeminden 89,5 mm). Direkteki çelik şerit 85–94 mm'de olduğu için mıknatıs bu hizada olmalı. 3B denetim, eski "üstüne ve altına" yerleşimindeki mıknatısların şeride değmeyeceğini gösterdi.</li>
     </ul></div>
     <div class="box"><h3>Direk tarafı (Elektrik ekibine)</h3><ul>
       <li>Ø40 mm PVC boru, 200 mm, ağır taban (robot 6° yaslanır).</li>
@@ -601,12 +581,13 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 
 <!-- ================= MONTAJ ================= -->
 <section id="montaj">
-  <div class="sec-head"><span class="sec-num">10</span><h2>Montaj ve tezgâh testleri</h2></div>
+  <div class="sec-head"><span class="sec-num">11</span><h2>Montaj ve tezgâh testleri</h2></div>
   <ol>
-    <li><b>Pil:</b> bölüm 07'deki sıra. B+ ile P− arası paket gerilimi.</li>
+    <li><b>Baskı:</b> altı parçayı basın (bölüm 09). Modülleri ceplerine kuru deneyin; sıkıysa <code>BOSLUK</code>'u 0,1 artırıp yeniden basın.</li>
+    <li><b>Pil:</b> bölüm 08'deki sıra. B+ ile P− arası paket gerilimi.</li>
     <li><b>Regülatör yüksüz:</b> LM2596'yı sigortadan besleyin, çıkışı 5,0–5,1 V'a ayarlayın. ESP32 takılı değil.</li>
     <li><b>Ana kart:</b> ESP32 takılı değilken J1'e 5 V verin, soketteki 5V ve 3V3 noktalarını ölçün (3V3 boş: ESP32 regülatörü takılınca gelir). GPIO4 ile GND arası 10k.</li>
-    <li><b>ESP32 tak, JP1 çıkık, USB ile yükle</b> (bölüm 11). Seri monitörde MPU6050 ve <code>Robot MAC</code> görünmeli.</li>
+    <li><b>ESP32 tak, JP1 çıkık, USB ile yükle</b> (bölüm 12). Seri monitörde MPU6050 ve <code>Robot MAC</code> görünmeli.</li>
     <li><b>Ölçümler:</b> <code>stat</code> ve telemetride <code>v</code> değerini multimetreyle karşılaştırın; fark %3'ten büyükse <code>vscale=</code>.</li>
     <li><b>Motor hattı:</b> EN kablosu takılmadan acil stopa basıp bırakın; J10 gerilimi 0 ↔ ~3,1 V olmalı.</li>
     <li><b>Motorlar havada:</b> robotu tekerler boşta kalacak şekilde destekleyin, EN'i takın, <code>mtest</code>: önce sol, sonra sağ teker 1 s ileri.</li>
@@ -618,7 +599,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 
 <!-- ================= FIRMWARE ================= -->
 <section id="firmware">
-  <div class="sec-head"><span class="sec-num">11</span><h2>Firmware</h2></div>
+  <div class="sec-head"><span class="sec-num">12</span><h2>Firmware</h2></div>
   <div class="grid2">
     <div class="box"><h3>Yükleme</h3><ol>
       <li>VS Code + PlatformIO eklentisi.</li>
@@ -662,11 +643,11 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 
 <!-- ================= AYAR ================= -->
 <section id="ayar">
-  <div class="sec-head"><span class="sec-num">12</span><h2>Ölçülecek ve ayarlanacaklar</h2></div>
+  <div class="sec-head"><span class="sec-num">13</span><h2>Ölçülecek ve ayarlanacaklar</h2></div>
   <div class="tbl"><table>
     <thead><tr><th>Parametre</th><th>Dosya</th><th>Şu an</th><th>Nasıl bulunur</th></tr></thead>
     <tbody>
-      <tr><td>Gövde kütlesi, KM, atalet</td><td class="num">tools/mass_budget.py</td><td class="num">1,245 kg, 72 mm</td><td>Parçaları tartın; KM için robotu ipe iki noktadan asın</td></tr>
+      <tr><td>Gövde kütlesi, KM, atalet</td><td class="num">tools/mass_budget.py</td><td class="num">1,245 kg, 70 mm</td><td>Parçaları tartın; KM için robotu ipe iki noktadan asın</td></tr>
       <tr><td>Enkoder sayım/tur</td><td class="num">cdtp_config.h</td><td class="num">836</td><td>Tekeri 10 tur çevirip sayımı okuyun</td></tr>
       <tr><td>İz genişliği</td><td class="num">cdtp_config.h + lqr_design.py</td><td class="num">0,190 m</td><td>Teker temas noktaları arası; yerinde 10 tur dönüp enkoder farkından</td></tr>
       <tr><td>Motor yönleri, enkoder yönleri</td><td class="num">cdtp_config.h</td><td class="num">sağ ters</td><td><code>mtest</code> ve elle çevirme</td></tr>
@@ -681,7 +662,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 
 <!-- ================= TESTLER ================= -->
 <section id="test">
-  <div class="sec-head"><span class="sec-num">13</span><h2>Testler: C++ simülasyonu ve MuJoCo dijital ikizi</h2></div>
+  <div class="sec-head"><span class="sec-num">14</span><h2>Testler: C++ simülasyonu ve MuJoCo dijital ikizi</h2></div>
 <!--TESTLER-->
   <div class="grid2">
     <figure><img src="img/c1_ileri.png" alt="1 m ileri: yol, eğim ve PWM"><figcaption>C1.2: iki "ileri" adımı ve 3 s durma</figcaption></figure>
@@ -694,7 +675,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 
 <!-- ================= KODLAR ================= -->
 <section id="kod">
-  <div class="sec-head"><span class="sec-num">14</span><h2>Robotun bütün kodları</h2></div>
+  <div class="sec-head"><span class="sec-num">15</span><h2>Robotun bütün kodları</h2></div>
   <p>Robotta çalışan her dosya. Ortak çekirdek (<code>common/cdtp_core</code>) robot firmware'inin parçasıdır; <code>protocol.h</code> ve <code>gesture.h</code> eldivenle paylaşılır. Her dosya açılır ve kopyalanır.</p>
 <!--KOD-->
 </section>

@@ -71,7 +71,7 @@ svg .pin{fill:var(--chg)}
 .note{border-left:3px solid var(--ink);padding:4px 0 4px 14px}
 .warnnote{border-left:3px solid var(--warn);padding:4px 0 4px 14px}
 figure{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0}
-figure img{border:1px solid var(--line);border-radius:6px;background:#fff}
+figure img{border:1px solid var(--line);border-radius:6px;background:#fff;max-width:100%;height:auto}
 figcaption{font-size:.85rem;color:var(--muted)}
 details.code{background:var(--panel);border:1px solid var(--line);border-radius:6px}
 details.code summary{cursor:pointer;padding:9px 14px;font-family:var(--mono);font-size:.86rem;display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap}
@@ -119,9 +119,9 @@ h3.code-group { break-before: page; }
 <div class="cover">
   <span class="eyebrow">YTÜ EEF ÇDTP · 2026-27 Güz · Kontrol ve Otomasyon</span>
   <h1>İki tekerlekli denge robotu<br>yapım kitabı</h1>
-  <p class="lede">Eğitimler, parça listesi, güç ve sinyal şemaları, ana kart, kablo listesi, şasi, şarj teması, firmware, testler, dijital ikiz doğrulaması ve robotun tüm kaynak kodu.</p>
-  <div class="facts"><span>Sürüm: <b>v1.2</b></span><span>Tarih: <b>29.10.2026</b></span><span>Depo: <b>cdtp-denge-robotu</b></span></div>
-  <h3>İçindekiler</h3><ol class="toc2"><li>Eğitim 1 · Geliştirme ortamı</li><li>Eğitim 2 · Montaj sırası</li><li>Eğitim 3 · İlk çalıştırma ve kalibrasyon</li><li>Eğitim 4 · Model ve kazançlar</li><li>Eğitim 5 · Telefon ve eldiven arayüzü</li><li>Eğitim 6 · Sorun giderme</li><li>Robot parça listesi</li><li>Blok şema</li><li>Güç şeması</li><li>Sinyal şeması: ESP32 pinleri</li><li>Ana kart yerleşimi (5×10 cm delikli plaket)</li><li>Kablo listesi</li><li>Pil ve BMS bağlama</li><li>Şasi ölçüleri</li><li>Şarj teması: V-yuva ve direk</li><li>Montaj ve tezgâh testleri</li><li>Firmware</li><li>Ölçülecek ve ayarlanacaklar</li><li>Testler: C++ simülasyonu ve MuJoCo dijital ikizi</li><li>Doğrulama: dijital ikiz, GitHub, tutarlılık</li><li>Ek: tüm kodlar</li></ol>
+  <p class="lede">Eğitimler, parça listesi, güç ve sinyal şemaları, KiCad şeması, ana kart, kablo listesi, 3B baskı şasi, şarj teması, firmware, testler, dijital ikiz doğrulaması ve robotun tüm kaynak kodu.</p>
+  <div class="facts"><span>Sürüm: <b>v1.3</b></span><span>Tarih: <b>29.10.2026</b></span><span>Depo: <b>cdtp-denge-robotu</b></span></div>
+  <h3>İçindekiler</h3><ol class="toc2"><li>Eğitim 1 · Geliştirme ortamı</li><li>Eğitim 2 · Montaj sırası</li><li>Eğitim 3 · İlk çalıştırma ve kalibrasyon</li><li>Eğitim 4 · Model ve kazançlar</li><li>Eğitim 5 · Telefon ve eldiven arayüzü</li><li>Eğitim 6 · Sorun giderme</li><li>Eğitim 7 · 3B baskı parçaları</li><li>Eğitim 8 · KiCad şeması</li><li>Robot parça listesi</li><li>Blok şema</li><li>Güç şeması</li><li>Sinyal şeması: ESP32 pinleri</li><li>KiCad şeması</li><li>Ana kart yerleşimi (5×10 cm delikli plaket)</li><li>Kablo listesi</li><li>Pil ve BMS bağlama</li><li>Şasi: 3B baskı parçaları</li><li>Şarj teması: V-yuva ve direk</li><li>Montaj ve tezgâh testleri</li><li>Firmware</li><li>Ölçülecek ve ayarlanacaklar</li><li>Testler: C++ simülasyonu ve MuJoCo dijital ikizi</li><li>Doğrulama: dijital ikiz, GitHub, tutarlılık</li><li>Ek: tüm kodlar</li><li>Ek: KiCad şeması (A3, son sayfa)</li></ol>
 </div>
 <section class="chapter" id="e1">
 <h2>Eğitim 1 · Geliştirme ortamını kurma</h2>
@@ -138,12 +138,12 @@ h3.code-group { break-before: page; }
 <section class="chapter" id="e2">
 <h2>Eğitim 2 · Montaj sırası</h2>
 <ol class="steps">
-<li><b>Pleksi kesimi:</b> 3 kat 150 × 110 mm, köşe delikleri Ø3,2; V-yuva kanatları ve kutu yuvası (bölüm "Şasi ölçüleri").</li>
-<li><b>Motorlar:</b> L braketlerle kat 1'in altına; mil ekseni = teker ekseni. Tekerleri 6 mm D göbekle takın, vidaları sıkın (gevşek göbek denge döngüsünde boşluk yapar).</li>
-<li><b>Kat 1 üstü:</b> BTS7960 × 2 (sol/sağ), MPU6050 tam ortada ve teker ekseni hizasında (X ileri, bileşenler yukarı), LM2596, sigorta, WAGO × 2, C5 (1000 µF), SR5100.</li>
-<li><b>Kat 2:</b> pil yuvası ortada, BMS yanında, ana kart, XT60 arkada. IR gözleri ön kenarda, ±15° dışa, 15 mm tüplü.</li>
-<li><b>V-yuva:</b> kat 1 ile kat 2 arasına önde; pogo pimler zeminden 102 mm (+) ve 77 mm (−).</li>
-<li><b>Kat 3:</b> acil stop arkada, kutu yuvası ön ortada.</li>
+<li><b>Baskı:</b> 3 kat, V-yuva ve 2 motor tutucu (Eğitim 7, bölüm "Şasi: 3B baskı parçaları").</li>
+<li><b>Motorlar:</b> baskı tutucularla kat 1'in altına; mil eksantrik, motor gövdesi milin 7 mm altında. Tekerleri 6 mm D göbekle takın, vidaları sıkın (gevşek göbek denge döngüsünde boşluk yapar).</li>
+<li><b>Kat 1 üstü:</b> BTS7960 × 2 arkada, MPU6050 tam ortada ve teker ekseni hizasında (X ileri, bileşenler yukarı), önde LM2596, sigorta, WAGO × 2, C5 (1000 µF). SR5100 kablo üstünde, makaronlu.</li>
+<li><b>V-yuva:</b> kat 1 ile kat 2 arasına önde; pogo pimler zeminden 102 mm (+) ve 77 mm (−), mıknatıslar ortada 89,5 mm.</li>
+<li><b>Kat 2:</b> altta ana kart (10 mm naylon distans, ESP32 aşağı bakar); üstte pil yuvası, BMS, XT60 ve ±15° IR göz tutucuları.</li>
+<li><b>Kat 3:</b> ilaç kutusu cebi solda, acil stop sağda; ikisi de öne kaydırılmış (kütle merkezi eksen üstünde).</li>
 <li><b>Kablolama:</b> Kablo listesindeki sırayla (W1 → W44). Önce pil/BMS (W1–W6), sonra 12 V (W7–W19), şarj (W20–W23), en son sinyal (W24–W30).</li>
 <li><b>Tezgâh testleri:</b> "Montaj ve tezgâh testleri" bölümündeki 10 adım. Hepsi geçmeden motorlara EN vermeyin.</li>
 </ol>
@@ -204,6 +204,32 @@ h3.code-group { break-before: page; }
 </tbody></table></div>
 </section>
 
+<section class="chapter" id="e7">
+<h2>Eğitim 7 · 3B baskı parçaları</h2>
+<ol class="steps">
+<li>Parçalar gelince kumpasla ölçün. <code>cad/olcu.py</code>'de <code>(OLC)</code> yazan her satırı kendi parçanızla karşılaştırın: BTS7960 delik aralığı, motor ön yüzü delikleri ve burç çapı, pogo pim çapı, ana kart delikleri, pil yuvası.</li>
+<li>Gerekli paketler: <code>pip install manifold3d trimesh matplotlib</code>. Sonra <code>python cad/robot_cad.py</code>. Çıktının sonunda <code>TUMU GECTI</code> görünmeli; bir denetim kalırsa hangi parçanın neye girdiği yazar.</li>
+<li><code>python cad/ciz.py</code> önizleme resimlerini yeniler. Montajı döndürerek görmek için <code>cad/montaj.glb</code>'yi herhangi bir 3B görüntüleyicide açın (Windows 3D Viewer, Blender, gltf-viewer).</li>
+<li><code>cad/stl/</code> altındaki altı dosyayı dilimleyiciye alın. Dosyalar zaten baskı yönünde, destek kapalı. PLA/PETG, 0,2 mm katman, 3 duvar, %30 gyroid dolgu.</li>
+<li>Önce <code>motor_tutucu_sol.stl</code>'yi basıp motoru takarak deneyin: 6 delik ve burç oturmalı. Oturmazsa <code>MOTOR_DELIK_ACI0</code> ve <code>MOTOR_BURC_D</code>'yi düzeltip yeniden üretin.</li>
+<li>Katları basın, modülleri ceplerine kuru takın. Sıkıysa <code>BOSLUK</code>'u 0,1 mm artırın.</li>
+<li>Montaj sırası: motor tutucular kat 1'in altına, V-yuva kat 1'e, kat 1 modülleri, 30 mm distanslar, ana kart kat 2'nin altına (10 mm naylon distans), V-yuva üst kaması kat 2'ye, kat 2 modülleri, 50 mm distanslar, kat 3, acil stop ve kutu.</li>
+<li>Yerleşim veya parça değişirse <code>tools/mass_budget.py</code>'deki konumları güncelleyin. Betik, kütle bütçesini 3B modelle karşılaştırır. Sonra Eğitim 4'teki gibi kazançları yeniden üretin.</li>
+</ol>
+</section>
+
+<section class="chapter" id="e8">
+<h2>Eğitim 8 · KiCad şeması</h2>
+<ol class="steps">
+<li>KiCad 10'u kurun (kicad.org ya da <code>winget install KiCad.KiCad</code>).</li>
+<li>KiCad'de <b>Dosya → Proje aç</b> → <code>elektronik/cdtp_robot.kicad_pro</code> → şema düzenleyicisi. Modül sembolleri proje kütüphanesinden (<code>cdtp</code>) kendiliğinden yüklenir.</li>
+<li>Bir hattı bulmak için etikete tıklayın: KiCad aynı adlı bütün etiketleri vurgular. Kablo numaraları ve pin sırası için robot dosyasındaki kablo listesine bakın.</li>
+<li>Bağlantı değişirse <code>tools/kicad_sema.py</code>'deki <code>GRUPLAR</code> listesini değiştirin ve <code>python tools/kicad_sema.py</code> çalıştırın. Betik KiCad'in ERC'sini koşar, netlisti çıkarır ve her ESP32 pinini <code>pins.h</code> ile, güç hatlarını kablo listesiyle karşılaştırır.</li>
+<li>Firmware'de bir pin değişirse önce <code>pins.h</code>'yi, sonra şemayı güncelleyin. Biri unutulursa denetim "ESP32 pinleri = pins.h" satırında kalır.</li>
+<li>Şemanın A3 çıktısı bu kitabın son sayfasıdır; ayrıca <code>elektronik/cdtp_robot.pdf</code>.</li>
+</ol>
+</section>
+
 
 
 
@@ -221,7 +247,7 @@ h3.code-group { break-before: page; }
       <tr class="grp"><td colspan="5">Hareket</td></tr>
       <tr><td>JGB37-520 12 V 530 RPM, Hall enkoderli</td><td class="num">2</td><td class="num r">639</td><td>Direnc.net</td><td>6 mm D mil</td></tr>
       <tr><td>BTS7960 motor sürücü kartı</td><td class="num">2</td><td class="num r">162</td><td>Robotzade</td><td>VCC → 3,3 V</td></tr>
-      <tr><td>37 mm motor tutucu (L braket)</td><td class="num">2</td><td class="num r">114</td><td>Keskinler</td><td></td></tr>
+      <tr><td>Motor tutucu, 3B baskı <span class="pill p-new">yeni</span></td><td class="num">2</td><td class="num r">—</td><td>Kendi baskınız</td><td>L braket yerine; <code>cad/stl/motor_tutucu_*.stl</code></td></tr>
       <tr><td>65 mm lastik tekerlek</td><td class="num">2</td><td class="num r">175</td><td>Robotistan</td><td>Göbek 6 mm D'ye uymalı</td></tr>
       <tr><td>6 mm kaplin (2'li)</td><td class="num">1</td><td class="num r">170</td><td>Robotistan</td><td>Göbek mile doğrudan oturuyorsa alınmaz</td></tr>
       <tr class="grp"><td colspan="5">Güç</td></tr>
@@ -244,15 +270,16 @@ h3.code-group { break-before: page; }
       <tr><td>2'li 5,08 mm PCB klemens</td><td class="num">3</td><td class="num r">8,72</td><td>Direnc.net</td><td>J1, J9, J10</td></tr>
       <tr><td>Dişi-dişi jumper 20 cm (40'lı)</td><td class="num">1</td><td class="num r">59</td><td>Direnc.net</td><td>Yalnız sinyal</td></tr>
       <tr class="grp"><td colspan="5">Gövde, yük, şarj teması</td></tr>
-      <tr><td>3 mm pleksi (3 kat + V-yuva + kutu yuvası)</td><td class="num">1</td><td class="num r">400</td><td>Trendyol</td><td>İstasyonla ortak levha</td></tr>
+      <tr><td>PLA ya da PETG filament, ~0,25 kg <span class="pill p-new">yeni</span></td><td class="num">1</td><td class="num r">~150</td><td>—</td><td>3 kat, V-yuva, 2 motor tutucu (bölüm 09). Pleksi artık yalnız istasyon için.</td></tr>
       <tr><td>M3 30 mm + 50 mm dişi-dişi distans</td><td class="num">8+8</td><td class="num r">9,5 / 13,5</td><td>Motorobit</td><td>Her köşede 30+50 = 80 mm</td></tr>
       <tr><td>M3 10 mm vida (10'lu)</td><td class="num">4</td><td class="num r">7,5</td><td>Motorobit</td><td></td></tr>
+      <tr><td>M3 10 mm naylon distans + M3 somun (10'lu) <span class="pill p-new">yeni</span></td><td class="num">4 + 1</td><td class="num r">~5 / ~5</td><td>Motorobit</td><td>Ana kart kat 2'nin altında; somunlar motor tutucu ve pil yuvası için</td></tr>
       <tr><td>5 mm pogo pin (10'lu) <span class="pill p-new">robot tarafında</span></td><td class="num">1</td><td class="num r">87</td><td>Direnc.net</td><td>V-yuvada 2 adet, istasyonla paket ortak</td></tr>
       <tr><td>Neodyum mıknatıs Ø10×3 mm N52 <span class="pill p-new">yeni</span></td><td class="num">2</td><td class="num r">~40</td><td>Trendyol</td><td>V-yuvanın arka şeridine, pimlerin arasına; direkteki çelik şeride tutunur</td></tr>
       <tr><td>Kapaklı ilaç kutusu</td><td class="num">1</td><td class="num r">60</td><td>Eczane</td><td></td></tr>
     </tbody>
   </table></div>
-  <p>Robot tarafının toplamı yaklaşık <b>6.090 TL</b> (pleksi ve pogo paketi istasyonla paylaşılırsa ~5.740 TL).</p>
+  <p>Robot tarafının toplamı yaklaşık <b>5.640 TL</b> (L braket ve pleksi çıktı, filament ve distans girdi; pogo paketi istasyonla paylaşılırsa ~5.550 TL).</p>
 </section>
 
 <!-- ================= BLOK ================= -->
@@ -441,9 +468,36 @@ h3.code-group { break-before: page; }
   </table></div>
 </section>
 
+<!-- ================= KICAD ================= -->
+<section id="kicad">
+  <div class="sec-head"><span class="sec-num">05</span><h2>KiCad şeması</h2></div>
+  <p>Robotun bütün devresi tek sayfa bir KiCad 10 projesidir: <code>elektronik/cdtp_robot.kicad_pro</code>. Bağlantılar etiketle yapılır: aynı adlı etiketler aynı hattır. ESP32, BTS7960, MPU6050, LM2596, BMS, motor, IR gözü, XT60, WAGO ve acil stop sembolleri <code>elektronik/cdtp.kicad_sym</code> kütüphanesindedir. Direnç, kondansatör, diyot, sigorta, pil hücresi ve konnektörler KiCad'in kendi kütüphanesinden gelir.</p>
+  <figure><a href="img/sema_kicad.svg"><img src="img/sema_kicad.svg" alt="KiCad şeması, tek sayfa A3"></a><figcaption>Tek sayfa A3. Büyütmek için resme tıklayın; yazdırılabilir hâli <code>elektronik/cdtp_robot.pdf</code>.</figcaption></figure>
+  <h3>Şema denetimi</h3>
+  <div class="tbl"><table><thead><tr><th>Kontrol</th><th>Sonuc</th><th>Ayrinti</th></tr></thead><tbody>
+<tr><td>KiCad ERC</td><td><span class="pill p-ok">geçti</span></td><td>0 hata, 0 uyari</td></tr>
+<tr><td>ESP32 pinleri = firmware/robot/src/pins.h</td><td><span class="pill p-ok">geçti</span></td><td>17 pin sabiti, her biri ESP32 + ana kart konnektoru + modul ucunda dogru</td></tr>
+<tr><td>Guc ve kablo listesi (W1-W44)</td><td><span class="pill p-ok">geçti</span></td><td>17 baglanti grubu dogru; acil stop, JP1, diyot ve XT60 hatlari ayri</td></tr>
+<tr><td>Bolucu degerleri</td><td><span class="pill p-ok">geçti</span></td><td>R1/R2 orani 4.704 = firmware DIVIDER 4.704; 12,6 V -&gt; 2.68 V (ADC 11 dB); R6/R7 -&gt; 3.13 V &lt; 3,3 V</td></tr>
+<tr><td>Tek uclu hat yok</td><td><span class="pill p-ok">geçti</span></td><td>57 hat</td></tr>
+</tbody></table></div>
+  <div class="grid2">
+    <div class="box"><h3>Dosyalar</h3><ul>
+      <li><code>cdtp_robot.kicad_sch</code>: şema. <code>cdtp_robot.pdf</code> / <code>.svg</code>: çıktı.</li>
+      <li><code>cdtp.kicad_sym</code> ve <code>sym-lib-table</code>: modül sembolleri; proje açılınca kendiliğinden yüklenir.</li>
+      <li><code>netlist.xml</code>, <code>erc.json</code>, <code>sema_kontrol.md</code>: denetim çıktıları.</li>
+    </ul></div>
+    <div class="box"><h3>Değiştirme</h3><ul>
+      <li>Şemayı <code>tools/kicad_sema.py</code> üretir. Bir bağlantı değişirse oradaki listeyi düzeltip <code>python tools/kicad_sema.py</code> çalıştırın: ERC ve pins.h karşılaştırması yeniden koşar.</li>
+      <li>KiCad'de elle düzenlerseniz betiği bir daha çalıştırmayın; üzerine yazar.</li>
+      <li>Baskı devre kartı çizilmedi: ana kart delikli plakettir (bölüm 06). Sembollerin footprint alanı bu yüzden boş.</li>
+    </ul></div>
+  </div>
+</section>
+
 <!-- ================= ANA KART ================= -->
 <section id="anakart">
-  <div class="sec-head"><span class="sec-num">05</span><h2>Ana kart yerleşimi (5×10 cm delikli plaket)</h2></div>
+  <div class="sec-head"><span class="sec-num">06</span><h2>Ana kart yerleşimi (5×10 cm delikli plaket)</h2></div>
   <p>Üstten görünüş, 2,54 mm aralık, 20 × 38 delik. ESP32 iki sıra dişi header üstünde; arızada sökmeden değişir. Anten kart kenarından taşar, altından kablo geçirmeyin. Kalın çizgiler lehim tarafındaki kalaylı hatlar.</p>
   <div class="diagram"><svg class="w7" viewBox="0 0 800 440" role="img" aria-label="Ana kart yerleşimi">
     <rect x="20" y="20" width="760" height="400" rx="8" class="plate"/>
@@ -503,12 +557,12 @@ h3.code-group { break-before: page; }
 
 <!-- ================= KABLO ================= -->
 <section id="kablo">
-  <div class="sec-head"><span class="sec-num">06</span><h2>Kablo listesi</h2></div>
+  <div class="sec-head"><span class="sec-num">07</span><h2>Kablo listesi</h2></div>
   <p>Takım sitesinin numaraları korunur. W20–W23 şarj teması değiştiği için yeniden yazıldı, W41–W44 yeni. Her kablonun iki ucuna numarasını kâğıt bantla yazın. Güç hattında jumper kullanmayın; her lehime makaron.</p>
   <div class="tbl"><table>
     <thead><tr><th>No</th><th>Nereden</th><th>Nereye</th><th>Taşıdığı</th><th>Kablo</th><th>Bağlantı</th></tr></thead>
     <tbody>
-      <tr class="grp"><td colspan="6">Pil ve BMS (bağlama sırası için bölüm 07)</td></tr>
+      <tr class="grp"><td colspan="6">Pil ve BMS (bağlama sırası için bölüm 08)</td></tr>
       <tr><td class="num">W1</td><td>Hücre 1 −</td><td>BMS B−</td><td>Pil −</td><td>18 AWG siyah</td><td>Lehim</td></tr>
       <tr><td class="num">W2</td><td>Hücre 1+/2− köprüsü</td><td>BMS B1</td><td>3,7 V denge</td><td>22–26 AWG</td><td>Lehim (yuvanın köprüsüne)</td></tr>
       <tr><td class="num">W3</td><td>Hücre 2+/3− köprüsü</td><td>BMS B2</td><td>7,4 V denge</td><td>22–26 AWG</td><td>Lehim</td></tr>
@@ -554,7 +608,7 @@ h3.code-group { break-before: page; }
 
 <!-- ================= BMS ================= -->
 <section id="bms">
-  <div class="sec-head"><span class="sec-num">07</span><h2>Pil ve BMS bağlama</h2></div>
+  <div class="sec-head"><span class="sec-num">08</span><h2>Pil ve BMS bağlama</h2></div>
   <div class="grid2">
     <div class="box"><h3>Sıra</h3><ol>
       <li>Hücreleri tek tek ölçün: 3,0–4,2 V, aralarında ≤ 0,05 V fark.</li>
@@ -575,88 +629,66 @@ h3.code-group { break-before: page; }
 
 <!-- ================= ŞASİ ================= -->
 <section id="sasi">
-  <div class="sec-head"><span class="sec-num">08</span><h2>Şasi ölçüleri</h2></div>
-  <p>Üç kat 3 mm pleksi, 150 × 110 mm, köşelerde 30+50 mm distans (katlar arası 80 mm). Ölçüler milimetre; z, teker ekseninden yukarı. Motorlar alt katın altına L braketle asılır, mil ekseni teker eksenidir.</p>
+  <div class="sec-head"><span class="sec-num">09</span><h2>Şasi: 3B baskı parçaları</h2></div>
+  <p>Gövde altı baskı parçasıdır: üç kat, V-yuva ve iki motor tutucu. Her modülün kendi cebi var; köşe duvarları modülü yerinde tutar, kenarlar kablolar için açıktır. Bütün ölçüler tek dosyada: <code>cad/olcu.py</code>. <code>python cad/robot_cad.py</code> STL'leri baskı yönünde üretir, 38 parçalık montajı kurar ve aşağıdaki denetimleri yapar. Ölçüler mm; z teker ekseninden yukarı, zemin z = −32,5.</p>
+  <figure><img src="img/cad_montaj.png" alt="3B montaj: önden-sağdan, önden, yandan"><figcaption>Montaj. Gri: baskı katları, mavi: V-yuva, turuncu: motor tutucular, yeşil: kartlar, kırmızı: acil stop ve ilaç kutusu, sarı: distans, pim, mıknatıs.</figcaption></figure>
+  <figure><img src="img/cad_parcalar.png" alt="Baskı parçaları"><figcaption>STL dosyaları, tablaya konduğu yönde. Hiçbiri destek istemez.</figcaption></figure>
+  <h3>3B montaj denetimi ve parçalar</h3>
+<div class="tbl"><table><thead><tr><th>Kontrol</th><th>Sonuc</th><th>Ayrinti</th></tr></thead><tbody>
+<tr><td>Carpisma (tum parcalar ikili)</td><td><span class="pill p-ok">geçti</span></td><td>38 parca, 703 cift; hic biri birbirine girmiyor</td></tr>
+<tr><td>Zemin payi (+-30 derece egim)</td><td><span class="pill p-ok">geçti</span></td><td>en alcak nokta zeminden 4.5 mm ([baski] motor_tutucu_sol)</td></tr>
+<tr><td>Direk yanasmasi (O40, seride temas)</td><td><span class="pill p-ok">geçti</span></td><td>yalniz pogo pimler direge giriyor (yay payi 3 mm)</td></tr>
+<tr><td>V kanatlari direge degmiyor</td><td><span class="pill p-ok">geçti</span></td><td>kanat ic yuzu ile direk arasi 1.2 mm</td></tr>
+<tr><td>Pim, miknatis ve goz yukseklikleri</td><td><span class="pill p-ok">geçti</span></td><td>+ pim 102.0, - pim 77.0, miknatis 89.5 (celik serit 85-94), IR goz 147.0 mm (zeminden)</td></tr>
+<tr><td>IR gorus hatti</td><td><span class="pill p-ok">geçti</span></td><td>iki gozun onu 25 cm acik</td></tr>
+<tr><td>MPU6050 teker ekseni ustunde, ortada</td><td><span class="pill p-ok">geçti</span></td><td>x=0, y=0 mm, z=27 mm</td></tr>
+<tr><td>Kutle butcesi 3B modelle uyumlu</td><td><span class="pill p-ok">geçti</span></td><td>en buyuk fark 6.0 mm (2x BTS7960: dz +0, MPU6050 (kat 1 ustu, ortada): dz +0, 3x18650 + yuva + BMS: dz +0, Ana kart + ESP32: dz -1, Kat 3 baski: dz +0, Ilac kutusu: dz +0, Acil stop: dz +0, Kutu yuvasi: dz +0)</td></tr>
+<tr><td>Kutle merkezi teker ekseni ustunde (x)</td><td><span class="pill p-ok">geçti</span></td><td>x = -0.1 mm (one +); robot dik dururken dengede</td></tr>
+<tr><td>Baski tablasina sigma (180x180)</td><td><span class="pill p-ok">geçti</span></td><td>hepsi sigiyor</td></tr>
+</tbody></table></div>
+<div class="tbl"><table><thead><tr><th>Parca</th><th>Boyut (mm, baski yonu)</th><th>Hacim cm3</th><th>Kutle g (%60 dolu PLA)</th></tr></thead><tbody>
+<tr><td>kat1</td><td>110.0 x 150.0 x 12.0</td><td>67.9</td><td>51</td></tr>
+<tr><td>kat2</td><td>110.0 x 150.0 x 18.0</td><td>68.3</td><td>51</td></tr>
+<tr><td>kat3</td><td>110.0 x 150.0 x 29.0</td><td>77.4</td><td>58</td></tr>
+<tr><td>motor_tutucu_sol</td><td>42.0 x 50.0 x 28.0</td><td>11.8</td><td>9</td></tr>
+<tr><td>motor_tutucu_sag</td><td>42.0 x 50.0 x 28.0</td><td>11.8</td><td>9</td></tr>
+<tr><td>v_yuva</td><td>47.7 x 83.6 x 80.0</td><td>36.5</td><td>27</td></tr>
+</tbody></table></div>
   <div class="grid2">
-    <div class="diagram"><svg class="w6" viewBox="0 0 520 470" role="img" aria-label="Önden görünüş ölçülü">
-      <text x="14" y="20" font-size="12" font-weight="600">Önden görünüş</text>
-      <!-- zemin -->
-      <path d="M20 430 H500" stroke="var(--muted)" stroke-width="1.2"/>
-      <!-- tekerler: 65 mm çap -> ölçek 1.6 px/mm. eksen y=430-32.5*1.6=378 -->
-      <rect x="62" y="326" width="42" height="104" rx="8" fill="var(--panel)" stroke="var(--fg)"/>
-      <rect x="374" y="326" width="42" height="104" rx="8" fill="var(--panel)" stroke="var(--fg)"/>
-      <!-- motorlar -->
-      <rect x="110" y="364" width="118" height="30" rx="4" fill="var(--panel)" stroke="var(--mot)"/><text x="122" y="383" font-size="10">sol motor</text>
-      <rect x="250" y="364" width="118" height="30" rx="4" fill="var(--panel)" stroke="var(--mot)"/><text x="262" y="383" font-size="10">sağ motor</text>
-      <!-- plakalar: z=21..24 -> y=378-24*1.6=340 ; kat2 z=104 -> y=211 ; kat3 z=184 -> y=84 -->
-      <rect class="plate" x="119" y="339" width="240" height="5"/>
-      <rect class="plate" x="119" y="211" width="240" height="5"/>
-      <rect class="plate" x="119" y="83" width="240" height="5"/>
-      <g stroke="var(--muted)" stroke-width="3"><path d="M125 216 V339"/><path d="M353 216 V339"/><path d="M125 88 V211"/><path d="M353 88 V211"/></g>
-      <!-- içerik -->
-      <rect x="140" y="304" width="60" height="35" fill="var(--panel)" stroke="var(--fg)"/><text x="146" y="325" font-size="9">BTS sol</text>
-      <rect x="280" y="304" width="60" height="35" fill="var(--panel)" stroke="var(--fg)"/><text x="286" y="325" font-size="9">BTS sağ</text>
-      <rect x="228" y="330" width="22" height="9" fill="var(--panel)" stroke="var(--ink)"/><text x="212" y="326" font-size="9" fill="var(--ink)">IMU</text>
-      <rect x="160" y="176" width="160" height="35" rx="4" fill="var(--panel)" stroke="var(--v12)"/><text x="186" y="198" font-size="10">3 × 18650 + BMS</text>
-      <rect x="215" y="50" width="48" height="33" rx="4" fill="var(--panel)" stroke="var(--bad)"/><text x="219" y="45" font-size="9">acil stop</text>
-      <rect x="140" y="60" width="62" height="23" fill="var(--panel)" stroke="var(--fg)"/><text x="144" y="75" font-size="9">kutu</text>
-      <!-- ölçüler -->
-      <g class="dim"><path d="M83 448 H395"/><path d="M83 440 V456"/><path d="M395 440 V456"/></g>
-      <text x="200" y="465" font-size="11">iz 190</text>
-      <g class="dim"><path d="M119 300 H359" stroke-dasharray="2 2"/></g>
-      <text x="196" y="296" font-size="10" class="sub">plaka 150</text>
-      <g class="dim"><path d="M470 378 V430"/><path d="M462 378 H478"/><path d="M462 430 H478"/></g><text x="430" y="408" font-size="10">32,5</text>
-      <g class="dim"><path d="M470 214 V378"/><path d="M462 214 H478"/></g><text x="438" y="300" font-size="10">104</text>
-      <g class="dim"><path d="M490 86 V378"/><path d="M482 86 H498"/></g><text x="456" y="150" font-size="10">184</text>
-      <circle cx="239" cy="263" r="5" fill="var(--bad)"/><text x="250" y="267" font-size="10" fill="var(--bad)">KM z≈72 (kutulu 79)</text>
-      <path d="M40 378 H470" stroke="var(--ink)" stroke-dasharray="6 4" stroke-width=".8"/><text x="24" y="374" font-size="9" fill="var(--ink)">eksen</text>
-    </svg></div>
-    <div class="diagram"><svg class="w6" viewBox="0 0 520 470" role="img" aria-label="Yandan görünüş ölçülü">
-      <text x="14" y="20" font-size="12" font-weight="600">Yandan görünüş (ön sağda)</text>
-      <path d="M20 430 H500" stroke="var(--muted)" stroke-width="1.2"/>
-      <circle cx="240" cy="378" r="52" fill="var(--panel)" stroke="var(--fg)"/><circle cx="240" cy="378" r="4" fill="var(--fg)"/>
-      <rect class="plate" x="152" y="339" width="176" height="5"/>
-      <rect class="plate" x="152" y="211" width="176" height="5"/>
-      <rect class="plate" x="152" y="83" width="176" height="5"/>
-      <g stroke="var(--muted)" stroke-width="3"><path d="M158 216 V339"/><path d="M322 216 V339"/><path d="M158 88 V211"/><path d="M322 88 V211"/></g>
-      <!-- V-yuva ve pimler -->
-      <path d="M328 236 L360 252 L360 330 L328 314 Z" fill="var(--panel)" stroke="var(--ink)" stroke-width="1.4"/>
-      <rect x="352" y="268" width="14" height="6" class="pin"/><text x="372" y="274" font-size="10">+ pim, zemin 102</text>
-      <rect x="352" y="308" width="14" height="6" class="pin"/><text x="372" y="314" font-size="10">− pim, zemin 77</text>
-      <!-- IR gözleri -->
-      <rect x="322" y="190" width="20" height="16" fill="var(--panel)" stroke="var(--sig)"/><text x="350" y="200" font-size="10">IR gözleri, zemin 147</text>
-      <!-- kutu -->
-      <rect x="196" y="56" width="72" height="27" fill="var(--panel)" stroke="var(--fg)"/><text x="206" y="74" font-size="9">ilaç kutusu</text>
-      <path d="M190 56 V83 M274 56 V83" stroke="var(--plate-edge)" stroke-width="3"/>
-      <rect x="160" y="50" width="30" height="33" rx="4" fill="var(--panel)" stroke="var(--bad)"/>
-      <g class="dim"><path d="M152 448 H328"/><path d="M152 440 V456"/><path d="M328 440 V456"/></g><text x="214" y="465" font-size="11">110</text>
-      <text x="40" y="120" font-size="10" class="sub">Kat 3: acil stop (arka),</text><text x="40" y="134" font-size="10" class="sub">kutu yuvası (ön-orta)</text>
-      <text x="40" y="190" font-size="10" class="sub">Kat 2: pil, BMS, ana kart,</text><text x="40" y="204" font-size="10" class="sub">XT60 arkada</text>
-      <text x="40" y="300" font-size="10" class="sub">Kat 1 üstü: BTS ×2, IMU,</text><text x="40" y="314" font-size="10" class="sub">LM2596, sigorta, WAGO ×2,</text><text x="40" y="328" font-size="10" class="sub">C5, SR5100 (önde)</text>
-    </svg></div>
-  </div>
-  <div class="grid2">
-    <div class="box"><h3>Kesim listesi (3 mm pleksi)</h3><ul>
-      <li>Kat 1, 2, 3: 150 × 110 mm, köşelerden 6 mm içeride Ø3,2 delik</li>
-      <li>Kat 1: motor braketleri için 4 × Ø3,2; kablo için ortada 20 × 40 mm pencere</li>
-      <li>V-yuva: 2 adet 40 × 80 mm kanat, 90° açıyla; arkada pimler için 20 × 80 mm dikey şerit, Ø5 delik 2 adet (25 mm aralık)</li>
-      <li>Kutu yuvası: kutunun 2 mm büyüğü cep, 4 duvar 25 mm. Kutu vidalanmaz, cebe oturur.</li>
-      <li>IR göz tutucu: iki gözü ±15° dışa bakacak açılı küçük braket, her göze 15 mm siyah büzüşmeli makaron tüp</li>
+    <div class="box"><h3>Katlara yerleşim</h3><ul>
+      <li><b>Kat 1 altı:</b> iki motor tutucu. JGB37'nin mili eksantrik; motor gövdesi milin 7 mm altında kalır. Tutucu başına 2 × M3 vida, somun tutucunun cebinde.</li>
+      <li><b>Kat 1 üstü (z 26):</b> BTS7960 ×2 arkada (4 ayak, M3 vida), MPU6050 tam ortada (köpük bant, uzun kenar ileri), önde LM2596, sigorta, WAGO ×2 ve C5 beşiği. Arkada 20 × 26 mm kablo penceresi.</li>
+      <li><b>Kat 1–2 arası, önde:</b> V-yuva. Alt flanş kat 1'e, üst kama kat 2'ye ikişer M3 ile.</li>
+      <li><b>Kat 2 altı:</b> ana kart, 10 mm naylon distansla ters asılı; ESP32 aşağı bakar, USB arkadan erişilir.</li>
+      <li><b>Kat 2 üstü (z 110):</b> 3×18650 yuvası (orta hatta 2 × M3), BMS, XT60, ±15° IR göz tutucuları, 8 × 28 mm kablo penceresi.</li>
+      <li><b>Kat 3 üstü (z 194):</b> ilaç kutusu cebi solda (iç 72 × 47, duvar 25 mm, iki parmak oyuğu), acil stop sağda (Ø22,3 delik + dönme kilidi çentiği). İkisi de öne kaydırıldı; böylece kütle merkezi tam teker ekseninin üstünde.</li>
+    </ul></div>
+    <div class="box"><h3>Baskı</h3><ul>
+      <li>PLA ya da PETG, 0,4 mm nozul, 0,2 mm katman, 3 duvar, %30 dolgu (gyroid). Tabla en az 180 × 180 mm.</li>
+      <li>Destek gerekmez: katlar düz, V-yuva dik (üst kaması 45°), motor tutucunun teker tarafı tablada.</li>
+      <li>M3 vidalar plastiğe doğrudan girer (Ø2,8 kılavuz delik). Sık sökülecekse <code>KILAVUZ_D</code>'yi 4,0 yapıp ısıyla gömme somun kullanın.</li>
+      <li>Mıknatıs cebi V-yuvanın arkasından açılır; önde 0,8 mm plastik kalır. İki mıknatısı üst üste bastırın, arkasına bir damla yapıştırıcı sürün.</li>
+      <li>Pogo pimler Ø5,2 deliğe arkadan girer. Uç şeritten 3 mm dışarıda kalacak şekilde sıcak silikonla sabitleyin.</li>
+    </ul></div>
+    <div class="box"><h3>Basmadan önce ölçün</h3><ul>
+      <li>Satıcıya göre değişen ölçüler <code>olcu.py</code>'de <code>(OLC)</code> işaretli. En önemlileri: BTS7960 delik aralığı (43 mm), motor ön yüzündeki 6 deliğin açısı ve mil burcu çapı (12,5 mm), pogo pim çapı, ana kart delikleri (94 × 44 mm), pil yuvası (78 × 60 mm).</li>
+      <li>Ölçü farklıysa <code>olcu.py</code>'yi düzeltip betiği yeniden çalıştırın. Denetimlerin hepsi yine geçmeli.</li>
+      <li>İz genişliği 190 mm. Teker göbeği mile farklı oturursa <code>IZ</code> ile birlikte <code>cdtp_config.h &gt; TRACK_WIDTH_M</code>'yi de değiştirin.</li>
     </ul></div>
     <div class="box"><h3>Kütle bütçesi</h3><ul>
-      <li>Motorlar + braketler 380 g (z 0)</li>
-      <li>Kat 1 ve üstü 255 g (z 24–45)</li>
-      <li>Kat 2 ve üstü 330 g (z 90–120)</li>
-      <li>Kat 3 ve üstü 160 g (z 184–205)</li>
+      <li>Motorlar + tutucular 380 g (z −6)</li>
+      <li>Kat 1 ve üstü 255 g (z 24–49)</li>
+      <li>Kat 2, pil ve ana kart 330 g (z 87–121)</li>
+      <li>Kat 3, acil stop, kutu cebi 160 g (z 192–205)</li>
       <li>Distans, vida, kablo 120 g</li>
-      <li><b>Toplam 1,245 kg, KM 72 mm</b>; kutuyla 1,305 kg, 79 mm</li>
-    </ul><p class="sub" style="font-size:.88rem;color:var(--muted)">Sitedeki öneri 80–120 mm. Simülasyon 54–115 mm arasında geçti. Daha yavaş düşen (kolay dengelenen) robot isterseniz pili kat 3'e alın.</p></div>
+      <li><b>Toplam 1,245 kg, KM 70 mm</b>; kutuyla 1,305 kg, 76 mm</li>
+    </ul><p class="sub" style="font-size:.88rem;color:var(--muted)">Konumlar 3B modelden alınır ve denetlenir. Pil kat 2'nin altına asıldığında KM 68 mm'ye iniyordu; o zaman belirsizlik testinde 40 rastgele robottan biri 1 m sonra 5,6 cm kaydı. Pil üstte, ana kart altta iken 40/40.</p></div>
   </div>
 </section>
 
 <!-- ================= ŞARJ TEMASI ================= -->
 <section id="tema">
-  <div class="sec-head"><span class="sec-num">09</span><h2>Şarj teması: V-yuva ve direk</h2></div>
+  <div class="sec-head"><span class="sec-num">10</span><h2>Şarj teması: V-yuva ve direk</h2></div>
   <p>Robot önündeki V-yuvayla istasyonun yuvarlak direğine yaslanır. Direk yuvarlak olduğu için hangi açıdan gelirse gelsin temas aynıdır; V-yuva yanal ±3 cm hatayı kendisi ortalar. Pimler robotta, halkalar direkte. Pimler SR5100 diyotun arkasında olduğu için robotta açıkta pil gerilimi yoktur.</p>
   <p class="warnnote">Motorlar kesilince tekerler serbest kalır ve robot yuvarlak direkten geri yuvarlanır. Dijital ikizde eğim 11,6°'ye çıktı ve pim temastan ayrıldı. Bu yüzden V-yuvanın arka şeridinde iki neodyum mıknatıs, direkte halkaların arasında çelik şerit var. Şartname manyetik sabitlemeye izin veriyor. Mıknatıs ~10 N tutar; elle çekmek ve motorla geri gitmek (en fazla ~35 N) bunu rahat yener.</p>
   <div class="diagram"><svg class="w7" viewBox="0 0 760 300" role="img" aria-label="V-yuva ve direk üstten ve yandan">
@@ -683,7 +715,7 @@ h3.code-group { break-before: page; }
       <li>Üst pim → SR5100 → XT60 + hattı (W20, W21) ve J9-2 (W23). Alt pim → WAGO-GND (W22).</li>
       <li>Robot dengede ±2° sallanır; pim yüksekliği ±0,5 mm değişir, halka 16 mm.</li>
       <li>Arka şerit 20 mm geniş olmalı: Ø40 direk önce şeride (pimlere) değer, kanatlar yalnız yanal hatayı düzeltir. Sivri V'de direk pimlere 8 mm kala kanatlara takılır (ikizde görüldü).</li>
-      <li>İki Ø10×3 mm mıknatıs şeridin üstüne ve altına, pimlerle aynı hizada yapıştırılır.</li>
+      <li>İki Ø10×3 mm mıknatıs üst üste, iki pimin tam ortasında (zeminden 89,5 mm). Direkteki çelik şerit 85–94 mm'de olduğu için mıknatıs bu hizada olmalı. 3B denetim, eski "üstüne ve altına" yerleşimindeki mıknatısların şeride değmeyeceğini gösterdi.</li>
     </ul></div>
     <div class="box"><h3>Direk tarafı (Elektrik ekibine)</h3><ul>
       <li>Ø40 mm PVC boru, 200 mm, ağır taban (robot 6° yaslanır).</li>
@@ -697,12 +729,13 @@ h3.code-group { break-before: page; }
 
 <!-- ================= MONTAJ ================= -->
 <section id="montaj">
-  <div class="sec-head"><span class="sec-num">10</span><h2>Montaj ve tezgâh testleri</h2></div>
+  <div class="sec-head"><span class="sec-num">11</span><h2>Montaj ve tezgâh testleri</h2></div>
   <ol>
-    <li><b>Pil:</b> bölüm 07'deki sıra. B+ ile P− arası paket gerilimi.</li>
+    <li><b>Baskı:</b> altı parçayı basın (bölüm 09). Modülleri ceplerine kuru deneyin; sıkıysa <code>BOSLUK</code>'u 0,1 artırıp yeniden basın.</li>
+    <li><b>Pil:</b> bölüm 08'deki sıra. B+ ile P− arası paket gerilimi.</li>
     <li><b>Regülatör yüksüz:</b> LM2596'yı sigortadan besleyin, çıkışı 5,0–5,1 V'a ayarlayın. ESP32 takılı değil.</li>
     <li><b>Ana kart:</b> ESP32 takılı değilken J1'e 5 V verin, soketteki 5V ve 3V3 noktalarını ölçün (3V3 boş: ESP32 regülatörü takılınca gelir). GPIO4 ile GND arası 10k.</li>
-    <li><b>ESP32 tak, JP1 çıkık, USB ile yükle</b> (bölüm 11). Seri monitörde MPU6050 ve <code>Robot MAC</code> görünmeli.</li>
+    <li><b>ESP32 tak, JP1 çıkık, USB ile yükle</b> (bölüm 12). Seri monitörde MPU6050 ve <code>Robot MAC</code> görünmeli.</li>
     <li><b>Ölçümler:</b> <code>stat</code> ve telemetride <code>v</code> değerini multimetreyle karşılaştırın; fark %3'ten büyükse <code>vscale=</code>.</li>
     <li><b>Motor hattı:</b> EN kablosu takılmadan acil stopa basıp bırakın; J10 gerilimi 0 ↔ ~3,1 V olmalı.</li>
     <li><b>Motorlar havada:</b> robotu tekerler boşta kalacak şekilde destekleyin, EN'i takın, <code>mtest</code>: önce sol, sonra sağ teker 1 s ileri.</li>
@@ -714,7 +747,7 @@ h3.code-group { break-before: page; }
 
 <!-- ================= FIRMWARE ================= -->
 <section id="firmware">
-  <div class="sec-head"><span class="sec-num">11</span><h2>Firmware</h2></div>
+  <div class="sec-head"><span class="sec-num">12</span><h2>Firmware</h2></div>
   <div class="grid2">
     <div class="box"><h3>Yükleme</h3><ol>
       <li>VS Code + PlatformIO eklentisi.</li>
@@ -758,11 +791,11 @@ h3.code-group { break-before: page; }
 
 <!-- ================= AYAR ================= -->
 <section id="ayar">
-  <div class="sec-head"><span class="sec-num">12</span><h2>Ölçülecek ve ayarlanacaklar</h2></div>
+  <div class="sec-head"><span class="sec-num">13</span><h2>Ölçülecek ve ayarlanacaklar</h2></div>
   <div class="tbl"><table>
     <thead><tr><th>Parametre</th><th>Dosya</th><th>Şu an</th><th>Nasıl bulunur</th></tr></thead>
     <tbody>
-      <tr><td>Gövde kütlesi, KM, atalet</td><td class="num">tools/mass_budget.py</td><td class="num">1,245 kg, 72 mm</td><td>Parçaları tartın; KM için robotu ipe iki noktadan asın</td></tr>
+      <tr><td>Gövde kütlesi, KM, atalet</td><td class="num">tools/mass_budget.py</td><td class="num">1,245 kg, 70 mm</td><td>Parçaları tartın; KM için robotu ipe iki noktadan asın</td></tr>
       <tr><td>Enkoder sayım/tur</td><td class="num">cdtp_config.h</td><td class="num">836</td><td>Tekeri 10 tur çevirip sayımı okuyun</td></tr>
       <tr><td>İz genişliği</td><td class="num">cdtp_config.h + lqr_design.py</td><td class="num">0,190 m</td><td>Teker temas noktaları arası; yerinde 10 tur dönüp enkoder farkından</td></tr>
       <tr><td>Motor yönleri, enkoder yönleri</td><td class="num">cdtp_config.h</td><td class="num">sağ ters</td><td><code>mtest</code> ve elle çevirme</td></tr>
@@ -777,20 +810,20 @@ h3.code-group { break-before: page; }
 
 <!-- ================= TESTLER ================= -->
 <section id="test">
-  <div class="sec-head"><span class="sec-num">13</span><h2>Testler: C++ simülasyonu ve MuJoCo dijital ikizi</h2></div>
+  <div class="sec-head"><span class="sec-num">14</span><h2>Testler: C++ simülasyonu ve MuJoCo dijital ikizi</h2></div>
 <div class="tbl"><table><thead><tr><th>Test</th><th>C++ simülasyonu</th><th>Sonuç</th></tr></thead><tbody>
 <tr><td><b>ON</b> Enerjisiz +-10 deg&#x27;den dik kalmamali</td><td class='small'>40 deg&#x27;yi gecme suresi en fazla 0.30 s (sinir: 5 s icinde dusmeli)</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.1</b> 30 s statik denge (kutulu)</td><td class='small'>en buyuk egim 0.73 deg, en buyuk kayma 1.5 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.2</b> 1 m ileri + 3 s dur</td><td class='small'>yol 0.994 m, 3 s durmada en buyuk kayma 10.2 mm (hiz tepe 0.052 m/s), en buyuk egim 5.2 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.3</b> 1 m geri + 3 s dur</td><td class='small'>yol 1.004 m, 3 s durmada en buyuk kayma 9.0 mm (hiz tepe 0.052 m/s), en buyuk egim 5.0 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.4</b> +10 ve -10 deg&#x27;den 10 s icinde toparlanma</td><td class='small'>+10: 1.44 s (yol 14 cm), -10: 1.46 s (yol 14 cm)</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.1</b> 30 s statik denge (kutulu)</td><td class='small'>en buyuk egim 0.70 deg, en buyuk kayma 1.6 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.2</b> 1 m ileri + 3 s dur</td><td class='small'>yol 0.993 m, 3 s durmada en buyuk kayma 10.1 mm (hiz tepe 0.052 m/s), en buyuk egim 5.3 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.3</b> 1 m geri + 3 s dur</td><td class='small'>yol 1.005 m, 3 s durmada en buyuk kayma 9.7 mm (hiz tepe 0.049 m/s), en buyuk egim 5.0 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.4</b> +10 ve -10 deg&#x27;den 10 s icinde toparlanma</td><td class='small'>+10: 1.44 s (yol 14 cm), -10: 1.48 s (yol 13 cm)</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>GUV.2</b> Acil stop: denge birakilir, motorlar kapanir</td><td class='small'>stop sonrasi mod BEKLE, bekleme dogru</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C2.1</b> Eldiven: ileri ~0,5 m</td><td class='small'>tepki 0.75 s, yol 0.497 m</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C2.2</b> Eldiven: geri ~0,5 m</td><td class='small'>tepki 0.77 s, yol -0.498 m</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.1</b> Eldiven: ileri ~0,5 m</td><td class='small'>tepki 0.75 s, yol 0.500 m</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.2</b> Eldiven: geri ~0,5 m</td><td class='small'>tepki 0.78 s, yol -0.492 m</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C2.3</b> Eldiven: sola ~90 deg</td><td class='small'>tepki 0.29 s, donus 90.0 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C2.4</b> Eldiven: saga ~90 deg</td><td class='small'>tepki 0.29 s, donus -90.0 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C2.5</b> Dur: tum komutlardan sonra yerinde kalir</td><td class='small'>son 3 s kayma 0.5 mm, donme 0.46 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>GUV.1</b> Eldiven sustu (0,3 s): adim kesilir, robot durur</td><td class='small'>durdugu yol 0.309 m (tam adim 0,5 m)</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.5</b> Dur: tum komutlardan sonra yerinde kalir</td><td class='small'>son 3 s kayma 12.4 mm, donme 0.43 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>GUV.1</b> Eldiven sustu (0,3 s): adim kesilir, robot durur</td><td class='small'>durdugu yol 0.305 m (tam adim 0,5 m)</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C3.1-2</b> IR ile bul, hizalan, yerles (63 baslangic, 30 cm/90 deg)</td><td class='small'>63/63 basarili, en uzun 14.8 s</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C3.3</b> Temastan sonra sarj + motor durur &lt;= 5 s</td><td class='small'>temas -&gt; SARJ modu en fazla 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C3.x</b> Istasyon gorus disindayken arayip bulma</td><td class='small'>3/3 basarili (90, -90, 180 deg ters bakis)</td><td><span class="pill p-ok">geçti</span></td></tr>
@@ -798,19 +831,19 @@ h3.code-group { break-before: page; }
 <tr><td><b>C5.2</b> Butunlesik gorev, tekrar 2</td><td class='small'>hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas-&gt;sarj 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C5.3</b> Butunlesik gorev, tekrar 3</td><td class='small'>hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas-&gt;sarj 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C5.4</b> Butunlesik gorev, tekrar 4</td><td class='small'>hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas-&gt;sarj 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>SAG</b> Belirsizlik: kutle +-25%, KM -25/+60%, ...</td><td class='small'>statik 40/40, toparlanma 40/40 (en uzun 1.7 s), 1 m: +-5 cm durmada 40/40, +-3 cm durmada 35/40</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>SAG</b> Belirsizlik: kutle +-25%, KM -25/+60%, ...</td><td class='small'>statik 40/40, toparlanma 40/40 (en uzun 1.7 s), 1 m: +-5 cm durmada 40/40, +-3 cm durmada 37/40</td><td><span class="pill p-ok">geçti</span></td></tr>
 </tbody></table></div>
 <h3>MuJoCo dijital ikizi</h3><div class="tbl"><table><thead><tr><th>Test</th><th>Dijital ikiz</th><th>Sonuç</th></tr></thead><tbody>
-<tr><td><b>ON</b> Enerjisiz +-10 deg&#x27;den dik kalmamali</td><td class='small'>40 deg&#x27;ye en gec 0.31 s&#x27;de dustu</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.1</b> 30 s statik denge (kutulu)</td><td class='small'>en buyuk egim 1.77 deg, kayma 4.0 cm, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.2</b> 1 m ileri + 3 s dur</td><td class='small'>yol 0.990 m, 3 s durmada kayma 6.9 mm, egim tepe 5.8 deg, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.3</b> 1 m geri + 3 s dur</td><td class='small'>yol 1.008 m, 3 s durmada kayma 13.9 mm, egim tepe 6.0 deg, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.4</b> +10 ve -10 deg&#x27;den 10 s icinde toparlanma</td><td class='small'>+10: 1.29 s, -10: 1.57 s</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C2.3-4</b> Eldiven: sola / saga ~90 deg</td><td class='small'>sol +89.8 deg, sag -89.8 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>ON</b> Enerjisiz +-10 deg&#x27;den dik kalmamali</td><td class='small'>40 deg&#x27;ye en gec 0.30 s&#x27;de dustu</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.1</b> 30 s statik denge (kutulu)</td><td class='small'>en buyuk egim 0.45 deg, kayma 0.8 cm, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.2</b> 1 m ileri + 3 s dur</td><td class='small'>yol 1.005 m, 3 s durmada kayma 7.8 mm, egim tepe 5.0 deg, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.3</b> 1 m geri + 3 s dur</td><td class='small'>yol 0.996 m, 3 s durmada kayma 13.1 mm, egim tepe 5.3 deg, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.4</b> +10 ve -10 deg&#x27;den 10 s icinde toparlanma</td><td class='small'>+10: 1.45 s, -10: 1.46 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.3-4</b> Eldiven: sola / saga ~90 deg</td><td class='small'>sol +89.7 deg, sag -89.7 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>GUV.2</b> Acil stop: denge birakilir, motorlar kapanir</td><td class='small'>mod=BEKLE</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>REF</b> GitHub referans LQI kazanclari ikizde dengeliyor</td><td class='small'>baslangic 0 deg: dengede (son -0.9 deg), baslangic 8 deg: dengede (son -1.1 deg)</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C3</b> IR ile yanasma, V-yuva + direk (30 baslangic)</td><td class='small'>30/30 basarili, en uzun temas 14.0 s, temas-&gt;sarj modu 0.50 s </td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C3.5</b> Eldivenle &#x27;geri&#x27;: miknatistan kopup istasyondan ayrilir</td><td class='small'>once SARJ, sonra mod DENGE, direge uzaklik 50 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>REF</b> GitHub referans LQI kazanclari ikizde dengeliyor</td><td class='small'>baslangic 0 deg: dengede (son -0.1 deg), baslangic 8 deg: dengede (son -0.0 deg)</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C3</b> IR ile yanasma, V-yuva + direk (30 baslangic)</td><td class='small'>30/30 basarili, en uzun temas 5.8 s, temas-&gt;sarj modu 0.50 s </td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C3.5</b> Eldivenle &#x27;geri&#x27;: miknatistan kopup istasyondan ayrilir</td><td class='small'>once SARJ, sonra mod DENGE, direge uzaklik 52 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C5</b> Butunlesik gorev (kutu, eldiven, yanasma)</td><td class='small'>son mod SARJ, erken yanasma yok, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
 </tbody></table></div>
   <div class="grid2">
@@ -838,10 +871,10 @@ h3.code-group { break-before: page; }
 </tbody></table></div>
 <h3>GitHub karşılaştırması</h3>
 <p>GitHub'da en çok yıldızlı ve bize en yakın 6 denge robotu indirildi. Kontrol yöntemi, döngü hızı, filtre, düşme sınırı ve kazançlar karşılaştırıldı. En yakın örnek (suelioalencar, ESP32, 65 mm teker, enkoderli DC motor, gerilim cinsinden LQI) gerçek robotta çalışan kazançlar kullanıyor. Bu kazançlar bizim dijital ikizimizde de robotu dengede tuttu; yani ikiz gerçekçi bir bölgede. Kazançlarımız aynı işaret yapısında ve aynı büyüklükte.</p>
-<div class="tbl"><table class="small"><thead><tr><th>Repo</th><th>Donanım</th><th>Kontrol</th><th>Döngü</th><th>Açı kestirimi</th><th>Düşme sınırı</th><th>Kazanç / not</th><th>Bizimle fark</th></tr></thead><tbody><tr><td>Bu proje (cdtp-denge-robotu)</td><td>ESP32, MPU6050, JGB37-520 enkoderli DC, BTS7960, 65 mm teker</td><td>LQR (gerilim), 4 durum + yön PD, referans süzgeci, denge açısı öğrenme</td><td>200 Hz, MPU INT ile</td><td>Tümleyen 0,98, ivme güveni 1 g&#x27;den sapınca düşer</td><td>40°</td><td>K = [52,4  64,7  107,2  13,2] V; modelden, simülasyon + ikizle doğrulandı</td><td>—</td></tr><tr><td>suelioalencar/Two-Wheels-Inverted-Pendulum-with-LQI (★4)</td><td>ESP32 (WEMOS D32), MPU6050, enkoderli DC (1:56), TB6612, 65 mm teker</td><td>LQI (gerilim × PWM katsayısı), tekerlere ayrı yön LQR&#x27;ı</td><td>125 Hz (8 ms), vTaskDelayUntil</td><td>MPU6050_tockn kütüphanesi</td><td>30°</td><td>k1 = [100,5  69,9  83,6  9,31] V + integral 0,107. Bizimkine en yakın; aynı işaret yapısı ve büyüklük. İkizimizde de dengeliyor.</td><td>Enkoder kesmeyle (CHANGE); biz PCNT donanım sayacıyla. Bizde integral yok, yerine denge açısı öğrenme.</td></tr><tr><td>dungvd0309/lqr-self-balancing-robot (★1)</td><td>ESP32, MPU6050, enkoderli DC, L298 tipi sürücü</td><td>LQR, 6 durum (ileri, eğim, yön), PWM&#x27;e map</td><td>~166 Hz (6 ms, loop içinde micros)</td><td>Kalman süzgeci</td><td>30°</td><td>K = [12  11  300  14] PWM biriminde, elle ayarlı. MIN_PWM 140/255 ölü bölge telafisi.</td><td>Kazanç elle; biz modelden. Ölü bölgeyi biz gerilimde (0,45 V) telafi ediyoruz.</td></tr><tr><td>trandi/esp32-self_balancing_robot (★88)</td><td>ESP32, MPU6050, step motor (A4988)</td><td>PID (Kp 100, Ki 5, Kd 130) + otomatik denge açısı</td><td>250 Hz (4 ms)</td><td>Tümleyen 0,999, DLPF 43 Hz</td><td>—</td><td>Denge açısını robot hareket ederken ayarlıyor (YABR yöntemi).</td><td>Step motorda enkoder gerekmez. Bizim denge açısı öğrenmemiz aynı fikrin konum hatasıyla yapılan hali.</td></tr><tr><td>Rokasbarasa1/ESP32-self-balancing-robot (★38)</td><td>ESP32-WROOM-32D, optik enkoder, DC motor</td><td>Kademeli PID (eğim, yön, hız)</td><td>400 Hz</td><td>Tümleyen, oran döngü hızına bağlı</td><td>—</td><td>pitch P 15, I 350, D 0,31; hız döngüleri kapalı (0).</td><td>PID ile konum tutmuyor; biz konum + hız durumlarıyla tutuyoruz.</td></tr><tr><td>simplefoc/Arduino-FOC-balancer (★277)</td><td>BLDC gimbal motor, FOC sürücü, MPU6050 DMP</td><td>Kademeli: hız PI → eğim hedefi → eğim PID → gerilim</td><td>FOC döngüsü</td><td>MPU6050 DMP</td><td>—</td><td>Eğim PID P 30, I 100, D 1; hız PI çıkışı ±π/10 ile sınırlı.</td><td>Bizim referans süzgecine benzer alçak geçirgen süzgeçler (0,07–0,5 s) kullanıyor.</td></tr><tr><td>bluino/esp32_wifi_balancing_robot (★56)</td><td>ESP32, MPU6050, step motor</td><td>PD eğim + PI hız (jjrobots B-ROBOT türevi)</td><td>~200 Hz</td><td>Tümleyen</td><td>—</td><td>KP 0,32, KD 0,05; MAX_TARGET_ANGLE 14°.</td><td>Hedef eğimi ±14° ile sınırlıyor; bizde ivme ön-beslemesi ve LQR doğal olarak sınırlıyor.</td></tr></tbody></table></div>
+<div class="tbl"><table class="small"><thead><tr><th>Repo</th><th>Donanım</th><th>Kontrol</th><th>Döngü</th><th>Açı kestirimi</th><th>Düşme sınırı</th><th>Kazanç / not</th><th>Bizimle fark</th></tr></thead><tbody><tr><td>Bu proje (cdtp-denge-robotu)</td><td>ESP32, MPU6050, JGB37-520 enkoderli DC, BTS7960, 65 mm teker</td><td>LQR (gerilim), 4 durum + yön PD, referans süzgeci, denge açısı öğrenme</td><td>200 Hz, MPU INT ile</td><td>Tümleyen 0,98, ivme güveni 1 g&#x27;den sapınca düşer</td><td>40°</td><td>K = [53,0  65,6  108,6  13,5] V; modelden, simülasyon + ikizle doğrulandı</td><td>—</td></tr><tr><td>suelioalencar/Two-Wheels-Inverted-Pendulum-with-LQI (★4)</td><td>ESP32 (WEMOS D32), MPU6050, enkoderli DC (1:56), TB6612, 65 mm teker</td><td>LQI (gerilim × PWM katsayısı), tekerlere ayrı yön LQR&#x27;ı</td><td>125 Hz (8 ms), vTaskDelayUntil</td><td>MPU6050_tockn kütüphanesi</td><td>30°</td><td>k1 = [100,5  69,9  83,6  9,31] V + integral 0,107. Bizimkine en yakın; aynı işaret yapısı ve büyüklük. İkizimizde de dengeliyor.</td><td>Enkoder kesmeyle (CHANGE); biz PCNT donanım sayacıyla. Bizde integral yok, yerine denge açısı öğrenme.</td></tr><tr><td>dungvd0309/lqr-self-balancing-robot (★1)</td><td>ESP32, MPU6050, enkoderli DC, L298 tipi sürücü</td><td>LQR, 6 durum (ileri, eğim, yön), PWM&#x27;e map</td><td>~166 Hz (6 ms, loop içinde micros)</td><td>Kalman süzgeci</td><td>30°</td><td>K = [12  11  300  14] PWM biriminde, elle ayarlı. MIN_PWM 140/255 ölü bölge telafisi.</td><td>Kazanç elle; biz modelden. Ölü bölgeyi biz gerilimde (0,45 V) telafi ediyoruz.</td></tr><tr><td>trandi/esp32-self_balancing_robot (★88)</td><td>ESP32, MPU6050, step motor (A4988)</td><td>PID (Kp 100, Ki 5, Kd 130) + otomatik denge açısı</td><td>250 Hz (4 ms)</td><td>Tümleyen 0,999, DLPF 43 Hz</td><td>—</td><td>Denge açısını robot hareket ederken ayarlıyor (YABR yöntemi).</td><td>Step motorda enkoder gerekmez. Bizim denge açısı öğrenmemiz aynı fikrin konum hatasıyla yapılan hali.</td></tr><tr><td>Rokasbarasa1/ESP32-self-balancing-robot (★38)</td><td>ESP32-WROOM-32D, optik enkoder, DC motor</td><td>Kademeli PID (eğim, yön, hız)</td><td>400 Hz</td><td>Tümleyen, oran döngü hızına bağlı</td><td>—</td><td>pitch P 15, I 350, D 0,31; hız döngüleri kapalı (0).</td><td>PID ile konum tutmuyor; biz konum + hız durumlarıyla tutuyoruz.</td></tr><tr><td>simplefoc/Arduino-FOC-balancer (★277)</td><td>BLDC gimbal motor, FOC sürücü, MPU6050 DMP</td><td>Kademeli: hız PI → eğim hedefi → eğim PID → gerilim</td><td>FOC döngüsü</td><td>MPU6050 DMP</td><td>—</td><td>Eğim PID P 30, I 100, D 1; hız PI çıkışı ±π/10 ile sınırlı.</td><td>Bizim referans süzgecine benzer alçak geçirgen süzgeçler (0,07–0,5 s) kullanıyor.</td></tr><tr><td>bluino/esp32_wifi_balancing_robot (★56)</td><td>ESP32, MPU6050, step motor</td><td>PD eğim + PI hız (jjrobots B-ROBOT türevi)</td><td>~200 Hz</td><td>Tümleyen</td><td>—</td><td>KP 0,32, KD 0,05; MAX_TARGET_ANGLE 14°.</td><td>Hedef eğimi ±14° ile sınırlıyor; bizde ivme ön-beslemesi ve LQR doğal olarak sınırlıyor.</td></tr></tbody></table></div>
 <h3>Belge ↔ kod tutarlılık denetimi</h3>
 <p><code>tools/check_consistency.py</code>: firmware pinleri, takım sitesindeki pin şeması, yapım dosyasındaki pin tablosu ve header sıraları, ayar sabitleri, LQR kazançları, BLE UUID'leri ve bölücü hesapları karşılaştırıldı.</p>
-<div class="tbl"><table class="small"><thead><tr><th>Konu</th><th>Beklenen</th><th>Bulunan</th><th>Durum</th></tr></thead><tbody><tr><td>Site semasi: SDA</td><td>[21]</td><td>[21]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: SCL</td><td>[22]</td><td>[22]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: INT</td><td>[19]</td><td>[19]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: OUT</td><td>[36, 39]</td><td>[36, 39]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: RPWM</td><td>[27, 16]</td><td>[27, 16]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: LPWM</td><td>[14, 17]</td><td>[14, 17]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: R_EN + L_EN</td><td>[4, 4]</td><td>[4, 4]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: C1 (A)</td><td>[32, 25]</td><td>[32, 25]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: C2 (B)</td><td>[33, 26]</td><td>[33, 26]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: pil olcumu</td><td>35</td><td>35</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: sarj algilama</td><td>34</td><td>34</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: MPU6050 INT</td><td>[19]</td><td>[19]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: I2C SDA / SCL</td><td>[21, 22]</td><td>[21, 22]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: Sol / sağ RPWM, LPWM</td><td>[27, 14, 16, 17]</td><td>[27, 14, 16, 17]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: EN (iki kart)</td><td>[4]</td><td>[4]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: Enkoder A, B</td><td>[32, 33, 25, 26]</td><td>[32, 33, 25, 26]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: IR göz sol / sağ</td><td>[36, 39]</td><td>[36, 39]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: Pil / şarj pimi gerilimi</td><td>[35, 34]</td><td>[35, 34]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: Acil stop sonrası motor hattı</td><td>[23]</td><td>[23]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: Karttaki LED</td><td>[2]</td><td>[2]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Ana kart J2 pin sirasi</td><td>3V3, GND, G22, G21, G19</td><td>3V3, GND, G22, G21, G19</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Ana kart J3 pin sirasi</td><td>G27, G14, G4, 3V3, GND</td><td>G27, G14, G4, 3V3, GND</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Ana kart J8 pin sirasi</td><td>G16, G17, G4, 3V3, GND</td><td>G16, G17, G4, 3V3, GND</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Ana kart J4 pin sirasi</td><td>3V3, GND, G32, G33</td><td>3V3, GND, G32, G33</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Ana kart J5 pin sirasi</td><td>3V3, GND, G25, G26</td><td>3V3, GND, G25, G26</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Ana kart J6/J7</td><td>[36, 39]</td><td>[36, 39]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Iz genisligi (kod &lt;-&gt; belge 190 mm)</td><td>190</td><td>190</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Enkoder sayim/tur (kod &lt;-&gt; belge 836)</td><td>836</td><td>836</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Dusme acisi 40 deg</td><td>40</td><td>40</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Dengeye girme +-3 deg, 0,5 s</td><td>3 / 0.5</td><td>3 / 0.5</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Eldiven zaman asimi 0,3 s</td><td>0.3</td><td>0.3</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Adim 0,5 m / 90 deg</td><td>0.5 / 90</td><td>0.5 / 90</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Sarj algilama esigi 9 V</td><td>9</td><td>9.0</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Butunlesik gorevde bos bekleme 6 s</td><td>6</td><td>6.0</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>LQR kazanclari (gains.h &lt;-&gt; plan sayfasi)</td><td>u = 52,4·x + 64,7·v + 107,2·θ + 13,2·ω</td><td>plan sayfasinda var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>BLE CDTP_SVC_UUID</td><td>6e400001-cd7b-4e3a-9a40-2026cd7b0001</td><td>belgede var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>BLE CDTP_TELEM_UUID</td><td>6e400002-cd7b-4e3a-9a40-2026cd7b0001</td><td>belgede var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>BLE CDTP_CMD_UUID</td><td>6e400003-cd7b-4e3a-9a40-2026cd7b0001</td><td>belgede var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Pil boluculeri 100k/27k</td><td>100/27</td><td>100/27</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>12,6 V -&gt; ADC gerilimi &lt; 3,1 V</td><td>&lt; 3.1</td><td>2.68</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Motor hatti bolucu 100k/33k -&gt; &lt; 3,3 V</td><td>&lt; 3.3</td><td>3.13</td><td><span class="pill p-ok">geçti</span></td></tr></tbody></table></div>
+<div class="tbl"><table class="small"><thead><tr><th>Konu</th><th>Beklenen</th><th>Bulunan</th><th>Durum</th></tr></thead><tbody><tr><td>Site semasi: SDA</td><td>[21]</td><td>[21]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: SCL</td><td>[22]</td><td>[22]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: INT</td><td>[19]</td><td>[19]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: OUT</td><td>[36, 39]</td><td>[36, 39]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: RPWM</td><td>[27, 16]</td><td>[27, 16]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: LPWM</td><td>[14, 17]</td><td>[14, 17]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: R_EN + L_EN</td><td>[4, 4]</td><td>[4, 4]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: C1 (A)</td><td>[32, 25]</td><td>[32, 25]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: C2 (B)</td><td>[33, 26]</td><td>[33, 26]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: pil olcumu</td><td>35</td><td>35</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Site semasi: sarj algilama</td><td>34</td><td>34</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: MPU6050 INT</td><td>[19]</td><td>[19]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: I2C SDA / SCL</td><td>[21, 22]</td><td>[21, 22]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: Sol / sağ RPWM, LPWM</td><td>[27, 14, 16, 17]</td><td>[27, 14, 16, 17]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: EN (iki kart)</td><td>[4]</td><td>[4]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: Enkoder A, B</td><td>[32, 33, 25, 26]</td><td>[32, 33, 25, 26]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: IR göz sol / sağ</td><td>[36, 39]</td><td>[36, 39]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: Pil / şarj pimi gerilimi</td><td>[35, 34]</td><td>[35, 34]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: Acil stop sonrası motor hattı</td><td>[23]</td><td>[23]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Belge pin tablosu: Karttaki LED</td><td>[2]</td><td>[2]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Ana kart J2 pin sirasi</td><td>3V3, GND, G22, G21, G19</td><td>3V3, GND, G22, G21, G19</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Ana kart J3 pin sirasi</td><td>G27, G14, G4, 3V3, GND</td><td>G27, G14, G4, 3V3, GND</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Ana kart J8 pin sirasi</td><td>G16, G17, G4, 3V3, GND</td><td>G16, G17, G4, 3V3, GND</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Ana kart J4 pin sirasi</td><td>3V3, GND, G32, G33</td><td>3V3, GND, G32, G33</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Ana kart J5 pin sirasi</td><td>3V3, GND, G25, G26</td><td>3V3, GND, G25, G26</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Ana kart J6/J7</td><td>[36, 39]</td><td>[36, 39]</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Iz genisligi (kod &lt;-&gt; belge 190 mm)</td><td>190</td><td>190</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Enkoder sayim/tur (kod &lt;-&gt; belge 836)</td><td>836</td><td>836</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Dusme acisi 40 deg</td><td>40</td><td>40</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Dengeye girme +-3 deg, 0,5 s</td><td>3 / 0.5</td><td>3 / 0.5</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Eldiven zaman asimi 0,3 s</td><td>0.3</td><td>0.3</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Adim 0,5 m / 90 deg</td><td>0.5 / 90</td><td>0.5 / 90</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Sarj algilama esigi 9 V</td><td>9</td><td>9.0</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Butunlesik gorevde bos bekleme 6 s</td><td>6</td><td>6.0</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>LQR kazanclari (gains.h &lt;-&gt; plan sayfasi)</td><td>u = 53,0·x + 65,6·v + 108,6·θ + 13,5·ω</td><td>plan sayfasinda var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>BLE CDTP_SVC_UUID</td><td>6e400001-cd7b-4e3a-9a40-2026cd7b0001</td><td>belgede var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>BLE CDTP_TELEM_UUID</td><td>6e400002-cd7b-4e3a-9a40-2026cd7b0001</td><td>belgede var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>BLE CDTP_CMD_UUID</td><td>6e400003-cd7b-4e3a-9a40-2026cd7b0001</td><td>belgede var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Pil boluculeri 100k/27k</td><td>100/27</td><td>100/27</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>12,6 V -&gt; ADC gerilimi &lt; 3,1 V</td><td>&lt; 3.1</td><td>2.68</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Motor hatti bolucu 100k/33k -&gt; &lt; 3,3 V</td><td>&lt; 3.3</td><td>3.13</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Kutle merkezi (mass_budget &lt;-&gt; robot dosyasi)</td><td>70 mm</td><td>belgede var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>3B montaj denetimi (cad/kontrol.md)</td><td>hepsi gecti</td><td>10 gecti, 0 kaldi</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>KiCad sema denetimi (sema_kontrol.md)</td><td>hepsi gecti</td><td>5 gecti, 0 kaldi</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>Iz genisligi (cad/olcu.py &lt;-&gt; cdtp_config.h)</td><td>0.19</td><td>0.19</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>KiCad R1 = 100k</td><td>100k</td><td>semada var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>KiCad R2 = 27k</td><td>27k</td><td>semada var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>KiCad R6 = 100k</td><td>100k</td><td>semada var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>KiCad R7 = 33k</td><td>33k</td><td>semada var</td><td><span class="pill p-ok">geçti</span></td></tr><tr><td>KiCad F1 = 5 A</td><td>5 A</td><td>semada var</td><td><span class="pill p-ok">geçti</span></td></tr></tbody></table></div>
 <h3>Dijital ikiz nasıl kuruldu</h3>
 <ul>
 <li>Gövde, kütle bütçesindeki her parçadan ayrı kutu olarak kuruldu. MuJoCo kütle merkezini ve ataleti kendisi hesaplar; C++ modelindeki elle girilen sayılar kullanılmaz.</li>
@@ -1553,14 +1586,14 @@ constexpr float GEST_NEUTRAL_S   = 0.20f;
 #pragma once
 namespace cdtp {
 namespace gains {
-constexpr float K_X = -52.40356f;
-constexpr float K_V = -64.68360f;
-constexpr float K_TH = -107.16416f;
-constexpr float K_OM = -13.15230f;
+constexpr float K_X = -53.04604f;
+constexpr float K_V = -65.55542f;
+constexpr float K_TH = -108.55007f;
+constexpr float K_OM = -13.48660f;
 constexpr float YAW_KP = 2.73684f;
 constexpr float YAW_KD = 0.61579f;
 // a_ref -&gt; egim on-besleme (rad / (m/s^2))
-constexpr float TH_PER_ACC = 0.15266f;
+constexpr float TH_PER_ACC = 0.15425f;
 }  // namespace gains
 }  // namespace cdtp
 </pre></div>
@@ -2439,25 +2472,26 @@ class GestureClassifier {
 }  // namespace cdtp
 </pre></div>
 <h3 class="code-group">Tasarım araçları</h3>
-<div class="codefile"><div class="codename">tools/mass_budget.py <span>29 satır</span></div><pre>&quot;&quot;&quot;Robot govdesinin kutle butcesi: kutle merkezi yuksekligi ve ataleti (teker ekseni z=0).
+<div class="codefile"><div class="codename">tools/mass_budget.py <span>30 satır</span></div><pre>&quot;&quot;&quot;Robot govdesinin kutle butcesi: kutle merkezi yuksekligi ve ataleti (teker ekseni z=0).
 Parca agirliklari tahmindir (OLC): parca gelince terazide tartip guncelleyin.&quot;&quot;&quot;
 # (ad, kutle kg, z m (eksenden yukseklik), x m (one +), boyut z m (atalet icin))
+# Konumlar 3B modelden (cad/robot_cad.py YER ve kat yukseklikleri). Pil kat 2&#x27;nin ustunde, ana kart kat 2&#x27;nin altinda asili.
 PARTS = [
-    (&quot;2x JGB37-520 motor + braket&quot;, 0.380, 0.000, 0.0, 0.037),
-    (&quot;Kat 1 pleksi 150x110x3&quot;,      0.060, 0.024, 0.0, 0.003),
-    (&quot;2x BTS7960&quot;,                  0.130, 0.045, 0.0, 0.035),
-    (&quot;LM2596 + sigorta + 2 WAGO&quot;,   0.060, 0.035, 0.0, 0.020),
-    (&quot;MPU6050 (kat 1 ustu, ortada)&quot;, 0.005, 0.030, 0.0, 0.003),
-    (&quot;Kat 2 pleksi&quot;,                0.060, 0.104, 0.0, 0.003),
-    (&quot;3x18650 + yuva + BMS&quot;,        0.190, 0.120, 0.0, 0.022),
-    (&quot;Ana kart + ESP32&quot;,            0.045, 0.115, 0.0, 0.015),
-    (&quot;IR gozleri + V-yuva + pimler&quot;, 0.035, 0.090, 0.05, 0.060),
-    (&quot;Kat 3 pleksi&quot;,                0.060, 0.184, 0.0, 0.003),
-    (&quot;Acil stop&quot;,                   0.070, 0.205, 0.0, 0.040),
-    (&quot;Kutu yuvasi&quot;,                 0.030, 0.195, 0.0, 0.020),
-    (&quot;16x distans + vida + kablo&quot;,  0.120, 0.100, 0.0, 0.160),
+    (&quot;2x JGB37-520 motor + tutucu&quot;, 0.380, -0.006, 0.0, 0.037),
+    (&quot;Kat 1 baski 150x110x4&quot;,       0.060, 0.024, 0.0, 0.004),
+    (&quot;2x BTS7960&quot;,                  0.130, 0.0485, -0.021, 0.035),
+    (&quot;LM2596 + sigorta + 2 WAGO&quot;,   0.060, 0.033, 0.03, 0.020),
+    (&quot;MPU6050 (kat 1 ustu, ortada)&quot;, 0.005, 0.0285, 0.0, 0.003),
+    (&quot;Kat 2 baski&quot;,                 0.060, 0.108, 0.0, 0.004),
+    (&quot;3x18650 + yuva + BMS&quot;,        0.190, 0.1205, -0.017, 0.022),
+    (&quot;Ana kart + ESP32&quot;,            0.045, 0.087, -0.028, 0.015),
+    (&quot;IR gozleri + V-yuva + pimler&quot;, 0.035, 0.070, 0.055, 0.080),
+    (&quot;Kat 3 baski&quot;,                 0.060, 0.192, 0.0, 0.004),
+    (&quot;Acil stop&quot;,                   0.070, 0.195, 0.028, 0.060),
+    (&quot;Kutu yuvasi&quot;,                 0.030, 0.205, 0.016, 0.025),
+    (&quot;16x distans + vida + kablo&quot;,  0.120, 0.106, 0.0, 0.160),
 ]
-BOX = (&quot;Ilac kutusu&quot;, 0.060, 0.215)
+BOX = (&quot;Ilac kutusu&quot;, 0.060, 0.2065)  # cep merkezi x=+16 mm, y=+27 mm (cad/robot_cad.py)
 m = sum(p[1] for p in PARTS)
 l = sum(p[1] * p[2] for p in PARTS) / m
 I = sum(p[1] * ((p[2] - l) ** 2 + (p[4] ** 2 + 0.11 ** 2) / 12) for p in PARTS)
@@ -2641,7 +2675,7 @@ def th_per_acc(p):
 if __name__ == &quot;__main__&quot;:
     main()
 </pre></div>
-<div class="codefile"><div class="codename">tools/check_consistency.py <span>130 satır</span></div><pre>&quot;&quot;&quot;Cizilen/yazilan belgeler ile kodun tutarlilik denetimi.
+<div class="codefile"><div class="codename">tools/check_consistency.py <span>149 satır</span></div><pre>&quot;&quot;&quot;Cizilen/yazilan belgeler ile kodun tutarlilik denetimi.
 
 Karsilastirir:
   1. firmware/robot/src/pins.h  &lt;-&gt;  takim sitesinin pin semasi (tools/ref/site_wiring.js)
@@ -2733,7 +2767,7 @@ num = lambda name: float(re.search(rf&quot;{name}\s*=\s*([\d.]+)f&quot;, cfg)[1]
 gains = rd(&quot;common/cdtp_core/src/gains.h&quot;)
 g = {k: float(v) for k, v in re.findall(r&quot;constexpr float (\w+) = (-?[\d.]+)f;&quot;, gains)}
 plan = rd(&quot;docs/plan.html&quot;)
-check(&quot;Iz genisligi (kod &lt;-&gt; belge 190 mm)&quot;, 190, round(num(&quot;TRACK_WIDTH_M&quot;) * 1000), &quot;iz 190&quot; in doc and num(&quot;TRACK_WIDTH_M&quot;) == 0.19)
+check(&quot;Iz genisligi (kod &lt;-&gt; belge 190 mm)&quot;, 190, round(num(&quot;TRACK_WIDTH_M&quot;) * 1000), &quot;İz genişliği: &lt;b&gt;190 mm&lt;/b&gt;&quot; in doc and num(&quot;TRACK_WIDTH_M&quot;) == 0.19)
 check(&quot;Enkoder sayim/tur (kod &lt;-&gt; belge 836)&quot;, 836, int(num(&quot;ENC_COUNTS_PER_REV&quot;)), &quot;836&quot; in doc)
 check(&quot;Dusme acisi 40 deg&quot;, 40, int(num(&quot;FALL_ANGLE_DEG&quot;)), &quot;40°&quot; in doc)
 check(&quot;Dengeye girme +-3 deg, 0,5 s&quot;, &quot;3 / 0.5&quot;, f&quot;{num(&#x27;ARM_ANGLE_DEG&#x27;):g} / {num(&#x27;ARM_HOLD_S&#x27;):g}&quot;, &quot;±3° içinde 0,5 s&quot; in doc)
@@ -2759,6 +2793,25 @@ v_top = 12.6 * float(div[2]) / (float(div[1]) + float(div[2]))
 check(&quot;12,6 V -&gt; ADC gerilimi &lt; 3,1 V&quot;, &quot;&lt; 3.1&quot;, f&quot;{v_top:.2f}&quot;, v_top &lt; 3.1)
 v_ms = 12.6 * 33 / 133
 check(&quot;Motor hatti bolucu 100k/33k -&gt; &lt; 3,3 V&quot;, &quot;&lt; 3.3&quot;, f&quot;{v_ms:.2f}&quot;, v_ms &lt; 3.3 and &quot;100k/33k&quot; in doc)
+
+# ---- 6. 3B model ve KiCad semasi ----
+sys.path.insert(0, str(ROOT / &quot;tools&quot;))
+import mass_budget as mb  # noqa: E402
+km = round(mb.l * 1000)
+check(&quot;Kutle merkezi (mass_budget &lt;-&gt; robot dosyasi)&quot;, f&quot;{km} mm&quot;, &quot;belgede var&quot; if f&quot;eksenin {km} mm üstü&quot; in doc else &quot;YOK&quot;,
+      f&quot;eksenin {km} mm üstü&quot; in doc and f&quot;KM {km} mm&quot; in doc)
+for ad, yol in ((&quot;3B montaj denetimi (cad/kontrol.md)&quot;, &quot;cad/kontrol.md&quot;), (&quot;KiCad sema denetimi (sema_kontrol.md)&quot;, &quot;elektronik/sema_kontrol.md&quot;)):
+    p_ = ROOT / yol
+    t = p_.read_text(encoding=&quot;utf-8&quot;) if p_.exists() else &quot;&quot;
+    n_ok, n_bad = t.count(&quot;| GECTI |&quot;), t.count(&quot;| KALDI |&quot;)
+    check(ad, &quot;hepsi gecti&quot;, f&quot;{n_ok} gecti, {n_bad} kaldi&quot;, n_ok &gt; 0 and n_bad == 0)
+olcu = rd(&quot;cad/olcu.py&quot;)
+iz = float(re.search(r&quot;^IZ = ([\d.]+)&quot;, olcu, re.M)[1])
+check(&quot;Iz genisligi (cad/olcu.py &lt;-&gt; cdtp_config.h)&quot;, f&quot;{iz / 1000:g}&quot;, f&quot;{num(&#x27;TRACK_WIDTH_M&#x27;):g}&quot;, abs(iz / 1000 - num(&quot;TRACK_WIDTH_M&quot;)) &lt; 1e-6)
+sch = rd(&quot;elektronik/cdtp_robot.kicad_sch&quot;) if (ROOT / &quot;elektronik/cdtp_robot.kicad_sch&quot;).exists() else &quot;&quot;
+for ref, deger in ((&quot;R1&quot;, &quot;100k&quot;), (&quot;R2&quot;, &quot;27k&quot;), (&quot;R6&quot;, &quot;100k&quot;), (&quot;R7&quot;, &quot;33k&quot;), (&quot;F1&quot;, &quot;5 A&quot;)):
+    var = re.search(rf&#x27;&quot;Reference&quot;\s+&quot;{ref}&quot;.{{0,600}}?&quot;Value&quot;\s+&quot;{deger}[ &quot;]&#x27;, sch, re.S) is not None
+    check(f&quot;KiCad {ref} = {deger}&quot;, deger, &quot;semada var&quot; if var else &quot;YOK&quot;, var)
 
 # ---- rapor ----
 bad = [r for r in rows if r[3] != &quot;uygun&quot;]
@@ -2892,7 +2945,7 @@ struct PlantParams {
   double Ke = PlantNominal::Ke, R = PlantNominal::R, b_visc = PlantNominal::b_visc, tau_c = PlantNominal::tau_coulomb;
   double track = PlantNominal::track, I_yaw = PlantNominal::I_yaw;
   double voc = 12.0, r_int = 0.15;   // paket bos gerilim, ic direnc
-  double box_mass = 0.06, box_h = 0.215;  // ilac kutusu (eksenden yukseklik)
+  double box_mass = 0.06, box_h = 0.2065;  // ilac kutusu (eksenden yukseklik)
   double h_imu = 0.05;               // IMU&#x27;nun eksenden yuksekligi
   double imu_offset_deg = 0.0;       // IMU montaj hatasi
   double gyro_bias_dps = 0.0;        // kalibrasyon sonrasi kalan bias
@@ -3737,7 +3790,7 @@ static int runUnitTests() {
 }
 </pre></div>
 <h3 class="code-group">MuJoCo dijital ikizi</h3>
-<div class="codefile"><div class="codename">twin/twin.py <span>634 satır</span></div><pre>&quot;&quot;&quot;MuJoCo dijital ikizi.
+<div class="codefile"><div class="codename">twin/twin.py <span>637 satır</span></div><pre>&quot;&quot;&quot;MuJoCo dijital ikizi.
 
 C++ simulasyonundan (sim/plant.h) bagimsiz ikinci bir model:
   * Govde tools/mass_budget.py&#x27;deki her parcadan ayri kutu olarak kurulur (kutle, konum, atalet MuJoCo hesaplar).
@@ -3771,13 +3824,14 @@ B_VISC, TAU_C = 0.002, 0.02
 CPR = 836
 VOC, RINT = 12.0, 0.15
 MAGNET_N, MAGNET_RANGE = 10.0, 0.006  # V-yuvadaki miknatis ile direkteki celik serit: temasta ~10 N, 6 mm&#x27;de sifir
+KX, KY = 0.016, 0.027  # ilac kutusu cebinin konumu (on, sol)
 PHYS_DT, CTRL_EVERY = 0.0005, 10  # 2 kHz fizik, 200 Hz kontrol
 TASKS = {&quot;statik&quot;: 0, &quot;yonlendirme&quot;: 1, &quot;sarj&quot;: 2, &quot;butunlesik&quot;: 3}
 CMD = {&quot;yok&quot;: 0, &quot;ileri&quot;: 1, &quot;geri&quot;: 2, &quot;sol&quot;: 3, &quot;sag&quot;: 4, &quot;dur&quot;: 5}
 
 # parca boyutlari (yari olcu, m) mass_budget isimlerine gore
 SIZES = {
-    &quot;Kat&quot;: (0.055, 0.075, 0.0015),
+    &quot;Kat&quot;: (0.055, 0.075, 0.002),
     &quot;BTS&quot;: (0.025, 0.030, 0.015),
     &quot;3x18650&quot;: (0.035, 0.040, 0.012),
     &quot;Ana kart&quot;: (0.025, 0.050, 0.008),
@@ -3803,7 +3857,7 @@ def build_xml(post_xy=None, box=True):
         if name.startswith(&quot;2x JGB37&quot;):
             # iki motor teker ekseninde, y boyunca
             for s in (1, -1):
-                geoms.append(f&#x27;&lt;geom type=&quot;cylinder&quot; size=&quot;0.0185 0.035&quot; pos=&quot;0 {s*0.045} 0&quot; euler=&quot;90 0 0&quot; mass=&quot;{m/2}&quot; rgba=&quot;.3 .5 .5 1&quot;/&gt;&#x27;)
+                geoms.append(f&#x27;&lt;geom type=&quot;cylinder&quot; size=&quot;0.0185 0.035&quot; pos=&quot;0 {s*0.045} -0.007&quot; euler=&quot;90 0 0&quot; mass=&quot;{m/2}&quot; rgba=&quot;.3 .5 .5 1&quot;/&gt;&#x27;)
             continue
         sx, sy, sz = size_for(name)
         # yalniz katlar carpisir (yere dusme, direk); diger parcalar kutle/atalet tasir, kutu cebine girmez
@@ -3811,8 +3865,10 @@ def build_xml(post_xy=None, box=True):
         geoms.append(f&#x27;&lt;geom type=&quot;box&quot; size=&quot;{sx} {sy} {sz}&quot; pos=&quot;{x} 0 {z}&quot; mass=&quot;{m}&quot; rgba=&quot;.6 .7 .8 1&quot;{coll}/&gt;&#x27;)
     # kutu cebi (kat 3 ustunde, 4 duvar, kutle kutu yuvasi parcasinda sayildi)
     pocket = []
-    zc = 0.184 + 0.0015 + 0.0125
-    for px, py, hx, hy in ((0.0365, 0, 0.0015, 0.025), (-0.0365, 0, 0.0015, 0.025), (0, 0.024, 0.038, 0.0015), (0, -0.024, 0.038, 0.0015)):
+    # cad/robot_cad.py ile ayni: kat 3 ustu z=0.194, cep ici 72x47 mm, merkez y=+0.027 (sagda acil stop)
+    zc = 0.194 + 0.0125
+    for px, py, hx, hy in ((KX + 0.0372, KY, 0.0012, 0.0259), (KX - 0.0372, KY, 0.0012, 0.0259),
+                           (KX, KY + 0.0247, 0.0384, 0.0012), (KX, KY - 0.0247, 0.0384, 0.0012)):
         pocket.append(f&#x27;&lt;geom type=&quot;box&quot; size=&quot;{hx} {hy} 0.0125&quot; pos=&quot;{px} {py} {zc}&quot; mass=&quot;0.0001&quot; rgba=&quot;.8 .8 .9 .5&quot;/&gt;&#x27;)
     # V-yuva (belgedeki gibi): arkada 20 mm genis dikey serit (pimler burada, x=0.058), iki yanda 45 derece kanat
     vee = [&#x27;&lt;geom type=&quot;box&quot; size=&quot;0.0015 0.010 0.025&quot; pos=&quot;0.0575 0 0.06&quot; mass=&quot;0.0001&quot; rgba=&quot;.2 .3 .9 1&quot;/&gt;&#x27;]
@@ -3826,7 +3882,7 @@ def build_xml(post_xy=None, box=True):
                 f&#x27;rgba=&quot;.5 .5 .5 1&quot;/&gt;&lt;/body&gt;&#x27;)
     box_body = &quot;&quot;
     if box:
-        box_body = (f&#x27;&lt;body name=&quot;pillbox&quot; pos=&quot;0 0 {R_WHEEL + zc + 0.001}&quot;&gt;&lt;freejoint/&gt;&#x27;
+        box_body = (f&#x27;&lt;body name=&quot;pillbox&quot; pos=&quot;{KX} {KY} {R_WHEEL + zc + 0.001}&quot;&gt;&lt;freejoint/&gt;&#x27;
                     f&#x27;&lt;geom type=&quot;box&quot; size=&quot;0.035 0.0225 0.0125&quot; mass=&quot;0.06&quot; rgba=&quot;.9 .3 .3 1&quot; friction=&quot;0.6 0.005 0.0001&quot;/&gt;&lt;/body&gt;&#x27;)
     arm = J_ROTOR * GEAR**2
     xml = f&quot;&quot;&quot;
@@ -3879,7 +3935,7 @@ class Twin:
         if box:
             bj = self.m.joint(self.m.body(&quot;pillbox&quot;).jntadr[0])
             a = bj.qposadr[0]
-            q[a:a + 3] = [x, y, q[a + 2]]
+            q[a:a + 3] = [x + KX * math.cos(yaw) - KY * math.sin(yaw), y + KX * math.sin(yaw) + KY * math.cos(yaw), q[a + 2]]
             q[a + 3:a + 7] = q[3:7]
             self.box_adr = a
         self.has_box = box
@@ -3937,7 +3993,7 @@ class Twin:
         bp = self.d.qpos[self.box_adr:self.box_adr + 3]
         cid = self.m.body(&quot;chassis&quot;).id
         local = self.rot().T @ (bp - self.d.xpos[cid])
-        return abs(local[0]) &lt; 0.03 and abs(local[1]) &lt; 0.03 and local[2] &gt; 0.18
+        return abs(local[0] - KX) &lt; 0.03 and abs(local[1] - KY) &lt; 0.03 and local[2] &gt; 0.18
 
     # ---- sensorler ----
     def sensors(self):
@@ -4496,4 +4552,1268 @@ if __name__ == &quot;__main__&quot;:
     compare()
     dock()
     print(&quot;cizildi&quot;)
+</pre></div>
+<h3 class="code-group">3B baskı ve KiCad şeması</h3>
+<div class="codefile"><div class="codename">cad/olcu.py <span>74 satır</span></div><pre>&quot;&quot;&quot;3B baski parcalarinin tum olculeri (mm). Eksenler: X ileri, Y sol, Z yukari; orijin teker ekseninin ortasi.
+Zemin z = -32.5. Parca gelince kumpasla olcun; (OLC) isaretlileri saticiya gore degisir.
+Degistirdikten sonra: python cad/robot_cad.py  (STL&#x27;ler ve kontrol raporu yeniden uretilir).&quot;&quot;&quot;
+
+# --- Genel ---
+R_TEKER = 32.5           # 65 mm teker
+TEKER_EN = 26.0          # (OLC) lastik genisligi
+IZ = 190.0               # iz genisligi; degisirse cdtp_config.h TRACK_WIDTH_M de degismeli
+ZEMIN = -R_TEKER
+BOSLUK = 0.3             # yuva bosluk payi (her yanda), PLA 0,4 mm nozul icin
+DUVAR = 1.6              # yuva duvari kalinligi
+VIDA_D = 3.4             # M3 gecis deligi
+KILAVUZ_D = 2.8          # M3 vidanin plastige dogrudan girecegi pilot delik
+SOMUN_AA = 5.7           # M3 somun anahtar agzi + bosluk
+KELEPCE = (4.0, 2.2)     # kablo bagi yuvasi (uzunluk, genislik); 3,6 mm bag icin
+
+# --- Katlar ---
+KAT_X, KAT_Y, KAT_T = 110.0, 150.0, 4.0
+KAT_KOSE_R = 6.0
+DISTANS_XY = (49.0, 69.0)            # kose delikleri (kenardan 6 mm)
+DISTANS_AA = 5.5                     # M3 disi-disi distans altigen
+KAT1_Z, KAT2_Z, KAT3_Z = 22.0, 106.0, 190.0   # alt yuzler; 30+50 = 80 mm distans + 4 mm kat
+
+# --- Motor: JGB37-520, eksantrik mil ---
+MOTOR_SANZ_D, MOTOR_SANZ_L = 37.0, 24.0   # sanziman
+MOTOR_GOVDE_D, MOTOR_GOVDE_L = 33.0, 31.0  # motor + enkoder kapagi (OLC: toplam ~55)
+MOTOR_MIL_KACIK = 7.0                     # mil, motor ekseninin 7 mm ustunde (motor asagida)
+MOTOR_MIL_D, MOTOR_MIL_L = 6.0, 15.0
+MOTOR_BURC_D = 12.5                       # (OLC) mil burcu cikintisi icin delik
+MOTOR_DELIK_PCD, MOTOR_DELIK_ACI0 = 31.0, 0.0   # 6 x M3, 31 mm daire; (OLC) delik acisi
+MOTOR_YUZ_Y = 75.0                        # sanziman on yuzu |Y|
+TUTUCU_T = 5.0                            # motor tutucu on plaka kalinligi
+
+# --- Moduller (en, boy, yukseklik); delikler (OLC) ---
+BTS = (50.0, 50.0, 35.0)
+BTS_DELIK = 43.0          # (OLC) dort kose delik araligi
+BTS_AYAK = 5.0            # kart alti bosluk
+MPU = (21.0, 16.0, 3.0)   # GY-521; uzun kenar X&#x27;e (ileri)
+MPU_DELIK = (15.2, 7.5)   # (OLC) iki delik: aralik Y, uzun kenarin ucundan X
+LM2596 = (43.0, 21.0, 14.0)
+SIGORTA = (36.0, 18.0, 15.0)   # (OLC) bicak sigorta yuvasi
+WAGO = (30.0, 18.8, 8.6)       # 221-415
+C5 = (13.0, 25.0)              # 1000 uF 25 V (cap, boy) yatay
+PIL = (78.0, 60.0, 21.0)       # 3x18650 yuva (Y, X, Z)
+BMS = (50.0, 16.0, 4.0)        # HX-3S-01
+XT60 = (16.0, 15.6, 8.2)
+ANAKART = (100.0, 50.0, 1.6)   # 5x10 delikli plaket
+ANAKART_DELIK = (94.0, 44.0)   # (OLC) kose delik araliklari
+ANAKART_YUK = 22.0             # header + ESP32 kart + modul yuksekligi
+ACIL_DELIK = 22.3              # 22 mm buton deligi
+ACIL_GOVDE = (32.0, 42.0, 45.0)  # (OLC) kat 3 altindaki kontak blogu
+ACIL_MANTAR = (40.0, 28.0)     # mantar cap, yukseklik
+KUTU = (70.0, 45.0, 25.0)      # ilac kutusu (X, Y, Z)
+KUTU_PAY = 1.0                 # her yanda
+KUTU_DUVAR = (2.4, 25.0)       # kalinlik, yukseklik
+KUTU_Y = 27.0                  # cep merkezi (sol); sag tarafta acil stop
+
+# --- Sarj temasi (istasyonla ortak; robot_src.html bolum 09) ---
+POGO_D, POGO_L, POGO_CIKIS = 5.0, 16.0, 3.0     # (OLC)
+PIM_UST_ZEMIN, PIM_ALT_ZEMIN = 102.0, 77.0
+MIKNATIS = (10.0, 3.0)          # N52, iki tane ust uste
+SERIT_ZEMIN = (85.0, 94.0)      # direkteki celik serit
+V_SERIT_ON_X = 59.0             # arka seridin on yuzu (ikizle ayni)
+V_SERIT_Y = 20.0
+V_KANAT_L, V_KANAT_T = 42.0, 3.0
+DIREK_D = 40.0
+
+# --- IR gozleri ---
+GOZ_ZEMIN = 147.0
+GOZ_ACI = 15.0
+GOZ_Y = 14.0
+GOZ_PENCERE = (7.4, 7.4)        # VS1838B basi
+GOZ_TUP_L = 15.0
+</pre></div>
+<div class="codefile"><div class="codename">cad/robot_cad.py <span>544 satır</span></div><pre>&quot;&quot;&quot;Denge robotu 3B baski parcalari ve montaj kontrolu.
+Calistir: python cad/robot_cad.py
+Uretir: cad/stl/*.stl (baski yonunde), cad/montaj.glb, cad/kontrol.md, docs/img/cad_*.png
+Olculer cad/olcu.py&#x27;de. Kontrol: parcalar ve moduller birbirine girmiyor mu, zemin, direk, pim yukseklikleri.&quot;&quot;&quot;
+import itertools
+import json
+import math
+import pathlib
+import sys
+
+import numpy as np
+import trimesh
+from manifold3d import CrossSection, Manifold
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import olcu as o  # noqa: E402
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+OUT = ROOT / &quot;cad&quot;
+SEG = 48
+
+
+# ---------------- temel cisimler ----------------
+def kutu(x0, x1, y0, y1, z0, z1):
+    return Manifold.cube([x1 - x0, y1 - y0, z1 - z0]).translate([x0, y0, z0])
+
+
+def kutu_m(cx, cy, sx, sy, z0, z1):
+    return kutu(cx - sx / 2, cx + sx / 2, cy - sy / 2, cy + sy / 2, z0, z1)
+
+
+def sil_z(cx, cy, r, z0, z1, seg=SEG):
+    return Manifold.cylinder(z1 - z0, r, r, seg).translate([cx, cy, z0])
+
+
+def sil_y(cx, cz, r, y0, y1, seg=SEG):
+    return Manifold.cylinder(y1 - y0, r, r, seg).rotate([-90, 0, 0]).translate([cx, y0, cz])
+
+
+def sil_x(cy, cz, r, x0, x1, seg=SEG):
+    return Manifold.cylinder(x1 - x0, r, r, seg).rotate([0, 90, 0]).translate([x0, cy, cz])
+
+
+def ccw(pts):
+    a = sum(x0 * y1 - x1 * y0 for (x0, y0), (x1, y1) in zip(pts, pts[1:] + pts[:1]))
+    return pts if a &gt; 0 else pts[::-1]
+
+
+def prizma_z(pts_xy, z0, z1):
+    return CrossSection([ccw(pts_xy)]).extrude(z1 - z0).translate([0, 0, z0])
+
+
+def prizma_x(pts_yz, x0, x1):
+    &quot;&quot;&quot;(y, z) cokgeni X boyunca uzat.&quot;&quot;&quot;
+    m = CrossSection([ccw(pts_yz)]).extrude(x1 - x0)
+    return m.transform([[0, 0, 1, x0], [1, 0, 0, 0], [0, 1, 0, 0]])
+
+
+def prizma_y(pts_xz, y0, y1):
+    &quot;&quot;&quot;(x, z) cokgeni Y boyunca uzat.&quot;&quot;&quot;
+    m = CrossSection([ccw(pts_xz)]).extrude(y1 - y0)
+    return m.rotate([90, 0, 0]).translate([0, y1, 0])  # (a, b, c) -&gt; (a, -c, b)
+
+
+def birlesim(parcalar):
+    parcalar = [p for p in parcalar if p is not None]
+    return Manifold.batch_boolean(parcalar, __import__(&quot;manifold3d&quot;).OpType.Add) if parcalar else Manifold()
+
+
+def altigen_z(cx, cy, aa, z0, z1):
+    return sil_z(cx, cy, aa / math.sqrt(3), z0, z1, seg=6)
+
+
+def yuvarlak_levha(sx, sy, r, z0, t):
+    c = [CrossSection.circle(r, SEG).translate([sgx * (sx / 2 - r), sgy * (sy / 2 - r)])
+         for sgx in (-1, 1) for sgy in (-1, 1)]
+    return CrossSection.batch_hull(c).extrude(t).translate([0, 0, z0])
+
+
+# ---------------- yuva (modul cebi) ----------------
+def yuva(cx, cy, ix, iy, z0, h=3.0, kelepce=&quot;x&quot;, kose=7.0):
+    &quot;&quot;&quot;Ic olcusu ix*iy olan modul icin dort kose L duvari (kablolar kenarlardan rahat cikar) ve
+    kablo bagi delikleri. kelepce=&#x27;x&#x27;: bag X yonunde sarar (delikler -x/+x tarafinda).&quot;&quot;&quot;
+    d = o.DUVAR
+    ex, ey = ix / 2, iy / 2
+    ekle = []
+    for sx, sy in itertools.product((-1, 1), (-1, 1)):
+        x_out, y_out = cx + sx * (ex + d / 2), cy + sy * (ey + d / 2)
+        kx = min(kose, ix / 2)
+        ky = min(kose, iy / 2)
+        ekle.append(kutu_m(x_out, cy + sy * (ey + d - ky / 2 - d / 2), d, ky + d, z0, z0 + h))
+        ekle.append(kutu_m(cx + sx * (ex + d - kx / 2 - d / 2), y_out, kx + d, d, z0, z0 + h))
+    kl, kg = o.KELEPCE
+    cik = []
+    if kelepce == &quot;x&quot;:
+        for sx in (-1, 1):
+            cik.append(kutu_m(cx + sx * (ex + d + 1.5 + kg / 2), cy, kg, kl, z0 - 20, z0 + 1))
+    elif kelepce == &quot;y&quot;:
+        for sy in (-1, 1):
+            cik.append(kutu_m(cx, cy + sy * (ey + d + 1.5 + kg / 2), kl, kg, z0 - 20, z0 + 1))
+    return ekle, cik
+
+
+# ---------------- yerlesim ----------------
+K1, K2, K3 = o.KAT1_Z, o.KAT2_Z, o.KAT3_Z
+K1U, K2U, K3U = K1 + o.KAT_T, K2 + o.KAT_T, K3 + o.KAT_T
+B = o.BOSLUK
+Z_PIM_UST = o.PIM_UST_ZEMIN + o.ZEMIN
+Z_PIM_ALT = o.PIM_ALT_ZEMIN + o.ZEMIN
+Z_MIKNATIS = (sum(o.SERIT_ZEMIN) / 2) + o.ZEMIN
+Z_GOZ = o.GOZ_ZEMIN + o.ZEMIN
+SX = o.V_SERIT_ON_X          # serit on yuzu
+SB = SX - 4.0                # serit arka yuzu = kat on kenari
+KAT_ON = o.KAT_X / 2
+
+YER = dict(
+    bts=(-21.0, 38.0),
+    lm=(18.4, 43.4), wago12=(42.75, 41.0), sigorta=(18.4, -43.4), wagogn=(42.75, -41.0),
+    c5=(21.0, 0.0), mpu=(0.0, 0.0),
+    anakart=(-28.0, 0.0), bms=(18.9, -32.8), xt60=(18.0, 22.0),
+    pil=(-23.0, 0.0), acil=(28.0, -46.0), kutu=(16.0, o.KUTU_Y),
+    goz=(39.0, o.GOZ_Y),
+)
+KAT1_PENCERE = (-48, -28, -13, 13)
+KAT2_PENCERE = (30, 38, -58, -30)
+ANAKART_DISTANS = 10.0   # ana kart kat 2&#x27;nin altina asili (M3 naylon distans), ESP32 asagi bakar
+MOTOR_TAB_DELIK = [(-5.0, 70.0), (9.0, 70.0)]
+V_ALT_VIDA = [(47.0, 14.0), (47.0, -14.0)]
+V_UST_VIDA = [(44.0, 0.0), (51.0, 0.0)]
+
+
+def kat_temel(z0):
+    p = yuvarlak_levha(o.KAT_X, o.KAT_Y, o.KAT_KOSE_R, z0, o.KAT_T)
+    delik = [sil_z(sx * o.DISTANS_XY[0], sy * o.DISTANS_XY[1], o.VIDA_D / 2, z0 - 1, z0 + o.KAT_T + 1)
+             for sx in (-1, 1) for sy in (-1, 1)]
+    return p, delik
+
+
+def kat1():
+    p, cik = kat_temel(K1)
+    ekle = []
+    x0, x1, y0, y1 = KAT1_PENCERE
+    cik.append(kutu(x0, x1, y0, y1, K1 - 1, K1U + 1))
+    for sy in (1, -1):
+        for x, y in MOTOR_TAB_DELIK:
+            cik.append(sil_z(x, sy * y, o.VIDA_D / 2, K1 - 1, K1U + 1))
+        # BTS7960: 4 ayak + pilot delik + kose duvarlari
+        bx, by = YER[&quot;bts&quot;][0], sy * YER[&quot;bts&quot;][1]
+        h = o.BTS_DELIK / 2
+        for dx, dy in itertools.product((-h, h), (-h, h)):
+            ekle.append(sil_z(bx + dx, by + dy, 4.0, K1U, K1U + o.BTS_AYAK))
+            cik.append(sil_z(bx + dx, by + dy, o.KILAVUZ_D / 2, K1U - 2, K1U + o.BTS_AYAK + 1))
+        e, c = yuva(bx, by, o.BTS[0] + 2 * B, o.BTS[1] + 2 * B, K1U, h=o.BTS_AYAK + 3, kelepce=None)
+        ekle += e
+    # on bant
+    for ad, (ix, iy), kel in ((&quot;lm&quot;, (o.LM2596[1], o.LM2596[0]), &quot;x&quot;), (&quot;wago12&quot;, (o.WAGO[1], o.WAGO[0]), &quot;x&quot;),
+                              (&quot;sigorta&quot;, (o.SIGORTA[1], o.SIGORTA[0]), &quot;x&quot;), (&quot;wagogn&quot;, (o.WAGO[1], o.WAGO[0]), &quot;x&quot;)):
+        cx, cy = YER[ad]
+        e, c = yuva(cx, cy, ix + 2 * B, iy + 2 * B, K1U, h=3.0, kelepce=kel)
+        ekle += e
+        cik += c
+    # MPU6050: kose duvarlari, kopuk bantla yapisir; eksenleri robotla hizali tutar
+    e, c = yuva(*YER[&quot;mpu&quot;], o.MPU[0] + 2 * B, o.MPU[1] + 2 * B, K1U, h=2.5, kelepce=&quot;y&quot;, kose=5)
+    ekle += e
+    cik += c
+    # C5 beşik
+    cx, _ = YER[&quot;c5&quot;]
+    eks = K1U + o.C5[0] / 2 + 0.5
+    for sy in (-1, 1):
+        ekle.append(kutu_m(cx, sy * 8.0, 15.0, 4.0, K1U, eks))
+    cik.append(sil_y(cx, eks, o.C5[0] / 2 + B, -20, 20))
+    for sx in (-1, 1):
+        cik.append(kutu_m(cx + sx * 9.5, 0, o.KELEPCE[1], o.KELEPCE[0], K1 - 1, K1U + 1))
+    for x, y in V_ALT_VIDA:
+        cik.append(sil_z(x, y, o.VIDA_D / 2, K1 - 1, K1U + 1))
+    return (p + birlesim(ekle)) - birlesim(cik)
+
+
+def goz_tutucu(sag):
+    &quot;&quot;&quot;Tek IR goz tutucu (yerel: x ileri, pencere x=0..TUP_L; arka cep x&lt;0).&quot;&quot;&quot;
+    w, h = o.GOZ_PENCERE
+    zc = Z_GOZ
+    d = o.DUVAR
+    tup = kutu(0, o.GOZ_TUP_L, -w / 2 - d, w / 2 + d, K2U, zc + h / 2 + d) - kutu(-1, o.GOZ_TUP_L + 1, -w / 2, w / 2, zc - h / 2, zc + h / 2)
+    cep_ic = (8.4, 16.0)
+    arka = kutu(-cep_ic[0] - d, 0, -cep_ic[1] / 2 - d, cep_ic[1] / 2 + d, K2U, K2U + 14) - \
+        kutu(-cep_ic[0], 0.01, -cep_ic[1] / 2, cep_ic[1] / 2, K2U + 0.8, K2U + 20)
+    # bag deligi (arka duvardan, modul kartini sarar)
+    arka = arka - kutu(-cep_ic[0] - d - 1, -cep_ic[0] + 1, -2, 2, K2U + 6, K2U + 8.2)
+    g = tup + arka
+    a = -o.GOZ_ACI if sag else o.GOZ_ACI
+    x, y = YER[&quot;goz&quot;]
+    return g.rotate([0, 0, a]).translate([x, -y if sag else y, 0])
+
+
+def kat2():
+    p, cik = kat_temel(K2)
+    ekle = []
+    x0, x1, y0, y1 = KAT2_PENCERE
+    cik.append(kutu(x0, x1, y0, y1, K2 - 1, K2U + 1))
+    # ana kart altta asili: 4 distans deligi
+    ax, ay = YER[&quot;anakart&quot;]
+    for dx, dy in itertools.product((-1, 1), (-1, 1)):
+        x, y = ax + dx * o.ANAKART_DELIK[1] / 2, ay + dy * o.ANAKART_DELIK[0] / 2
+        cik.append(sil_z(x, y, o.VIDA_D / 2, K2 - 1, K2U + 1))
+    # 3x18650 yuvasi ustte: kose duvarlari + orta hatta iki vida kanali (yuvanin taban deligi icin, somun altta)
+    px, py = YER[&quot;pil&quot;]
+    e, c = yuva(px, py, o.PIL[1] + 2 * B, o.PIL[0] + 2 * B, K2U, h=4.0, kelepce=None, kose=10)
+    ekle += e
+    for sy in (-1, 1):
+        cik.append(kutu(px - o.VIDA_D / 2, px + o.VIDA_D / 2, *sorted((sy * 8, sy * 32)), K2 - 1, K2U + 1))
+    e, c = yuva(*YER[&quot;bms&quot;], o.BMS[1] + 2 * B, o.BMS[0] + 2 * B, K2U, h=3.0, kelepce=&quot;x&quot;)
+    ekle += e
+    cik += c
+    e, c = yuva(*YER[&quot;xt60&quot;], o.XT60[0] + 2 * B, o.XT60[1] + 2 * B, K2U, h=4.0, kelepce=&quot;x&quot;, kose=5)
+    ekle += e
+    cik += c
+    for x, y in V_UST_VIDA:
+        cik.append(sil_z(x, y, o.VIDA_D / 2, K2 - 1, K2U + 1))
+    p = (p + birlesim(ekle)) - birlesim(cik)
+    return p + goz_tutucu(False) + goz_tutucu(True)
+
+
+def kat3():
+    p, cik = kat_temel(K3)
+    ax, ay = YER[&quot;acil&quot;]
+    r = o.ACIL_DELIK / 2
+    cik.append(sil_z(ax, ay, r, K3 - 1, K3U + 1, seg=72))
+    cik.append(kutu(ax + r - 1, ax + r + 2.0, ay - 1.6, ay + 1.6, K3 - 1, K3U + 1))   # donme kilidi
+    cik.append(sil_z(ax - 25, ay, 5.0, K3 - 1, K3U + 1))                              # acil stop kablolari
+    kx, ky = YER[&quot;kutu&quot;]
+    ix, iy = o.KUTU[0] + 2 * o.KUTU_PAY, o.KUTU[1] + 2 * o.KUTU_PAY
+    t, h = o.KUTU_DUVAR
+    cep = kutu_m(kx, ky, ix + 2 * t, iy + 2 * t, K3U, K3U + h) - kutu_m(kx, ky, ix, iy, K3U, K3U + h + 1)
+    for sx in (-1, 1):  # parmak oyuklari
+        cep = cep - kutu_m(kx + sx * (ix / 2 + t / 2), ky, t + 2, 22, K3U + h - 12, K3U + h + 1)
+    return (p + cep) - birlesim(cik)
+
+
+def motor_tutucu(sol=True):
+    y0 = o.MOTOR_YUZ_Y
+    y1 = y0 + o.TUTUCU_T
+    zm = -o.MOTOR_MIL_KACIK
+    xa, xb = -14.0, 20.0
+    plaka = sil_y(0, zm, 21.0, y0, y1) + kutu(xa, xb, y0, y1, zm, K1 - 5)
+    tab = kutu(xa, xb, 52.0, y1, K1 - 5, K1)
+    gus = [prizma_x([(y0, K1 - 5), (57.0, K1 - 5), (y0, K1 - 13)], x, x + 4) for x in (xa, xb - 4)]
+    m = plaka + tab + birlesim(gus)
+    cik = [sil_y(0, 0, o.MOTOR_BURC_D / 2, y0 - 1, y1 + 1)]
+    for k in range(6):
+        a = math.radians(o.MOTOR_DELIK_ACI0 + 60 * k)
+        x, z = o.MOTOR_DELIK_PCD / 2 * math.cos(a), zm + o.MOTOR_DELIK_PCD / 2 * math.sin(a)
+        cik.append(sil_y(x, z, o.VIDA_D / 2, y0 - 1, y1 + 1, seg=24))
+        cik.append(sil_y(x, z, 3.25, y1 - 2.5, y1 + 1, seg=24))
+    for x, y in MOTOR_TAB_DELIK:
+        cik.append(sil_z(x, y, o.VIDA_D / 2, K1 - 6, K1 + 1, seg=24))
+        cik.append(altigen_z(x, y, o.SOMUN_AA, K1 - 6, K1 - 5 + 2.6))
+    m = m - birlesim(cik)
+    return m if sol else m.mirror([0, 1, 0])
+
+
+def v_yuva():
+    s = kutu(SB, SX, -o.V_SERIT_Y / 2, o.V_SERIT_Y / 2, K1U, K2)
+    kan = []
+    c = math.cos(math.radians(45))
+    L, t = o.V_KANAT_L, o.V_KANAT_T
+    for sy in (1, -1):
+        p0 = (SX, o.V_SERIT_Y / 2)
+        p1 = (SX + L * c, o.V_SERIT_Y / 2 + L * c)
+        p2 = (p1[0] - t * c, p1[1] + t * c)
+        p3 = (p0[0] - t * c, p0[1] + t * c)
+        pts = [p0, p1, p2, p3, (SB, p3[1]), (SB, p0[1])]
+        pts = [(x, sy * y) for x, y in pts]
+        kan.append(prizma_z(pts, K1U, K2))
+    alt = kutu(SB - 14, SB, -o.V_SERIT_Y, o.V_SERIT_Y, K1U, K1U + 4)
+    ust = prizma_y([(SB - 14, K2), (SB, K2), (SB, K2 - 18), (SB - 14, K2 - 4)], -o.V_SERIT_Y, o.V_SERIT_Y)
+    pim_ayak = [sil_x(0, z, 5.0, SB - 8, SB) for z in (Z_PIM_UST, Z_PIM_ALT)]
+    mik_ayak = sil_x(0, Z_MIKNATIS, 7.0, SX - 7.0, SB)
+    m = s + birlesim(kan) + alt + ust + birlesim(pim_ayak) + mik_ayak
+    cik = [sil_x(0, z, o.POGO_D / 2 + 0.1, SB - 10, SX + 1, seg=32) for z in (Z_PIM_UST, Z_PIM_ALT)]
+    cik.append(sil_x(0, Z_MIKNATIS, o.MIKNATIS[0] / 2 + 0.15, SX - 7.0 - 1, SX - 0.8, seg=48))
+    for x, y in V_ALT_VIDA:
+        cik.append(sil_z(x, y, o.KILAVUZ_D / 2, K1U - 1, K1U + 3.5, seg=24))
+    for x, y in V_UST_VIDA:
+        cik.append(sil_z(x, y, o.KILAVUZ_D / 2, K2 - 12, K2 + 1, seg=24))
+    return m - birlesim(cik)
+
+
+# ---------------- satin alinan parcalar (zarf) ----------------
+def bilesenler():
+    b = {}
+    for sy, ad in ((1, &quot;sol&quot;), (-1, &quot;sag&quot;)):
+        y = o.MOTOR_YUZ_Y
+        zm = -o.MOTOR_MIL_KACIK
+        mot = sil_y(0, zm, o.MOTOR_SANZ_D / 2, y - o.MOTOR_SANZ_L, y) + \
+            sil_y(0, zm, o.MOTOR_GOVDE_D / 2, y - o.MOTOR_SANZ_L - o.MOTOR_GOVDE_L, y - o.MOTOR_SANZ_L) + \
+            sil_y(0, 0, o.MOTOR_MIL_D / 2, y, y + o.TUTUCU_T + 2) + sil_y(0, 0, 6.0, y, y + 3)
+        tek = sil_y(0, 0, o.R_TEKER, o.IZ / 2 - o.TEKER_EN / 2, o.IZ / 2 + o.TEKER_EN / 2, seg=72)
+        if sy &lt; 0:
+            mot, tek = mot.mirror([0, 1, 0]), tek.mirror([0, 1, 0])
+        b[f&quot;motor {ad}&quot;] = mot
+        b[f&quot;teker {ad}&quot;] = tek
+        bx, by = YER[&quot;bts&quot;][0], sy * YER[&quot;bts&quot;][1]
+        b[f&quot;BTS7960 {ad}&quot;] = kutu_m(bx, by, o.BTS[0], o.BTS[1], K1U + o.BTS_AYAK, K1U + o.BTS_AYAK + o.BTS[2])
+    b[&quot;MPU6050&quot;] = kutu_m(*YER[&quot;mpu&quot;], o.MPU[0], o.MPU[1], K1U + 1, K1U + 1 + o.MPU[2])
+    b[&quot;LM2596&quot;] = kutu_m(*YER[&quot;lm&quot;], o.LM2596[1], o.LM2596[0], K1U, K1U + o.LM2596[2])
+    b[&quot;sigorta&quot;] = kutu_m(*YER[&quot;sigorta&quot;], o.SIGORTA[1], o.SIGORTA[0], K1U, K1U + o.SIGORTA[2])
+    b[&quot;WAGO-12V&quot;] = kutu_m(*YER[&quot;wago12&quot;], o.WAGO[1], o.WAGO[0], K1U, K1U + o.WAGO[2])
+    b[&quot;WAGO-GND&quot;] = kutu_m(*YER[&quot;wagogn&quot;], o.WAGO[1], o.WAGO[0], K1U, K1U + o.WAGO[2])
+    b[&quot;C5 1000uF&quot;] = sil_y(YER[&quot;c5&quot;][0], K1U + o.C5[0] / 2 + 0.5, o.C5[0] / 2, -o.C5[1] / 2, o.C5[1] / 2)
+    for z, ad in ((Z_PIM_UST, &quot;+&quot;), (Z_PIM_ALT, &quot;-&quot;)):
+        b[f&quot;pogo {ad}&quot;] = sil_x(0, z, o.POGO_D / 2, SX + o.POGO_CIKIS - o.POGO_L, SX + o.POGO_CIKIS, seg=32)
+    b[&quot;miknatis x2&quot;] = sil_x(0, Z_MIKNATIS, o.MIKNATIS[0] / 2, SX - 0.8 - 2 * o.MIKNATIS[1], SX - 0.8)
+    px, py = YER[&quot;pil&quot;]
+    b[&quot;3x18650 yuva&quot;] = kutu_m(px, py, o.PIL[1], o.PIL[0], K2U, K2U + o.PIL[2])
+    ax, ay = YER[&quot;anakart&quot;]
+    za = K2 - ANAKART_DISTANS
+    b[&quot;ana kart&quot;] = kutu_m(ax, ay, o.ANAKART[1], o.ANAKART[0], za - o.ANAKART[2], za)
+    b[&quot;ESP32 (soketli)&quot;] = kutu_m(ax, ay, 28.0, 52.0, za - o.ANAKART[2] - o.ANAKART_YUK, za - o.ANAKART[2])
+    for dx, dy in itertools.product((-1, 1), (-1, 1)):
+        b[f&quot;ana kart distansi {dx:+d}{dy:+d}&quot;] = altigen_z(ax + dx * o.ANAKART_DELIK[1] / 2, ay + dy * o.ANAKART_DELIK[0] / 2, o.DISTANS_AA, za, K2)
+    b[&quot;BMS&quot;] = kutu_m(*YER[&quot;bms&quot;], o.BMS[1], o.BMS[0], K2U, K2U + o.BMS[2])
+    b[&quot;XT60&quot;] = kutu_m(*YER[&quot;xt60&quot;], o.XT60[0], o.XT60[1], K2U, K2U + o.XT60[2])
+    for sag in (False, True):
+        a = math.radians(-o.GOZ_ACI if sag else o.GOZ_ACI)
+        gx, gy = YER[&quot;goz&quot;][0], (-1 if sag else 1) * YER[&quot;goz&quot;][1]
+        bas = kutu(-5.6, -0.05, -3.2, 3.2, Z_GOZ - 3.7, Z_GOZ + 3.5).rotate([0, 0, math.degrees(a)]).translate([gx, gy, 0])
+        b[f&quot;IR goz {&#x27;sag&#x27; if sag else &#x27;sol&#x27;}&quot;] = bas
+    cx, cy = YER[&quot;acil&quot;]
+    b[&quot;acil stop&quot;] = sil_z(cx, cy, 15.0, K3U, K3U + 8) + sil_z(cx, cy, o.ACIL_MANTAR[0] / 2, K3U + 8, K3U + o.ACIL_MANTAR[1]) + \
+        kutu_m(cx, cy, o.ACIL_GOVDE[0], o.ACIL_GOVDE[1], K3 - o.ACIL_GOVDE[2], K3)
+    kx, ky = YER[&quot;kutu&quot;]
+    b[&quot;ilac kutusu&quot;] = kutu_m(kx, ky, o.KUTU[0], o.KUTU[1], K3U, K3U + o.KUTU[2])
+    for sx, sy in itertools.product((-1, 1), (-1, 1)):
+        x, y = sx * o.DISTANS_XY[0], sy * o.DISTANS_XY[1]
+        b[f&quot;distans {&#x27;+&#x27; if sx &gt; 0 else &#x27;-&#x27;}{&#x27;+&#x27; if sy &gt; 0 else &#x27;-&#x27;}&quot;] = \
+            altigen_z(x, y, o.DISTANS_AA, K1U, K2) + altigen_z(x, y, o.DISTANS_AA, K2U, K3)
+    return b
+
+
+# ---------------- kontroller ----------------
+def tepe(m):
+    mesh = m.to_mesh()
+    return np.asarray(mesh.vert_properties)[:, :3]
+
+
+def kontrol(basili, bil):
+    satir = []
+    ok_hepsi = True
+
+    def ekle(ad, ok, detay):
+        nonlocal ok_hepsi
+        ok_hepsi &amp;= ok
+        satir.append((ad, &quot;GECTI&quot; if ok else &quot;KALDI&quot;, detay))
+
+    hepsi = {**{f&quot;[baski] {k}&quot;: v for k, v in basili.items()}, **bil}
+    adlar = list(hepsi)
+    cakis = []
+    for a, b_ in itertools.combinations(adlar, 2):
+        if (a.startswith(&quot;motor&quot;) and b_.startswith(&quot;teker&quot;)) or (b_.startswith(&quot;motor&quot;) and a.startswith(&quot;teker&quot;)):
+            continue  # mil teker gobegine girer
+        v = (hepsi[a] ^ hepsi[b_]).volume()
+        if v &gt; 0.5:
+            cakis.append((a, b_, v))
+    ekle(&quot;Carpisma (tum parcalar ikili)&quot;, not cakis,
+         f&quot;{len(adlar)} parca, {len(adlar)*(len(adlar)-1)//2} cift; &quot; +
+         (&quot;hic biri birbirine girmiyor&quot; if not cakis else &quot;; &quot;.join(f&quot;{a} x {b_}: {v:.0f} mm3&quot; for a, b_, v in cakis)))
+
+    # zemin: teker disindaki her nokta +-30 derece egimde zeminden en az 3 mm yukarida
+    en_dusuk = 1e9
+    hangi = &quot;&quot;
+    for ad, m in hepsi.items():
+        if ad.startswith(&quot;teker&quot;):
+            continue
+        v = tepe(m)
+        for th in np.radians(np.arange(-30, 31, 2)):
+            z = v[:, 2] * math.cos(th) + v[:, 0] * math.sin(th)
+            if z.min() &lt; en_dusuk:
+                en_dusuk, hangi = z.min(), ad
+    ekle(&quot;Zemin payi (+-30 derece egim)&quot;, en_dusuk - o.ZEMIN &gt;= 3.0,
+         f&quot;en alcak nokta zeminden {en_dusuk - o.ZEMIN:.1f} mm ({hangi})&quot;)
+
+    # direk: yanasmis konumda direk seride degiyor, pimler 3 mm basiliyor, baska hicbir sey degmiyor
+    direk = sil_z(SX + o.DIREK_D / 2, 0, o.DIREK_D / 2, o.ZEMIN, o.ZEMIN + 200, seg=96)
+    deg = []
+    for ad, m in hepsi.items():
+        v = (m ^ direk).volume()
+        if v &gt; 0.05 and not ad.startswith(&quot;pogo&quot;):
+            deg.append(f&quot;{ad} {v:.1f} mm3&quot;)
+    pim = [(bil[f&quot;pogo {s}&quot;] ^ direk).volume() for s in &quot;+-&quot;]
+    ekle(&quot;Direk yanasmasi (O40, seride temas)&quot;, not deg and all(p &gt; 1 for p in pim),
+         (&quot;yalniz pogo pimler direge giriyor (yay payi &quot; + f&quot;{o.POGO_CIKIS:.0f} mm)&quot;) if not deg else &quot;; &quot;.join(deg))
+
+    # kanat ile direk arasi en kucuk bosluk
+    kan_bosluk = []
+    c = math.cos(math.radians(45))
+    for sy in (1, -1):
+        p0 = np.array([SX, sy * o.V_SERIT_Y / 2])
+        d = np.array([c, sy * c])
+        q = np.array([SX + o.DIREK_D / 2, 0.0]) - p0
+        kan_bosluk.append(abs(q[0] * d[1] - q[1] * d[0]) - o.DIREK_D / 2)
+    ekle(&quot;V kanatlari direge degmiyor&quot;, min(kan_bosluk) &gt; 0.5, f&quot;kanat ic yuzu ile direk arasi {min(kan_bosluk):.1f} mm&quot;)
+
+    # yukseklikler
+    zp = [Z_PIM_UST - o.ZEMIN, Z_PIM_ALT - o.ZEMIN, Z_GOZ - o.ZEMIN, Z_MIKNATIS - o.ZEMIN]
+    ekle(&quot;Pim, miknatis ve goz yukseklikleri&quot;, abs(zp[0] - 102) &lt; 0.1 and abs(zp[1] - 77) &lt; 0.1 and abs(zp[2] - 147) &lt; 0.1,
+         f&quot;+ pim {zp[0]:.1f}, - pim {zp[1]:.1f}, miknatis {zp[3]:.1f} (celik serit 85-94), IR goz {zp[2]:.1f} mm (zeminden)&quot;)
+
+    # IR gozleri direge bakiyor mu (30 cm onde), gorus hatti engelsiz mi
+    engel = []
+    for sag in (False, True):
+        a = math.radians(-o.GOZ_ACI if sag else o.GOZ_ACI)
+        gx, gy = YER[&quot;goz&quot;][0], (-1 if sag else 1) * YER[&quot;goz&quot;][1]
+        for dx in np.linspace(0, 250, 60)[1:]:
+            p = (gx + dx * math.cos(a), gy + dx * math.sin(a), Z_GOZ)
+            for ad, m in hepsi.items():
+                if ad.startswith(&quot;IR goz&quot;) or ad.startswith(&quot;[baski] kat2&quot;):
+                    continue
+                bb = m.bounding_box()
+                if bb[0] &lt;= p[0] &lt;= bb[3] and bb[1] &lt;= p[1] &lt;= bb[4] and bb[2] &lt;= p[2] &lt;= bb[5]:
+                    if (m ^ kutu_m(p[0], p[1], 0.5, 0.5, p[2] - 0.25, p[2] + 0.25)).volume() &gt; 0:
+                        engel.append(ad)
+    ekle(&quot;IR gorus hatti&quot;, not engel, &quot;iki gozun onu 25 cm acik&quot; if not engel else &quot;, &quot;.join(sorted(set(engel))))
+
+    # MPU merkezde mi
+    mx, my = YER[&quot;mpu&quot;]
+    ekle(&quot;MPU6050 teker ekseni ustunde, ortada&quot;, abs(mx) &lt; 1 and abs(my) &lt; 1, f&quot;x={mx:.0f}, y={my:.0f} mm, z={K1U+1:.0f} mm&quot;)
+
+    # kutle butcesi (tools/mass_budget.py) parca konumlari 3B modelle ayni mi (LQR ve ikiz bunu kullanir)
+    sys.path.insert(0, str(ROOT / &quot;tools&quot;))
+    import mass_budget as mb
+    esle = {&quot;2x BTS7960&quot;: [&quot;BTS7960 sol&quot;], &quot;3x18650 + yuva + BMS&quot;: [&quot;3x18650 yuva&quot;], &quot;Kat 3 baski&quot;: None,
+            &quot;Ana kart + ESP32&quot;: [&quot;ana kart&quot;, &quot;ESP32 (soketli)&quot;], &quot;MPU6050 (kat 1 ustu, ortada)&quot;: [&quot;MPU6050&quot;]}
+    fark = []
+    for ad, z, x in ((p[0], p[2], p[3]) for p in mb.PARTS):
+        if ad not in esle or esle[ad] is None:
+            continue
+        ms = [bil[k] for k in esle[ad]]
+        hac = sum(m.volume() for m in ms)
+        cz = sum(tri(m).center_mass[2] * m.volume() for m in ms) / hac
+        cx = sum(tri(m).center_mass[0] * m.volume() for m in ms) / hac
+        fark.append((ad, cz - z * 1000, cx - x * 1000))
+    kz = (K3 + K3U) / 2
+    fark.append((&quot;Kat 3 baski&quot;, kz - [p[2] for p in mb.PARTS if p[0] == &quot;Kat 3 baski&quot;][0] * 1000, 0.0))
+    fark.append((&quot;Ilac kutusu&quot;, tri(bil[&quot;ilac kutusu&quot;]).center_mass[2] - mb.BOX[2] * 1000, 0.0))
+    for ad, yx in ((&quot;Acil stop&quot;, YER[&quot;acil&quot;][0]), (&quot;Kutu yuvasi&quot;, YER[&quot;kutu&quot;][0])):
+        fark.append((ad, 0.0, yx - [p[3] for p in mb.PARTS if p[0] == ad][0] * 1000))
+    en = max(max(abs(a_), abs(b_)) for _, a_, b_ in fark)
+    ekle(&quot;Kutle butcesi 3B modelle uyumlu&quot;, en &lt; 10.0,
+         f&quot;en buyuk fark {en:.1f} mm (&quot; + &quot;, &quot;.join(f&quot;{a_}: dz {z_:+.0f}&quot; for a_, z_, _ in fark) + &quot;)&quot;)
+
+    xkm = sum(p[1] * p[3] for p in mb.PARTS) + mb.BOX[1] * YER[&quot;kutu&quot;][0] / 1000
+    mt = sum(p[1] for p in mb.PARTS) + mb.BOX[1]
+    ekle(&quot;Kutle merkezi teker ekseni ustunde (x)&quot;, abs(xkm / mt * 1000) &lt; 1.0,
+         f&quot;x = {xkm / mt * 1000:+.1f} mm (one +); robot dik dururken dengede&quot;)
+
+    # baski hacmi
+    buyuk = []
+    for ad, m in basili.items():
+        bb = m.bounding_box()
+        s = sorted([bb[3] - bb[0], bb[4] - bb[1], bb[5] - bb[2]])
+        if s[2] &gt; 180 or s[1] &gt; 180:
+            buyuk.append(ad)
+    ekle(&quot;Baski tablasina sigma (180x180)&quot;, not buyuk, &quot;hepsi sigiyor&quot; if not buyuk else &quot;, &quot;.join(buyuk))
+    return ok_hepsi, satir
+
+
+# ---------------- disari aktarma ----------------
+BASKI_YONU = {
+    &quot;kat1&quot;: lambda m: m,
+    &quot;kat2&quot;: lambda m: m,
+    &quot;kat3&quot;: lambda m: m,
+    &quot;motor_tutucu_sol&quot;: lambda m: m.rotate([-90, 0, 0]),     # dis yuz (teker tarafi) tablada
+    &quot;motor_tutucu_sag&quot;: lambda m: m.rotate([90, 0, 0]),
+    &quot;v_yuva&quot;: lambda m: m,
+}
+
+
+def tri(m):
+    mesh = m.to_mesh()
+    return trimesh.Trimesh(np.asarray(mesh.vert_properties)[:, :3], np.asarray(mesh.tri_verts), process=False)
+
+
+def main():
+    (OUT / &quot;stl&quot;).mkdir(parents=True, exist_ok=True)
+    basili = {
+        &quot;kat1&quot;: kat1(), &quot;kat2&quot;: kat2(), &quot;kat3&quot;: kat3(),
+        &quot;motor_tutucu_sol&quot;: motor_tutucu(True), &quot;motor_tutucu_sag&quot;: motor_tutucu(False),
+        &quot;v_yuva&quot;: v_yuva(),
+    }
+    bil = bilesenler()
+    bilgi = {}
+    for ad, m in basili.items():
+        assert m.status().name == &quot;NoError&quot;, (ad, m.status())
+        p = BASKI_YONU[ad](m)
+        bb = p.bounding_box()
+        p = p.translate([-(bb[0] + bb[3]) / 2, -(bb[1] + bb[4]) / 2, -bb[2]])
+        t = tri(p)
+        assert t.is_watertight, ad
+        t.export(OUT / &quot;stl&quot; / f&quot;{ad}.stl&quot;)
+        bb = p.bounding_box()
+        hacim = m.volume() / 1000.0
+        bilgi[ad] = dict(hacim_cm3=round(hacim, 1), kutle_g=round(hacim * 1.24 * 0.6, 0),
+                         boyut_mm=[round(bb[3] - bb[0], 1), round(bb[4] - bb[1], 1), round(bb[5] - bb[2], 1)])
+    ok, satir = kontrol(basili, bil)
+
+    # montaj GLB (renkli)
+    sahne = trimesh.Scene()
+    renk_b = {&quot;kat1&quot;: (230, 230, 235), &quot;kat2&quot;: (230, 230, 235), &quot;kat3&quot;: (230, 230, 235),
+              &quot;motor_tutucu_sol&quot;: (255, 160, 60), &quot;motor_tutucu_sag&quot;: (255, 160, 60), &quot;v_yuva&quot;: (60, 110, 230)}
+    for ad, m in basili.items():
+        t = tri(m)
+        t.visual.face_colors = (*renk_b[ad], 255)
+        sahne.add_geometry(t, node_name=f&quot;baski_{ad}&quot;, geom_name=f&quot;baski_{ad}&quot;)
+    for ad, m in bil.items():
+        t = tri(m)
+        c = (60, 60, 60) if ad.startswith((&quot;teker&quot;, &quot;motor&quot;)) else (40, 140, 70) if ad.startswith((&quot;BTS&quot;, &quot;ana&quot;, &quot;ESP&quot;, &quot;MPU&quot;, &quot;LM&quot;, &quot;BMS&quot;, &quot;IR&quot;)) \
+            else (200, 40, 40) if ad.startswith((&quot;acil&quot;, &quot;ilac&quot;)) else (180, 150, 60) if ad.startswith((&quot;pogo&quot;, &quot;distans&quot;, &quot;miknatis&quot;)) else (120, 120, 140)
+        t.visual.face_colors = (*c, 255)
+        sahne.add_geometry(t, node_name=ad, geom_name=ad)
+    sahne.export(OUT / &quot;montaj.glb&quot;)
+
+    # kutle merkezi icin basili parcalarin katkisi
+    km = {ad: [round(float(x), 1) for x in tri(m).center_mass] for ad, m in basili.items()}
+    (OUT / &quot;parcalar.json&quot;).write_text(json.dumps(dict(parca=bilgi, km_mm=km), indent=1), encoding=&quot;utf-8&quot;)
+
+    with open(OUT / &quot;kontrol.md&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+        f.write(&quot;# 3B montaj kontrolu\n\n`python cad/robot_cad.py` uretir.\n\n| Kontrol | Sonuc | Ayrinti |\n|---|---|---|\n&quot;)
+        for a, s, d in satir:
+            f.write(f&quot;| {a} | {s} | {d} |\n&quot;)
+        f.write(&quot;\n| Parca | Boyut (mm, baski yonu) | Hacim cm3 | Kutle g (%60 dolu PLA) |\n|---|---|---|---|\n&quot;)
+        for ad, i in bilgi.items():
+            f.write(f&quot;| {ad} | {&#x27; x &#x27;.join(str(v) for v in i[&#x27;boyut_mm&#x27;])} | {i[&#x27;hacim_cm3&#x27;]} | {i[&#x27;kutle_g&#x27;]:.0f} |\n&quot;)
+    for a, s, d in satir:
+        print(f&quot;{s:6s} {a}: {d}&quot;)
+    for ad, i in bilgi.items():
+        print(f&quot;{ad:18s} {i[&#x27;boyut_mm&#x27;]} {i[&#x27;kutle_g&#x27;]:.0f} g&quot;)
+    print(&quot;TUMU GECTI&quot; if ok else &quot;KALAN VAR&quot;)
+    return 0 if ok else 1
+
+
+if __name__ == &quot;__main__&quot;:
+    sys.exit(main())
+</pre></div>
+<div class="codefile"><div class="codename">cad/ciz.py <span>78 satır</span></div><pre>&quot;&quot;&quot;cad/montaj.glb ve cad/stl/*.stl&#x27;den onizleme resimleri -&gt; docs/img/cad_*.png&quot;&quot;&quot;
+import pathlib
+
+import matplotlib
+import numpy as np
+import trimesh
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection  # noqa: E402
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+IMG = ROOT / &quot;docs/img&quot;
+ISIK = np.array([0.4, -0.5, 0.8])
+ISIK = ISIK / np.linalg.norm(ISIK)
+
+
+def golgeli(ax, mesh, renk, alfa=1.0):
+    n = mesh.face_normals
+    k = 0.45 + 0.55 * np.clip(n @ ISIK, 0, 1)
+    c = np.clip(np.outer(k, np.asarray(renk[:3]) / 255.0), 0, 1)
+    pc = Poly3DCollection(mesh.vertices[mesh.faces], facecolors=np.c_[c, np.full(len(c), alfa)], linewidths=0)
+    ax.add_collection3d(pc)
+
+
+def eksen(ax, lo, hi):
+    c = (lo + hi) / 2
+    r = (hi - lo).max() / 2
+    ax.set_xlim(c[0] - r, c[0] + r)
+    ax.set_ylim(c[1] - r, c[1] + r)
+    ax.set_zlim(c[2] - r, c[2] + r)
+    ax.set_box_aspect((1, 1, 1))
+    ax.set_axis_off()
+
+
+def montaj():
+    sahne = trimesh.load(ROOT / &quot;cad/montaj.glb&quot;)
+    parcalar = []
+    for ad, g in sahne.geometry.items():
+        m = g.copy()
+        m.apply_transform(sahne.graph.get(ad)[0] if ad in sahne.graph.nodes else np.eye(4))
+        renk = m.visual.face_colors[0] if hasattr(m.visual, &quot;face_colors&quot;) else (180, 180, 180, 255)
+        parcalar.append((ad, m, renk))
+    lo = np.min([m.bounds[0] for _, m, _ in parcalar], axis=0)
+    hi = np.max([m.bounds[1] for _, m, _ in parcalar], axis=0)
+    fig = plt.figure(figsize=(13, 5.2))
+    for i, (baslik, elev, azim) in enumerate(((&quot;Montaj (önden-sağdan)&quot;, 22, -35), (&quot;Önden&quot;, 0, 0), (&quot;Yandan (ön sağda)&quot;, 0, -90))):
+        ax = fig.add_subplot(1, 3, i + 1, projection=&quot;3d&quot;)
+        ax.view_init(elev=elev, azim=azim)
+        for ad, m, renk in parcalar:
+            golgeli(ax, m, renk, 0.55 if ad.startswith(&quot;baski_kat&quot;) else 1.0)
+        eksen(ax, lo, hi)
+        ax.set_title(baslik, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(IMG / &quot;cad_montaj.png&quot;, dpi=120)
+    plt.close(fig)
+
+
+def parcalar():
+    adlar = [&quot;kat1&quot;, &quot;kat2&quot;, &quot;kat3&quot;, &quot;motor_tutucu_sol&quot;, &quot;v_yuva&quot;]
+    fig = plt.figure(figsize=(15, 3.6))
+    for i, ad in enumerate(adlar):
+        m = trimesh.load(ROOT / f&quot;cad/stl/{ad}.stl&quot;)
+        ax = fig.add_subplot(1, len(adlar), i + 1, projection=&quot;3d&quot;)
+        ax.view_init(elev=35, azim=-60)
+        golgeli(ax, m, (90, 150, 230))
+        eksen(ax, m.bounds[0], m.bounds[1])
+        ax.set_title(f&quot;{ad}.stl (baskı yönü)&quot;, fontsize=9)
+    fig.tight_layout()
+    fig.savefig(IMG / &quot;cad_parcalar.png&quot;, dpi=120)
+    plt.close(fig)
+
+
+if __name__ == &quot;__main__&quot;:
+    montaj()
+    parcalar()
+    print(&quot;cizildi&quot;)
+</pre></div>
+<div class="codefile"><div class="codename">tools/kicad_sema.py <span>567 satır</span></div><pre>&quot;&quot;&quot;Robotun KiCad semasini uretir ve denetler -&gt; elektronik/
+  cdtp_robot.kicad_sch  (KiCad 10 ile acilir; moduller cdtp.kicad_sym kutuphanesinde)
+  cdtp_robot.pdf / .svg, erc.json, netlist.xml, sema_kontrol.md
+Calistir: python tools/kicad_sema.py   (KiCad 10 kurulu olmali: kicad-cli)
+Baglantilar etiketle yapilir: ayni adli etiketler ayni hattir. Denetim: ERC + netlistteki her ESP32 pini
+firmware/robot/src/pins.h ile ve her kablo ucu robot_src.html tablolariyla karsilastirilir.&quot;&quot;&quot;
+import copy
+import itertools
+import json
+import os
+import pathlib
+import re
+import subprocess
+import sys
+import uuid
+import xml.etree.ElementTree as ET
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+OUT = ROOT / &quot;elektronik&quot;
+KICAD = pathlib.Path(os.environ.get(&quot;LOCALAPPDATA&quot;, &quot;&quot;)) / &quot;Programs/KiCad/10.0&quot;
+CLI = KICAD / &quot;bin/kicad-cli.exe&quot;
+STDLIB = KICAD / &quot;share/kicad/symbols&quot;
+PROJE = &quot;cdtp_robot&quot;
+NS = uuid.UUID(&quot;6e400001-cd7b-4e3a-9a40-2026cd7b0001&quot;)
+
+
+def uid(*a):
+    return str(uuid.uuid5(NS, &quot;/&quot;.join(map(str, a))))
+
+
+# ---------------- S-ifadesi ----------------
+class S(str):
+    &quot;&quot;&quot;Tirnakli dize.&quot;&quot;&quot;
+
+
+def ayristir(metin):
+    tok = re.findall(r&#x27;\(|\)|&quot;(?:[^&quot;\\]|\\.)*&quot;|[^\s()]+&#x27;, metin)
+    yigin = [[]]
+    for t in tok:
+        if t == &quot;(&quot;:
+            yigin.append([])
+        elif t == &quot;)&quot;:
+            son = yigin.pop()
+            yigin[-1].append(son)
+        elif t.startswith(&#x27;&quot;&#x27;):
+            yigin[-1].append(S(t[1:-1].replace(&#x27;\\&quot;&#x27;, &#x27;&quot;&#x27;).replace(&quot;\\\\&quot;, &quot;\\&quot;)))
+        else:
+            yigin[-1].append(t)
+    return yigin[0][0]
+
+
+def yaz(n, girinti=0):
+    if isinstance(n, list):
+        if all(not isinstance(c, list) for c in n):
+            return &quot;(&quot; + &quot; &quot;.join(yaz(c) for c in n) + &quot;)&quot;
+        ic = &quot;\n&quot;.join(&quot;\t&quot; * (girinti + 1) + yaz(c, girinti + 1) for c in n[1:])
+        return &quot;(&quot; + yaz(n[0]) + &quot;\n&quot; + ic + &quot;\n&quot; + &quot;\t&quot; * girinti + &quot;)&quot;
+    if isinstance(n, S):
+        return &#x27;&quot;&#x27; + n.replace(&quot;\\&quot;, &quot;\\\\&quot;).replace(&#x27;&quot;&#x27;, &#x27;\\&quot;&#x27;) + &#x27;&quot;&#x27;
+    if isinstance(n, float):
+        return f&quot;{n:.4f}&quot;.rstrip(&quot;0&quot;).rstrip(&quot;.&quot;)
+    return str(n)
+
+
+def bul(n, bas):
+    return [c for c in n if isinstance(c, list) and c and c[0] == bas]
+
+
+# ---------------- sembol kutuphaneleri ----------------
+_lib_cache = {}
+
+
+def std_sembol(lib_id):
+    lib, ad = lib_id.split(&quot;:&quot;)
+    if lib not in _lib_cache:
+        _lib_cache[lib] = ayristir((STDLIB / f&quot;{lib}.kicad_sym&quot;).read_text(encoding=&quot;utf-8&quot;))
+    for s in bul(_lib_cache[lib], &quot;symbol&quot;):
+        if s[1] == ad:
+            if bul(s, &quot;extends&quot;):
+                raise ValueError(f&quot;{lib_id} turetilmis sembol; desteklenmiyor&quot;)
+            s = copy.deepcopy(s)
+            s[1] = S(lib_id)
+            return s
+    raise KeyError(lib_id)
+
+
+def pinler(sym):
+    &quot;&quot;&quot;[(numara, ad, x, y, aci)] (kutuphane koordinati, y yukari; (x,y) elektrik ucu).&quot;&quot;&quot;
+    out = []
+
+    def gez(n):
+        for c in n:
+            if isinstance(c, list) and c:
+                if c[0] == &quot;pin&quot;:
+                    at = bul(c, &quot;at&quot;)[0]
+                    out.append((str(bul(c, &quot;number&quot;)[0][1]), str(bul(c, &quot;name&quot;)[0][1]), float(at[1]), float(at[2]), float(at[3])))
+                else:
+                    gez(c)
+    gez(sym)
+    return out
+
+
+def ozel_modul(ad, sol, sag, gen=20.32, aciklama=&quot;&quot;, ust=None):
+    &quot;&quot;&quot;Dikdortgen modul sembolu. sol/sag: [(numara, ad)]. Pin araligi 2,54 mm.&quot;&quot;&quot;
+    n = max(len(sol), len(sag))
+    h = (n + 1) * 2.54 / 2
+    h = round(h / 1.27) * 1.27
+    w = gen / 2
+    govde = [[&quot;rectangle&quot;, [&quot;start&quot;, -w, h], [&quot;end&quot;, w, -h], [&quot;stroke&quot;, [&quot;width&quot;, 0.254], [&quot;type&quot;, &quot;default&quot;]],
+              [&quot;fill&quot;, [&quot;type&quot;, &quot;background&quot;]]]]
+    if ust:
+        govde.append([&quot;text&quot;, S(ust), [&quot;at&quot;, 0, 0, 0], [&quot;effects&quot;, [&quot;font&quot;, [&quot;size&quot;, 1.27, 1.27]]]])
+    pins = []
+    for taraf, liste in ((-1, sol), (1, sag)):
+        for i, (num, pad) in enumerate(liste):
+            y = h - 2.54 * (i + 1)
+            pins.append([&quot;pin&quot;, &quot;passive&quot;, &quot;line&quot;, [&quot;at&quot;, taraf * (w + 2.54), round(y, 2), 0 if taraf &lt; 0 else 180],
+                         [&quot;length&quot;, 2.54], [&quot;name&quot;, S(pad), [&quot;effects&quot;, [&quot;font&quot;, [&quot;size&quot;, 1.27, 1.27]]]],
+                         [&quot;number&quot;, S(num), [&quot;effects&quot;, [&quot;font&quot;, [&quot;size&quot;, 1.27, 1.27]]]]])
+
+    def prop(k, v, y, gizli=False):
+        p = [&quot;property&quot;, S(k), S(v), [&quot;at&quot;, 0, y, 0], [&quot;effects&quot;, [&quot;font&quot;, [&quot;size&quot;, 1.27, 1.27]]]]
+        if gizli:
+            p.insert(4, [&quot;hide&quot;, &quot;yes&quot;])
+        return p
+    return [&quot;symbol&quot;, S(f&quot;cdtp:{ad}&quot;), [&quot;pin_names&quot;, [&quot;offset&quot;, 1.016]], [&quot;exclude_from_sim&quot;, &quot;no&quot;], [&quot;in_bom&quot;, &quot;yes&quot;],
+            [&quot;on_board&quot;, &quot;yes&quot;],
+            prop(&quot;Reference&quot;, &quot;A&quot;, h + 1.27), prop(&quot;Value&quot;, ad, -h - 1.27), prop(&quot;Footprint&quot;, &quot;&quot;, 0, True),
+            prop(&quot;Datasheet&quot;, &quot;&quot;, 0, True), prop(&quot;Description&quot;, aciklama, 0, True),
+            [&quot;symbol&quot;, S(f&quot;{ad}_0_1&quot;)] + govde, [&quot;symbol&quot;, S(f&quot;{ad}_1_1&quot;)] + pins]
+
+
+def numarali(adlar, bas=1):
+    return [(str(bas + i), a) for i, a in enumerate(adlar)]
+
+
+OZEL = {
+    &quot;cdtp:ESP32_DevKitC_38&quot;: ozel_modul(
+        &quot;ESP32_DevKitC_38&quot;,
+        numarali([&quot;3V3&quot;, &quot;EN&quot;, &quot;GPIO36_VP&quot;, &quot;GPIO39_VN&quot;, &quot;GPIO34&quot;, &quot;GPIO35&quot;, &quot;GPIO32&quot;, &quot;GPIO33&quot;, &quot;GPIO25&quot;, &quot;GPIO26&quot;,
+                  &quot;GPIO27&quot;, &quot;GPIO14&quot;, &quot;GPIO12&quot;, &quot;GND&quot;, &quot;GPIO13&quot;, &quot;SD2&quot;, &quot;SD3&quot;, &quot;CMD&quot;, &quot;5V&quot;]),
+        numarali([&quot;GND&quot;, &quot;GPIO23&quot;, &quot;GPIO22&quot;, &quot;TX_GPIO1&quot;, &quot;RX_GPIO3&quot;, &quot;GPIO21&quot;, &quot;GND&quot;, &quot;GPIO19&quot;, &quot;GPIO18&quot;, &quot;GPIO5&quot;,
+                  &quot;GPIO17&quot;, &quot;GPIO16&quot;, &quot;GPIO4&quot;, &quot;GPIO0&quot;, &quot;GPIO2&quot;, &quot;GPIO15&quot;, &quot;SD1&quot;, &quot;SD0&quot;, &quot;CLK&quot;], 20),
+        gen=30.48, aciklama=&quot;ESP32-WROOM-32D DevKitC 38 pin, ustten (USB asagida). Sol 1-19, sag 20-38 ustten asagi.&quot;),
+    &quot;cdtp:BTS7960_Modul&quot;: ozel_modul(
+        &quot;BTS7960_Modul&quot;, numarali([&quot;RPWM&quot;, &quot;LPWM&quot;, &quot;R_EN&quot;, &quot;L_EN&quot;, &quot;R_IS&quot;, &quot;L_IS&quot;, &quot;VCC&quot;, &quot;GND&quot;]),
+        numarali([&quot;B+&quot;, &quot;B-&quot;, &quot;M+&quot;, &quot;M-&quot;], 9), gen=17.78, aciklama=&quot;IBT-2 BTS7960 43 A H-kopru modulu&quot;),
+    &quot;cdtp:GY521_MPU6050&quot;: ozel_modul(
+        &quot;GY521_MPU6050&quot;, numarali([&quot;VCC&quot;, &quot;GND&quot;, &quot;SCL&quot;, &quot;SDA&quot;, &quot;XDA&quot;, &quot;XCL&quot;, &quot;AD0&quot;, &quot;INT&quot;]), [], gen=15.24,
+        aciklama=&quot;GY-521 MPU6050 modulu (kart uzerinde 3,3 V LDO ve 4,7k pull-up)&quot;),
+    &quot;cdtp:LM2596_Modul&quot;: ozel_modul(&quot;LM2596_Modul&quot;, [(&quot;1&quot;, &quot;IN+&quot;), (&quot;2&quot;, &quot;IN-&quot;)], [(&quot;3&quot;, &quot;OUT+&quot;), (&quot;4&quot;, &quot;OUT-&quot;)],
+                                    gen=15.24, aciklama=&quot;LM2596 3 A dusurucu, cikis 5,0 V&#x27;a ayarli&quot;),
+    &quot;cdtp:Motor_JGB37_Enkoder&quot;: ozel_modul(
+        &quot;Motor_JGB37_Enkoder&quot;, [(&quot;1&quot;, &quot;M1&quot;), (&quot;6&quot;, &quot;M2&quot;)], [(&quot;2&quot;, &quot;GND&quot;), (&quot;3&quot;, &quot;C1&quot;), (&quot;4&quot;, &quot;C2&quot;), (&quot;5&quot;, &quot;VCC&quot;)],
+        gen=15.24, aciklama=&quot;JGB37-520 12 V 530 RPM, Hall enkoder (11 darbe/tur x 19 = 836 sayim/tur, 4x)&quot;),
+    &quot;cdtp:IR_Alici_VS1838B&quot;: ozel_modul(&quot;IR_Alici_VS1838B&quot;, [(&quot;1&quot;, &quot;OUT&quot;), (&quot;2&quot;, &quot;GND&quot;), (&quot;3&quot;, &quot;VCC&quot;)], [], gen=12.7,
+                                        aciklama=&quot;38 kHz IR alici modulu, VS1838B (3,3 V&#x27;ta calisir)&quot;),
+    &quot;cdtp:BMS_3S_HX3S01&quot;: ozel_modul(&quot;BMS_3S_HX3S01&quot;, numarali([&quot;B-&quot;, &quot;B1&quot;, &quot;B2&quot;, &quot;B+&quot;]), [(&quot;5&quot;, &quot;P-&quot;)], gen=12.7,
+                                     aciklama=&quot;HX-3S-01 3S 10 A koruma karti; P+ = B+&quot;),
+    &quot;cdtp:XT60&quot;: ozel_modul(&quot;XT60&quot;, [(&quot;1&quot;, &quot;+&quot;), (&quot;2&quot;, &quot;-&quot;)], [], gen=7.62, aciklama=&quot;XT60 konnektor&quot;),
+    &quot;cdtp:WAGO_221_415&quot;: ozel_modul(&quot;WAGO_221_415&quot;, numarali([&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;]), [], gen=7.62,
+                                    aciklama=&quot;WAGO 221-415, 5 uc ic tarafta kisa devre&quot;),
+    &quot;cdtp:AcilStop_NC&quot;: ozel_modul(&quot;AcilStop_NC&quot;, [(&quot;1&quot;, &quot;NC1&quot;)], [(&quot;2&quot;, &quot;NC2&quot;)], gen=10.16,
+                                   aciklama=&quot;Chint NP2-BE102 mantar buton, 1 NC kontak, 10 A&quot;),
+    &quot;cdtp:Pogo_Pim&quot;: ozel_modul(&quot;Pogo_Pim&quot;, [(&quot;1&quot;, &quot;&quot;)], [], gen=5.08, aciklama=&quot;V-yuvadaki 5 mm pogo pim&quot;),
+}
+
+
+def sembol(lib_id):
+    return OZEL[lib_id] if lib_id in OZEL else std_sembol(lib_id)
+
+
+# ---------------- devre ----------------
+NC = None
+# (ref, lib_id, deger, {pin numarasi: hat}, aci)
+GRUPLAR = [
+    (&quot;PIL, BMS, SARJ TEMASI&quot;, [
+        (&quot;BT1&quot;, &quot;Device:Battery_Cell&quot;, &quot;18650 hucre 1&quot;, {&quot;1&quot;: &quot;B1&quot;, &quot;2&quot;: &quot;B-&quot;}, 90),
+        (&quot;BT2&quot;, &quot;Device:Battery_Cell&quot;, &quot;18650 hucre 2&quot;, {&quot;1&quot;: &quot;B2&quot;, &quot;2&quot;: &quot;B1&quot;}, 90),
+        (&quot;BT3&quot;, &quot;Device:Battery_Cell&quot;, &quot;18650 hucre 3&quot;, {&quot;1&quot;: &quot;PACK+&quot;, &quot;2&quot;: &quot;B2&quot;}, 90),
+        (&quot;U2&quot;, &quot;cdtp:BMS_3S_HX3S01&quot;, &quot;HX-3S-01&quot;, {&quot;1&quot;: &quot;B-&quot;, &quot;2&quot;: &quot;B1&quot;, &quot;3&quot;: &quot;B2&quot;, &quot;4&quot;: &quot;PACK+&quot;, &quot;5&quot;: &quot;PACK-&quot;}, 0),
+        (&quot;J11&quot;, &quot;cdtp:XT60&quot;, &quot;XT60 disi (pil)&quot;, {&quot;1&quot;: &quot;PACK+&quot;, &quot;2&quot;: &quot;PACK-&quot;}, 0),
+        (&quot;J12&quot;, &quot;cdtp:XT60&quot;, &quot;XT60 erkek (robot)&quot;, {&quot;1&quot;: &quot;BAT+&quot;, &quot;2&quot;: &quot;GND&quot;}, 0),
+        (&quot;P1&quot;, &quot;cdtp:Pogo_Pim&quot;, &quot;Pogo + (ust, zeminden 102)&quot;, {&quot;1&quot;: &quot;CHG+&quot;}, 0),
+        (&quot;P2&quot;, &quot;cdtp:Pogo_Pim&quot;, &quot;Pogo - (alt, zeminden 77)&quot;, {&quot;1&quot;: &quot;GND&quot;}, 0),
+        (&quot;D1&quot;, &quot;Device:D_Schottky&quot;, &quot;SR5100&quot;, {&quot;1&quot;: &quot;BAT+&quot;, &quot;2&quot;: &quot;CHG+&quot;}, 0),
+    ]),
+    (&quot;12 V DAGITIM&quot;, [
+        (&quot;F1&quot;, &quot;Device:Fuse&quot;, &quot;5 A bicak&quot;, {&quot;1&quot;: &quot;BAT+&quot;, &quot;2&quot;: &quot;+12V&quot;}, 90),
+        (&quot;X1&quot;, &quot;cdtp:WAGO_221_415&quot;, &quot;WAGO-12V&quot;, {str(i): &quot;+12V&quot; for i in range(1, 6)}, 0),
+        (&quot;S1&quot;, &quot;cdtp:AcilStop_NC&quot;, &quot;NP2-BE102 NC&quot;, {&quot;1&quot;: &quot;+12V&quot;, &quot;2&quot;: &quot;+12V_MOT&quot;}, 0),
+        (&quot;C5&quot;, &quot;Device:C_Polarized&quot;, &quot;1000uF 25V&quot;, {&quot;1&quot;: &quot;+12V_MOT&quot;, &quot;2&quot;: &quot;GND&quot;}, 270),
+        (&quot;X2&quot;, &quot;cdtp:WAGO_221_415&quot;, &quot;WAGO-GND (yildiz)&quot;, {str(i): &quot;GND&quot; for i in range(1, 6)}, 0),
+        (&quot;U3&quot;, &quot;cdtp:LM2596_Modul&quot;, &quot;LM2596 5,0 V&quot;, {&quot;1&quot;: &quot;+12V&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;+5V&quot;, &quot;4&quot;: &quot;GND&quot;}, 0),
+    ]),
+    (&quot;ANA KART: ESP32 VE BESLEME&quot;, [
+        (&quot;U1&quot;, &quot;cdtp:ESP32_DevKitC_38&quot;, &quot;ESP32-WROOM-32D DevKitC&quot;, {
+            &quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: NC, &quot;3&quot;: &quot;IR_L&quot;, &quot;4&quot;: &quot;IR_R&quot;, &quot;5&quot;: &quot;VCHG_ADC&quot;, &quot;6&quot;: &quot;VBAT_ADC&quot;, &quot;7&quot;: &quot;ENC_L_A&quot;,
+            &quot;8&quot;: &quot;ENC_L_B&quot;, &quot;9&quot;: &quot;ENC_R_A&quot;, &quot;10&quot;: &quot;ENC_R_B&quot;, &quot;11&quot;: &quot;L_RPWM&quot;, &quot;12&quot;: &quot;L_LPWM&quot;, &quot;13&quot;: NC, &quot;14&quot;: &quot;GND&quot;,
+            &quot;15&quot;: NC, &quot;16&quot;: NC, &quot;17&quot;: NC, &quot;18&quot;: NC, &quot;19&quot;: &quot;+5V_ESP&quot;,
+            &quot;20&quot;: &quot;GND&quot;, &quot;21&quot;: &quot;MOTOR_SENSE&quot;, &quot;22&quot;: &quot;I2C_SCL&quot;, &quot;23&quot;: NC, &quot;24&quot;: NC, &quot;25&quot;: &quot;I2C_SDA&quot;, &quot;26&quot;: &quot;GND&quot;,
+            &quot;27&quot;: &quot;IMU_INT&quot;, &quot;28&quot;: NC, &quot;29&quot;: NC, &quot;30&quot;: &quot;R_LPWM&quot;, &quot;31&quot;: &quot;R_RPWM&quot;, &quot;32&quot;: &quot;MOTOR_EN&quot;, &quot;33&quot;: NC, &quot;34&quot;: NC,
+            &quot;35&quot;: NC, &quot;36&quot;: NC, &quot;37&quot;: NC, &quot;38&quot;: NC}, 0),
+        (&quot;J1&quot;, &quot;Connector_Generic:Conn_01x02&quot;, &quot;5 V klemens&quot;, {&quot;1&quot;: &quot;+5V&quot;, &quot;2&quot;: &quot;GND&quot;}, 0),
+        (&quot;C1&quot;, &quot;Device:C_Polarized&quot;, &quot;100uF 16V&quot;, {&quot;1&quot;: &quot;+5V&quot;, &quot;2&quot;: &quot;GND&quot;}, 270),
+        (&quot;JP1&quot;, &quot;Jumper:Jumper_2_Open&quot;, &quot;USB&#x27;de cikar&quot;, {&quot;1&quot;: &quot;+5V&quot;, &quot;2&quot;: &quot;+5V_ESP&quot;}, 0),
+        (&quot;R5&quot;, &quot;Device:R&quot;, &quot;10k&quot;, {&quot;1&quot;: &quot;MOTOR_EN&quot;, &quot;2&quot;: &quot;GND&quot;}, 90),
+    ]),
+    (&quot;ANA KART: KONNEKTOR, OLCUM&quot;, [
+        (&quot;J2&quot;, &quot;Connector_Generic:Conn_01x05&quot;, &quot;IMU&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;I2C_SCL&quot;, &quot;4&quot;: &quot;I2C_SDA&quot;, &quot;5&quot;: &quot;IMU_INT&quot;}, 0),
+        (&quot;J3&quot;, &quot;Connector_Generic:Conn_01x05&quot;, &quot;BTS sol&quot;, {&quot;1&quot;: &quot;L_RPWM&quot;, &quot;2&quot;: &quot;L_LPWM&quot;, &quot;3&quot;: &quot;MOTOR_EN&quot;, &quot;4&quot;: &quot;+3V3&quot;, &quot;5&quot;: &quot;GND&quot;}, 0),
+        (&quot;J8&quot;, &quot;Connector_Generic:Conn_01x05&quot;, &quot;BTS sag&quot;, {&quot;1&quot;: &quot;R_RPWM&quot;, &quot;2&quot;: &quot;R_LPWM&quot;, &quot;3&quot;: &quot;MOTOR_EN&quot;, &quot;4&quot;: &quot;+3V3&quot;, &quot;5&quot;: &quot;GND&quot;}, 0),
+        (&quot;J4&quot;, &quot;Connector_Generic:Conn_01x04&quot;, &quot;Enkoder sol&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;ENC_L_A&quot;, &quot;4&quot;: &quot;ENC_L_B&quot;}, 0),
+        (&quot;J5&quot;, &quot;Connector_Generic:Conn_01x04&quot;, &quot;Enkoder sag&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;ENC_R_A&quot;, &quot;4&quot;: &quot;ENC_R_B&quot;}, 0),
+        (&quot;J6&quot;, &quot;Connector_Generic:Conn_01x03&quot;, &quot;IR sol&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;IR_L&quot;}, 0),
+        (&quot;J7&quot;, &quot;Connector_Generic:Conn_01x03&quot;, &quot;IR sag&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;IR_R&quot;}, 0),
+        (&quot;J9&quot;, &quot;Connector_Generic:Conn_01x02&quot;, &quot;Olcum klemens&quot;, {&quot;1&quot;: &quot;+12V&quot;, &quot;2&quot;: &quot;CHG+&quot;}, 0),
+        (&quot;J10&quot;, &quot;Connector_Generic:Conn_01x02&quot;, &quot;Motor hatti klemens&quot;, {&quot;1&quot;: &quot;+12V_MOT&quot;, &quot;2&quot;: NC}, 0),
+        (&quot;R1&quot;, &quot;Device:R&quot;, &quot;100k&quot;, {&quot;1&quot;: &quot;+12V&quot;, &quot;2&quot;: &quot;VBAT_ADC&quot;}, 90),
+        (&quot;R2&quot;, &quot;Device:R&quot;, &quot;27k&quot;, {&quot;1&quot;: &quot;VBAT_ADC&quot;, &quot;2&quot;: &quot;GND&quot;}, 90),
+        (&quot;C2&quot;, &quot;Device:C&quot;, &quot;100nF&quot;, {&quot;1&quot;: &quot;VBAT_ADC&quot;, &quot;2&quot;: &quot;GND&quot;}, 90),
+        (&quot;R3&quot;, &quot;Device:R&quot;, &quot;100k&quot;, {&quot;1&quot;: &quot;CHG+&quot;, &quot;2&quot;: &quot;VCHG_ADC&quot;}, 90),
+        (&quot;R4&quot;, &quot;Device:R&quot;, &quot;27k&quot;, {&quot;1&quot;: &quot;VCHG_ADC&quot;, &quot;2&quot;: &quot;GND&quot;}, 90),
+        (&quot;C3&quot;, &quot;Device:C&quot;, &quot;100nF&quot;, {&quot;1&quot;: &quot;VCHG_ADC&quot;, &quot;2&quot;: &quot;GND&quot;}, 90),
+        (&quot;R6&quot;, &quot;Device:R&quot;, &quot;100k&quot;, {&quot;1&quot;: &quot;+12V_MOT&quot;, &quot;2&quot;: &quot;MOTOR_SENSE&quot;}, 90),
+        (&quot;R7&quot;, &quot;Device:R&quot;, &quot;33k&quot;, {&quot;1&quot;: &quot;MOTOR_SENSE&quot;, &quot;2&quot;: &quot;GND&quot;}, 90),
+        (&quot;C4&quot;, &quot;Device:C&quot;, &quot;100nF&quot;, {&quot;1&quot;: &quot;MOTOR_SENSE&quot;, &quot;2&quot;: &quot;GND&quot;}, 90),
+    ]),
+    (&quot;MODULLER VE MOTORLAR&quot;, [
+        (&quot;A1&quot;, &quot;cdtp:GY521_MPU6050&quot;, &quot;GY-521&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;I2C_SCL&quot;, &quot;4&quot;: &quot;I2C_SDA&quot;, &quot;5&quot;: NC,
+                                                &quot;6&quot;: NC, &quot;7&quot;: &quot;GND&quot;, &quot;8&quot;: &quot;IMU_INT&quot;}, 0),
+        (&quot;A2&quot;, &quot;cdtp:BTS7960_Modul&quot;, &quot;BTS7960 sol&quot;, {&quot;1&quot;: &quot;L_RPWM&quot;, &quot;2&quot;: &quot;L_LPWM&quot;, &quot;3&quot;: &quot;MOTOR_EN&quot;, &quot;4&quot;: &quot;MOTOR_EN&quot;,
+                                                     &quot;5&quot;: NC, &quot;6&quot;: NC, &quot;7&quot;: &quot;+3V3&quot;, &quot;8&quot;: &quot;GND&quot;, &quot;9&quot;: &quot;+12V_MOT&quot;,
+                                                     &quot;10&quot;: &quot;GND&quot;, &quot;11&quot;: &quot;MOT_L+&quot;, &quot;12&quot;: &quot;MOT_L-&quot;}, 0),
+        (&quot;A3&quot;, &quot;cdtp:BTS7960_Modul&quot;, &quot;BTS7960 sag&quot;, {&quot;1&quot;: &quot;R_RPWM&quot;, &quot;2&quot;: &quot;R_LPWM&quot;, &quot;3&quot;: &quot;MOTOR_EN&quot;, &quot;4&quot;: &quot;MOTOR_EN&quot;,
+                                                     &quot;5&quot;: NC, &quot;6&quot;: NC, &quot;7&quot;: &quot;+3V3&quot;, &quot;8&quot;: &quot;GND&quot;, &quot;9&quot;: &quot;+12V_MOT&quot;,
+                                                     &quot;10&quot;: &quot;GND&quot;, &quot;11&quot;: &quot;MOT_R+&quot;, &quot;12&quot;: &quot;MOT_R-&quot;}, 0),
+        (&quot;M1&quot;, &quot;cdtp:Motor_JGB37_Enkoder&quot;, &quot;JGB37-520 sol&quot;, {&quot;1&quot;: &quot;MOT_L+&quot;, &quot;6&quot;: &quot;MOT_L-&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;ENC_L_A&quot;,
+                                                            &quot;4&quot;: &quot;ENC_L_B&quot;, &quot;5&quot;: &quot;+3V3&quot;}, 0),
+        (&quot;M2&quot;, &quot;cdtp:Motor_JGB37_Enkoder&quot;, &quot;JGB37-520 sag&quot;, {&quot;1&quot;: &quot;MOT_R+&quot;, &quot;6&quot;: &quot;MOT_R-&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;ENC_R_A&quot;,
+                                                            &quot;4&quot;: &quot;ENC_R_B&quot;, &quot;5&quot;: &quot;+3V3&quot;}, 0),
+        (&quot;A4&quot;, &quot;cdtp:IR_Alici_VS1838B&quot;, &quot;IR goz sol (+15 deg)&quot;, {&quot;1&quot;: &quot;IR_L&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;+3V3&quot;}, 0),
+        (&quot;A5&quot;, &quot;cdtp:IR_Alici_VS1838B&quot;, &quot;IR goz sag (-15 deg)&quot;, {&quot;1&quot;: &quot;IR_R&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;+3V3&quot;}, 0),
+    ]),
+]
+
+NOTLAR = [
+    &quot;CDTP denge robotu - robot elektronigi (tek sayfa). Ayni adli etiketler ayni hattir.&quot;,
+    &quot;Guc: pil -&gt; BMS -&gt; XT60 -&gt; F1 5 A -&gt; WAGO-12V. Acil stop (NC) yalniz motor hattini keser; ESP32 acik kalir.&quot;,
+    &quot;Sarj: pogo + -&gt; D1 SR5100 -&gt; BAT+ (sigortadan once). Robotta acikta pil gerilimi yok.&quot;,
+    &quot;JP1: kod yuklerken (USB takiliyken) cikarin; LM2596 ile USB 5 V&#x27;u cakismasin.&quot;,
+    &quot;BTS7960 VCC = 3,3 V (ESP32 seviyesi). R_EN ve L_EN iki kartta GPIO4&#x27;e; R5 10k ile acilista motorlar kapali.&quot;,
+    &quot;MPU6050 AD0 -&gt; GND (adres 0x68). GPIO36/39 yalniz giris (IR, PCNT 12,8 us suzgec).&quot;,
+    &quot;Bolucu: R1/R2 ve R3/R4 100k/27k (12,6 V -&gt; 2,68 V); R6/R7 100k/33k (12,6 V -&gt; 3,13 V).&quot;,
+    &quot;Kablo numaralari (W1-W44) ve pin sirasi: docs/robot.html bolum 04, 06, 07.&quot;,
+]
+
+
+# ---------------- yerlesim ----------------
+def don(px, py, aci):
+    a = round(aci) % 360
+    return {0: (px, py), 90: (-py, px), 180: (-px, -py), 270: (py, -px)}[a]
+
+
+def uc_noktalar(lib_id, aci):
+    &quot;&quot;&quot;{numara: (ex, ey, dx, dy)} ekran koordinati (y asagi), (dx,dy) disa dogru birim yon.&quot;&quot;&quot;
+    out = {}
+    for num, ad, px, py, pa in pinler(sembol(lib_id)):
+        rx, ry = don(px, py, aci)
+        ic = (round(pa) + 180 + round(aci)) % 360  # disa bakan yon (kutuphane acisi)
+        dx, dy = {0: (1, 0), 90: (0, -1), 180: (-1, 0), 270: (0, 1)}[ic]
+        out[num] = (rx, -ry, dx, dy)
+    return out
+
+
+def kutu_olcu(lib_id, aci, baglar):
+    xs, ys = [0.0], [0.0]
+    for num, (ex, ey, dx, dy) in uc_noktalar(lib_id, aci).items():
+        hat = baglar.get(num)
+        uz = 2.54 + (len(hat) * 1.1 + 2 if hat else 1)
+        xs += [ex, ex + dx * uz]
+        ys += [ey, ey + dy * uz]
+    return min(xs), max(xs), min(ys) - 3, max(ys) + 3
+
+
+def izgara(v, g=1.27):
+    return round(v / g) * g
+
+
+def yerlestir(kagit_h):
+    yer = []
+    x = 20.0
+    for baslik, ogeler in GRUPLAR:
+        y0 = 40.0
+        y = y0
+        col_w = 0.0
+        basliklar = [(baslik, x, 32.0)]
+        for ref, lib, deger, bag, aci in ogeler:
+            x0, x1, ys0, ys1 = kutu_olcu(lib, aci, bag)
+            h = ys1 - ys0
+            if y + h &gt; kagit_h - 20 - 3.2 * len(NOTLAR) - 8 and y &gt; y0:
+                x += col_w + 8
+                y = y0
+                col_w = 0.0
+            px, py = izgara(x - x0), izgara(y - ys0, 2.54)
+            yer.append((ref, lib, deger, bag, aci, px, py))
+            y += h + 6.5
+            col_w = max(col_w, x1 - x0)
+        yer_basliklar.extend(basliklar)
+        x = max(x + col_w + 14, basliklar[0][1] + len(baslik) * 2.2 + 6)
+    return yer, x
+
+
+yer_basliklar = []
+
+
+# ---------------- dosya ----------------
+def efekt(justify=None, boy=1.27, kalin=False):
+    f = [&quot;font&quot;, [&quot;size&quot;, boy, boy]]
+    if kalin:
+        f.append([&quot;bold&quot;, &quot;yes&quot;])
+    e = [&quot;effects&quot;, f]
+    if justify:
+        e.append([&quot;justify&quot;] + justify)
+    return e
+
+
+def sema_yaz():
+    for kagit in ((&quot;A3&quot;, 420.0, 297.0), (&quot;A2&quot;, 594.0, 420.0), (&quot;A1&quot;, 841.0, 594.0)):
+        yer_basliklar.clear()
+        yer, gen = yerlestir(kagit[2])
+        if gen &lt; kagit[1] - 10:
+            break
+    kok = uid(&quot;kok&quot;)
+    libs = {}
+    for _, lib, *_ in yer:
+        libs[lib] = sembol(lib)
+    govde = [[&quot;version&quot;, 20250610], [&quot;generator&quot;, S(&quot;eeschema&quot;)], [&quot;generator_version&quot;, S(&quot;10.0&quot;)],
+             [&quot;uuid&quot;, S(kok)], [&quot;paper&quot;, S(kagit[0])],
+             [&quot;title_block&quot;, [&quot;title&quot;, S(&quot;CDTP denge robotu - robot elektronigi&quot;)], [&quot;date&quot;, S(&quot;2026-10-29&quot;)],
+              [&quot;rev&quot;, S(&quot;v1.3&quot;)], [&quot;company&quot;, S(&quot;YTU EEF CDTP&quot;)],
+              [&quot;comment&quot;, 1, S(&quot;Uretici: tools/kicad_sema.py (elle duzenlemeyin; betigi degistirip yeniden uretin)&quot;)]],
+             [&quot;lib_symbols&quot;] + list(libs.values())]
+    ogeler = []
+    for b, bx, by in yer_basliklar:
+        ogeler.append([&quot;text&quot;, S(b), [&quot;exclude_from_sim&quot;, &quot;no&quot;], [&quot;at&quot;, izgara(bx), izgara(by), 0],
+                       efekt([&quot;left&quot;, &quot;bottom&quot;], 2.54, True), [&quot;uuid&quot;, S(uid(&quot;baslik&quot;, b))]])
+    ny = kagit[2] - 12 - 3.2 * len(NOTLAR)
+    for i, t in enumerate(NOTLAR):
+        ogeler.append([&quot;text&quot;, S(t), [&quot;exclude_from_sim&quot;, &quot;no&quot;], [&quot;at&quot;, 20.32, izgara(ny + 3.2 * i), 0],
+                       efekt([&quot;left&quot;, &quot;bottom&quot;], 1.6), [&quot;uuid&quot;, S(uid(&quot;not&quot;, i))]])
+    for ref, lib, deger, bag, aci, px, py in yer:
+        sym = sembol(lib)
+        pins = pinler(sym)
+        props = []
+        for k, v, dy, gizli in ((&quot;Reference&quot;, ref, -1, False), (&quot;Value&quot;, deger, 1, False), (&quot;Footprint&quot;, &quot;&quot;, 0, True),
+                                (&quot;Datasheet&quot;, &quot;&quot;, 0, True), (&quot;Description&quot;, &quot;&quot;, 0, True)):
+            p = [&quot;property&quot;, S(k), S(v), [&quot;at&quot;, px, py, 0]]
+            if gizli:
+                p.append([&quot;hide&quot;, &quot;yes&quot;])
+            p.append(efekt())
+            props.append(p)
+        # referans/deger konumu: kutunun ustu ve alti
+        x0, x1, ys0, ys1 = kutu_olcu(lib, aci, bag)
+        fa = aci % 180
+        uy = [e[1] for e in uc_noktalar(lib, aci).values()]
+        props[0][3] = [&quot;at&quot;, px, izgara(py + min(uy) - 4.0, 0.635), fa]
+        props[1][3] = [&quot;at&quot;, px, izgara(py + max(uy) + 4.0, 0.635), fa]
+        s = [&quot;symbol&quot;, [&quot;lib_id&quot;, S(lib)], [&quot;at&quot;, px, py, aci], [&quot;unit&quot;, 1], [&quot;exclude_from_sim&quot;, &quot;no&quot;],
+             [&quot;in_bom&quot;, &quot;yes&quot;], [&quot;on_board&quot;, &quot;yes&quot;], [&quot;dnp&quot;, &quot;no&quot;], [&quot;uuid&quot;, S(uid(&quot;sym&quot;, ref))]] + props
+        for num, *_ in pins:
+            s.append([&quot;pin&quot;, S(num), [&quot;uuid&quot;, S(uid(&quot;pin&quot;, ref, num))]])
+        s.append([&quot;instances&quot;, [&quot;project&quot;, S(PROJE), [&quot;path&quot;, S(&quot;/&quot; + kok), [&quot;reference&quot;, S(ref)], [&quot;unit&quot;, 1]]]])
+        ogeler.append(s)
+        for num, (ex, ey, dx, dy) in uc_noktalar(lib, aci).items():
+            ax, ay = px + ex, py + ey
+            hat = bag.get(num, &quot;YOK&quot;)
+            if hat == &quot;YOK&quot;:
+                raise ValueError(f&quot;{ref} pin {num} tanimsiz&quot;)
+            if hat is None:
+                ogeler.append([&quot;no_connect&quot;, [&quot;at&quot;, ax, ay], [&quot;uuid&quot;, S(uid(&quot;nc&quot;, ref, num))]])
+                continue
+            bx, by = ax + 2.54 * dx, ay + 2.54 * dy
+            ogeler.append([&quot;wire&quot;, [&quot;pts&quot;, [&quot;xy&quot;, ax, ay], [&quot;xy&quot;, bx, by]], [&quot;stroke&quot;, [&quot;width&quot;, 0], [&quot;type&quot;, &quot;default&quot;]],
+                           [&quot;uuid&quot;, S(uid(&quot;w&quot;, ref, num))]])
+            la = {(1, 0): 0, (-1, 0): 180, (0, -1): 90, (0, 1): 270}[(dx, dy)]
+            js = [&quot;left&quot;, &quot;bottom&quot;] if la in (0, 90) else [&quot;right&quot;, &quot;bottom&quot;]
+            ogeler.append([&quot;label&quot;, S(hat), [&quot;at&quot;, bx, by, la], efekt(js), [&quot;uuid&quot;, S(uid(&quot;l&quot;, ref, num))]])
+    govde += ogeler
+    govde += [[&quot;sheet_instances&quot;, [&quot;path&quot;, S(&quot;/&quot;), [&quot;page&quot;, S(&quot;1&quot;)]]], [&quot;embedded_fonts&quot;, &quot;no&quot;]]
+    OUT.mkdir(exist_ok=True)
+    (OUT / f&quot;{PROJE}.kicad_sch&quot;).write_text(yaz([&quot;kicad_sch&quot;] + govde) + &quot;\n&quot;, encoding=&quot;utf-8&quot;)
+    # proje dosyalari ve ozel kutuphane
+    (OUT / f&quot;{PROJE}.kicad_pro&quot;).write_text(json.dumps({&quot;meta&quot;: {&quot;filename&quot;: f&quot;{PROJE}.kicad_pro&quot;, &quot;version&quot;: 3}}, indent=2),
+                                            encoding=&quot;utf-8&quot;)
+    kut = [&quot;kicad_symbol_lib&quot;, [&quot;version&quot;, 20251024], [&quot;generator&quot;, S(&quot;cdtp_kicad_sema&quot;)], [&quot;generator_version&quot;, S(&quot;10.0&quot;)]]
+    for k, v in OZEL.items():
+        v = copy.deepcopy(v)
+        v[1] = S(k.split(&quot;:&quot;)[1])
+        kut.append(v)
+    (OUT / &quot;cdtp.kicad_sym&quot;).write_text(yaz(kut) + &quot;\n&quot;, encoding=&quot;utf-8&quot;)
+    satir = [&#x27;\t(lib (name &quot;cdtp&quot;)(type &quot;KiCad&quot;)(uri &quot;${KIPRJMOD}/cdtp.kicad_sym&quot;)(options &quot;&quot;)(descr &quot;CDTP robot modulleri&quot;))&#x27;]
+    for lib in sorted({k.split(&quot;:&quot;)[0] for k in libs if not k.startswith(&quot;cdtp:&quot;)}):
+        satir.append(f&#x27;\t(lib (name &quot;{lib}&quot;)(type &quot;KiCad&quot;)(uri &quot;${{KICAD10_SYMBOL_DIR}}/{lib}.kicad_sym&quot;)(options &quot;&quot;)(descr &quot;&quot;))&#x27;)
+    (OUT / &quot;sym-lib-table&quot;).write_text(&quot;(sym_lib_table\n\t(version 7)\n&quot; + &quot;\n&quot;.join(satir) + &quot;\n)\n&quot;, encoding=&quot;utf-8&quot;)
+    return kagit, len(yer)
+
+
+# ---------------- denetim ----------------
+def cli(*a):
+    r = subprocess.run([str(CLI), *a], capture_output=True, text=True, encoding=&quot;utf-8&quot;, errors=&quot;replace&quot;)
+    return r.returncode, r.stdout + r.stderr
+
+
+def netlist_oku():
+    t = ET.parse(OUT / &quot;netlist.xml&quot;).getroot()
+    nets = {}
+    for n in t.iter(&quot;net&quot;):
+        nets[n.get(&quot;name&quot;).lstrip(&quot;/&quot;)] = {(nd.get(&quot;ref&quot;), nd.get(&quot;pin&quot;)) for nd in n.iter(&quot;node&quot;)}
+    pin_ad = {}
+    for c in t.iter(&quot;comp&quot;):
+        pass
+    for lp in t.iter(&quot;libpart&quot;):
+        for p in lp.iter(&quot;pin&quot;):
+            pin_ad[(lp.get(&quot;lib&quot;) + &quot;:&quot; + lp.get(&quot;part&quot;), p.get(&quot;num&quot;))] = p.get(&quot;name&quot;)
+    return nets
+
+
+def denetle():
+    sonuc = []
+
+    def ekle(ad, ok, detay):
+        sonuc.append((ad, &quot;GECTI&quot; if ok else &quot;KALDI&quot;, detay))
+
+    kod, cikti = cli(&quot;sch&quot;, &quot;erc&quot;, &quot;--format&quot;, &quot;json&quot;, &quot;--severity-all&quot;, &quot;-o&quot;, str(OUT / &quot;erc.json&quot;), str(OUT / f&quot;{PROJE}.kicad_sch&quot;))
+    erc = json.loads((OUT / &quot;erc.json&quot;).read_text(encoding=&quot;utf-8&quot;))
+    ihlal = [v for s in erc.get(&quot;sheets&quot;, []) for v in s.get(&quot;violations&quot;, [])]
+    hata = [v for v in ihlal if v.get(&quot;severity&quot;) == &quot;error&quot;]
+    uyari = [v for v in ihlal if v.get(&quot;severity&quot;) == &quot;warning&quot;]
+    ekle(&quot;KiCad ERC&quot;, not hata and not uyari,
+         f&quot;{len(hata)} hata, {len(uyari)} uyari&quot; + (&quot;&quot; if not ihlal else &quot;: &quot; + &quot;; &quot;.join(
+             f&quot;{v[&#x27;type&#x27;]}: {v[&#x27;description&#x27;]}&quot; for v in ihlal[:8])))
+    cli(&quot;sch&quot;, &quot;export&quot;, &quot;netlist&quot;, &quot;--format&quot;, &quot;kicadxml&quot;, &quot;-o&quot;, str(OUT / &quot;netlist.xml&quot;), str(OUT / f&quot;{PROJE}.kicad_sch&quot;))
+    nets = netlist_oku()
+    hat_of = {}
+    for n, uclar in nets.items():
+        for u in uclar:
+            hat_of[u] = n
+
+    # 1) ESP32 pinleri pins.h ile
+    pins_h = (ROOT / &quot;firmware/robot/src/pins.h&quot;).read_text(encoding=&quot;utf-8&quot;)
+    sabit = {k: int(v) for k, v in re.findall(r&quot;constexpr int (PIN_\w+) = (\d+);&quot;, pins_h)}
+    esp_pin = {}
+    for num, ad, *_ in pinler(OZEL[&quot;cdtp:ESP32_DevKitC_38&quot;]):
+        m = re.match(r&quot;(?:\w+_)?GPIO(\d+)&quot;, ad)
+        if m:
+            esp_pin[int(m.group(1))] = num
+    beklenen = {  # pins.h sabiti -&gt; (hat, ulasmasi gereken uclar)
+        &quot;PIN_SDA&quot;: (&quot;I2C_SDA&quot;, [(&quot;A1&quot;, &quot;4&quot;), (&quot;J2&quot;, &quot;4&quot;)]), &quot;PIN_SCL&quot;: (&quot;I2C_SCL&quot;, [(&quot;A1&quot;, &quot;3&quot;), (&quot;J2&quot;, &quot;3&quot;)]),
+        &quot;PIN_IMU_INT&quot;: (&quot;IMU_INT&quot;, [(&quot;A1&quot;, &quot;8&quot;), (&quot;J2&quot;, &quot;5&quot;)]),
+        &quot;PIN_L_RPWM&quot;: (&quot;L_RPWM&quot;, [(&quot;A2&quot;, &quot;1&quot;), (&quot;J3&quot;, &quot;1&quot;)]), &quot;PIN_L_LPWM&quot;: (&quot;L_LPWM&quot;, [(&quot;A2&quot;, &quot;2&quot;), (&quot;J3&quot;, &quot;2&quot;)]),
+        &quot;PIN_R_RPWM&quot;: (&quot;R_RPWM&quot;, [(&quot;A3&quot;, &quot;1&quot;), (&quot;J8&quot;, &quot;1&quot;)]), &quot;PIN_R_LPWM&quot;: (&quot;R_LPWM&quot;, [(&quot;A3&quot;, &quot;2&quot;), (&quot;J8&quot;, &quot;2&quot;)]),
+        &quot;PIN_MOTOR_EN&quot;: (&quot;MOTOR_EN&quot;, [(&quot;A2&quot;, &quot;3&quot;), (&quot;A2&quot;, &quot;4&quot;), (&quot;A3&quot;, &quot;3&quot;), (&quot;A3&quot;, &quot;4&quot;), (&quot;J3&quot;, &quot;3&quot;), (&quot;J8&quot;, &quot;3&quot;), (&quot;R5&quot;, &quot;1&quot;)]),
+        &quot;PIN_ENC_L_A&quot;: (&quot;ENC_L_A&quot;, [(&quot;M1&quot;, &quot;3&quot;), (&quot;J4&quot;, &quot;3&quot;)]), &quot;PIN_ENC_L_B&quot;: (&quot;ENC_L_B&quot;, [(&quot;M1&quot;, &quot;4&quot;), (&quot;J4&quot;, &quot;4&quot;)]),
+        &quot;PIN_ENC_R_A&quot;: (&quot;ENC_R_A&quot;, [(&quot;M2&quot;, &quot;3&quot;), (&quot;J5&quot;, &quot;3&quot;)]), &quot;PIN_ENC_R_B&quot;: (&quot;ENC_R_B&quot;, [(&quot;M2&quot;, &quot;4&quot;), (&quot;J5&quot;, &quot;4&quot;)]),
+        &quot;PIN_IR_L&quot;: (&quot;IR_L&quot;, [(&quot;A4&quot;, &quot;1&quot;), (&quot;J6&quot;, &quot;3&quot;)]), &quot;PIN_IR_R&quot;: (&quot;IR_R&quot;, [(&quot;A5&quot;, &quot;1&quot;), (&quot;J7&quot;, &quot;3&quot;)]),
+        &quot;PIN_VBAT&quot;: (&quot;VBAT_ADC&quot;, [(&quot;R1&quot;, &quot;2&quot;), (&quot;R2&quot;, &quot;1&quot;), (&quot;C2&quot;, &quot;1&quot;)]),
+        &quot;PIN_VCHG&quot;: (&quot;VCHG_ADC&quot;, [(&quot;R3&quot;, &quot;2&quot;), (&quot;R4&quot;, &quot;1&quot;), (&quot;C3&quot;, &quot;1&quot;)]),
+        &quot;PIN_MOTOR_SENSE&quot;: (&quot;MOTOR_SENSE&quot;, [(&quot;R6&quot;, &quot;2&quot;), (&quot;R7&quot;, &quot;1&quot;), (&quot;C4&quot;, &quot;1&quot;)]),
+    }
+    eksik = []
+    for k, gpio in sabit.items():
+        if k == &quot;PIN_LED&quot;:
+            continue
+        if k not in beklenen:
+            eksik.append(f&quot;{k} semada yok&quot;)
+            continue
+        net, uclar = beklenen[k]
+        u = (&quot;U1&quot;, esp_pin[gpio])
+        if hat_of.get(u) != net:
+            eksik.append(f&quot;{k}=GPIO{gpio}: ESP32 pini {u[1]} hatti {hat_of.get(u)} (beklenen {net})&quot;)
+        for uc in uclar:
+            if hat_of.get(uc) != net:
+                eksik.append(f&quot;{k}: {uc[0]}.{uc[1]} hatti {hat_of.get(uc)}&quot;)
+    ekle(&quot;ESP32 pinleri = firmware/robot/src/pins.h&quot;, not eksik,
+         f&quot;{len(sabit) - 1} pin sabiti, her biri ESP32 + ana kart konnektoru + modul ucunda dogru&quot; if not eksik else &quot;; &quot;.join(eksik))
+
+    # 2) guc ve kablo listesi (robot_src.html bolum 03/06)
+    guc = {
+        &quot;W1 hucre1- -&gt; BMS B-&quot;: [(&quot;BT1&quot;, &quot;2&quot;), (&quot;U2&quot;, &quot;1&quot;)], &quot;W2 B1&quot;: [(&quot;BT1&quot;, &quot;1&quot;), (&quot;BT2&quot;, &quot;2&quot;), (&quot;U2&quot;, &quot;2&quot;)],
+        &quot;W3 B2&quot;: [(&quot;BT2&quot;, &quot;1&quot;), (&quot;BT3&quot;, &quot;2&quot;), (&quot;U2&quot;, &quot;3&quot;)], &quot;W4/W5 B+ -&gt; XT60 disi +&quot;: [(&quot;BT3&quot;, &quot;1&quot;), (&quot;U2&quot;, &quot;4&quot;), (&quot;J11&quot;, &quot;1&quot;)],
+        &quot;W6 P- -&gt; XT60 disi -&quot;: [(&quot;U2&quot;, &quot;5&quot;), (&quot;J11&quot;, &quot;2&quot;)],
+        &quot;W7/W21 XT60 erkek + -&gt; sigorta, diyot katot&quot;: [(&quot;J12&quot;, &quot;1&quot;), (&quot;F1&quot;, &quot;1&quot;), (&quot;D1&quot;, &quot;1&quot;)],
+        &quot;W8/W9/W12/W19 sigortali 12 V&quot;: [(&quot;F1&quot;, &quot;2&quot;), (&quot;S1&quot;, &quot;1&quot;), (&quot;U3&quot;, &quot;1&quot;), (&quot;J9&quot;, &quot;1&quot;), (&quot;R1&quot;, &quot;1&quot;), (&quot;X1&quot;, &quot;1&quot;)],
+        &quot;W10/W11/W41/W43 acil stop sonrasi&quot;: [(&quot;S1&quot;, &quot;2&quot;), (&quot;A2&quot;, &quot;9&quot;), (&quot;A3&quot;, &quot;9&quot;), (&quot;C5&quot;, &quot;1&quot;), (&quot;J10&quot;, &quot;1&quot;), (&quot;R6&quot;, &quot;1&quot;)],
+        &quot;W13-W15/W22/W42 GND&quot;: [(&quot;J12&quot;, &quot;2&quot;), (&quot;A2&quot;, &quot;10&quot;), (&quot;A3&quot;, &quot;10&quot;), (&quot;U3&quot;, &quot;2&quot;), (&quot;P2&quot;, &quot;1&quot;), (&quot;C5&quot;, &quot;2&quot;), (&quot;X2&quot;, &quot;1&quot;),
+                                 (&quot;U3&quot;, &quot;4&quot;), (&quot;J1&quot;, &quot;2&quot;), (&quot;U1&quot;, &quot;14&quot;), (&quot;U1&quot;, &quot;20&quot;), (&quot;U1&quot;, &quot;26&quot;), (&quot;A1&quot;, &quot;7&quot;)],
+        &quot;W16 sol motor&quot;: [(&quot;A2&quot;, &quot;11&quot;), (&quot;M1&quot;, &quot;1&quot;)], &quot;W16 sol motor -&quot;: [(&quot;A2&quot;, &quot;12&quot;), (&quot;M1&quot;, &quot;6&quot;)],
+        &quot;W17 sag motor&quot;: [(&quot;A3&quot;, &quot;11&quot;), (&quot;M2&quot;, &quot;1&quot;)], &quot;W17 sag motor -&quot;: [(&quot;A3&quot;, &quot;12&quot;), (&quot;M2&quot;, &quot;6&quot;)],
+        &quot;W18 LM2596 -&gt; J1 5 V -&gt; JP1&quot;: [(&quot;U3&quot;, &quot;3&quot;), (&quot;J1&quot;, &quot;1&quot;), (&quot;C1&quot;, &quot;1&quot;), (&quot;JP1&quot;, &quot;1&quot;)],
+        &quot;JP1 -&gt; ESP32 5V&quot;: [(&quot;JP1&quot;, &quot;2&quot;), (&quot;U1&quot;, &quot;19&quot;)],
+        &quot;W20/W23 pogo + -&gt; diyot anot, J9-2&quot;: [(&quot;P1&quot;, &quot;1&quot;), (&quot;D1&quot;, &quot;2&quot;), (&quot;J9&quot;, &quot;2&quot;), (&quot;R3&quot;, &quot;1&quot;)],
+        &quot;3V3 hatti (IMU, BTS VCC, enkoder, IR)&quot;: [(&quot;U1&quot;, &quot;1&quot;), (&quot;A1&quot;, &quot;1&quot;), (&quot;A2&quot;, &quot;7&quot;), (&quot;A3&quot;, &quot;7&quot;), (&quot;M1&quot;, &quot;5&quot;), (&quot;M2&quot;, &quot;5&quot;),
+                                                  (&quot;A4&quot;, &quot;3&quot;), (&quot;A5&quot;, &quot;3&quot;), (&quot;J2&quot;, &quot;1&quot;), (&quot;J3&quot;, &quot;4&quot;), (&quot;J8&quot;, &quot;4&quot;),
+                                                  (&quot;J4&quot;, &quot;1&quot;), (&quot;J5&quot;, &quot;1&quot;), (&quot;J6&quot;, &quot;1&quot;), (&quot;J7&quot;, &quot;1&quot;)],
+    }
+    hata2 = []
+    for ad, uclar in guc.items():
+        h = {hat_of.get(u) for u in uclar}
+        if len(h) != 1 or None in h:
+            hata2.append(f&quot;{ad}: {sorted(map(str, h))}&quot;)
+    # birbirinden ayri kalmasi gerekenler
+    ayri = [(&quot;PACK+&quot;, &quot;BAT+&quot;), (&quot;+12V&quot;, &quot;+12V_MOT&quot;), (&quot;+5V&quot;, &quot;+5V_ESP&quot;), (&quot;CHG+&quot;, &quot;BAT+&quot;), (&quot;+12V&quot;, &quot;+3V3&quot;)]
+    for a, b in ayri:
+        if a not in nets or b not in nets:
+            hata2.append(f&quot;{a}/{b} hatti yok&quot;)
+    ekle(&quot;Guc ve kablo listesi (W1-W44)&quot;, not hata2, f&quot;{len(guc)} baglanti grubu dogru; acil stop, JP1, diyot ve XT60 hatlari ayri&quot;
+         if not hata2 else &quot;; &quot;.join(hata2))
+
+    # 3) bolucu oranlari (pins.h DIVIDER ile)
+    deg = {}
+    sch = (OUT / f&quot;{PROJE}.kicad_sch&quot;).read_text(encoding=&quot;utf-8&quot;)
+    for ref, _, d, *_ in [o for _, g in GRUPLAR for o in g]:
+        deg[ref] = d
+
+    def ohm(v):
+        return float(v.lower().replace(&quot;k&quot;, &quot;&quot;)) * 1000
+    oran = (ohm(deg[&quot;R1&quot;]) + ohm(deg[&quot;R2&quot;])) / ohm(deg[&quot;R2&quot;])
+    m = re.search(r&quot;DIVIDER = \(([\d.]+)f \+ ([\d.]+)f\) / ([\d.]+)f&quot;, pins_h)
+    fw = (float(m.group(1)) + float(m.group(2))) / float(m.group(3))
+    v_ms = 12.6 * ohm(deg[&quot;R7&quot;]) / (ohm(deg[&quot;R6&quot;]) + ohm(deg[&quot;R7&quot;]))
+    ekle(&quot;Bolucu degerleri&quot;, abs(oran - fw) &lt; 1e-6 and v_ms &lt; 3.3 and 12.6 / oran &lt; 3.1,
+         f&quot;R1/R2 orani {oran:.3f} = firmware DIVIDER {fw:.3f}; 12,6 V -&gt; {12.6/oran:.2f} V (ADC 11 dB); R6/R7 -&gt; {v_ms:.2f} V &lt; 3,3 V&quot;)
+
+    # 4) her hat en az iki uca gidiyor, bos pinler isaretli
+    tek = [n for n, u in nets.items() if len(u) &lt; 2 and not n.startswith(&quot;unconnected&quot;)]
+    ekle(&quot;Tek uclu hat yok&quot;, not tek, f&quot;{len(nets)} hat&quot; if not tek else &quot;, &quot;.join(tek))
+    return sonuc
+
+
+def main():
+    if not CLI.exists():
+        print(&quot;KiCad 10 bulunamadi:&quot;, CLI)
+        return 2
+    kagit, n = sema_yaz()
+    sonuc = denetle()
+    cli(&quot;sch&quot;, &quot;export&quot;, &quot;pdf&quot;, &quot;-o&quot;, str(OUT / f&quot;{PROJE}.pdf&quot;), str(OUT / f&quot;{PROJE}.kicad_sch&quot;))
+    cli(&quot;sch&quot;, &quot;export&quot;, &quot;svg&quot;, &quot;-o&quot;, str(OUT), str(OUT / f&quot;{PROJE}.kicad_sch&quot;))
+    svg = (OUT / f&quot;{PROJE}.svg&quot;).read_text(encoding=&quot;utf-8&quot;)
+    svg = re.sub(r&quot;&lt;!DOCTYPE[^&gt;]*&gt;&quot;, &quot;&quot;, svg, count=1)  # web yayini DTD&#x27;siz SVG ister
+    (ROOT / &quot;docs/img/sema_kicad.svg&quot;).write_text(svg, encoding=&quot;utf-8&quot;)
+    ok = all(s == &quot;GECTI&quot; for _, s, _ in sonuc)
+    with open(OUT / &quot;sema_kontrol.md&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+        f.write(f&quot;# KiCad sema denetimi\n\n`python tools/kicad_sema.py` uretir. Kagit {kagit[0]}, {n} sembol.\n\n&quot;
+                &quot;| Kontrol | Sonuc | Ayrinti |\n|---|---|---|\n&quot;)
+        for a, s, d in sonuc:
+            f.write(f&quot;| {a} | {s} | {d} |\n&quot;)
+    print(f&quot;kagit {kagit[0]}, {n} sembol&quot;)
+    for a, s, d in sonuc:
+        print(f&quot;{s:6s} {a}: {d}&quot;)
+    return 0 if ok else 1
+
+
+if __name__ == &quot;__main__&quot;:
+    sys.stdout.reconfigure(encoding=&quot;utf-8&quot;)
+    sys.exit(main())
 </pre></div></section></div></body></html>

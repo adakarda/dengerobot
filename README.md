@@ -15,7 +15,10 @@ farklar `docs/` altındaki plan sayfasında "değişiklik önerisi" olarak işar
 | `firmware/glove/` | Eldiven ESP32-C3 Super Mini: MPU6050 → 5 komut → ESP-NOW 20 Hz |
 | `tools/lqr_design.py` | Fiziksel model + LQR. `gains.h` ve simülasyon modelini üretir |
 | `sim/` | Ters sarkaç + motor + sensör gürültüsü + IR istasyon simülasyonu, kabul testleri |
-| `docs/` | BLE protokolü, grafikler |
+| `twin/` | MuJoCo dijital ikizi: robot firmware mantığı + 3B gövde, V-yuva, direk |
+| `cad/` | 3B baskı: `olcu.py` (bütün ölçüler), `robot_cad.py` (STL + montaj denetimi), `stl/` (6 parça), `montaj.glb` |
+| `elektronik/` | KiCad 10 projesi: `cdtp_robot.kicad_pro`, şema PDF/SVG, ERC ve netlist; `tools/kicad_sema.py` üretir |
+| `docs/` | Robot yapım dosyası, PDF kitap, BLE protokolü, grafikler |
 
 ## Hızlı başlangıç
 
@@ -23,6 +26,9 @@ farklar `docs/` altındaki plan sayfasında "değişiklik önerisi" olarak işar
 python tools/lqr_design.py        # model değişince kazançları yeniden üret
 bash tools/run_sim.sh             # 20 kabul testi + birim testleri (Git Bash / Linux)
 python tools/plot_sim.py          # docs/img/*.png
+python cad/robot_cad.py           # 3B parçalar + montaj denetimi (pip install manifold3d trimesh)
+python tools/kicad_sema.py        # KiCad şeması + ERC + pins.h karşılaştırması (KiCad 10 gerekir)
+python tools/check_consistency.py # belge, kod, 3B model ve şema tutarlılığı
 ```
 
 Firmware: VS Code + PlatformIO eklentisi → `firmware/robot` (ya da `firmware/glove`) klasörünü açın → Upload.
