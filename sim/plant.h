@@ -94,7 +94,7 @@ class Plant {
     if (std::fabs(th) > 80 * M_PI / 180) lying = true;
   }
 
-  // IMU olcumu (ham eksen): acc[0]=ileri, acc[2]=yukari, gyro[1]=-yunuslama, gyro[2]=sapma
+  // IMU olcumu (ham eksen, MPU6050 X ileri / Y sol / Z yukari): acc[0]=ileri, acc[2]=yukari, gyro[1]=+yunuslama, gyro[2]=sapma
   cdtp::ImuSample imu(bool motorsOn) {
     std::normal_distribution<double> n(0, 1);
     const double h = p_.h_imu;
@@ -124,7 +124,7 @@ class Plant {
     s.acc[1] = (float)f_[1];
     s.acc[2] = (float)f_[2];
     s.gyro[0] = 0;
-    s.gyro[1] = (float)-f_[3];
+    s.gyro[1] = (float)f_[3];
     s.gyro[2] = (float)f_[4];
     return s;
   }
@@ -136,7 +136,8 @@ class Plant {
 
   int32_t encCount(bool right) const {
     const double mpc = 2 * M_PI * cdtp::cfg::WHEEL_RADIUS_M / cdtp::cfg::ENC_COUNTS_PER_REV;
-    double c = std::floor((right ? xr : xl) / mpc);
+    // gercek enkoder teker ile govde arasindaki bagil aciyi sayar: yol - r*theta
+    double c = std::floor(((right ? xr : xl) - p_.r * th) / mpc);
     bool inv = right ? cdtp::cfg::ENC_RIGHT_INVERT : cdtp::cfg::ENC_LEFT_INVERT;
     return (int32_t)(inv ? -c : c);
   }

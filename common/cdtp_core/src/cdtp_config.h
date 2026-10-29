@@ -31,6 +31,8 @@ constexpr float MOTOR_DEADBAND_V = 0.45f;     // kucuk gerilimde dislinin donmem
 constexpr float MOTOR_KE       = 0.216f;      // V/(rad/s), cikis milinde: 12 V / 55.5 rad/s (530 RPM)
 
 // ---- Kontrol ----
+constexpr float TRIM_RATE = 0.1f;      // rad/(m s): dururken denge acisi ogrenme hizi
+constexpr float TRIM_MAX_DEG = 3.0f;   // ogrenilen aci siniri
 constexpr float REF_SHAPING_W = 5.0f;  // rad/s, konum referansi suzgeci
 constexpr float TH_FF_GAIN = 1.0f;   // ivme -> egim on-beslemesinin ne kadari kullanilsin (sim ile secildi)
 
@@ -61,6 +63,7 @@ constexpr float DOCK_TRIGGER_S      = 1.0f;   // gozlerden biri isareti bu kadar
 constexpr float DOCK_IDLE_S         = 6.0f;   // eldiven bu kadar "dur"daysa yanasma serbest (hedefte 5 s bekleme bozulmasin)
 constexpr float DOCK_LOST_S         = 1.0f;
 constexpr float DOCK_TIMEOUT_S      = 60.0f;
+constexpr float UNDOCK_HOLD_S       = 10.0f;  // eldivenle istasyondan ayrilinca bu sure yeniden yanasmaz
 constexpr float CHARGE_DETECT_V     = 9.0f;   // plakada bu gerilim varsa sarj var
 constexpr float CHARGE_CONFIRM_S    = 0.10f;
 constexpr float DOCK_LEAN_DEG       = 4.0f;   // motor kesmeden once sirta dogru egilme

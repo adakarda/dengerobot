@@ -1,0 +1,13 @@
+[GECTI] ON      Enerjisiz +-10 deg'den dik kalmamali         40 deg'ye en gec 0.31 s'de dustu
+[GECTI] C1.1    30 s statik denge (kutulu)                   en buyuk egim 1.77 deg, kayma 4.0 cm, kutu yerinde
+[GECTI] C1.2    1 m ileri + 3 s dur                          yol 0.990 m, 3 s durmada kayma 6.9 mm, egim tepe 5.8 deg, kutu yerinde
+[GECTI] C1.3    1 m geri + 3 s dur                           yol 1.008 m, 3 s durmada kayma 13.9 mm, egim tepe 6.0 deg, kutu yerinde
+[GECTI] C1.4    +10 ve -10 deg'den 10 s icinde toparlanma    +10: 1.29 s, -10: 1.57 s
+[GECTI] C2.3-4  Eldiven: sola / saga ~90 deg                 sol +89.8 deg, sag -89.8 deg
+[GECTI] GUV.2   Acil stop: denge birakilir, motorlar kapanir mod=BEKLE
+[GECTI] REF     GitHub referans LQI kazanclari ikizde dengeliyor baslangic 0 deg: dengede (son -0.9 deg), baslangic 8 deg: dengede (son -1.1 deg)
+[GECTI] C3      IR ile yanasma, V-yuva + direk (30 baslangic) 30/30 basarili, en uzun temas 14.0 s, temas->sarj modu 0.50 s 
+[GECTI] C3.5    Eldivenle 'geri': miknatistan kopup istasyondan ayrilir once SARJ, sonra mod DENGE, direge uzaklik 50 cm
+[GECTI] C5      Butunlesik gorev (kutu, eldiven, yanasma)    son mod SARJ, erken yanasma yok, kutu yerinde
+
+IKIZ OZET: 11/11 gecti

@@ -152,10 +152,11 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>M3 30 mm + 50 mm dişi-dişi distans</td><td class="num">8+8</td><td class="num r">9,5 / 13,5</td><td>Motorobit</td><td>Her köşede 30+50 = 80 mm</td></tr>
       <tr><td>M3 10 mm vida (10'lu)</td><td class="num">4</td><td class="num r">7,5</td><td>Motorobit</td><td></td></tr>
       <tr><td>5 mm pogo pin (10'lu) <span class="pill p-new">robot tarafında</span></td><td class="num">1</td><td class="num r">87</td><td>Direnc.net</td><td>V-yuvada 2 adet, istasyonla paket ortak</td></tr>
+      <tr><td>Neodyum mıknatıs Ø10×3 mm N52 <span class="pill p-new">yeni</span></td><td class="num">2</td><td class="num r">~40</td><td>Trendyol</td><td>V-yuvanın arka şeridine, pimlerin arasına; direkteki çelik şeride tutunur</td></tr>
       <tr><td>Kapaklı ilaç kutusu</td><td class="num">1</td><td class="num r">60</td><td>Eczane</td><td></td></tr>
     </tbody>
   </table></div>
-  <p>Robot tarafının toplamı yaklaşık <b>6.050 TL</b> (pleksi ve pogo paketi istasyonla paylaşılırsa ~5.700 TL).</p>
+  <p>Robot tarafının toplamı yaklaşık <b>6.090 TL</b> (pleksi ve pogo paketi istasyonla paylaşılırsa ~5.740 TL).</p>
 </section>
 
 <!-- ================= BLOK ================= -->
@@ -561,6 +562,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 <section id="tema">
   <div class="sec-head"><span class="sec-num">09</span><h2>Şarj teması: V-yuva ve direk</h2></div>
   <p>Robot önündeki V-yuvayla istasyonun yuvarlak direğine yaslanır. Direk yuvarlak olduğu için hangi açıdan gelirse gelsin temas aynıdır; V-yuva yanal ±3 cm hatayı kendisi ortalar. Pimler robotta, halkalar direkte. Pimler SR5100 diyotun arkasında olduğu için robotta açıkta pil gerilimi yoktur.</p>
+  <p class="warnnote">Motorlar kesilince tekerler serbest kalır ve robot yuvarlak direkten geri yuvarlanır. Dijital ikizde eğim 11,6°'ye çıktı ve pim temastan ayrıldı. Bu yüzden V-yuvanın arka şeridinde iki neodyum mıknatıs, direkte halkaların arasında çelik şerit var. Şartname manyetik sabitlemeye izin veriyor. Mıknatıs ~10 N tutar; elle çekmek ve motorla geri gitmek (en fazla ~35 N) bunu rahat yener.</p>
   <div class="diagram"><svg class="w7" viewBox="0 0 760 300" role="img" aria-label="V-yuva ve direk üstten ve yandan">
     <text x="14" y="20" font-size="12" font-weight="600">Üstten</text>
     <rect x="40" y="60" width="200" height="160" class="plate"/><text x="80" y="145" font-size="11">robot (kat 1)</text>
@@ -584,12 +586,15 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <li>Pogo pimler V-yuvanın arka şeridine geçirilir, arkasından lehimlenip sıcak silikonla sabitlenir; uçlar şeritten 3 mm dışarıda.</li>
       <li>Üst pim → SR5100 → XT60 + hattı (W20, W21) ve J9-2 (W23). Alt pim → WAGO-GND (W22).</li>
       <li>Robot dengede ±2° sallanır; pim yüksekliği ±0,5 mm değişir, halka 16 mm.</li>
+      <li>Arka şerit 20 mm geniş olmalı: Ø40 direk önce şeride (pimlere) değer, kanatlar yalnız yanal hatayı düzeltir. Sivri V'de direk pimlere 8 mm kala kanatlara takılır (ikizde görüldü).</li>
+      <li>İki Ø10×3 mm mıknatıs şeridin üstüne ve altına, pimlerle aynı hizada yapıştırılır.</li>
     </ul></div>
     <div class="box"><h3>Direk tarafı (Elektrik ekibine)</h3><ul>
       <li>Ø40 mm PVC boru, 200 mm, ağır taban (robot 6° yaslanır).</li>
       <li>Halkalar bakır banttan, aralarında 9 mm boşluk. Şarj kartı OUT+ → 1,1 A PTC → üst halka, OUT− → alt halka.</li>
       <li>IR LED'ler 147 mm'de, ±20° açılı, robot gözleriyle aynı yükseklikte.</li>
       <li>Robot bölgesine bakan yarım çevrede halkalar; arka yarım bant olmadan bırakılabilir.</li>
+      <li>Halkaların arasına (85–94 mm) ince galvaniz çelik şerit sarılır; robotun mıknatısı her açıdan buna tutunur.</li>
     </ul></div>
   </div>
 </section>
@@ -627,6 +632,9 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <li><code>RobotLogic::step()</code> çıkışı: EN ve iki PWM oranı.</li>
       <li>Her 200 adımda bir telemetri JSON'u üretilir; çekirdek 0 BLE ile yollar.</li>
       <li>IMU 3 kez üst üste okunamazsa motorlar kapanır.</li>
+      <li>Eldivenden 0,3 s paket gelmezse süren adım yumuşakça kesilir, robot durur.</li>
+      <li>Enkoder tekerin gövdeye göre dönüşünü sayar; yere göre yol için r·θ eklenir.</li>
+      <li>Robot yerinde dururken denge açısını yavaşça öğrenir (en fazla ±3°). Kütle merkezi tam eksen üstünde değilse durduktan sonraki kaymayı bu giderir.</li>
     </ul></div>
   </div>
   <div class="tbl"><table>
@@ -635,7 +643,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td><b>BEKLE</b></td><td>Motorlar kapalı</td><td>Elle ±3° içinde 0,5 s tutulunca DENGE. Şarj gerilimi varsa ŞARJ.</td></tr>
       <tr><td><b>DENGE</b></td><td>LQR denge; eldiven adımları</td><td>Görev uygunsa ve işaret görülürse YANAŞMA. |θ| > 40° → DÜŞTÜ. Acil stop → BEKLE.</td></tr>
       <tr><td><b>YANAŞMA</b></td><td>ARA → HİZALAN → YAKLAŞ → YERLEŞ</td><td>Pimde 9 V'tan fazla 0,1 s → 4° öne eğilip motorları keser → ŞARJ. 60 s'de bitmezse DENGE.</td></tr>
-      <tr><td><b>ŞARJ</b></td><td>Motorlar kapalı, direğe yaslı</td><td>Eldivenle "geri" → DENGE + 0,5 m geri. Şarj 2 s kesilirse BEKLE.</td></tr>
+      <tr><td><b>ŞARJ</b></td><td>Motorlar kapalı, mıknatısla direğe yaslı</td><td>Eldivenle "geri" → DENGE + 0,5 m geri; sonraki 10 s yeniden yanaşmaz. Şarj 2 s kesilirse BEKLE.</td></tr>
       <tr><td><b>DÜŞTÜ</b></td><td>Motorlar kapalı</td><td>|θ| < 20° olunca BEKLE.</td></tr>
     </tbody>
   </table></div>
@@ -662,7 +670,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>Enkoder sayım/tur</td><td class="num">cdtp_config.h</td><td class="num">836</td><td>Tekeri 10 tur çevirip sayımı okuyun</td></tr>
       <tr><td>İz genişliği</td><td class="num">cdtp_config.h + lqr_design.py</td><td class="num">0,190 m</td><td>Teker temas noktaları arası; yerinde 10 tur dönüp enkoder farkından</td></tr>
       <tr><td>Motor yönleri, enkoder yönleri</td><td class="num">cdtp_config.h</td><td class="num">sağ ters</td><td><code>mtest</code> ve elle çevirme</td></tr>
-      <tr><td>IMU eksenleri</td><td class="num">imu_filter.h AxisMap</td><td class="num">X ileri, Z yukarı</td><td>MPU6050'yi X ileri bakacak yapıştırın, <code>tilt</code> ve <code>yaw</code> işaretini kontrol edin</td></tr>
+      <tr><td>IMU eksenleri</td><td class="num">imu_filter.h AxisMap</td><td class="num">X ileri, Z yukarı, jiroskop Y +</td><td>MPU6050'yi X ileri, bileşenler yukarı bakacak yapıştırın. Öne eğince <code>tilt</code> artmalı; hızlı öne eğerken jiroskop Y pozitif okunur. Farklı montajda <code>AxisMap</code> işaretlerini değiştirin.</td></tr>
       <tr><td>Olu bölge gerilimi</td><td class="num">cdtp_config.h</td><td class="num">0,45 V</td><td>Teker havada; PWM'i yavaş artırıp dönmeye başladığı gerilim</td></tr>
       <tr><td>Denge noktası ofseti</td><td class="num">NVS (<code>cal</code>)</td><td class="num">0</td><td>Robotu en rahat durduğu açıda tutup <code>cal</code></td></tr>
       <tr><td>Motor Ke, R</td><td class="num">lqr_design.py</td><td class="num">0,216, 4,5 Ω</td><td>Ke = 12 V / boşta hız (rad/s); R = 12 V / kilit akımı</td></tr>
@@ -673,22 +681,8 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 
 <!-- ================= TESTLER ================= -->
 <section id="test">
-  <div class="sec-head"><span class="sec-num">13</span><h2>Simülasyon testleri (bu şasiyle)</h2></div>
-  <div class="tbl"><table>
-    <thead><tr><th>Test</th><th>Ölçülen</th><th>Sonuç</th></tr></thead>
-    <tbody>
-      <tr><td>Enerjisiz ±10°'den bırakma</td><td class="num">0,30 s'de 40°'yi geçer</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>C1.1 30 s statik denge, kutulu</td><td class="num">eğim ≤ 0,52°, kayma 1,4 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>C1.2 / C1.3 1 m ileri / geri + 3 s dur</td><td class="num">1,002 m / 1,002 m; durmada ≤ 12 mm</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>C1.4 ±10°'den toparlanma</td><td class="num">1,42 s / 1,44 s</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>Acil stop</td><td class="num">BEKLE, motor çıkışı kapalı</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>C2 ileri / geri / sola / sağa / dur</td><td class="num">0,494 m · 0,491 m · 90,0° · 90,0°; tepki ≤ 0,8 s</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>Eldiven sustu</td><td class="num">adım 0,30 m'de kesildi, durdu</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>C3 yanaşma, 63 başlangıç</td><td class="num">63/63, en uzun 14,8 s; temas → motor kesme 0,5 s</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>C5 bütünleşik × 4</td><td class="num">4/4, hedefte 5,6 s bekledi</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>40 rastgele robot (kütle ±25 %, KM −25/+60 %, motor ±20 %, pil 10,4–12,6 V)</td><td class="num">statik 40/40, toparlanma 40/40 (≤ 1,7 s), 1 m 40/40</td><td><span class="pill p-ok">geçti</span></td></tr>
-    </tbody>
-  </table></div>
+  <div class="sec-head"><span class="sec-num">13</span><h2>Testler: C++ simülasyonu ve MuJoCo dijital ikizi</h2></div>
+<!--TESTLER-->
   <div class="grid2">
     <figure><img src="img/c1_ileri.png" alt="1 m ileri: yol, eğim ve PWM"><figcaption>C1.2: iki "ileri" adımı ve 3 s durma</figcaption></figure>
     <figure><img src="img/c1_toparlanma.png" alt="±10 derece toparlanma"><figcaption>C1.4: ±10°'den toparlanma</figcaption></figure>

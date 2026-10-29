@@ -1,15 +1,15 @@
 ON	Enerjisiz +-10 deg'den dik kalmamali	GECTI	40 deg'yi gecme suresi en fazla 0.30 s (sinir: 5 s icinde dusmeli)
-C1.1	30 s statik denge (kutulu)	GECTI	en buyuk egim 0.52 deg, en buyuk kayma 1.4 cm
-C1.2	1 m ileri + 3 s dur	GECTI	yol 1.002 m, 3 s durmada en buyuk kayma 12.0 mm (hiz tepe 0.040 m/s), en buyuk egim 4.8 deg
-C1.3	1 m geri + 3 s dur	GECTI	yol 1.002 m, 3 s durmada en buyuk kayma 9.1 mm (hiz tepe 0.022 m/s), en buyuk egim 4.9 deg
-C1.4	+10 ve -10 deg'den 10 s icinde toparlanma	GECTI	+10: 1.42 s (yol 13 cm), -10: 1.44 s (yol 12 cm)
+C1.1	30 s statik denge (kutulu)	GECTI	en buyuk egim 0.73 deg, en buyuk kayma 1.5 cm
+C1.2	1 m ileri + 3 s dur	GECTI	yol 0.994 m, 3 s durmada en buyuk kayma 10.2 mm (hiz tepe 0.052 m/s), en buyuk egim 5.2 deg
+C1.3	1 m geri + 3 s dur	GECTI	yol 1.004 m, 3 s durmada en buyuk kayma 9.0 mm (hiz tepe 0.052 m/s), en buyuk egim 5.0 deg
+C1.4	+10 ve -10 deg'den 10 s icinde toparlanma	GECTI	+10: 1.44 s (yol 14 cm), -10: 1.46 s (yol 14 cm)
 GUV.2	Acil stop: denge birakilir, motorlar kapanir	GECTI	stop sonrasi mod BEKLE, bekleme dogru
-C2.1	Eldiven: ileri ~0,5 m	GECTI	tepki 0.78 s, yol 0.494 m
-C2.2	Eldiven: geri ~0,5 m	GECTI	tepki 0.77 s, yol -0.491 m
-C2.3	Eldiven: sola ~90 deg	GECTI	tepki 0.28 s, donus 90.0 deg
-C2.4	Eldiven: saga ~90 deg	GECTI	tepki 0.28 s, donus -90.0 deg
-C2.5	Dur: tum komutlardan sonra yerinde kalir	GECTI	son 3 s kayma 9.6 mm, donme 0.31 deg
-GUV.1	Eldiven sustu (0,3 s): adim kesilir, robot durur	GECTI	durdugu yol 0.303 m (tam adim 0,5 m)
+C2.1	Eldiven: ileri ~0,5 m	GECTI	tepki 0.75 s, yol 0.497 m
+C2.2	Eldiven: geri ~0,5 m	GECTI	tepki 0.77 s, yol -0.498 m
+C2.3	Eldiven: sola ~90 deg	GECTI	tepki 0.29 s, donus 90.0 deg
+C2.4	Eldiven: saga ~90 deg	GECTI	tepki 0.29 s, donus -90.0 deg
+C2.5	Dur: tum komutlardan sonra yerinde kalir	GECTI	son 3 s kayma 0.5 mm, donme 0.46 deg
+GUV.1	Eldiven sustu (0,3 s): adim kesilir, robot durur	GECTI	durdugu yol 0.309 m (tam adim 0,5 m)
 C3.1-2	IR ile bul, hizalan, yerles (63 baslangic, 30 cm/90 deg)	GECTI	63/63 basarili, en uzun 14.8 s
 C3.3	Temastan sonra sarj + motor durur <= 5 s	GECTI	temas -> SARJ modu en fazla 0.50 s
 C3.x	Istasyon gorus disindayken arayip bulma	GECTI	3/3 basarili (90, -90, 180 deg ters bakis)
@@ -17,4 +17,4 @@ C5.1	Butunlesik gorev, tekrar 1	GECTI	hedefte bekleme 5.6 s, erken yanasma yok, 
 C5.2	Butunlesik gorev, tekrar 2	GECTI	hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas->sarj 0.50 s
 C5.3	Butunlesik gorev, tekrar 3	GECTI	hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas->sarj 0.50 s
 C5.4	Butunlesik gorev, tekrar 4	GECTI	hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas->sarj 0.50 s
-SAG	Belirsizlik: kutle +-25%, KM -25/+60%, ...	GECTI	statik 40/40, toparlanma 40/40 (en uzun 1.7 s), 1 m 40/40
+SAG	Belirsizlik: kutle +-25%, KM -25/+60%, ...	GECTI	statik 40/40, toparlanma 40/40 (en uzun 1.7 s), 1 m: +-5 cm durmada 40/40, +-3 cm durmada 35/40

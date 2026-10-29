@@ -86,6 +86,7 @@ void RobotLogic::handleGlove(const RobotInputs& in) {
     if (edge && cmd == Cmd::BACK) {
       enterBalance();
       pendingBack_ = true;
+      undockHoldT_ = cfg::UNDOCK_HOLD_S;  // kullanici ayirdi: hemen geri yanasma
     }
     return;
   }
@@ -117,7 +118,12 @@ RobotOutputs RobotLogic::balanceControl(float vbat, float leanRad) {
   const float r = cfg::WHEEL_RADIUS_M;
   const float thRef = cfg::TH_FF_GAIN * TH_PER_ACC * aRef_ + leanRad;
   const float ex = clampf(x_ - xRef_, -0.25f, 0.25f);
-  float u = -(K_X * ex + K_V * (v_ - vRef_) + K_TH * (tilt_.theta() - thRef) + K_OM * tilt_.pitchRate());
+  // Denge noktasi ogrenme: kutle merkezi eksenin tam ustunde degilse robot egik dengede durur ve LQR bunu
+  // kalici konum hatasiyla karsilar (dururken yavas kayma). Robot yerinde dururken egim hedefi yavasca
+  // bu hatayi sifirlayacak yone kaydirilir. Hareket, donus ve yanasmada donmus kalir.
+  const bool still = !linActive_ && !rotActive_ && fabsf(vRef_) < 0.01f && fabsf(rRef_) < 0.05f && mode_ == Mode::BALANCE;
+  if (still) thTrim_ = clampf(thTrim_ - cfg::TRIM_RATE * ex * cfg::DT, -cfg::TRIM_MAX_DEG * DEG, cfg::TRIM_MAX_DEG * DEG);
+  float u = -(K_X * ex + K_V * (v_ - vRef_) + K_TH * (tilt_.theta() - thRef - thTrim_) + K_OM * tilt_.pitchRate());
   u += cfg::MOTOR_KE * vRef_ / r;  // zit-EMK on-beslemesi
   float ud = YAW_KP * wrapPi(psiRef_ - psi_) + YAW_KD * (rRef_ - tilt_.yawRate());
   ud += cfg::MOTOR_KE * (rRef_ * cfg::TRACK_WIDTH_M * 0.5f) / r;
@@ -177,7 +183,8 @@ RobotOutputs RobotLogic::step(const RobotInputs& in) {
   const float mPerCount = 2 * PI_F * cfg::WHEEL_RADIUS_M / cfg::ENC_COUNTS_PER_REV;
   const float xl = (cfg::ENC_LEFT_INVERT ? -1 : 1) * (float)(in.encL - encL0_) * mPerCount;
   const float xr = (cfg::ENC_RIGHT_INVERT ? -1 : 1) * (float)(in.encR - encR0_) * mPerCount;
-  x_ = 0.5f * (xl + xr);
+  // Enkoder tekerin govdeye gore donusunu sayar; yere gore teker yolu icin govde egimi eklenir: x = r*(phi_bagil + theta)
+  x_ = 0.5f * (xl + xr) + cfg::WHEEL_RADIUS_M * tilt_.theta();
   // hiz: 4 ornek (20 ms) uzerinden fark; tek sayim kuantalamasini 4 kat azaltir
   const float xOld = xHist_[histIdx_];
   xHist_[histIdx_] = x_;
@@ -257,7 +264,10 @@ RobotOutputs RobotLogic::step(const RobotInputs& in) {
         const float idleNeed = task_ == Task::INTEGRATED ? cfg::DOCK_IDLE_S : 1.0f;
         // Sarj gorevinde robot istasyon bolgesine konur: isareti gormese de 1 s sonra aramaya baslar
         const bool look = seen || task_ == Task::CHARGING;
-        beaconT_ = (dockAllowed() && idle && gloveIdleT_ > idleNeed && look && !pendingBack_) ? beaconT_ + dt : 0;
+        undockHoldT_ = fmaxf(0.0f, undockHoldT_ - dt);
+        beaconT_ = (dockAllowed() && idle && gloveIdleT_ > idleNeed && look && !pendingBack_ && undockHoldT_ <= 0)
+                       ? beaconT_ + dt
+                       : 0;
         if (beaconT_ > cfg::DOCK_TRIGGER_S) {
           mode_ = Mode::DOCK;
           modeT_ = 0;

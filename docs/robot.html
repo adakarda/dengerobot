@@ -152,10 +152,11 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>M3 30 mm + 50 mm dişi-dişi distans</td><td class="num">8+8</td><td class="num r">9,5 / 13,5</td><td>Motorobit</td><td>Her köşede 30+50 = 80 mm</td></tr>
       <tr><td>M3 10 mm vida (10'lu)</td><td class="num">4</td><td class="num r">7,5</td><td>Motorobit</td><td></td></tr>
       <tr><td>5 mm pogo pin (10'lu) <span class="pill p-new">robot tarafında</span></td><td class="num">1</td><td class="num r">87</td><td>Direnc.net</td><td>V-yuvada 2 adet, istasyonla paket ortak</td></tr>
+      <tr><td>Neodyum mıknatıs Ø10×3 mm N52 <span class="pill p-new">yeni</span></td><td class="num">2</td><td class="num r">~40</td><td>Trendyol</td><td>V-yuvanın arka şeridine, pimlerin arasına; direkteki çelik şeride tutunur</td></tr>
       <tr><td>Kapaklı ilaç kutusu</td><td class="num">1</td><td class="num r">60</td><td>Eczane</td><td></td></tr>
     </tbody>
   </table></div>
-  <p>Robot tarafının toplamı yaklaşık <b>6.050 TL</b> (pleksi ve pogo paketi istasyonla paylaşılırsa ~5.700 TL).</p>
+  <p>Robot tarafının toplamı yaklaşık <b>6.090 TL</b> (pleksi ve pogo paketi istasyonla paylaşılırsa ~5.740 TL).</p>
 </section>
 
 <!-- ================= BLOK ================= -->
@@ -561,6 +562,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 <section id="tema">
   <div class="sec-head"><span class="sec-num">09</span><h2>Şarj teması: V-yuva ve direk</h2></div>
   <p>Robot önündeki V-yuvayla istasyonun yuvarlak direğine yaslanır. Direk yuvarlak olduğu için hangi açıdan gelirse gelsin temas aynıdır; V-yuva yanal ±3 cm hatayı kendisi ortalar. Pimler robotta, halkalar direkte. Pimler SR5100 diyotun arkasında olduğu için robotta açıkta pil gerilimi yoktur.</p>
+  <p class="warnnote">Motorlar kesilince tekerler serbest kalır ve robot yuvarlak direkten geri yuvarlanır. Dijital ikizde eğim 11,6°'ye çıktı ve pim temastan ayrıldı. Bu yüzden V-yuvanın arka şeridinde iki neodyum mıknatıs, direkte halkaların arasında çelik şerit var. Şartname manyetik sabitlemeye izin veriyor. Mıknatıs ~10 N tutar; elle çekmek ve motorla geri gitmek (en fazla ~35 N) bunu rahat yener.</p>
   <div class="diagram"><svg class="w7" viewBox="0 0 760 300" role="img" aria-label="V-yuva ve direk üstten ve yandan">
     <text x="14" y="20" font-size="12" font-weight="600">Üstten</text>
     <rect x="40" y="60" width="200" height="160" class="plate"/><text x="80" y="145" font-size="11">robot (kat 1)</text>
@@ -584,12 +586,15 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <li>Pogo pimler V-yuvanın arka şeridine geçirilir, arkasından lehimlenip sıcak silikonla sabitlenir; uçlar şeritten 3 mm dışarıda.</li>
       <li>Üst pim → SR5100 → XT60 + hattı (W20, W21) ve J9-2 (W23). Alt pim → WAGO-GND (W22).</li>
       <li>Robot dengede ±2° sallanır; pim yüksekliği ±0,5 mm değişir, halka 16 mm.</li>
+      <li>Arka şerit 20 mm geniş olmalı: Ø40 direk önce şeride (pimlere) değer, kanatlar yalnız yanal hatayı düzeltir. Sivri V'de direk pimlere 8 mm kala kanatlara takılır (ikizde görüldü).</li>
+      <li>İki Ø10×3 mm mıknatıs şeridin üstüne ve altına, pimlerle aynı hizada yapıştırılır.</li>
     </ul></div>
     <div class="box"><h3>Direk tarafı (Elektrik ekibine)</h3><ul>
       <li>Ø40 mm PVC boru, 200 mm, ağır taban (robot 6° yaslanır).</li>
       <li>Halkalar bakır banttan, aralarında 9 mm boşluk. Şarj kartı OUT+ → 1,1 A PTC → üst halka, OUT− → alt halka.</li>
       <li>IR LED'ler 147 mm'de, ±20° açılı, robot gözleriyle aynı yükseklikte.</li>
       <li>Robot bölgesine bakan yarım çevrede halkalar; arka yarım bant olmadan bırakılabilir.</li>
+      <li>Halkaların arasına (85–94 mm) ince galvaniz çelik şerit sarılır; robotun mıknatısı her açıdan buna tutunur.</li>
     </ul></div>
   </div>
 </section>
@@ -627,6 +632,9 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <li><code>RobotLogic::step()</code> çıkışı: EN ve iki PWM oranı.</li>
       <li>Her 200 adımda bir telemetri JSON'u üretilir; çekirdek 0 BLE ile yollar.</li>
       <li>IMU 3 kez üst üste okunamazsa motorlar kapanır.</li>
+      <li>Eldivenden 0,3 s paket gelmezse süren adım yumuşakça kesilir, robot durur.</li>
+      <li>Enkoder tekerin gövdeye göre dönüşünü sayar; yere göre yol için r·θ eklenir.</li>
+      <li>Robot yerinde dururken denge açısını yavaşça öğrenir (en fazla ±3°). Kütle merkezi tam eksen üstünde değilse durduktan sonraki kaymayı bu giderir.</li>
     </ul></div>
   </div>
   <div class="tbl"><table>
@@ -635,7 +643,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td><b>BEKLE</b></td><td>Motorlar kapalı</td><td>Elle ±3° içinde 0,5 s tutulunca DENGE. Şarj gerilimi varsa ŞARJ.</td></tr>
       <tr><td><b>DENGE</b></td><td>LQR denge; eldiven adımları</td><td>Görev uygunsa ve işaret görülürse YANAŞMA. |θ| > 40° → DÜŞTÜ. Acil stop → BEKLE.</td></tr>
       <tr><td><b>YANAŞMA</b></td><td>ARA → HİZALAN → YAKLAŞ → YERLEŞ</td><td>Pimde 9 V'tan fazla 0,1 s → 4° öne eğilip motorları keser → ŞARJ. 60 s'de bitmezse DENGE.</td></tr>
-      <tr><td><b>ŞARJ</b></td><td>Motorlar kapalı, direğe yaslı</td><td>Eldivenle "geri" → DENGE + 0,5 m geri. Şarj 2 s kesilirse BEKLE.</td></tr>
+      <tr><td><b>ŞARJ</b></td><td>Motorlar kapalı, mıknatısla direğe yaslı</td><td>Eldivenle "geri" → DENGE + 0,5 m geri; sonraki 10 s yeniden yanaşmaz. Şarj 2 s kesilirse BEKLE.</td></tr>
       <tr><td><b>DÜŞTÜ</b></td><td>Motorlar kapalı</td><td>|θ| < 20° olunca BEKLE.</td></tr>
     </tbody>
   </table></div>
@@ -662,7 +670,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>Enkoder sayım/tur</td><td class="num">cdtp_config.h</td><td class="num">836</td><td>Tekeri 10 tur çevirip sayımı okuyun</td></tr>
       <tr><td>İz genişliği</td><td class="num">cdtp_config.h + lqr_design.py</td><td class="num">0,190 m</td><td>Teker temas noktaları arası; yerinde 10 tur dönüp enkoder farkından</td></tr>
       <tr><td>Motor yönleri, enkoder yönleri</td><td class="num">cdtp_config.h</td><td class="num">sağ ters</td><td><code>mtest</code> ve elle çevirme</td></tr>
-      <tr><td>IMU eksenleri</td><td class="num">imu_filter.h AxisMap</td><td class="num">X ileri, Z yukarı</td><td>MPU6050'yi X ileri bakacak yapıştırın, <code>tilt</code> ve <code>yaw</code> işaretini kontrol edin</td></tr>
+      <tr><td>IMU eksenleri</td><td class="num">imu_filter.h AxisMap</td><td class="num">X ileri, Z yukarı, jiroskop Y +</td><td>MPU6050'yi X ileri, bileşenler yukarı bakacak yapıştırın. Öne eğince <code>tilt</code> artmalı; hızlı öne eğerken jiroskop Y pozitif okunur. Farklı montajda <code>AxisMap</code> işaretlerini değiştirin.</td></tr>
       <tr><td>Olu bölge gerilimi</td><td class="num">cdtp_config.h</td><td class="num">0,45 V</td><td>Teker havada; PWM'i yavaş artırıp dönmeye başladığı gerilim</td></tr>
       <tr><td>Denge noktası ofseti</td><td class="num">NVS (<code>cal</code>)</td><td class="num">0</td><td>Robotu en rahat durduğu açıda tutup <code>cal</code></td></tr>
       <tr><td>Motor Ke, R</td><td class="num">lqr_design.py</td><td class="num">0,216, 4,5 Ω</td><td>Ke = 12 V / boşta hız (rad/s); R = 12 V / kilit akımı</td></tr>
@@ -673,22 +681,42 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 
 <!-- ================= TESTLER ================= -->
 <section id="test">
-  <div class="sec-head"><span class="sec-num">13</span><h2>Simülasyon testleri (bu şasiyle)</h2></div>
-  <div class="tbl"><table>
-    <thead><tr><th>Test</th><th>Ölçülen</th><th>Sonuç</th></tr></thead>
-    <tbody>
-      <tr><td>Enerjisiz ±10°'den bırakma</td><td class="num">0,30 s'de 40°'yi geçer</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>C1.1 30 s statik denge, kutulu</td><td class="num">eğim ≤ 0,52°, kayma 1,4 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>C1.2 / C1.3 1 m ileri / geri + 3 s dur</td><td class="num">1,002 m / 1,002 m; durmada ≤ 12 mm</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>C1.4 ±10°'den toparlanma</td><td class="num">1,42 s / 1,44 s</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>Acil stop</td><td class="num">BEKLE, motor çıkışı kapalı</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>C2 ileri / geri / sola / sağa / dur</td><td class="num">0,494 m · 0,491 m · 90,0° · 90,0°; tepki ≤ 0,8 s</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>Eldiven sustu</td><td class="num">adım 0,30 m'de kesildi, durdu</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>C3 yanaşma, 63 başlangıç</td><td class="num">63/63, en uzun 14,8 s; temas → motor kesme 0,5 s</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>C5 bütünleşik × 4</td><td class="num">4/4, hedefte 5,6 s bekledi</td><td><span class="pill p-ok">geçti</span></td></tr>
-      <tr><td>40 rastgele robot (kütle ±25 %, KM −25/+60 %, motor ±20 %, pil 10,4–12,6 V)</td><td class="num">statik 40/40, toparlanma 40/40 (≤ 1,7 s), 1 m 40/40</td><td><span class="pill p-ok">geçti</span></td></tr>
-    </tbody>
-  </table></div>
+  <div class="sec-head"><span class="sec-num">13</span><h2>Testler: C++ simülasyonu ve MuJoCo dijital ikizi</h2></div>
+<h3>C++ simülasyonu: 20/20</h3><div class="tbl"><table><thead><tr><th>Test</th><th>Ölçülen</th><th>Sonuç</th></tr></thead><tbody>
+<tr><td><b>ON</b> Enerjisiz +-10 deg&#x27;den dik kalmamali</td><td>40 deg&#x27;yi gecme suresi en fazla 0.30 s (sinir: 5 s icinde dusmeli)</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.1</b> 30 s statik denge (kutulu)</td><td>en buyuk egim 0.73 deg, en buyuk kayma 1.5 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.2</b> 1 m ileri + 3 s dur</td><td>yol 0.994 m, 3 s durmada en buyuk kayma 10.2 mm (hiz tepe 0.052 m/s), en buyuk egim 5.2 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.3</b> 1 m geri + 3 s dur</td><td>yol 1.004 m, 3 s durmada en buyuk kayma 9.0 mm (hiz tepe 0.052 m/s), en buyuk egim 5.0 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.4</b> +10 ve -10 deg&#x27;den 10 s icinde toparlanma</td><td>+10: 1.44 s (yol 14 cm), -10: 1.46 s (yol 14 cm)</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>GUV.2</b> Acil stop: denge birakilir, motorlar kapanir</td><td>stop sonrasi mod BEKLE, bekleme dogru</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.1</b> Eldiven: ileri ~0,5 m</td><td>tepki 0.75 s, yol 0.497 m</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.2</b> Eldiven: geri ~0,5 m</td><td>tepki 0.77 s, yol -0.498 m</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.3</b> Eldiven: sola ~90 deg</td><td>tepki 0.29 s, donus 90.0 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.4</b> Eldiven: saga ~90 deg</td><td>tepki 0.29 s, donus -90.0 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.5</b> Dur: tum komutlardan sonra yerinde kalir</td><td>son 3 s kayma 0.5 mm, donme 0.46 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>GUV.1</b> Eldiven sustu (0,3 s): adim kesilir, robot durur</td><td>durdugu yol 0.309 m (tam adim 0,5 m)</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C3.1-2</b> IR ile bul, hizalan, yerles (63 baslangic, 30 cm/90 deg)</td><td>63/63 basarili, en uzun 14.8 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C3.3</b> Temastan sonra sarj + motor durur &lt;= 5 s</td><td>temas -&gt; SARJ modu en fazla 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C3.x</b> Istasyon gorus disindayken arayip bulma</td><td>3/3 basarili (90, -90, 180 deg ters bakis)</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C5.1</b> Butunlesik gorev, tekrar 1</td><td>hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas-&gt;sarj 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C5.2</b> Butunlesik gorev, tekrar 2</td><td>hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas-&gt;sarj 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C5.3</b> Butunlesik gorev, tekrar 3</td><td>hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas-&gt;sarj 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C5.4</b> Butunlesik gorev, tekrar 4</td><td>hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas-&gt;sarj 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>SAG</b> Belirsizlik: kutle +-25%, KM -25/+60%, ...</td><td>statik 40/40, toparlanma 40/40 (en uzun 1.7 s), 1 m: +-5 cm durmada 40/40, +-3 cm durmada 35/40</td><td><span class="pill p-ok">geçti</span></td></tr>
+</tbody></table></div>
+<h3>MuJoCo dijital ikizi: 11/11</h3><div class="tbl"><table><thead><tr><th>Test</th><th>Ölçülen</th><th>Sonuç</th></tr></thead><tbody>
+<tr><td><b>ON</b> Enerjisiz +-10 deg&#x27;den dik kalmamali</td><td>40 deg&#x27;ye en gec 0.31 s&#x27;de dustu</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.1</b> 30 s statik denge (kutulu)</td><td>en buyuk egim 1.77 deg, kayma 4.0 cm, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.2</b> 1 m ileri + 3 s dur</td><td>yol 0.990 m, 3 s durmada kayma 6.9 mm, egim tepe 5.8 deg, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.3</b> 1 m geri + 3 s dur</td><td>yol 1.008 m, 3 s durmada kayma 13.9 mm, egim tepe 6.0 deg, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.4</b> +10 ve -10 deg&#x27;den 10 s icinde toparlanma</td><td>+10: 1.29 s, -10: 1.57 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.3-4</b> Eldiven: sola / saga ~90 deg</td><td>sol +89.8 deg, sag -89.8 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>GUV.2</b> Acil stop: denge birakilir, motorlar kapanir</td><td>mod=BEKLE</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>REF</b> GitHub referans LQI kazanclari ikizde dengeliyor</td><td>baslangic 0 deg: dengede (son -0.9 deg), baslangic 8 deg: dengede (son -1.1 deg)</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C3</b> IR ile yanasma, V-yuva + direk (30 baslangic)</td><td>30/30 basarili, en uzun temas 14.0 s, temas-&gt;sarj modu 0.50 s </td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C3.5</b> Eldivenle &#x27;geri&#x27;: miknatistan kopup istasyondan ayrilir</td><td>once SARJ, sonra mod DENGE, direge uzaklik 50 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C5</b> Butunlesik gorev (kutu, eldiven, yanasma)</td><td>son mod SARJ, erken yanasma yok, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
+</tbody></table></div>
   <div class="grid2">
     <figure><img src="img/c1_ileri.png" alt="1 m ileri: yol, eğim ve PWM"><figcaption>C1.2: iki "ileri" adımı ve 3 s durma</figcaption></figure>
     <figure><img src="img/c1_toparlanma.png" alt="±10 derece toparlanma"><figcaption>C1.4: ±10°'den toparlanma</figcaption></figure>
@@ -702,7 +730,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 <section id="kod">
   <div class="sec-head"><span class="sec-num">14</span><h2>Robotun bütün kodları</h2></div>
   <p>Robotta çalışan her dosya. Ortak çekirdek (<code>common/cdtp_core</code>) robot firmware'inin parçasıdır; <code>protocol.h</code> ve <code>gesture.h</code> eldivenle paylaşılır. Her dosya açılır ve kopyalanır.</p>
-<p class="mono">18 dosya, 1720 satır</p>
+<p class="mono">20 dosya, 2424 satır</p>
 <details class="code"><summary><b>firmware/robot/platformio.ini</b><span>PlatformIO ayarlari · 23 satır</span><button class="copy" data-target="src0" type="button">kopyala</button></summary><pre id="src0">; Robot ESP32 (ESP32-WROOM-32D gelistirme karti)
 ; VS Code + PlatformIO eklentisiyle bu klasoru acip &quot;Upload&quot; deyin.
 ; Kod yuklerken ana karttaki JP1 koprusunu cikarin (USB ve LM2596 5 V&#x27;u cakismasin).
@@ -1309,7 +1337,7 @@ inline void publish(const char* json) {
 }
 }  // namespace ble
 </pre></details>
-<details class="code"><summary><b>common/cdtp_core/src/cdtp_config.h</b><span>Tum ayar sabitleri · 77 satır</span><button class="copy" data-target="src5" type="button">kopyala</button></summary><pre id="src5">// Robot parametreleri. &quot;OLC&quot; yazanlar parca gelince olculup guncellenecek.
+<details class="code"><summary><b>common/cdtp_core/src/cdtp_config.h</b><span>Tum ayar sabitleri · 80 satır</span><button class="copy" data-target="src5" type="button">kopyala</button></summary><pre id="src5">// Robot parametreleri. &quot;OLC&quot; yazanlar parca gelince olculup guncellenecek.
 // Bu dosya hem firmware&#x27;de hem simulasyonda ayni degerlerle kullanilir.
 #pragma once
 
@@ -1342,6 +1370,8 @@ constexpr float MOTOR_DEADBAND_V = 0.45f;     // kucuk gerilimde dislinin donmem
 constexpr float MOTOR_KE       = 0.216f;      // V/(rad/s), cikis milinde: 12 V / 55.5 rad/s (530 RPM)
 
 // ---- Kontrol ----
+constexpr float TRIM_RATE = 0.1f;      // rad/(m s): dururken denge acisi ogrenme hizi
+constexpr float TRIM_MAX_DEG = 3.0f;   // ogrenilen aci siniri
 constexpr float REF_SHAPING_W = 5.0f;  // rad/s, konum referansi suzgeci
 constexpr float TH_FF_GAIN = 1.0f;   // ivme -&gt; egim on-beslemesinin ne kadari kullanilsin (sim ile secildi)
 
@@ -1372,6 +1402,7 @@ constexpr float DOCK_TRIGGER_S      = 1.0f;   // gozlerden biri isareti bu kadar
 constexpr float DOCK_IDLE_S         = 6.0f;   // eldiven bu kadar &quot;dur&quot;daysa yanasma serbest (hedefte 5 s bekleme bozulmasin)
 constexpr float DOCK_LOST_S         = 1.0f;
 constexpr float DOCK_TIMEOUT_S      = 60.0f;
+constexpr float UNDOCK_HOLD_S       = 10.0f;  // eldivenle istasyondan ayrilinca bu sure yeniden yanasmaz
 constexpr float CHARGE_DETECT_V     = 9.0f;   // plakada bu gerilim varsa sarj var
 constexpr float CHARGE_CONFIRM_S    = 0.10f;
 constexpr float DOCK_LEAN_DEG       = 4.0f;   // motor kesmeden once sirta dogru egilme
@@ -1403,7 +1434,7 @@ constexpr float TH_PER_ACC = 0.15266f;
 }  // namespace gains
 }  // namespace cdtp
 </pre></details>
-<details class="code"><summary><b>common/cdtp_core/src/robot_logic.h</b><span>Mod makinesi arayuzu · 116 satır</span><button class="copy" data-target="src7" type="button">kopyala</button></summary><pre id="src7">// Robotun tum karar mantigi: mod makinesi, denge (LQR), hareket, yanasma.
+<details class="code"><summary><b>common/cdtp_core/src/robot_logic.h</b><span>Mod makinesi arayuzu · 119 satır</span><button class="copy" data-target="src7" type="button">kopyala</button></summary><pre id="src7">// Robotun tum karar mantigi: mod makinesi, denge (LQR), hareket, yanasma.
 // Donanimdan bagimsizdir: firmware her 5 ms&#x27;de bir step() cagirir, simulasyon da ayni sinifi kullanir.
 #pragma once
 #include &lt;stdint.h&gt;
@@ -1460,6 +1491,7 @@ class RobotLogic {
   const char* direction() const { return dir_; }
   DockState dockState() const { return dock_.state(); }
   float thetaDeg() const { return tilt_.theta() / DEG; }
+  float trimDeg() const { return thTrim_ / DEG; }
   float x() const { return x_; }
   float v() const { return v_; }
   float psiDeg() const { return psi_ / DEG; }
@@ -1501,6 +1533,7 @@ class RobotLogic {
   int histIdx_ = 0;
   // referanslar
   float xRaw_ = 0, vRaw_ = 0;  // bicimlendirme oncesi referans
+  float thTrim_ = 0;           // ogrenilen denge acisi (rad); acilista sifir, cal komutu kalici ofseti verir
   float xRef_ = 0, vRef_ = 0, aRef_ = 0, psiRef_ = 0, rRef_ = 0;
   float xStart_ = 0, psiStart_ = 0;
   Trapezoid lin_, rot_;
@@ -1513,13 +1546,14 @@ class RobotLogic {
   bool pendingBack_ = false;
   // yanasma tetik
   float beaconT_ = 0;
+  float undockHoldT_ = 0;  // eldivenle ayrildiktan sonra otomatik yanasma beklemesi
   bool charging_ = false;
   float chargeLostT_ = 0;
 };
 
 }  // namespace cdtp
 </pre></details>
-<details class="code"><summary><b>common/cdtp_core/src/robot_logic.cpp</b><span>Mod makinesi, LQR, hareket, telemetri · 315 satır</span><button class="copy" data-target="src8" type="button">kopyala</button></summary><pre id="src8">#include &quot;robot_logic.h&quot;
+<details class="code"><summary><b>common/cdtp_core/src/robot_logic.cpp</b><span>Mod makinesi, LQR, hareket, telemetri · 325 satır</span><button class="copy" data-target="src8" type="button">kopyala</button></summary><pre id="src8">#include &quot;robot_logic.h&quot;
 
 #include &lt;stdio.h&gt;
 
@@ -1607,6 +1641,7 @@ void RobotLogic::handleGlove(const RobotInputs&amp; in) {
     if (edge &amp;&amp; cmd == Cmd::BACK) {
       enterBalance();
       pendingBack_ = true;
+      undockHoldT_ = cfg::UNDOCK_HOLD_S;  // kullanici ayirdi: hemen geri yanasma
     }
     return;
   }
@@ -1638,7 +1673,12 @@ RobotOutputs RobotLogic::balanceControl(float vbat, float leanRad) {
   const float r = cfg::WHEEL_RADIUS_M;
   const float thRef = cfg::TH_FF_GAIN * TH_PER_ACC * aRef_ + leanRad;
   const float ex = clampf(x_ - xRef_, -0.25f, 0.25f);
-  float u = -(K_X * ex + K_V * (v_ - vRef_) + K_TH * (tilt_.theta() - thRef) + K_OM * tilt_.pitchRate());
+  // Denge noktasi ogrenme: kutle merkezi eksenin tam ustunde degilse robot egik dengede durur ve LQR bunu
+  // kalici konum hatasiyla karsilar (dururken yavas kayma). Robot yerinde dururken egim hedefi yavasca
+  // bu hatayi sifirlayacak yone kaydirilir. Hareket, donus ve yanasmada donmus kalir.
+  const bool still = !linActive_ &amp;&amp; !rotActive_ &amp;&amp; fabsf(vRef_) &lt; 0.01f &amp;&amp; fabsf(rRef_) &lt; 0.05f &amp;&amp; mode_ == Mode::BALANCE;
+  if (still) thTrim_ = clampf(thTrim_ - cfg::TRIM_RATE * ex * cfg::DT, -cfg::TRIM_MAX_DEG * DEG, cfg::TRIM_MAX_DEG * DEG);
+  float u = -(K_X * ex + K_V * (v_ - vRef_) + K_TH * (tilt_.theta() - thRef - thTrim_) + K_OM * tilt_.pitchRate());
   u += cfg::MOTOR_KE * vRef_ / r;  // zit-EMK on-beslemesi
   float ud = YAW_KP * wrapPi(psiRef_ - psi_) + YAW_KD * (rRef_ - tilt_.yawRate());
   ud += cfg::MOTOR_KE * (rRef_ * cfg::TRACK_WIDTH_M * 0.5f) / r;
@@ -1698,7 +1738,8 @@ RobotOutputs RobotLogic::step(const RobotInputs&amp; in) {
   const float mPerCount = 2 * PI_F * cfg::WHEEL_RADIUS_M / cfg::ENC_COUNTS_PER_REV;
   const float xl = (cfg::ENC_LEFT_INVERT ? -1 : 1) * (float)(in.encL - encL0_) * mPerCount;
   const float xr = (cfg::ENC_RIGHT_INVERT ? -1 : 1) * (float)(in.encR - encR0_) * mPerCount;
-  x_ = 0.5f * (xl + xr);
+  // Enkoder tekerin govdeye gore donusunu sayar; yere gore teker yolu icin govde egimi eklenir: x = r*(phi_bagil + theta)
+  x_ = 0.5f * (xl + xr) + cfg::WHEEL_RADIUS_M * tilt_.theta();
   // hiz: 4 ornek (20 ms) uzerinden fark; tek sayim kuantalamasini 4 kat azaltir
   const float xOld = xHist_[histIdx_];
   xHist_[histIdx_] = x_;
@@ -1778,7 +1819,10 @@ RobotOutputs RobotLogic::step(const RobotInputs&amp; in) {
         const float idleNeed = task_ == Task::INTEGRATED ? cfg::DOCK_IDLE_S : 1.0f;
         // Sarj gorevinde robot istasyon bolgesine konur: isareti gormese de 1 s sonra aramaya baslar
         const bool look = seen || task_ == Task::CHARGING;
-        beaconT_ = (dockAllowed() &amp;&amp; idle &amp;&amp; gloveIdleT_ &gt; idleNeed &amp;&amp; look &amp;&amp; !pendingBack_) ? beaconT_ + dt : 0;
+        undockHoldT_ = fmaxf(0.0f, undockHoldT_ - dt);
+        beaconT_ = (dockAllowed() &amp;&amp; idle &amp;&amp; gloveIdleT_ &gt; idleNeed &amp;&amp; look &amp;&amp; !pendingBack_ &amp;&amp; undockHoldT_ &lt;= 0)
+                       ? beaconT_ + dt
+                       : 0;
         if (beaconT_ &gt; cfg::DOCK_TRIGGER_S) {
           mode_ = Mode::DOCK;
           modeT_ = 0;
@@ -1834,7 +1878,7 @@ int RobotLogic::telemetryJson(char* buf, int len, uint32_t seq) const {
 
 }  // namespace cdtp
 </pre></details>
-<details class="code"><summary><b>common/cdtp_core/src/imu_filter.h</b><span>Tumleyen filtre, eksen eslemesi · 64 satır</span><button class="copy" data-target="src9" type="button">kopyala</button></summary><pre id="src9">// MPU6050 eksen eslemesi + tumleyen filtre.
+<details class="code"><summary><b>common/cdtp_core/src/imu_filter.h</b><span>Tumleyen filtre, eksen eslemesi · 66 satır</span><button class="copy" data-target="src9" type="button">kopyala</button></summary><pre id="src9">// MPU6050 eksen eslemesi + tumleyen filtre.
 #pragma once
 #include &quot;cdtp_config.h&quot;
 #include &quot;core_math.h&quot;
@@ -1843,10 +1887,12 @@ namespace cdtp {
 
 // Ham IMU eksenlerini robot eksenlerine esleme. idx: 0=X 1=Y 2=Z, sign: +1/-1.
 // Robot ekseni: ileri (on), yukari (govde boyunca), yunuslama hizi (one egilme +), sapma hizi (sola donus +).
+// Varsayilan: MPU6050 X ileri, Z yukari (Y sola). Bu montajda one dusus jiroskop Y&#x27;de POZITIF okunur
+// (sag el kurali; MuJoCo dijital ikiziyle dogrulandi).
 struct AxisMap {
   int fwdIdx = 0;   int fwdSign = 1;
   int upIdx = 2;    int upSign = 1;
-  int pitchIdx = 1; int pitchSign = -1;
+  int pitchIdx = 1; int pitchSign = 1;
   int yawIdx = 2;   int yawSign = 1;
 };
 
@@ -2422,6 +2468,692 @@ def th_per_acc(p):
 
 if __name__ == &quot;__main__&quot;:
     main()
+</pre></details>
+<details class="code"><summary><b>twin/twin.py</b><span>MuJoCo dijital ikizi · 634 satır</span><button class="copy" data-target="src18" type="button">kopyala</button></summary><pre id="src18">&quot;&quot;&quot;MuJoCo dijital ikizi.
+
+C++ simulasyonundan (sim/plant.h) bagimsiz ikinci bir model:
+  * Govde tools/mass_budget.py&#x27;deki her parcadan ayri kutu olarak kurulur (kutle, konum, atalet MuJoCo hesaplar).
+  * Teker-zemin temasi, kayma, ilac kutusunun cepte durmasi, V-yuvanin direge oturmasi gercek temasla cozulur.
+  * Sensorler fiziksel kurallarla uretilir: MPU6050 (X ileri, Y sol, Z yukari) MuJoCo&#x27;nun ivme/jiroskop
+    sensorunden; enkoder teker ile govde arasindaki BAGIL acidan (gercek enkoder gibi).
+  * Karar mantigi: robot firmware&#x27;indeki RobotLogic, build/twin_bridge.exe uzerinden (ayni C++ kodu).
+Calistir:  &lt;venv&gt;/python twin/twin.py   -&gt;  twin/results/*.csv ve summary.tsv
+&quot;&quot;&quot;
+import math
+import pathlib
+import subprocess
+import sys
+
+import mujoco
+import numpy as np
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / &quot;tools&quot;))
+import mass_budget  # noqa: E402
+
+OUT = ROOT / &quot;twin/results&quot;
+OUT.mkdir(parents=True, exist_ok=True)
+BRIDGE = ROOT / &quot;build/twin_bridge.exe&quot;
+
+# ---- fiziksel parametreler (lqr_design.py ile ayni kaynaklar; motor degerleri veri sayfasi tahmini) ----
+R_WHEEL, TRACK = 0.0325, 0.19
+KE, RA = 0.216, 4.5
+J_ROTOR, GEAR = 5.0e-7, 19.0
+B_VISC, TAU_C = 0.002, 0.02
+CPR = 836
+VOC, RINT = 12.0, 0.15
+MAGNET_N, MAGNET_RANGE = 10.0, 0.006  # V-yuvadaki miknatis ile direkteki celik serit: temasta ~10 N, 6 mm&#x27;de sifir
+PHYS_DT, CTRL_EVERY = 0.0005, 10  # 2 kHz fizik, 200 Hz kontrol
+TASKS = {&quot;statik&quot;: 0, &quot;yonlendirme&quot;: 1, &quot;sarj&quot;: 2, &quot;butunlesik&quot;: 3}
+CMD = {&quot;yok&quot;: 0, &quot;ileri&quot;: 1, &quot;geri&quot;: 2, &quot;sol&quot;: 3, &quot;sag&quot;: 4, &quot;dur&quot;: 5}
+
+# parca boyutlari (yari olcu, m) mass_budget isimlerine gore
+SIZES = {
+    &quot;Kat&quot;: (0.055, 0.075, 0.0015),
+    &quot;BTS&quot;: (0.025, 0.030, 0.015),
+    &quot;3x18650&quot;: (0.035, 0.040, 0.012),
+    &quot;Ana kart&quot;: (0.025, 0.050, 0.008),
+    &quot;Acil&quot;: (0.020, 0.020, 0.020),
+    &quot;Kutu yuvasi&quot;: (0.038, 0.025, 0.003),
+    &quot;LM2596&quot;: (0.020, 0.030, 0.010),
+    &quot;MPU&quot;: (0.010, 0.010, 0.002),
+    &quot;IR&quot;: (0.008, 0.020, 0.010),
+    &quot;16x&quot;: (0.050, 0.070, 0.004),
+}
+
+
+def size_for(name):
+    for k, v in SIZES.items():
+        if name.startswith(k):
+            return v
+    return (0.02, 0.02, 0.02)
+
+
+def build_xml(post_xy=None, box=True):
+    geoms = []
+    for name, m, z, x, _ in mass_budget.PARTS:
+        if name.startswith(&quot;2x JGB37&quot;):
+            # iki motor teker ekseninde, y boyunca
+            for s in (1, -1):
+                geoms.append(f&#x27;&lt;geom type=&quot;cylinder&quot; size=&quot;0.0185 0.035&quot; pos=&quot;0 {s*0.045} 0&quot; euler=&quot;90 0 0&quot; mass=&quot;{m/2}&quot; rgba=&quot;.3 .5 .5 1&quot;/&gt;&#x27;)
+            continue
+        sx, sy, sz = size_for(name)
+        # yalniz katlar carpisir (yere dusme, direk); diger parcalar kutle/atalet tasir, kutu cebine girmez
+        coll = &quot;&quot; if name.startswith(&quot;Kat&quot;) else &#x27; contype=&quot;0&quot; conaffinity=&quot;0&quot;&#x27;
+        geoms.append(f&#x27;&lt;geom type=&quot;box&quot; size=&quot;{sx} {sy} {sz}&quot; pos=&quot;{x} 0 {z}&quot; mass=&quot;{m}&quot; rgba=&quot;.6 .7 .8 1&quot;{coll}/&gt;&#x27;)
+    # kutu cebi (kat 3 ustunde, 4 duvar, kutle kutu yuvasi parcasinda sayildi)
+    pocket = []
+    zc = 0.184 + 0.0015 + 0.0125
+    for px, py, hx, hy in ((0.0365, 0, 0.0015, 0.025), (-0.0365, 0, 0.0015, 0.025), (0, 0.024, 0.038, 0.0015), (0, -0.024, 0.038, 0.0015)):
+        pocket.append(f&#x27;&lt;geom type=&quot;box&quot; size=&quot;{hx} {hy} 0.0125&quot; pos=&quot;{px} {py} {zc}&quot; mass=&quot;0.0001&quot; rgba=&quot;.8 .8 .9 .5&quot;/&gt;&#x27;)
+    # V-yuva (belgedeki gibi): arkada 20 mm genis dikey serit (pimler burada, x=0.058), iki yanda 45 derece kanat
+    vee = [&#x27;&lt;geom type=&quot;box&quot; size=&quot;0.0015 0.010 0.025&quot; pos=&quot;0.0575 0 0.06&quot; mass=&quot;0.0001&quot; rgba=&quot;.2 .3 .9 1&quot;/&gt;&#x27;]
+    for s_ in (1, -1):
+        # kanat (0.058, +-0.010) noktasindan 45 derece disa, 42 mm
+        cx, cy = 0.058 + 0.0148, s_ * (0.010 + 0.0148)
+        vee.append(f&#x27;&lt;geom type=&quot;box&quot; size=&quot;0.021 0.0015 0.025&quot; pos=&quot;{cx} {cy} 0.06&quot; euler=&quot;0 0 {s_*45}&quot; mass=&quot;0.0001&quot; rgba=&quot;.2 .3 .9 1&quot;/&gt;&#x27;)
+    post = &quot;&quot;
+    if post_xy is not None:
+        post = (f&#x27;&lt;body name=&quot;post&quot; pos=&quot;{post_xy[0]} {post_xy[1]} 0.1&quot;&gt;&lt;geom type=&quot;cylinder&quot; size=&quot;0.02 0.1&quot; &#x27;
+                f&#x27;rgba=&quot;.5 .5 .5 1&quot;/&gt;&lt;/body&gt;&#x27;)
+    box_body = &quot;&quot;
+    if box:
+        box_body = (f&#x27;&lt;body name=&quot;pillbox&quot; pos=&quot;0 0 {R_WHEEL + zc + 0.001}&quot;&gt;&lt;freejoint/&gt;&#x27;
+                    f&#x27;&lt;geom type=&quot;box&quot; size=&quot;0.035 0.0225 0.0125&quot; mass=&quot;0.06&quot; rgba=&quot;.9 .3 .3 1&quot; friction=&quot;0.6 0.005 0.0001&quot;/&gt;&lt;/body&gt;&#x27;)
+    arm = J_ROTOR * GEAR**2
+    xml = f&quot;&quot;&quot;
+&lt;mujoco model=&quot;cdtp_twin&quot;&gt;
+  &lt;option timestep=&quot;{PHYS_DT}&quot; gravity=&quot;0 0 -9.81&quot; integrator=&quot;implicitfast&quot;/&gt;
+  &lt;default&gt;&lt;geom friction=&quot;1.0 0.01 0.001&quot; condim=&quot;3&quot;/&gt;&lt;/default&gt;
+  &lt;worldbody&gt;
+    &lt;geom name=&quot;floor&quot; type=&quot;plane&quot; size=&quot;5 5 0.1&quot; rgba=&quot;.9 .9 .9 1&quot;/&gt;
+    {post}
+    &lt;body name=&quot;chassis&quot; pos=&quot;0 0 {R_WHEEL}&quot;&gt;
+      &lt;freejoint name=&quot;root&quot;/&gt;
+      {&#x27;&#x27;.join(geoms)}
+      {&#x27;&#x27;.join(pocket)}
+      {&#x27;&#x27;.join(vee)}
+      &lt;site name=&quot;imu&quot; pos=&quot;0 0 0.030&quot;/&gt;
+      &lt;site name=&quot;pin&quot; pos=&quot;0.062 0 0.07&quot;/&gt;
+      &lt;body name=&quot;wheel_L&quot; pos=&quot;0 {TRACK/2} 0&quot;&gt;
+        &lt;joint name=&quot;wl&quot; type=&quot;hinge&quot; axis=&quot;0 1 0&quot; armature=&quot;{arm}&quot; damping=&quot;{B_VISC}&quot; frictionloss=&quot;{TAU_C}&quot;/&gt;
+        &lt;geom type=&quot;cylinder&quot; size=&quot;{R_WHEEL} 0.013&quot; euler=&quot;90 0 0&quot; mass=&quot;0.045&quot; rgba=&quot;.1 .1 .1 1&quot;/&gt;
+      &lt;/body&gt;
+      &lt;body name=&quot;wheel_R&quot; pos=&quot;0 {-TRACK/2} 0&quot;&gt;
+        &lt;joint name=&quot;wr&quot; type=&quot;hinge&quot; axis=&quot;0 1 0&quot; armature=&quot;{arm}&quot; damping=&quot;{B_VISC}&quot; frictionloss=&quot;{TAU_C}&quot;/&gt;
+        &lt;geom type=&quot;cylinder&quot; size=&quot;{R_WHEEL} 0.013&quot; euler=&quot;90 0 0&quot; mass=&quot;0.045&quot; rgba=&quot;.1 .1 .1 1&quot;/&gt;
+      &lt;/body&gt;
+    &lt;/body&gt;
+    {box_body}
+  &lt;/worldbody&gt;
+  &lt;actuator&gt;
+    &lt;motor name=&quot;ml&quot; joint=&quot;wl&quot; gear=&quot;1&quot; ctrllimited=&quot;false&quot;/&gt;
+    &lt;motor name=&quot;mr&quot; joint=&quot;wr&quot; gear=&quot;1&quot; ctrllimited=&quot;false&quot;/&gt;
+  &lt;/actuator&gt;
+  &lt;sensor&gt;
+    &lt;accelerometer name=&quot;acc&quot; site=&quot;imu&quot;/&gt;
+    &lt;gyro name=&quot;gyro&quot; site=&quot;imu&quot;/&gt;
+  &lt;/sensor&gt;
+&lt;/mujoco&gt;&quot;&quot;&quot;
+    return xml
+
+
+class Twin:
+    def __init__(self, x=0.0, y=0.0, yaw=0.0, post=None, task=&quot;statik&quot;, seed=1, box=True, bridge=True):
+        self.m = mujoco.MjModel.from_xml_string(build_xml(post, box))
+        self.d = mujoco.MjData(self.m)
+        self.rng = np.random.default_rng(seed)
+        self.post = post
+        self.task = TASKS[task]
+        q = self.d.qpos
+        q[0:3] = [x, y, R_WHEEL]
+        q[3:7] = [math.cos(yaw / 2), 0, 0, math.sin(yaw / 2)]
+        if box:
+            bj = self.m.joint(self.m.body(&quot;pillbox&quot;).jntadr[0])
+            a = bj.qposadr[0]
+            q[a:a + 3] = [x, y, q[a + 2]]
+            q[a + 3:a + 7] = q[3:7]
+            self.box_adr = a
+        self.has_box = box
+        self.jl, self.jr = self.m.joint(&quot;wl&quot;), self.m.joint(&quot;wr&quot;)
+        mujoco.mj_forward(self.m, self.d)
+        self.t = 0.0
+        self.duty = (0.0, 0.0)
+        self.en = False
+        self.mode, self.dock, self.theta_logic = 0, 0, 0.0
+        self.filt = None
+        self.ir = [0, 0]
+        self.frame, self.burst = 0, 0
+        self.glove = []        # [(t, cmd)]
+        self.glove_next = 0.0
+        self.motor_power = True
+        self.hold = True       # elle dik tutuluyor
+        self.magnet = True     # V-yuva miknatisi
+        self.vbat = VOC
+        self.trace = []
+        self.proc = subprocess.Popen([str(BRIDGE)], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True,
+                                     bufsize=1) if bridge else None
+
+    # ---- durum ----
+    def rot(self):
+        return self.d.xmat[self.m.body(&quot;chassis&quot;).id].reshape(3, 3)
+
+    def pitch(self):
+        R = self.rot()
+        zb, xb = R[:, 2], R[:, 0]
+        h = np.array([xb[0], xb[1], 0.0])
+        h /= np.linalg.norm(h) + 1e-12
+        return math.atan2(zb @ h, zb[2])
+
+    def yaw(self):
+        R = self.rot()
+        return math.atan2(R[1, 0], R[0, 0])
+
+    def pos(self):
+        return self.d.qpos[0], self.d.qpos[1]
+
+    def fwd_dist(self, x0, y0, yaw0):
+        x, y = self.pos()
+        return (x - x0) * math.cos(yaw0) + (y - y0) * math.sin(yaw0)
+
+    def charging(self):
+        if self.post is None:
+            return False
+        p = self.d.site(&quot;pin&quot;).xpos
+        dist = math.hypot(p[0] - self.post[0], p[1] - self.post[1])
+        return dist &lt; 0.02 + 0.0015  # pim ucu seritten 3 mm disarida, yay yolu ~1,5 mm
+
+    def box_ok(self):
+        if not self.has_box:
+            return True
+        bp = self.d.qpos[self.box_adr:self.box_adr + 3]
+        cid = self.m.body(&quot;chassis&quot;).id
+        local = self.rot().T @ (bp - self.d.xpos[cid])
+        return abs(local[0]) &lt; 0.03 and abs(local[1]) &lt; 0.03 and local[2] &gt; 0.18
+
+    # ---- sensorler ----
+    def sensors(self):
+        acc = self.d.sensor(&quot;acc&quot;).data.copy()
+        gyro = self.d.sensor(&quot;gyro&quot;).data.copy()
+        i_mot = abs(self.cur[0]) + abs(self.cur[1]) if hasattr(self, &quot;cur&quot;) else 0
+        vib = 0.3 * (0.3 + i_mot / 2) if self.en else 0
+        acc += self.rng.normal(0, 0.03 + vib, 3)
+        gyro += self.rng.normal(0, math.radians(0.05), 3)
+        a = 1 - math.exp(-2 * math.pi * 42 / 200)  # MPU6050 DLPF
+        raw = np.concatenate([acc, gyro])
+        self.filt = raw if self.filt is None else self.filt + a * (raw - self.filt)
+        return self.filt
+
+    def enc(self):
+        # gercek enkoder: teker ile govde (motor) arasindaki bagil aci
+        mpc = 2 * math.pi / CPR
+        cl = math.floor(self.d.qpos[self.jl.qposadr[0]] / mpc)
+        cr = math.floor(self.d.qpos[self.jr.qposadr[0]] / mpc)
+        return cl, -cr  # sag enkoder ayna takili
+
+    def eye_gain(self, eye):
+        if self.post is None:
+            return 0.0
+        R = self.rot()
+        cid = self.m.body(&quot;chassis&quot;).id
+        front = self.d.xpos[cid] + R @ np.array([0.06, 0, 0])
+        dx, dy = self.post[0] - front[0], self.post[1] - front[1]
+        dist = math.hypot(dx, dy)
+        if dist &gt; 1.2 or dist &lt; 0.01:
+            return 0.0
+        gamma = math.atan2(-dy, -dx)  # direk normaline (+X) gore robotun acisi
+        emit = max(0.0, 1 - (gamma / math.radians(70)) ** 2)
+        bearing = math.atan2(dy, dx) - self.yaw()
+        bearing = (bearing + math.pi) % (2 * math.pi) - math.pi
+        axis = math.radians(15 if eye == 0 else -15)
+        acc = max(0.0, 1 - ((bearing - axis) / math.radians(30)) ** 2)
+        g = emit * acc
+        return 0.0 if g &lt; 0.12 else min(1.0, 1.4 * g)
+
+    def beacon(self):
+        # 78 ms cerceve: ilk 45 ms&#x27;de 1,012 ms arayla 44 patlama, sonra 33 ms sessizlik (tamsayi sayacla)
+        while True:
+            tb = self.frame * 0.078 + self.burst * 0.0010122
+            if tb &gt; self.t:
+                return
+            for e in (0, 1):
+                if self.rng.random() &lt; self.eye_gain(e):
+                    self.ir[e] += 1
+            self.burst += 1
+            if self.burst &gt;= 44:
+                self.burst = 0
+                self.frame += 1
+
+    def glove_cmd(self):
+        c = &quot;dur&quot;
+        for t, cmd in self.glove:
+            if t &lt;= self.t:
+                c = cmd
+        return CMD[c]
+
+    # ---- adim ----
+    def control(self):
+        s = self.sensors()
+        el, er = self.enc()
+        gnew = 0
+        if self.glove and self.t &gt;= self.glove_next:
+            self.glove_next = self.t + 0.05
+            gnew = 1 if self.rng.random() &gt; 0.05 else 0
+        vchg = 12.4 if self.charging() else 0.0
+        line = (f&quot;{self.t:.4f} {s[0]:.5f} {s[1]:.5f} {s[2]:.5f} {s[3]:.6f} {s[4]:.6f} {s[5]:.6f} {el} {er} &quot;
+                f&quot;{self.vbat:.3f} {vchg:.2f} {self.ir[0]} {self.ir[1]} {int(self.motor_power)} {gnew} {self.glove_cmd()} {self.task}\n&quot;)
+        self.proc.stdin.write(line)
+        out = self.proc.stdout.readline().split()
+        self.en = out[0] == &quot;1&quot;
+        dl, dr = float(out[1]), float(out[2])
+        self.duty = (round(dl * 1023) / 1023, -round(dr * 1023) / 1023)  # sag motor ayna
+        self.mode, self.dock, self.theta_logic = int(out[3]), int(out[4]), float(out[5])
+
+    def physics(self):
+        # DC motor: tork = Ke*(V - Ke*w)/R ; kuru/viskoz surtunme eklem parametrelerinde
+        wl = self.d.qvel[self.jl.dofadr[0]]
+        wr = self.d.qvel[self.jr.dofadr[0]]
+        on = self.en and self.motor_power
+        il = (self.duty[0] * self.vbat - KE * wl) / RA if on else 0.0
+        ir = (self.duty[1] * self.vbat - KE * wr) / RA if on else 0.0
+        self.cur = (il, ir)
+        self.vbat = VOC - RINT * (abs(il) + abs(ir))
+        self.d.ctrl[0] = KE * il
+        self.d.ctrl[1] = KE * ir
+        self.d.qfrc_applied[:] = 0
+        if self.post is not None and self.magnet:
+            p = self.d.site(&quot;pin&quot;).xpos
+            dx, dy = self.post[0] - p[0], self.post[1] - p[1]
+            dist = math.hypot(dx, dy)
+            gap = dist - 0.02
+            if gap &lt; MAGNET_RANGE and dist &gt; 1e-6:
+                f = MAGNET_N * (1 - max(gap, 0) / MAGNET_RANGE)
+                force = np.array([dx / dist * f, dy / dist * f, 0.0])
+                mujoco.mj_applyFT(self.m, self.d, force, np.zeros(3), p, self.m.body(&quot;chassis&quot;).id, self.d.qfrc_applied)
+        if self.hold:  # elle dik tutma: govdeyi dik ve hareketsiz tut
+            yaw = self.yaw()
+            self.d.qpos[3:7] = [math.cos(yaw / 2), 0, 0, math.sin(yaw / 2)]
+            self.d.qvel[0:6] = 0
+        mujoco.mj_step(self.m, self.d)
+        self.t += PHYS_DT
+        self.beacon()
+
+    def run(self, dur, each=None):
+        n = int(round(dur / PHYS_DT))
+        for i in range(n):
+            if i % CTRL_EVERY == 0:
+                self.control()
+                if self.hold and self.mode == 1:  # DENGE&#x27;ye girdi: birak
+                    self.hold = False
+                x, y = self.pos()
+                self.trace.append((self.t, x, y, math.degrees(self.pitch()), math.degrees(self.yaw()), self.duty[0],
+                                   self.duty[1], self.mode, self.dock))
+                if each:
+                    each(self)
+            self.physics()
+
+    def arm(self):
+        self.run(1.0)
+
+    def tilt(self, deg):
+        # govdeyi teker ekseni etrafinda egerek birak (elle egip birakma)
+        R = self.rot()
+        yb = R[:, 1]
+        q = np.zeros(4)
+        mujoco.mju_axisAngle2Quat(q, yb, math.radians(deg))
+        q0 = self.d.qpos[3:7].copy()
+        qn = np.zeros(4)
+        mujoco.mju_mulQuat(qn, q, q0)
+        cid = self.m.body(&quot;chassis&quot;).id
+        axle = self.d.xpos[cid].copy()
+        if self.has_box:  # kutu govdeyle birlikte egilir (elde tutulan robot)
+            a = self.box_adr
+            Rq = np.zeros(9)
+            mujoco.mju_quat2Mat(Rq, q)
+            rel = self.d.qpos[a:a + 3] - axle
+            self.d.qpos[a:a + 3] = axle + Rq.reshape(3, 3) @ rel
+            qb = np.zeros(4)
+            mujoco.mju_mulQuat(qb, q, self.d.qpos[a + 3:a + 7].copy())
+            self.d.qpos[a + 3:a + 7] = qb
+            self.d.qvel[6:12] = 0
+        self.d.qpos[3:7] = qn
+        self.d.qpos[0:3] = axle
+        self.d.qvel[0:6] = 0
+        mujoco.mj_forward(self.m, self.d)
+
+    def lying(self):
+        return abs(self.pitch()) &gt; math.radians(40)  # govde ~45-50 derecede plakayla yere degiyor
+
+    def close(self):
+        if self.proc:
+            self.proc.stdin.write(&quot;quit\n&quot;)
+            self.proc.stdin.close()
+            self.proc.wait()
+
+    def csv(self, name):
+        with open(OUT / name, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+            f.write(&quot;t,x,y,theta_deg,yaw_deg,dutyL,dutyR,mode,dock\n&quot;)
+            for r in self.trace:
+                f.write(&quot;,&quot;.join(f&quot;{v:.5f}&quot; if isinstance(v, float) else str(v) for v in r) + &quot;\n&quot;)
+
+
+# ======================= senaryolar =======================
+RESULTS = []
+
+
+def report(tid, name, ok, detail):
+    RESULTS.append((tid, name, &quot;GECTI&quot; if ok else &quot;KALDI&quot;, detail))
+    print(f&quot;[{&#x27;GECTI&#x27; if ok else &#x27;KALDI&#x27;}] {tid:7s} {name:44s} {detail}&quot;, flush=True)
+
+
+class Watch:
+    def __init__(self):
+        self.max_th, self.fell, self.box = 0.0, False, True
+
+    def __call__(self, tw):
+        if not tw.hold:
+            self.max_th = max(self.max_th, abs(tw.pitch()))
+        self.fell |= tw.lying() or tw.mode == 4
+        self.box &amp;= tw.box_ok()
+
+
+def t_passive():
+    worst = 0.0
+    ok = True
+    for deg in (10, -10):
+        tw = Twin(bridge=False)
+        tw.hold = False
+        tw.tilt(deg)
+        t = 0.0
+        while t &lt; 5 and not tw.lying():
+            mujoco.mj_step(tw.m, tw.d)
+            t += PHYS_DT
+        ok &amp;= t &lt; 5
+        worst = max(worst, t)
+    report(&quot;ON&quot;, &quot;Enerjisiz +-10 deg&#x27;den dik kalmamali&quot;, ok, f&quot;40 deg&#x27;ye en gec {worst:.2f} s&#x27;de dustu&quot;)
+
+
+def t_static():
+    tw = Twin(task=&quot;statik&quot;, seed=1)
+    tw.arm()
+    w = Watch()
+    x0, y0 = tw.pos()
+    maxd = [0.0]
+
+    def each(t):
+        w(t)
+        maxd[0] = max(maxd[0], math.hypot(t.pos()[0] - x0, t.pos()[1] - y0))
+    tw.run(30, each)
+    tw.csv(&quot;ikiz_statik.csv&quot;)
+    tw.close()
+    ok = not w.fell and w.box and w.max_th &lt; math.radians(5) and maxd[0] &lt; 0.15
+    report(&quot;C1.1&quot;, &quot;30 s statik denge (kutulu)&quot;, ok,
+           f&quot;en buyuk egim {math.degrees(w.max_th):.2f} deg, kayma {maxd[0]*100:.1f} cm, kutu {&#x27;yerinde&#x27; if w.box else &#x27;DUSTU&#x27;}&quot;)
+
+
+def t_move(forward=True):
+    c = &quot;ileri&quot; if forward else &quot;geri&quot;
+    tw = Twin(task=&quot;yonlendirme&quot;, seed=2 if forward else 3)
+    tw.glove = [(0, &quot;dur&quot;), (6.0, c), (6.4, &quot;dur&quot;), (9.5, c), (9.9, &quot;dur&quot;)]
+    tw.arm()
+    w = Watch()
+    tw.run(4.9, w)  # 5 s dengede bekleme
+    yaw0 = tw.yaw()
+    x0, y0 = tw.pos()
+    tw.run(8.1, w)  # C++ testiyle ayni: durma penceresi t=14 s&#x27;de baslar
+    d0 = tw.fwd_dist(x0, y0, yaw0)
+    maxdx = [0.0]
+
+    def each(t):
+        w(t)
+        maxdx[0] = max(maxdx[0], abs(t.fwd_dist(x0, y0, yaw0) - d0))
+    tw.run(3.0, each)
+    d = abs(tw.fwd_dist(x0, y0, yaw0))
+    tw.csv(&quot;ikiz_ileri.csv&quot; if forward else &quot;ikiz_geri.csv&quot;)
+    tw.close()
+    ok = not w.fell and w.box and 0.9 &lt; d &lt; 1.1 and maxdx[0] &lt; 0.03
+    report(&quot;C1.2&quot; if forward else &quot;C1.3&quot;, f&quot;1 m {c} + 3 s dur&quot;, ok,
+           f&quot;yol {d:.3f} m, 3 s durmada kayma {maxdx[0]*1000:.1f} mm, egim tepe {math.degrees(w.max_th):.1f} deg, kutu {&#x27;yerinde&#x27; if w.box else &#x27;DUSTU&#x27;}&quot;)
+
+
+def t_recovery():
+    res = []
+    for deg in (10, -10):
+        tw = Twin(task=&quot;statik&quot;, seed=4)
+        tw.arm()
+        tw.tilt(deg)
+        t0 = tw.t
+        rec = [None]
+        after = [0.0]
+        w = Watch()
+
+        # toparlanma: |theta| &lt; 3 deg ve |v| &lt; 0,1 m/s&#x27;ye ilk varis; sonrasinda egim 5 deg&#x27;yi hic asmamali (C++ testiyle ayni olcut)
+        def each(t):
+            w(t)
+            th = abs(t.pitch())
+            v = np.linalg.norm(t.d.qvel[0:2])
+            if rec[0] is None and th &lt; math.radians(3) and v &lt; 0.1:
+                rec[0] = t.t - t0
+            if rec[0] is not None:
+                after[0] = max(after[0], th)
+        tw.run(10, each)
+        if after[0] &gt; math.radians(5):
+            rec[0] = None
+        tw.close()
+        res.append((deg, rec[0], w.fell, w.box))
+    ok = all(r[1] is not None and r[1] &lt; 10 and not r[2] and r[3] for r in res)
+    report(&quot;C1.4&quot;, &quot;+10 ve -10 deg&#x27;den 10 s icinde toparlanma&quot;, ok,
+           &quot;, &quot;.join(f&quot;{r[0]:+d}: {r[1]:.2f} s&quot; if r[1] is not None else f&quot;{r[0]:+d}: TOPARLANMADI&quot; for r in res))
+
+
+def t_turn():
+    out = []
+    for c, sgn in ((&quot;sol&quot;, 1), (&quot;sag&quot;, -1)):
+        tw = Twin(task=&quot;yonlendirme&quot;, seed=5)
+        tw.glove = [(0, &quot;dur&quot;), (1.5, c), (1.9, &quot;dur&quot;)]
+        tw.arm()
+        y0 = tw.yaw()
+        w = Watch()
+        tw.run(5, w)
+        dy = math.degrees((tw.yaw() - y0 + math.pi) % (2 * math.pi) - math.pi)
+        tw.close()
+        out.append((c, dy, not w.fell and w.box and abs(dy - 90 * sgn) &lt; 15))
+    report(&quot;C2.3-4&quot;, &quot;Eldiven: sola / saga ~90 deg&quot;, all(o[2] for o in out),
+           &quot;, &quot;.join(f&quot;{o[0]} {o[1]:+.1f} deg&quot; for o in out))
+
+
+def t_estop():
+    tw = Twin(task=&quot;statik&quot;, seed=6)
+    tw.arm()
+    tw.motor_power = False
+    tw.run(0.05)
+    ok = tw.mode == 0 and not tw.en
+    tw.close()
+    report(&quot;GUV.2&quot;, &quot;Acil stop: denge birakilir, motorlar kapanir&quot;, ok, f&quot;mod={[&#x27;BEKLE&#x27;,&#x27;DENGE&#x27;,&#x27;YANASMA&#x27;,&#x27;SARJ&#x27;,&#x27;DUSTU&#x27;][tw.mode]}&quot;)
+
+
+def dock_once(rho, alpha_deg, head_deg, seed, record=False):
+    # direk dunya orijininde; yaklasma bolgesi direk normali (+X) etrafinda
+    a = math.radians(alpha_deg)
+    x, y = rho * math.cos(a), rho * math.sin(a)
+    yaw = math.atan2(-y, -x) + math.radians(head_deg)
+    tw = Twin(x=x, y=y, yaw=yaw, post=(0.0, 0.0), task=&quot;sarj&quot;, seed=seed)
+    tw.arm()
+    t0 = tw.t
+    w = Watch()
+    st = {&quot;contact&quot;: None, &quot;charge&quot;: None}
+
+    def each(t):
+        w(t)
+        if st[&quot;contact&quot;] is None and t.charging():
+            st[&quot;contact&quot;] = t.t
+        if st[&quot;charge&quot;] is None and t.mode == 3:
+            st[&quot;charge&quot;] = t.t
+    tw.run(45, each)
+    if record:
+        tw.csv(&quot;ikiz_yanasma.csv&quot;)
+    tw.close()
+    ok = st[&quot;charge&quot;] is not None and tw.charging() and not w.box is False
+    return ok, (st[&quot;contact&quot;] - t0) if st[&quot;contact&quot;] else None, (st[&quot;charge&quot;] - st[&quot;contact&quot;]) if st[&quot;charge&quot;] and st[&quot;contact&quot;] else None
+
+
+def t_dock():
+    cases = [(r, a, h) for r in (0.18, 0.30) for a in (-45, -20, 0, 20, 45) for h in (-25, 0, 25)]
+    good, worst, wc = 0, 0.0, 0.0
+    fails = []
+    for i, (r, a, h) in enumerate(cases):
+        ok, tc, tchg = dock_once(r, a, h, 100 + i, record=(i == len(cases) - 2))
+        if ok:
+            good += 1
+            worst = max(worst, tc)
+            wc = max(wc, tchg)
+        else:
+            fails.append(f&quot;({r:.2f} m, {a} deg, bakis {h:+d})&quot;)
+    report(&quot;C3&quot;, f&quot;IR ile yanasma, V-yuva + direk ({len(cases)} baslangic)&quot;, good == len(cases),
+           f&quot;{good}/{len(cases)} basarili, en uzun temas {worst:.1f} s, temas-&gt;sarj modu {wc:.2f} s &quot; + &quot; &quot;.join(fails))
+
+
+def t_undock():
+    &quot;&quot;&quot;Sarjdayken eldivenle &#x27;geri&#x27;: robot miknatistan kopup dengeye girer ve 0,5 m geri gider.&quot;&quot;&quot;
+    tw = Twin(x=0.25, y=0.0, yaw=math.pi, post=(0.0, 0.0), task=&quot;sarj&quot;, seed=8)
+    tw.arm()
+    tw.run(15)
+    docked = tw.mode == 3 and tw.charging()
+    tw.glove = [(0, &quot;dur&quot;), (tw.t + 0.5, &quot;geri&quot;), (tw.t + 0.9, &quot;dur&quot;)]
+    w = Watch()
+    tw.run(8, w)
+    p = tw.d.site(&quot;pin&quot;).xpos
+    gap = math.hypot(p[0], p[1]) - 0.02
+    ok = docked and tw.mode == 1 and gap &gt; 0.25 and not w.fell
+    tw.close()
+    report(&quot;C3.5&quot;, &quot;Eldivenle &#x27;geri&#x27;: miknatistan kopup istasyondan ayrilir&quot;, ok,
+           f&quot;once {&#x27;SARJ&#x27; if docked else &#x27;sarjda degil&#x27;}, sonra mod {[&#x27;BEKLE&#x27;,&#x27;DENGE&#x27;,&#x27;YANASMA&#x27;,&#x27;SARJ&#x27;,&#x27;DUSTU&#x27;][tw.mode]}, direge uzaklik {gap*100:.0f} cm&quot;)
+
+
+def t_integrated():
+    # direk (0,0); robot (0.27,-1.0)&#x27;dan +Y&#x27;ye bakarak baslar: 2 x ileri, 5 s bekle, sola don, otonom yanasma
+    tw = Twin(x=0.27, y=-1.0, yaw=math.pi / 2, post=(0.0, 0.0), task=&quot;butunlesik&quot;, seed=7)
+    tw.glove = [(0, &quot;dur&quot;), (5.0, &quot;ileri&quot;), (5.4, &quot;dur&quot;), (8.6, &quot;ileri&quot;), (9.0, &quot;dur&quot;), (17.0, &quot;sol&quot;), (17.4, &quot;dur&quot;)]
+    tw.arm()
+    w = Watch()
+    early = [False]
+
+    def each(t):
+        w(t)
+        if t.t &lt; 17 and t.mode == 2:
+            early[0] = True
+    tw.run(60, each)
+    tw.csv(&quot;ikiz_butunlesik.csv&quot;)
+    ok = tw.mode == 3 and tw.charging() and not early[0] and w.box
+    tw.close()
+    report(&quot;C5&quot;, &quot;Butunlesik gorev (kutu, eldiven, yanasma)&quot;, ok,
+           f&quot;son mod {[&#x27;BEKLE&#x27;,&#x27;DENGE&#x27;,&#x27;YANASMA&#x27;,&#x27;SARJ&#x27;,&#x27;DUSTU&#x27;][tw.mode]}, erken yanasma {&#x27;VAR&#x27; if early[0] else &#x27;yok&#x27;}, kutu {&#x27;yerinde&#x27; if w.box else &#x27;DUSTU&#x27;}&quot;)
+
+
+def t_reference_gains():
+    &quot;&quot;&quot;GitHub: suelioalencar/Two-Wheels-Inverted-Pendulum... gercek robotta calisan LQI kazanclari
+    (k1 = [-100.5, -69.9, -83.6, -9.31] V, 65 mm teker, enkoderli DC motor). Bu kazanclari ikizde, kendi
+    durum olcumleriyle (dogrudan fizikten) kosup modelin gercekci bir bolgede oldugunu kontrol eder.&quot;&quot;&quot;
+    K = np.array([-100.493, -69.900, -83.636, -9.314])
+    res = []
+    for deg in (0, 8):
+        tw = Twin(task=&quot;statik&quot;, seed=9, bridge=False)
+        tw.hold = False
+        tw.en = True
+        if deg:
+            tw.tilt(deg)
+        x0 = tw.d.qpos[0]
+        ok = True
+        prev = tw.pitch()
+        for i in range(int(8 / PHYS_DT)):
+            if i % CTRL_EVERY == 0:
+                th = tw.pitch()
+                om = tw.d.sensor(&quot;gyro&quot;).data[1]
+                wl = tw.d.qpos[tw.jl.qposadr[0]]
+                wr = tw.d.qpos[tw.jr.qposadr[0]]
+                x = R_WHEEL * ((wl + wr) / 2 + th) - 0  # teker yolu
+                v = R_WHEEL * ((tw.d.qvel[tw.jl.dofadr[0]] + tw.d.qvel[tw.jr.dofadr[0]]) / 2 + om)
+                u = -(K @ np.array([x, v, th, om]))
+                u = max(-11.0, min(11.0, u))
+                tw.duty = (u / tw.vbat, u / tw.vbat)
+            tw.physics()
+            if tw.lying():
+                ok = False
+                break
+        res.append((deg, ok, math.degrees(tw.pitch())))
+    report(&quot;REF&quot;, &quot;GitHub referans LQI kazanclari ikizde dengeliyor&quot;, all(r[1] for r in res),
+           &quot;, &quot;.join(f&quot;baslangic {r[0]} deg: {&#x27;dengede&#x27; if r[1] else &#x27;DUSTU&#x27;} (son {r[2]:+.1f} deg)&quot; for r in res))
+
+
+if __name__ == &quot;__main__&quot;:
+    which = sys.argv[1:] or [&quot;passive&quot;, &quot;static&quot;, &quot;move&quot;, &quot;recovery&quot;, &quot;turn&quot;, &quot;estop&quot;, &quot;ref&quot;, &quot;dock&quot;, &quot;undock&quot;, &quot;integrated&quot;]
+    if &quot;passive&quot; in which: t_passive()
+    if &quot;static&quot; in which: t_static()
+    if &quot;move&quot; in which: t_move(True); t_move(False)
+    if &quot;recovery&quot; in which: t_recovery()
+    if &quot;turn&quot; in which: t_turn()
+    if &quot;estop&quot; in which: t_estop()
+    if &quot;ref&quot; in which: t_reference_gains()
+    if &quot;dock&quot; in which: t_dock()
+    if &quot;undock&quot; in which: t_undock()
+    if &quot;integrated&quot; in which: t_integrated()
+    with open(OUT / &quot;summary.tsv&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+        for r in RESULTS:
+            f.write(&quot;\t&quot;.join(r) + &quot;\n&quot;)
+    n = sum(r[2] == &quot;GECTI&quot; for r in RESULTS)
+    print(f&quot;\nIKIZ OZET: {n}/{len(RESULTS)} gecti&quot;)
+</pre></details>
+<details class="code"><summary><b>twin/bridge.cpp</b><span>Ikiz koprusu (RobotLogic &lt;-&gt; MuJoCo) · 52 satır</span><button class="copy" data-target="src19" type="button">kopyala</button></summary><pre id="src19">// Dijital ikiz koprusu: robot firmware&#x27;indeki RobotLogic&#x27;i stdin/stdout uzerinden MuJoCo ikizine baglar.
+// Her satir bir 5 ms adimi:
+//   girdi : t ax ay az gx gy gz encL encR vbat vchg irL irR motorPower gloveNew gloveCmd task
+//   cikti : en dutyL dutyR mode dock thetaDeg
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+
+#include &quot;robot_logic.h&quot;
+
+int main() {
+  cdtp::RobotLogic logic;
+  char line[512];
+  uint16_t seq = 0;
+  int lastTask = -1;
+  while (std::fgets(line, sizeof line, stdin)) {
+    if (!std::strncmp(line, &quot;quit&quot;, 4)) break;
+    cdtp::RobotInputs in;
+    int en_mp, gnew, gcmd, task;
+    long eL, eR, iL, iR;
+    int n = std::sscanf(line, &quot;%f %f %f %f %f %f %f %ld %ld %f %f %ld %ld %d %d %d %d&quot;, &amp;in.t, &amp;in.imu.acc[0],
+                        &amp;in.imu.acc[1], &amp;in.imu.acc[2], &amp;in.imu.gyro[0], &amp;in.imu.gyro[1], &amp;in.imu.gyro[2], &amp;eL, &amp;eR,
+                        &amp;in.vbat, &amp;in.vcharge, &amp;iL, &amp;iR, &amp;en_mp, &amp;gnew, &amp;gcmd, &amp;task);
+    if (n != 17) {
+      std::printf(&quot;ERR %d\n&quot;, n);
+      std::fflush(stdout);
+      continue;
+    }
+    if (task != lastTask) {
+      logic.setTask((cdtp::Task)task);
+      lastTask = task;
+    }
+    in.encL = eL;
+    in.encR = eR;
+    in.irL = iL;
+    in.irR = iR;
+    in.motorPower = en_mp != 0;
+    in.gloveNew = gnew != 0;
+    if (in.gloveNew) {
+      cdtp::GlovePacket p{};
+      p.cmd = (uint8_t)gcmd;
+      p.seq = seq++;
+      cdtp::sealPacket(p);
+      in.glove = p;
+    }
+    cdtp::RobotOutputs o = logic.step(in);
+    std::printf(&quot;%d %.5f %.5f %d %d %.3f\n&quot;, o.motorEnable ? 1 : 0, o.dutyL, o.dutyR, (int)logic.mode(),
+                (int)logic.dockState(), logic.thetaDeg());
+    std::fflush(stdout);
+  }
+  return 0;
+}
 </pre></details>
 </section>
 

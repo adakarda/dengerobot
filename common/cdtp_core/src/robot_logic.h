@@ -55,6 +55,7 @@ class RobotLogic {
   const char* direction() const { return dir_; }
   DockState dockState() const { return dock_.state(); }
   float thetaDeg() const { return tilt_.theta() / DEG; }
+  float trimDeg() const { return thTrim_ / DEG; }
   float x() const { return x_; }
   float v() const { return v_; }
   float psiDeg() const { return psi_ / DEG; }
@@ -96,6 +97,7 @@ class RobotLogic {
   int histIdx_ = 0;
   // referanslar
   float xRaw_ = 0, vRaw_ = 0;  // bicimlendirme oncesi referans
+  float thTrim_ = 0;           // ogrenilen denge acisi (rad); acilista sifir, cal komutu kalici ofseti verir
   float xRef_ = 0, vRef_ = 0, aRef_ = 0, psiRef_ = 0, rRef_ = 0;
   float xStart_ = 0, psiStart_ = 0;
   Trapezoid lin_, rot_;
@@ -108,6 +110,7 @@ class RobotLogic {
   bool pendingBack_ = false;
   // yanasma tetik
   float beaconT_ = 0;
+  float undockHoldT_ = 0;  // eldivenle ayrildiktan sonra otomatik yanasma beklemesi
   bool charging_ = false;
   float chargeLostT_ = 0;
 };

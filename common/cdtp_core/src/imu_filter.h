@@ -7,10 +7,12 @@ namespace cdtp {
 
 // Ham IMU eksenlerini robot eksenlerine esleme. idx: 0=X 1=Y 2=Z, sign: +1/-1.
 // Robot ekseni: ileri (on), yukari (govde boyunca), yunuslama hizi (one egilme +), sapma hizi (sola donus +).
+// Varsayilan: MPU6050 X ileri, Z yukari (Y sola). Bu montajda one dusus jiroskop Y'de POZITIF okunur
+// (sag el kurali; MuJoCo dijital ikiziyle dogrulandi).
 struct AxisMap {
   int fwdIdx = 0;   int fwdSign = 1;
   int upIdx = 2;    int upSign = 1;
-  int pitchIdx = 1; int pitchSign = -1;
+  int pitchIdx = 1; int pitchSign = 1;
   int yawIdx = 2;   int yawSign = 1;
 };
 
