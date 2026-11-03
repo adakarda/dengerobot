@@ -120,7 +120,7 @@ h3.code-group { break-before: page; }
   <span class="eyebrow">YTÜ EEF ÇDTP · 2026-27 Güz · Kontrol ve Otomasyon</span>
   <h1>İki tekerlekli denge robotu<br>yapım kitabı</h1>
   <p class="lede">Eğitimler, parça listesi, güç ve sinyal şemaları, KiCad şeması, ana kart, kablo listesi, 3B baskı şasi, şarj teması, firmware, testler, dijital ikiz doğrulaması ve robotun tüm kaynak kodu.</p>
-  <div class="facts"><span>Sürüm: <b>v1.3</b></span><span>Tarih: <b>29.10.2026</b></span><span>Depo: <b>cdtp-denge-robotu</b></span></div>
+  <div class="facts"><span>Sürüm: <b>v1.3</b></span><span>Tarih: <b>03.11.2026</b></span><span>Depo: <b>cdtp-denge-robotu</b></span></div>
   <h3>İçindekiler</h3><ol class="toc2"><li>Eğitim 1 · Geliştirme ortamı</li><li>Eğitim 2 · Montaj sırası</li><li>Eğitim 3 · İlk çalıştırma ve kalibrasyon</li><li>Eğitim 4 · Model ve kazançlar</li><li>Eğitim 5 · Telefon ve eldiven arayüzü</li><li>Eğitim 6 · Sorun giderme</li><li>Eğitim 7 · 3B baskı parçaları</li><li>Eğitim 8 · KiCad şeması</li><li>Robot parça listesi</li><li>Blok şema</li><li>Güç şeması</li><li>Sinyal şeması: ESP32 pinleri</li><li>KiCad şeması</li><li>Ana kart yerleşimi (5×10 cm delikli plaket)</li><li>Kablo listesi</li><li>Pil ve BMS bağlama</li><li>Şasi: 3B baskı parçaları</li><li>Şarj teması: V-yuva ve direk</li><li>Montaj ve tezgâh testleri</li><li>Firmware</li><li>Ölçülecek ve ayarlanacaklar</li><li>Testler: C++ simülasyonu ve MuJoCo dijital ikizi</li><li>Doğrulama: dijital ikiz, GitHub, tutarlılık</li><li>Ek: tüm kodlar</li><li>Ek: KiCad şeması (A3, son sayfa)</li></ol>
 </div>
 <section class="chapter" id="e1">
@@ -279,7 +279,7 @@ h3.code-group { break-before: page; }
       <tr><td>Kapaklı ilaç kutusu</td><td class="num">1</td><td class="num r">60</td><td>Eczane</td><td></td></tr>
     </tbody>
   </table></div>
-  <p>Robot tarafının toplamı yaklaşık <b>5.640 TL</b> (L braket ve pleksi çıktı, filament ve distans girdi; pogo paketi istasyonla paylaşılırsa ~5.550 TL).</p>
+  <p>Robot tarafının toplamı yaklaşık <b>5.270 TL</b> (sarf malzemesi hariç, ~110 TL; fiyatlar 3 Kasım 2026 kontrolüne göre, seçilen satıcıya göre değişir; satır satır liste: parça listesi sayfası).</p>
 </section>
 
 <!-- ================= BLOK ================= -->
@@ -4578,7 +4578,7 @@ DISTANS_AA = 5.5                     # M3 disi-disi distans altigen
 KAT1_Z, KAT2_Z, KAT3_Z = 22.0, 106.0, 190.0   # alt yuzler; 30+50 = 80 mm distans + 4 mm kat
 
 # --- Motor: JGB37-520, eksantrik mil ---
-MOTOR_SANZ_D, MOTOR_SANZ_L = 37.0, 24.0   # sanziman
+MOTOR_SANZ_D, MOTOR_SANZ_L = 37.0, 22.0   # sanziman
 MOTOR_GOVDE_D, MOTOR_GOVDE_L = 33.0, 31.0  # motor + enkoder kapagi (OLC: toplam ~55)
 MOTOR_MIL_KACIK = 7.0                     # mil, motor ekseninin 7 mm ustunde (motor asagida)
 MOTOR_MIL_D, MOTOR_MIL_L = 6.0, 15.0
@@ -4593,7 +4593,7 @@ BTS_DELIK = 43.0          # (OLC) dort kose delik araligi
 BTS_AYAK = 5.0            # kart alti bosluk
 MPU = (21.0, 16.0, 3.0)   # GY-521; uzun kenar X&#x27;e (ileri)
 MPU_DELIK = (15.2, 7.5)   # (OLC) iki delik: aralik Y, uzun kenarin ucundan X
-LM2596 = (43.0, 21.0, 14.0)
+LM2596 = (48.0, 23.0, 14.0)
 SIGORTA = (36.0, 18.0, 15.0)   # (OLC) bicak sigorta yuvasi
 WAGO = (30.0, 18.8, 8.6)       # 221-415
 C5 = (13.0, 25.0)              # 1000 uF 25 V (cap, boy) yatay
