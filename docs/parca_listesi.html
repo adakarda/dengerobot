@@ -1,0 +1,298 @@
+<title>Denge Robotu Parça Listesi</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Düzen: malzeme listesi gibi okunan tek sütun; her satırda seçilebilir satıcı/alternatif, ürün linki ve stok durumu. */
+:root {
+  --bg: #eef1f2;
+  --panel: #ffffff;
+  --ink: #14232b;
+  --muted: #5b6b73;
+  --line: #d3dade;
+  --accent: #0b6e4f;
+  --accent-soft: #dcefe7;
+  --warn: #9a5b00;
+  --warn-soft: #fbeccd;
+  --bad: #a3261f;
+  --bad-soft: #f8dcd9;
+  --new: #1f5fa8;
+  --new-soft: #dde9f7;
+  --head: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --body: "Source Sans 3", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1a1f; --panel: #16252c; --ink: #e4edf0; --muted: #94a7af; --line: #28404a;
+    --accent: #4fc79c; --accent-soft: #14362c; --warn: #f0b858; --warn-soft: #3a2c10;
+    --bad: #f08a82; --bad-soft: #3d1b19; --new: #7fb2ee; --new-soft: #162c46; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1a1f; --panel: #16252c; --ink: #e4edf0; --muted: #94a7af; --line: #28404a;
+  --accent: #4fc79c; --accent-soft: #14362c; --warn: #f0b858; --warn-soft: #3a2c10;
+  --bad: #f08a82; --bad-soft: #3d1b19; --new: #7fb2ee; --new-soft: #162c46; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.5 var(--body); padding-block: 28px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+header { display: flex; flex-direction: column; gap: 10px; }
+.eyebrow { font: 600 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font: 700 clamp(2rem, 6vw, 3rem)/1.05 var(--head); margin: 0; text-wrap: balance; }
+.lede { margin: 0; max-width: 66ch; color: var(--muted); }
+a { color: var(--accent); }
+.summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.stat { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.stat span { font: 600 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.stat b { font: 700 1.7rem/1.1 var(--head); font-variant-numeric: tabular-nums; }
+.bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+.box { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; min-width: 0; }
+.box h3 { font: 600 1.15rem/1.2 var(--head); margin: 0 0 8px; }
+.box ul { margin: 0; padding-left: 1.1em; display: flex; flex-direction: column; gap: 6px; }
+.box.warn { background: var(--warn-soft); border-color: var(--warn); }
+.box.warn h3 { color: var(--warn); }
+.box.bad { background: var(--bad-soft); border-color: var(--bad); }
+.box.bad h3 { color: var(--bad); }
+section { display: flex; flex-direction: column; gap: 8px; }
+section h2 { font: 600 1.35rem/1.2 var(--head); letter-spacing: .02em; margin: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+section h2 small { font: 400 .8rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.tbl { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: .94rem; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.k { width: 36px; padding-right: 0; }
+input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; margin: 2px 0 0; }
+input[type=checkbox]:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+tr.done .nm { text-decoration: line-through; text-decoration-color: var(--muted); color: var(--muted); }
+.nm { font-weight: 600; }
+.nt { color: var(--muted); display: block; font-weight: 400; font-size: .86rem; margin-top: 2px; }
+.tag { font: 600 10px/1 var(--mono); letter-spacing: .05em; text-transform: uppercase; padding: 3px 6px; border-radius: 3px; margin-left: 6px; vertical-align: 2px; white-space: nowrap; }
+.tag.yeni { background: var(--new-soft); color: var(--new); }
+.tag.kosullu { background: var(--warn-soft); color: var(--warn); }
+.tag.olc { background: var(--accent-soft); color: var(--accent); }
+.st { font: 600 10px/1 var(--mono); letter-spacing: .04em; text-transform: uppercase; padding: 3px 6px; border-radius: 3px; white-space: nowrap; }
+.st.stokta { background: var(--accent-soft); color: var(--accent); }
+.st.var { background: var(--new-soft); color: var(--new); }
+.st.tukendi { background: var(--bad-soft); color: var(--bad); }
+.st.bilinmiyor { background: var(--line); color: var(--muted); }
+select { font: 400 .88rem var(--body); color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 5px; padding: 6px 8px; max-width: 100%; width: 100%; }
+.opt { display: flex; flex-direction: column; gap: 5px; min-width: 230px; }
+.optrow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: .84rem; color: var(--muted); }
+.optnote { font-size: .84rem; color: var(--muted); }
+.ver { font: 400 10px/1.2 var(--mono); color: var(--muted); }
+code { font: 400 .86em var(--mono); background: var(--bg); padding: 1px 5px; border-radius: 3px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+footer { color: var(--muted); font-size: .85rem; }
+@media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+</style>
+
+<main>
+<header>
+  <span class="eyebrow">YTÜ EEF ÇDTP · yalnız robot · 3 Kasım 2026 kontrolü</span>
+  <h1>Denge robotu parça listesi</h1>
+  <p class="lede">Eldiven, istasyon ve telefon uygulaması bu listede yok. Her parçada satıcı ya da alternatif seç; link, stok ve fiyat seçime göre değişir, toplam yeniden hesaplanır. Linkler takım sitesinin Malzeme sekmesinden (<a href="https://cdtp-robot.netlify.app">cdtp-robot.netlify.app</a>). “3 Kas” yazan fiyat ve stoğu ürün sayfasından bugün okudum; yazmayanlar 9–10 Ekim fiyatı, doğrulanmadı.</p>
+</header>
+
+<div class="summary">
+  <div class="stat"><span>Toplam (sarf hariç)</span><b id="tot">–</b></div>
+  <div class="stat"><span>Sarf malzemesi, tahmini</span><b id="sarf">–</b></div>
+  <div class="stat"><span>Alınan</span><b id="prog">–</b><div class="bar"><i id="barfill"></i></div></div>
+</div>
+
+<div class="grid2">
+  <div class="box bad"><h3>Almayacağın parçalar</h3><ul>
+    <li><b>DSTK4297</b> (Direnc.net, “Arduino IR Alıcı-Verici Modül”): yansımalı engel sensörü, LM393 karşılaştırıcılı. 38 kHz'lik alıcı değil; direğin IR işaretini çözemez. Alma.</li>
+    <li><b>Çıplak TSOP1838</b> ve <b>WROVER / ESP32-S3 / C3</b> kartlar: ilki 3,3 V'ta güvenilir değil, ikincilerde GPIO16/17 başka işe gidiyor ya da pin düzeni farklı.</li>
+    <li><b>16 mm acil stop</b> (DRN956): kat 3'teki Ø22,3 deliğe uymaz.</li>
+  </ul></div>
+  <div class="box warn"><h3>Bugün tükenmiş görünenler</h3><ul>
+    <li><b>ESP32 WROOM-32D</b> (Robotistan), <b>IR alıcı kartı</b> (Robotistan), <b>MPU6050</b> (Robotzade): “Tükendi”. Aşağıda alternatifleri seçili geliyor.</li>
+    <li><b>BTS7960</b> Robotzade'de 162 TL değil, <b>270 TL</b>; <b>motor</b> 665 TL. Takım sitesindeki fiyatlar eski.</li>
+    <li>Listenin eski toplamı (5.700 TL) yanlıştı; bu sayfa her satırı toplar.</li>
+  </ul></div>
+</div>
+
+<div id="list"></div>
+
+<div class="grid2">
+  <div class="box"><h3>Datasheet ve ürün sayfasıyla doğrulananlar</h3><ul>
+    <li><b>JGB37-520 12 V 530 RPM</b> (datasheet): 1:19 dişli, boşta 120 mA, durma 2,3 A ve 3,1 kg·cm. Altı M3 delik Ø31 daire üzerinde, gövde Ø37, mil 7 mm eksantrik, enkoder 11 darbe/tur ve 3,3–5 V. Bu 11 × 19 × 4 = 836 sayım/tur eder; firmware ile aynı.</li>
+    <li><b>Durma akımı:</b> iki motor kilitlenirse 4,6 A. 5 A sigortaya çok yakın; 7,5 A yedek sigortayı yanında tut.</li>
+    <li><b>Şanzıman boyu</b> datasheet'te 22 mm. 3B modelde 24'tü, düzelttim; çakışma denetimi yine geçti.</li>
+    <li><b>LM2596</b> Direnc.net kartı 48×23×14 mm, 4–35 V giriş, 3 A, trimpotlu. Tasarımdaki 43×21'e göre büyük; yuvayı 48×23'e çıkardım, hiçbir parça çakışmıyor.</li>
+    <li><b>BMS</b> 50×16×2,6 mm; 5–8 A çalışma, 10 A tepe, aşırı akım ve kısa devre korumalı.</li>
+    <li><b>Acil stop</b> NP2-BE102 NC, Ith 10 A, 415 V. Delik çapı sayfada yazmıyor; 22 mm sınıfı, gelince ölç.</li>
+    <li><b>MPU6050 GY-521</b>: 3–5 V, kartta regülatör ve I2C pull-up var, AD0 boşta ya da GND = 0x68.</li>
+  </ul></div>
+  <div class="box"><h3>Sayfada bulamadıklarım, gelince bak</h3><ul>
+    <li><b>ESP32 kartın pin sayısı</b> sayfada yazmıyor (30 mu 38 mi). Kullandığımız bütün GPIO'lar ikisinde de var; 30 pinse yalnız soket sırası ve ana kart yerleşimi değişir, atamalar aynı kalır.</li>
+    <li><b>BTS7960</b> sayfası “5 V mantık” diyor. Tasarım VCC'yi <b>3,3 V</b>'a bağlar (takım sitesiyle aynı); ESP32 çıkışları böyle doğrudan sürer. 5 V verme.</li>
+    <li><b>IR modül</b> (Direnc.net minyatür, Vishay): 2,5–5,5 V, yani 3,3 V uygun. Sayfada 38 kHz yazmıyor; gelince direğin işaretiyle dene.</li>
+    <li><b>Pil yuvası, ilaç kutusu, BTS delik aralığı</b> ölçüleri sayfalarda yok. Gelince kumpasla ölç, <code>cad/olcu.py</code>'de düzelt.</li>
+  </ul></div>
+</div>
+
+<footer>Fiyatlar KDV dahil, TL. “~” tahmin demektir. İşaretler ve seçimler yalnız bu tarayıcıda durur. Ürün sayfaları başka sitelere açılır.</footer>
+</main>
+
+<script>
+// Satır: [grup, ad, adet, not, etiket, [seçenekler]]
+// Seçenek: [etiket, birim TL, durum (stokta/var/tukendi/bilinmiyor), doğrulama tarihi ("3 Kas" ya da ""), link, not]
+var N = "bilinmiyor", S = "stokta", V = "var", T = "tukendi";
+var ROWS = [
+ ["Beyin ve sensörler","ESP32 WROOM-32D geliştirme kartı",1,"Kablosuz modül kartın içinde. Pin sayısı için aşağıdaki nota bak","",[
+   ["Robotistan · ESP-32S kartı",419,N,"","https://www.robotistan.com/esp32-esp-32s-wifi-bluetooth-dual-mode-developement-board","WROOM-32 modüllü olmalı. Pin düzeni ve USB çipi farklı olabilir; alınca kontrol et"],
+   ["Robotistan · WROOM-32D",462.22,T,"3 Kas","https://www.robotistan.com/esp32-wroom-32d-gelistirme-karti","Birebir istenen kart; “Gelince haber ver” seçeneği var"]]],
+ ["Beyin ve sensörler","38 kHz IR alıcı kartı (sağ ve sol göz)",2,"3,3 V'ta çalışmalı. DSTK4297 olmaz (yansımalı sensör)","",[
+   ["Direnc.net · minyatür IR alıcı modül",29.01,V,"3 Kas","https://www.direnc.net/minyatur-ir-alici-modul","Vishay, 2,5–5,5 V. Sayfada 38 kHz yazmıyor; gelince dene"],
+   ["Robotistan · IR alıcı kartı 38 kHz",42.02,T,"3 Kas","https://www.robotistan.com/ir-alici-karti-38-khz","“1838B” alıcı; çalışma gerilimi yazmıyor"],
+   ["Motorobit · çıplak TSOP1838",10,N,"","https://www.motorobit.com/tsop1838-38-khz-ir-alici","Önerilmez: 3,3 V'ta çalışmayabilir, lehim ister"]]],
+ ["Beyin ve sensörler","MPU6050 GY-521",1,"Robotun ortasında, teker ekseni hizasında","",[
+   ["Direnc.net",153,N,"","https://www.direnc.net/mpu6050-3-axis-gyro-ve-egim-sensoru",""],
+   ["Motorobit",200,N,"","https://www.motorobit.com/mpu6050-6-eksen-ivme-ve-gyro-sensoru-gy-521",""],
+   ["Robotzade",111,T,"3 Kas","https://www.robotzade.com/urun/mpu6050-6-eksen-ivme-ve-gyro-sensoru-gy-521","3–5 V, kartta regülatör ve pull-up var"],
+   ["Trendyol · Sanec MPU6050 (arama)",109,N,"","https://www.trendyol.com/sr?q=sanec%20mpu6050","Aynı ürün; fiyatı satıcıya göre değişir"]]],
+ ["Hareket","JGB37-520, 12 V, 530 RPM, Hall enkoderli",2,"Datasheet: 1:19, durma 2,3 A. 6 mm D mil","",[
+   ["Direnc.net · 530 RPM",665.41,V,"3 Kas","https://www.direnc.net/jgb37-520-12v-530rpm-enkoderli-motor","Tasarımdaki motor"],
+   ["Direnc.net · 333 RPM",639,N,"","https://www.direnc.net/jgb37-520-12v-330rpm-enkoderli-motor","Daha çok tork, ama motor sabitleri değişir: kazançları yeniden üretip testleri koşmak gerekir"]]],
+ ["Hareket","BTS7960 motor sürücü kartı",2,"Her motora bir kart. VCC'yi 3,3 V'a bağla","",[
+   ["Robotzade · 20 A",270,S,"3 Kas","https://www.robotzade.com/urun/bts7960b-20-amper-motor-surucu-karti","25 kHz'e kadar PWM, 5,5–27,5 V"],
+   ["Direnc.net · 40 A",279,N,"","https://www.direnc.net/bts7960b-40-amper-motor-surucu-modulu-1",""],
+   ["Motorobit · 20 A",375,N,"","https://www.motorobit.com/20-amper-motor-surucu-karti-bts7960b",""],
+   ["Robolink · 43 A",393,N,"","https://www.robolinkmarket.com/bts7960b-43a-motor-surucu-karti",""]]],
+ ["Hareket","65 mm lastik tekerlek",2,"Göbek 6 mm D mile uymalı","",[
+   ["Robotistan · tekerlek (arama)",175,N,"","https://www.robotistan.com/arama?q=tekerlek","Göbek mile oturmuyorsa aşağıdaki kaplin"],
+   ["Motorobit · 6→12 mm altıgen kaplin",100,N,"","https://www.motorobit.com/6mm-motor-safti-ile-uyumlu-hex-tekerlek-kaplini","RC tekerleği için; tekerlek ayrı alınır"]]],
+ ["Hareket","6 mm kaplin",1,"Yalnız göbek mile doğrudan oturmuyorsa","kosullu",[
+   ["Robotistan · 2'li paket",170,N,"","https://www.robotistan.com/6-mm-kaplin-2-adet",""],
+   ["Motorobit · 6×6 mm, tek",75,N,"","https://www.motorobit.com/6mm-x-6mm-kaplin","İki tekerlek için 2 adet gerekir"]]],
+ ["Güç","Orion 18650P 2450 mAh 12C",3,"Üçü aynı partiden","",[
+   ["Direnc.net · 2450 mAh 12C",201,N,"","https://www.direnc.net/orion-18650p-37v-2450mah-12c-li-ion-pil",""],
+   ["Direnc.net · 2000 mAh 15C",153,N,"","https://www.direnc.net/orion-18650p-37v-2000mah-15c-li-ion-pil","Daha az kapasite, daha çok akım"]]],
+ ["Güç","18650 üçlü pil yuvası",1,"Korumasız hücre. Boyut sayfada yok: ölç","olc",[
+   ["Ulutaş Elektronik",48,S,"3 Kas","https://www.ulutaselektronik.com/urun/18650-3lu-pil-yuvasi-lityum-li-on-pil-yatagi","99 adet stokta"]]],
+ ["Güç","3S 10 A BMS (HX-3S-01)",1,"Şartnamede zorunlu. P+ = B+","",[
+   ["Motorobit · 3S 10 A",104.04,S,"3 Kas","https://www.motorobit.com/3s-10a-12v-li-ion-18650-bms-batarya-koruyucu-balans-devresi","50×16×2,6 mm, 10 A tepe, aşırı akım korumalı"],
+   ["Motorobit · 3S balanslı",125,N,"","https://www.motorobit.com/lipo-lion-18650-3s-bms-batarya-koruyucu-balans-devresi",""],
+   ["Robotzade · 3S 25 A",90,T,"","https://www.robotzade.com/urun/bms-modul-3s-25a-lipo-pil-balans-devresi","10 Ekim'de tükenmişti"]]],
+ ["Güç","LM2596 5 V 3 A regülatör",1,"Ayarlıysa bağlamadan önce 5,0 V'a ayarla","",[
+   ["Direnc.net · ayarlı, trimpotlu",50.57,V,"3 Kas","https://www.direnc.net/lm2596-power-suplay-modul-1","48×23×14 mm, 4–35 V giriş. Önce multimetreyle 5,0 V'a ayarla"],
+   ["Robotistan · LM2596-5V (arama)",161,N,"","https://www.robotistan.com/arama?q=LM2596","Sabit 5 V; ayar gerekmez, çok daha pahalı"]]],
+ ["Güç","Bıçak sigorta yuvası + 5 A sigorta",1,"Yedek olarak 7,5 A sigorta da al","",[
+   ["Motorobit · QSC-1, 5 A sigortalı",40,N,"","https://www.motorobit.com/qsc-1-standart-bicak-sigorta-coklayici-5a-sigortali",""]]],
+ ["Güç","Acil stop Chint NP2-BE102, NC, 10 A",1,"Şartnamede zorunlu. 22 mm delik","",[
+   ["Motorobit · NP2-BE102 NC",306,S,"3 Kas","https://www.motorobit.com/np2-be102-nc-metal-acil-stop-butonu","10+ adet stokta, Ith 10 A"],
+   ["Direnc.net · DRN956 16 mm",188,N,"","https://www.direnc.net/drn956-16mm-acil-stop-dugmesi-kafa-27mm","Olmaz: 16 mm delik, 3B kat 3'e uymaz; kontak akımı da yazmıyor"]]],
+ ["Güç","WAGO 221-415, 5'li",2,"Biri 12 V, biri GND","",[
+   ["Robotistan · wago (arama)",30,N,"","https://www.robotistan.com/arama?q=wago","Karaköy'de elektrikçilerde de var"]]],
+ ["Güç","XT60 takımı",2,"","",[
+   ["Direnc.net",26,N,"","https://www.direnc.net/xt60-plug-60a-li-po-konnektor",""]]],
+ ["Güç","SR5100 Schottky diyot",3,"Şarj girişi; biri yedek","",[
+   ["Motorobit",6,N,"","https://www.motorobit.com/sr5100-5a-100v-schottky-diyot",""]]],
+ ["Güç","18 AWG silikon kablo, kırmızı, 1 m",2,"","",[
+   ["Motorobit",35,N,"","https://www.motorobit.com/18-awg-silikon-kablo-kirmizi-1-metre",""]]],
+ ["Güç","18 AWG silikon kablo, siyah, 1 m",2,"","",[
+   ["Motorobit",35,N,"","https://www.motorobit.com/18-awg-silikon-kablo-siyah-1-metre",""]]],
+ ["Güç","1000 µF 25 V düşük ESR elektrolitik",1,"Motor hattı kondansatörü","yeni",[
+   ["Karaköy / elektronikçi",20,N,"","","~20 TL, link yok"]]],
+ ["Ana kart ve bağlantı","5×10 cm delikli plaket",1,"Ana kart","",[
+   ["Direnc.net",16,N,"","https://www.direnc.net/5x10-delikli-plaket",""]]],
+ ["Ana kart ve bağlantı","Dişi + erkek pin header, 1×40",1,"ESP32 sokete takılır","",[
+   ["Robotistan · header (arama)",45,N,"","https://www.robotistan.com/arama?q=header",""]]],
+ ["Ana kart ve bağlantı","Direnç ¼ W: 100k ×3, 27k ×2, 33k ×1, 10k ×1",1,"Bir set","",[
+   ["Robotistan · direnç seti (arama)",30,N,"","https://www.robotistan.com/arama?q=diren%C3%A7+seti","27k ve 33k sette yoksa tek tek al"]]],
+ ["Ana kart ve bağlantı","Kondansatör: 100 µF 16 V ×1, 100 nF ×3",1,"Bir set","",[
+   ["Robotistan · kondansatör (arama)",15,N,"","https://www.robotistan.com/arama?q=kondansat%C3%B6r",""]]],
+ ["Ana kart ve bağlantı","2'li 5,08 mm PCB klemens",3,"J1, J9, J10","",[
+   ["Direnc.net",8.72,N,"","https://www.direnc.net/2-li-2-no-klemens",""]]],
+ ["Ana kart ve bağlantı","Dişi-dişi jumper, 20 cm, 40'lı",1,"Yalnız sinyal","",[
+   ["Direnc.net",59,N,"","https://www.direnc.net/40-adet-disi-disi-jumper-kablo-20cm",""]]],
+ ["Gövde ve şarj teması","M3 dişi-dişi distans, 30 mm",8,"Her köşede 30 + 50 = 80 mm","",[
+   ["Motorobit",9.5,N,"","https://www.motorobit.com/m3-30mm-metal-disi-disi-aralayici-standoff",""]]],
+ ["Gövde ve şarj teması","M3 dişi-dişi distans, 50 mm",8,"","",[
+   ["Motorobit",13.5,N,"","https://www.motorobit.com/m3-50mm-metal-disi-disi-aralayici-standoff",""]]],
+ ["Gövde ve şarj teması","M3 10 mm vida, 10'lu paket",5,"Yaklaşık 42 vida gerekiyor; eski listede 4 paketti","yeni",[
+   ["Motorobit · yıldız baş",7.5,N,"","https://www.motorobit.com/m3-10mm-ysb-yildiz-bas-vida-10-adet",""]]],
+ ["Gövde ve şarj teması","M3 6 mm vida, 12 adet",1,"Motor yüzü delikleri 4 mm derin; 10 mm uzun gelir","yeni",[
+   ["Motorobit / hırdavatçı",8,N,"","","~8 TL; sitede “M3 6 mm vida” ara"]]],
+ ["Gövde ve şarj teması","M3 10 mm naylon distans ×4 + M3 somun ×10",1,"Ana kart kat 2'nin altına asılır","yeni",[
+   ["Motorobit / hırdavatçı",10,N,"","","~10 TL; sitede “M3 naylon distans” ara"]]],
+ ["Gövde ve şarj teması","Pogo pin, 5 mm, 10'lu",1,"Robota 2 tane lazım; paket istasyonla paylaşılabilir","",[
+   ["Direnc.net",87,N,"","https://www.direnc.net/5mm-pogo-pim-konnektor-10-adet",""],
+   ["Motorobit · 4 pin manyetik takım",330,N,"","https://www.motorobit.com/4-pin-254mm-kablolu-pogo-pin-manyetik-konnektor-takimi-usb-soketli","Hazır manyetik konnektör; tasarım bunu kullanmıyor, V-yuva değişir"]]],
+ ["Gövde ve şarj teması","Neodyum mıknatıs Ø10×3 mm N52",2,"V-yuvanın arkasında, iki pimin ortasında","yeni",[
+   ["Trendyol (arama)",40,N,"","https://www.trendyol.com/sr?q=neodyum%20m%C4%B1knat%C4%B1s%2010x3","~40 TL, fiyat satıcıya göre değişir"]]],
+ ["Gövde ve şarj teması","Kapaklı ilaç kutusu",1,"Dışı en çok 70×45×25 mm (cep iç ölçüsü 72×47)","olc",[
+   ["Trendyol (arama)",60,N,"","https://www.trendyol.com/sr?q=kapakl%C4%B1%20ila%C3%A7%20kutusu","Eczaneden de alınır"]]],
+ ["Gövde ve şarj teması","PLA ya da PETG filament, yaklaşık 0,25 kg",1,"Üç kat, V-yuva, iki motor tutucu (cad/stl)","yeni",[
+   ["Kendin basarsın",150,N,"","","~150 TL"]]],
+ ["Sarf (elinde yoksa)","Kablo bağı 3,6 mm, 100 adet",1,"Modül yuvalarındaki bağ yuvaları için","",[["Hırdavatçı",25,N,"","","~25 TL"]]],
+ ["Sarf (elinde yoksa)","Kalın çift taraflı köpük bant",1,"MPU6050'yi yapıştırmak için","",[["Hırdavatçı",25,N,"","","~25 TL"]]],
+ ["Sarf (elinde yoksa)","Sıcak silikon çubuk",1,"Pogo pim ve jumper ucu sabitleme","",[["Hırdavatçı",30,N,"","","~30 TL"]]],
+ ["Sarf (elinde yoksa)","Makaron ve 15 mm siyah büzüşmeli tüp",1,"Lehim yerleri, IR göz perdesi","",[["Elektronikçi",30,N,"","","~30 TL"]]]
+];
+var TAGS = {yeni: "yeni", kosullu: "koşullu", olc: "ölç"};
+var STX = {stokta: "stokta", "var": "sepete eklenebilir", tukendi: "tükendi", bilinmiyor: "stok bilinmiyor"};
+var KEY = "cdtp-parca-v2";
+var st = {done: {}, pick: {}};
+try { var s0 = JSON.parse(localStorage.getItem(KEY) || "{}"); if (s0 && s0.done) st = s0; } catch (e) {}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+function tl(n) { return n.toLocaleString("tr-TR", {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2}) + " TL"; }
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;"); }
+function defPick(r) { var o = r[5]; for (var k = 0; k < o.length; k++) { if (o[k][2] !== "tukendi" && o[k][5].indexOf("Olmaz") !== 0 && o[k][5].indexOf("Önerilmez") !== 0) return k; } return 0; }
+function pick(i) { var p = st.pick[i]; return (p === undefined || p >= ROWS[i][5].length) ? defPick(ROWS[i]) : p; }
+
+var groups = [], idx = {};
+ROWS.forEach(function (r, i) { if (!(r[0] in idx)) { idx[r[0]] = groups.length; groups.push({name: r[0], rows: []}); } groups[idx[r[0]]].rows.push(i); });
+var html = "";
+groups.forEach(function (g, gi) {
+  html += '<section><h2>' + esc(g.name) + '<small id="gs' + gi + '"></small></h2><div class="tbl"><table><thead><tr><th></th><th>Parça</th><th class="n">Adet</th><th>Satıcı / alternatif</th><th class="n">Toplam</th></tr></thead><tbody>';
+  g.rows.forEach(function (i) {
+    var r = ROWS[i], tag = r[4] ? '<span class="tag ' + r[4] + '">' + TAGS[r[4]] + '</span>' : "";
+    var sel = "";
+    if (r[5].length > 1) {
+      sel = '<select id="s' + i + '" aria-label="' + esc(r[1]) + ' satıcısı">' + r[5].map(function (o, k) { return '<option value="' + k + '">' + esc(o[0]) + ' · ' + (o[3] ? "" : "~") + tl(o[1]) + ' · ' + STX[o[2]] + '</option>'; }).join("") + '</select>';
+    }
+    html += '<tr id="r' + i + '"><td class="k"><input type="checkbox" id="c' + i + '" aria-label="' + esc(r[1]) + ' alındı"></td>' +
+      '<td><label for="c' + i + '" class="nm">' + esc(r[1]) + '</label>' + tag + (r[3] ? '<span class="nt">' + esc(r[3]) + '</span>' : "") + '</td>' +
+      '<td class="n">' + r[2] + '</td><td><div class="opt">' + sel + '<div class="optrow" id="o' + i + '"></div><div class="optnote" id="n' + i + '"></div></div></td><td class="n" id="t' + i + '"></td></tr>';
+  });
+  html += '</tbody></table></div></section>';
+});
+var list = document.getElementById("list");
+list.style.cssText = "display:flex;flex-direction:column;gap:22px";
+list.innerHTML = html;
+
+function refresh() {
+  var core = 0, sarf = 0, d = 0, gsum = groups.map(function () { return 0; });
+  ROWS.forEach(function (r, i) {
+    var k = pick(i), o = r[5][k], v = r[2] * o[1], est = o[3] ? "" : "~";
+    if (r[0].indexOf("Sarf") === 0) sarf += v; else core += v;
+    gsum[idx[r[0]]] += v;
+    var sl = document.getElementById("s" + i); if (sl) sl.value = k;
+    var link = o[4] ? '<a href="' + esc(o[4]) + '" target="_blank" rel="noopener">ürün sayfası ↗</a>' : '<span>link yok</span>';
+    document.getElementById("o" + i).innerHTML = '<span class="st ' + o[2] + '">' + STX[o[2]] + '</span>' + link + (o[3] ? '<span class="ver">' + o[3] + ' okundu</span>' : "");
+    document.getElementById("n" + i).textContent = o[5];
+    document.getElementById("t" + i).textContent = est + tl(v);
+    var done = !!st.done[i]; if (done) d++;
+    document.getElementById("r" + i).className = done ? "done" : "";
+    document.getElementById("c" + i).checked = done;
+  });
+  groups.forEach(function (g, gi) { document.getElementById("gs" + gi).textContent = g.rows.length + " kalem · ~" + tl(Math.round(gsum[gi])); });
+  document.getElementById("tot").textContent = "~" + tl(Math.round(core));
+  document.getElementById("sarf").textContent = "~" + tl(Math.round(sarf));
+  document.getElementById("prog").textContent = d + " / " + ROWS.length + " kalem";
+  document.getElementById("barfill").style.width = (100 * d / ROWS.length) + "%";
+}
+list.addEventListener("change", function (e) {
+  var t = e.target, i = parseInt(t.id.slice(1), 10);
+  if (t.type === "checkbox") { if (t.checked) st.done[i] = 1; else delete st.done[i]; }
+  else if (t.tagName === "SELECT") { st.pick[i] = parseInt(t.value, 10); }
+  save(); refresh();
+});
+refresh();
+</script>
