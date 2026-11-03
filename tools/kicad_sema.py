@@ -174,16 +174,13 @@ def sembol(lib_id):
 NC = None
 # (ref, lib_id, deger, {pin numarasi: hat}, aci)
 GRUPLAR = [
-    ("PIL, BMS, SARJ TEMASI", [
+    ("PIL VE BMS", [
         ("BT1", "Device:Battery_Cell", "18650 hucre 1", {"1": "B1", "2": "B-"}, 90),
         ("BT2", "Device:Battery_Cell", "18650 hucre 2", {"1": "B2", "2": "B1"}, 90),
         ("BT3", "Device:Battery_Cell", "18650 hucre 3", {"1": "PACK+", "2": "B2"}, 90),
         ("U2", "cdtp:BMS_3S_HX3S01", "HX-3S-01", {"1": "B-", "2": "B1", "3": "B2", "4": "PACK+", "5": "PACK-"}, 0),
         ("J11", "cdtp:XT60", "XT60 disi (pil)", {"1": "PACK+", "2": "PACK-"}, 0),
         ("J12", "cdtp:XT60", "XT60 erkek (robot)", {"1": "BAT+", "2": "GND"}, 0),
-        ("P1", "cdtp:Pogo_Pim", "Pogo + (ust, zeminden 102)", {"1": "CHG+"}, 0),
-        ("P2", "cdtp:Pogo_Pim", "Pogo - (alt, zeminden 77)", {"1": "GND"}, 0),
-        ("D1", "Device:D_Schottky", "SR5100", {"1": "BAT+", "2": "CHG+"}, 0),
     ]),
     ("12 V DAGITIM", [
         ("F1", "Device:Fuse", "5 A bicak", {"1": "BAT+", "2": "+12V"}, 90),
@@ -212,9 +209,10 @@ GRUPLAR = [
         ("J8", "Connector_Generic:Conn_01x05", "BTS sag", {"1": "R_RPWM", "2": "R_LPWM", "3": "MOTOR_EN", "4": "+3V3", "5": "GND"}, 0),
         ("J4", "Connector_Generic:Conn_01x04", "Enkoder sol", {"1": "+3V3", "2": "GND", "3": "ENC_L_A", "4": "ENC_L_B"}, 0),
         ("J5", "Connector_Generic:Conn_01x04", "Enkoder sag", {"1": "+3V3", "2": "GND", "3": "ENC_R_A", "4": "ENC_R_B"}, 0),
-        ("J6", "Connector_Generic:Conn_01x03", "IR sol", {"1": "+3V3", "2": "GND", "3": "IR_L"}, 0),
-        ("J7", "Connector_Generic:Conn_01x03", "IR sag", {"1": "+3V3", "2": "GND", "3": "IR_R"}, 0),
-        ("J9", "Connector_Generic:Conn_01x02", "Olcum klemens", {"1": "+12V", "2": "CHG+"}, 0),
+        ("J6", "Connector_Generic:Conn_01x03", "GENISLEME: IR goz sol (bos)", {"1": "+3V3", "2": "GND", "3": "IR_L"}, 0),
+        ("J7", "Connector_Generic:Conn_01x03", "GENISLEME: IR goz sag (bos)", {"1": "+3V3", "2": "GND", "3": "IR_R"}, 0),
+        ("J9", "Connector_Generic:Conn_01x02", "GENISLEME: sarj girisi (bos)", {"1": "+12V", "2": "CHG+"}, 0),
+        ("J13", "Connector_Generic:Conn_01x04", "GENISLEME: I2C (ekran, 2. sensor)", {"1": "+3V3", "2": "GND", "3": "I2C_SCL", "4": "I2C_SDA"}, 0),
         ("J10", "Connector_Generic:Conn_01x02", "Motor hatti klemens", {"1": "+12V_MOT", "2": NC}, 0),
         ("R1", "Device:R", "100k", {"1": "+12V", "2": "VBAT_ADC"}, 90),
         ("R2", "Device:R", "27k", {"1": "VBAT_ADC", "2": "GND"}, 90),
@@ -239,15 +237,14 @@ GRUPLAR = [
                                                             "4": "ENC_L_B", "5": "+3V3"}, 0),
         ("M2", "cdtp:Motor_JGB37_Enkoder", "JGB37-520 sag", {"1": "MOT_R+", "6": "MOT_R-", "2": "GND", "3": "ENC_R_A",
                                                             "4": "ENC_R_B", "5": "+3V3"}, 0),
-        ("A4", "cdtp:IR_Alici_VS1838B", "IR goz sol (+15 deg)", {"1": "IR_L", "2": "GND", "3": "+3V3"}, 0),
-        ("A5", "cdtp:IR_Alici_VS1838B", "IR goz sag (-15 deg)", {"1": "IR_R", "2": "GND", "3": "+3V3"}, 0),
     ]),
 ]
 
 NOTLAR = [
     "CDTP denge robotu - robot elektronigi (tek sayfa). Ayni adli etiketler ayni hattir.",
     "Guc: pil -> BMS -> XT60 -> F1 5 A -> WAGO-12V. Acil stop (NC) yalniz motor hattini keser; ESP32 acik kalir.",
-    "Sarj: pogo + -> D1 SR5100 -> BAT+ (sigortadan once). Robotta acikta pil gerilimi yok.",
+    "KAPSAM: yalniz dengede kalan, pilli robot. GENISLEME konnektorleri (J6, J7, J9, J13) bos birakildi; sarj, IR goz, ekran sonradan buraya takilir.",
+    "Sarj eklentisi (sonra): pogo + -> SR5100 anot, katot -> BAT+ (sigortadan once), pogo + ayrica J9-2. R3/R4 GPIO34'u 0 V'ta tutar.",
     "JP1: kod yuklerken (USB takiliyken) cikarin; LM2596 ile USB 5 V'u cakismasin.",
     "BTS7960 VCC = 3,3 V (ESP32 seviyesi). R_EN ve L_EN iki kartta GPIO4'e; R5 10k ile acilista motorlar kapali.",
     "MPU6050 AD0 -> GND (adres 0x68). GPIO36/39 yalniz giris (IR, PCNT 12,8 us suzgec).",
@@ -463,7 +460,7 @@ def denetle():
         "PIN_MOTOR_EN": ("MOTOR_EN", [("A2", "3"), ("A2", "4"), ("A3", "3"), ("A3", "4"), ("J3", "3"), ("J8", "3"), ("R5", "1")]),
         "PIN_ENC_L_A": ("ENC_L_A", [("M1", "3"), ("J4", "3")]), "PIN_ENC_L_B": ("ENC_L_B", [("M1", "4"), ("J4", "4")]),
         "PIN_ENC_R_A": ("ENC_R_A", [("M2", "3"), ("J5", "3")]), "PIN_ENC_R_B": ("ENC_R_B", [("M2", "4"), ("J5", "4")]),
-        "PIN_IR_L": ("IR_L", [("A4", "1"), ("J6", "3")]), "PIN_IR_R": ("IR_R", [("A5", "1"), ("J7", "3")]),
+        "PIN_IR_L": ("IR_L", [("J6", "3")]), "PIN_IR_R": ("IR_R", [("J7", "3")]),
         "PIN_VBAT": ("VBAT_ADC", [("R1", "2"), ("R2", "1"), ("C2", "1")]),
         "PIN_VCHG": ("VCHG_ADC", [("R3", "2"), ("R4", "1"), ("C3", "1")]),
         "PIN_MOTOR_SENSE": ("MOTOR_SENSE", [("R6", "2"), ("R7", "1"), ("C4", "1")]),
@@ -490,18 +487,18 @@ def denetle():
         "W1 hucre1- -> BMS B-": [("BT1", "2"), ("U2", "1")], "W2 B1": [("BT1", "1"), ("BT2", "2"), ("U2", "2")],
         "W3 B2": [("BT2", "1"), ("BT3", "2"), ("U2", "3")], "W4/W5 B+ -> XT60 disi +": [("BT3", "1"), ("U2", "4"), ("J11", "1")],
         "W6 P- -> XT60 disi -": [("U2", "5"), ("J11", "2")],
-        "W7/W21 XT60 erkek + -> sigorta, diyot katot": [("J12", "1"), ("F1", "1"), ("D1", "1")],
+        "W7/W21 XT60 erkek + -> sigorta, diyot katot": [("J12", "1"), ("F1", "1")],
         "W8/W9/W12/W19 sigortali 12 V": [("F1", "2"), ("S1", "1"), ("U3", "1"), ("J9", "1"), ("R1", "1"), ("X1", "1")],
         "W10/W11/W41/W43 acil stop sonrasi": [("S1", "2"), ("A2", "9"), ("A3", "9"), ("C5", "1"), ("J10", "1"), ("R6", "1")],
-        "W13-W15/W22/W42 GND": [("J12", "2"), ("A2", "10"), ("A3", "10"), ("U3", "2"), ("P2", "1"), ("C5", "2"), ("X2", "1"),
+        "W13-W15/W22/W42 GND": [("J12", "2"), ("A2", "10"), ("A3", "10"), ("U3", "2"), ("C5", "2"), ("X2", "1"),
                                  ("U3", "4"), ("J1", "2"), ("U1", "14"), ("U1", "20"), ("U1", "26"), ("A1", "7")],
         "W16 sol motor": [("A2", "11"), ("M1", "1")], "W16 sol motor -": [("A2", "12"), ("M1", "6")],
         "W17 sag motor": [("A3", "11"), ("M2", "1")], "W17 sag motor -": [("A3", "12"), ("M2", "6")],
         "W18 LM2596 -> J1 5 V -> JP1": [("U3", "3"), ("J1", "1"), ("C1", "1"), ("JP1", "1")],
         "JP1 -> ESP32 5V": [("JP1", "2"), ("U1", "19")],
-        "W20/W23 pogo + -> diyot anot, J9-2": [("P1", "1"), ("D1", "2"), ("J9", "2"), ("R3", "1")],
-        "3V3 hatti (IMU, BTS VCC, enkoder, IR)": [("U1", "1"), ("A1", "1"), ("A2", "7"), ("A3", "7"), ("M1", "5"), ("M2", "5"),
-                                                  ("A4", "3"), ("A5", "3"), ("J2", "1"), ("J3", "4"), ("J8", "4"),
+        "W20/W23 sarj girisi (bos) J9-2 -> R3": [("J9", "2"), ("R3", "1")],
+        "3V3 hatti (IMU, BTS VCC, enkoder, genisleme)": [("U1", "1"), ("A1", "1"), ("A2", "7"), ("A3", "7"), ("M1", "5"), ("M2", "5"),
+                                                  ("J13", "1"), ("J2", "1"), ("J3", "4"), ("J8", "4"),
                                                   ("J4", "1"), ("J5", "1"), ("J6", "1"), ("J7", "1")],
     }
     hata2 = []
@@ -514,7 +511,7 @@ def denetle():
     for a, b in ayri:
         if a not in nets or b not in nets:
             hata2.append(f"{a}/{b} hatti yok")
-    ekle("Guc ve kablo listesi (W1-W44)", not hata2, f"{len(guc)} baglanti grubu dogru; acil stop, JP1, diyot ve XT60 hatlari ayri"
+    ekle("Guc ve kablo listesi (W1-W44)", not hata2, f"{len(guc)} baglanti grubu dogru; acil stop, JP1 ve XT60 hatlari ayri"
          if not hata2 else "; ".join(hata2))
 
     # 3) bolucu oranlari (pins.h DIVIDER ile)

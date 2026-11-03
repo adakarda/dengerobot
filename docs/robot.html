@@ -112,6 +112,20 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 </header>
 
 <!-- ================= PARÇALAR ================= -->
+<section id="kapsam">
+  <div class="sec-head"><span class="sec-num">00</span><h2>Kapsam: yalnız dengede kalan robot</h2></div>
+  <p>Bu dosyadaki robot, <b>pille çalışan, kendi başına dengede duran</b> robottur. Şarj istasyonu, IR göz, ilaç kutusu ve eldiven başka kişiler tarafından sonradan eklenecek. Onlar için kapı açık bırakıldı:</p>
+  <ul>
+    <li><b>J6, J7</b>: IR göz konnektörleri (3,3 V, GND, sinyal). Firmware pinleri hazır, göz takılmasa da çalışır.</li>
+    <li><b>J9</b>: şarj girişi, boş. Eklenti: pogo + → SR5100 anot, katot → pil + (sigortadan önce). R3/R4 bölücüsü GPIO34'ü 0 V'ta tutar; bağlı değilken robot “şarjda” sanmaz.</li>
+    <li><b>J13</b>: I2C genişleme (3,3 V, GND, SCL, SDA): ekran ya da ikinci sensör.</li>
+    <li><b>J1</b>: kalan 5 V çıkışı. LM2596 3 A; ESP32 ve sensörler çok az çeker.</li>
+    <li>Radyo (ESP-NOW, BLE) yazılımda hazır; ek donanım gerekmez.</li>
+    <li>3B baskıda V-yuva ve ilaç kutusu cebi <b>eklenti</b> parçalarıdır; denge için yalnız 3 kat ve 2 motor tutucu basılır.</li>
+  </ul>
+  <p>Robot parçaları 01'de; eklenti parçaları <a href="parca_listesi.html">parça listesi</a> sayfasının en altında ayrı ve toplama girmiyor.</p>
+</section>
+
 <section id="parcalar">
   <div class="sec-head"><span class="sec-num">01</span><h2>Robot parça listesi</h2></div>
   <p>Fiyatlar takım sitesinden (9–10 Ekim 2026, KDV dahil). "Yeni" işaretliler bu dosyanın eklemeleri. Kütleler tahmin; parça gelince tartıp <code>tools/mass_budget.py</code>'ye yazın.</p>
@@ -121,7 +135,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr class="grp"><td colspan="5">Beyin ve sensörler</td></tr>
       <tr><td>ESP32 WROOM-32D geliştirme kartı (38 pin)</td><td class="num">1</td><td class="num r">455</td><td>Robotistan</td><td>WROVER değil: GPIO16/17 kullanılıyor</td></tr>
       <tr><td>MPU6050 GY-521</td><td class="num">1</td><td class="num r">109</td><td>Robotzade</td><td>Kat 1 üstü, teker ekseni hizasında, ortada</td></tr>
-      <tr><td>38 kHz IR alıcı kartı (VS1838B)</td><td class="num">2</td><td class="num r">41</td><td>Robotistan</td><td>TSOP1838 almayın: 3,3 V'ta çalışmaz</td></tr>
+      <tr><td>38 kHz IR alıcı kartı (VS1838B) <span class="pill p-warn">eklenti</span></td><td class="num">2</td><td class="num r">41</td><td>Robotistan</td><td>TSOP1838 almayın: 3,3 V'ta çalışmaz</td></tr>
       <tr class="grp"><td colspan="5">Hareket</td></tr>
       <tr><td>JGB37-520 12 V 530 RPM, Hall enkoderli</td><td class="num">2</td><td class="num r">639</td><td>Direnc.net</td><td>6 mm D mil</td></tr>
       <tr><td>BTS7960 motor sürücü kartı</td><td class="num">2</td><td class="num r">162</td><td>Robotzade</td><td>VCC → 3,3 V</td></tr>
@@ -137,7 +151,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>Acil stop Chint NP2-BE102, NC, 10 A</td><td class="num">1</td><td class="num r">300</td><td>Motorobit</td><td>Zorunlu, kat 3'te</td></tr>
       <tr><td>WAGO 221-415 (5'li)</td><td class="num">2</td><td class="num r">30</td><td>Robotistan</td><td>WAGO-12V ve WAGO-GND</td></tr>
       <tr><td>XT60 takımı</td><td class="num">2</td><td class="num r">26</td><td>Direnc.net</td><td></td></tr>
-      <tr><td>SR5100 Schottky diyot</td><td class="num">3</td><td class="num r">6</td><td>Motorobit</td><td>Şarj girişi</td></tr>
+      <tr><td>SR5100 Schottky diyot <span class="pill p-warn">eklenti</span></td><td class="num">3</td><td class="num r">6</td><td>Motorobit</td><td>Şarj girişi</td></tr>
       <tr><td>1000 µF 25 V düşük ESR elektrolitik <span class="pill p-new">yeni</span></td><td class="num">1</td><td class="num r">~20</td><td>Karaköy</td><td>Motor hattı (C5)</td></tr>
       <tr><td>18 AWG silikon kablo kırmızı / siyah, 1 m</td><td class="num">2+2</td><td class="num r">35</td><td>Motorobit</td><td></td></tr>
       <tr class="grp"><td colspan="5">Ana kart ve bağlantı</td></tr>
@@ -152,12 +166,12 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>M3 30 mm + 50 mm dişi-dişi distans</td><td class="num">8+8</td><td class="num r">9,5 / 13,5</td><td>Motorobit</td><td>Her köşede 30+50 = 80 mm</td></tr>
       <tr><td>M3 10 mm vida (10'lu)</td><td class="num">4</td><td class="num r">7,5</td><td>Motorobit</td><td></td></tr>
       <tr><td>M3 10 mm naylon distans + M3 somun (10'lu) <span class="pill p-new">yeni</span></td><td class="num">4 + 1</td><td class="num r">~5 / ~5</td><td>Motorobit</td><td>Ana kart kat 2'nin altında; somunlar motor tutucu ve pil yuvası için</td></tr>
-      <tr><td>5 mm pogo pin (10'lu) <span class="pill p-new">robot tarafında</span></td><td class="num">1</td><td class="num r">87</td><td>Direnc.net</td><td>V-yuvada 2 adet, istasyonla paket ortak</td></tr>
-      <tr><td>Neodyum mıknatıs Ø10×3 mm N52 <span class="pill p-new">yeni</span></td><td class="num">2</td><td class="num r">~40</td><td>Trendyol</td><td>V-yuvanın arka şeridine, pimlerin arasına; direkteki çelik şeride tutunur</td></tr>
-      <tr><td>Kapaklı ilaç kutusu</td><td class="num">1</td><td class="num r">60</td><td>Eczane</td><td></td></tr>
+      <tr><td>5 mm pogo pin (10'lu) <span class="pill p-new">robot tarafında</span> <span class="pill p-warn">eklenti</span></td><td class="num">1</td><td class="num r">87</td><td>Direnc.net</td><td>V-yuvada 2 adet, istasyonla paket ortak</td></tr>
+      <tr><td>Neodyum mıknatıs Ø10×3 mm N52 <span class="pill p-new">yeni</span> <span class="pill p-warn">eklenti</span></td><td class="num">2</td><td class="num r">~40</td><td>Trendyol</td><td>V-yuvanın arka şeridine, pimlerin arasına; direkteki çelik şeride tutunur</td></tr>
+      <tr><td>Kapaklı ilaç kutusu <span class="pill p-warn">eklenti</span></td><td class="num">1</td><td class="num r">60</td><td>Eczane</td><td></td></tr>
     </tbody>
   </table></div>
-  <p>Robot tarafının toplamı yaklaşık <b>5.270 TL</b> (sarf malzemesi hariç, ~110 TL; fiyatlar 3 Kasım 2026 kontrolüne göre, seçilen satıcıya göre değişir; satır satır liste: parça listesi sayfası).</p>
+  <p>Dengede kalan robotun toplamı yaklaşık <b>4.970 TL</b> (sarf malzemesi hariç, ~110 TL; 3 Kasım 2026 fiyatları, seçilen satıcıya göre değişir). Aşağıdaki IR alıcı, SR5100, pogo, mıknatıs ve ilaç kutusu satırları <b>eklentidir</b> (~300 TL), toplama girmez.</p>
 </section>
 
 <!-- ================= BLOK ================= -->
@@ -355,7 +369,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
   <div class="tbl"><table><thead><tr><th>Kontrol</th><th>Sonuc</th><th>Ayrinti</th></tr></thead><tbody>
 <tr><td>KiCad ERC</td><td><span class="pill p-ok">geçti</span></td><td>0 hata, 0 uyari</td></tr>
 <tr><td>ESP32 pinleri = firmware/robot/src/pins.h</td><td><span class="pill p-ok">geçti</span></td><td>17 pin sabiti, her biri ESP32 + ana kart konnektoru + modul ucunda dogru</td></tr>
-<tr><td>Guc ve kablo listesi (W1-W44)</td><td><span class="pill p-ok">geçti</span></td><td>17 baglanti grubu dogru; acil stop, JP1, diyot ve XT60 hatlari ayri</td></tr>
+<tr><td>Guc ve kablo listesi (W1-W44)</td><td><span class="pill p-ok">geçti</span></td><td>17 baglanti grubu dogru; acil stop, JP1 ve XT60 hatlari ayri</td></tr>
 <tr><td>Bolucu degerleri</td><td><span class="pill p-ok">geçti</span></td><td>R1/R2 orani 4.704 = firmware DIVIDER 4.704; 12,6 V -&gt; 2.68 V (ADC 11 dB); R6/R7 -&gt; 3.13 V &lt; 3,3 V</td></tr>
 <tr><td>Tek uclu hat yok</td><td><span class="pill p-ok">geçti</span></td><td>57 hat</td></tr>
 </tbody></table></div>
@@ -737,7 +751,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 <section id="kod">
   <div class="sec-head"><span class="sec-num">15</span><h2>Robotun bütün kodları</h2></div>
   <p>Robotta çalışan her dosya. Ortak çekirdek (<code>common/cdtp_core</code>) robot firmware'inin parçasıdır; <code>protocol.h</code> ve <code>gesture.h</code> eldivenle paylaşılır. Her dosya açılır ve kopyalanır.</p>
-<p class="mono">23 dosya, 3613 satır</p>
+<p class="mono">23 dosya, 3610 satır</p>
 <details class="code"><summary><b>firmware/robot/platformio.ini</b><span>PlatformIO ayarlari · 23 satır</span><button class="copy" data-target="src0" type="button">kopyala</button></summary><pre id="src0">; Robot ESP32 (ESP32-WROOM-32D gelistirme karti)
 ; VS Code + PlatformIO eklentisiyle bu klasoru acip &quot;Upload&quot; deyin.
 ; Kod yuklerken ana karttaki JP1 koprusunu cikarin (USB ve LM2596 5 V&#x27;u cakismasin).
@@ -3784,7 +3798,7 @@ def main():
 if __name__ == &quot;__main__&quot;:
     sys.exit(main())
 </pre></details>
-<details class="code"><summary><b>tools/kicad_sema.py</b><span>KiCad semasi uretici ve denetimi · 567 satır</span><button class="copy" data-target="src22" type="button">kopyala</button></summary><pre id="src22">&quot;&quot;&quot;Robotun KiCad semasini uretir ve denetler -&gt; elektronik/
+<details class="code"><summary><b>tools/kicad_sema.py</b><span>KiCad semasi uretici ve denetimi · 564 satır</span><button class="copy" data-target="src22" type="button">kopyala</button></summary><pre id="src22">&quot;&quot;&quot;Robotun KiCad semasini uretir ve denetler -&gt; elektronik/
   cdtp_robot.kicad_sch  (KiCad 10 ile acilir; moduller cdtp.kicad_sym kutuphanesinde)
   cdtp_robot.pdf / .svg, erc.json, netlist.xml, sema_kontrol.md
 Calistir: python tools/kicad_sema.py   (KiCad 10 kurulu olmali: kicad-cli)
@@ -3960,16 +3974,13 @@ def sembol(lib_id):
 NC = None
 # (ref, lib_id, deger, {pin numarasi: hat}, aci)
 GRUPLAR = [
-    (&quot;PIL, BMS, SARJ TEMASI&quot;, [
+    (&quot;PIL VE BMS&quot;, [
         (&quot;BT1&quot;, &quot;Device:Battery_Cell&quot;, &quot;18650 hucre 1&quot;, {&quot;1&quot;: &quot;B1&quot;, &quot;2&quot;: &quot;B-&quot;}, 90),
         (&quot;BT2&quot;, &quot;Device:Battery_Cell&quot;, &quot;18650 hucre 2&quot;, {&quot;1&quot;: &quot;B2&quot;, &quot;2&quot;: &quot;B1&quot;}, 90),
         (&quot;BT3&quot;, &quot;Device:Battery_Cell&quot;, &quot;18650 hucre 3&quot;, {&quot;1&quot;: &quot;PACK+&quot;, &quot;2&quot;: &quot;B2&quot;}, 90),
         (&quot;U2&quot;, &quot;cdtp:BMS_3S_HX3S01&quot;, &quot;HX-3S-01&quot;, {&quot;1&quot;: &quot;B-&quot;, &quot;2&quot;: &quot;B1&quot;, &quot;3&quot;: &quot;B2&quot;, &quot;4&quot;: &quot;PACK+&quot;, &quot;5&quot;: &quot;PACK-&quot;}, 0),
         (&quot;J11&quot;, &quot;cdtp:XT60&quot;, &quot;XT60 disi (pil)&quot;, {&quot;1&quot;: &quot;PACK+&quot;, &quot;2&quot;: &quot;PACK-&quot;}, 0),
         (&quot;J12&quot;, &quot;cdtp:XT60&quot;, &quot;XT60 erkek (robot)&quot;, {&quot;1&quot;: &quot;BAT+&quot;, &quot;2&quot;: &quot;GND&quot;}, 0),
-        (&quot;P1&quot;, &quot;cdtp:Pogo_Pim&quot;, &quot;Pogo + (ust, zeminden 102)&quot;, {&quot;1&quot;: &quot;CHG+&quot;}, 0),
-        (&quot;P2&quot;, &quot;cdtp:Pogo_Pim&quot;, &quot;Pogo - (alt, zeminden 77)&quot;, {&quot;1&quot;: &quot;GND&quot;}, 0),
-        (&quot;D1&quot;, &quot;Device:D_Schottky&quot;, &quot;SR5100&quot;, {&quot;1&quot;: &quot;BAT+&quot;, &quot;2&quot;: &quot;CHG+&quot;}, 0),
     ]),
     (&quot;12 V DAGITIM&quot;, [
         (&quot;F1&quot;, &quot;Device:Fuse&quot;, &quot;5 A bicak&quot;, {&quot;1&quot;: &quot;BAT+&quot;, &quot;2&quot;: &quot;+12V&quot;}, 90),
@@ -3998,9 +4009,10 @@ GRUPLAR = [
         (&quot;J8&quot;, &quot;Connector_Generic:Conn_01x05&quot;, &quot;BTS sag&quot;, {&quot;1&quot;: &quot;R_RPWM&quot;, &quot;2&quot;: &quot;R_LPWM&quot;, &quot;3&quot;: &quot;MOTOR_EN&quot;, &quot;4&quot;: &quot;+3V3&quot;, &quot;5&quot;: &quot;GND&quot;}, 0),
         (&quot;J4&quot;, &quot;Connector_Generic:Conn_01x04&quot;, &quot;Enkoder sol&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;ENC_L_A&quot;, &quot;4&quot;: &quot;ENC_L_B&quot;}, 0),
         (&quot;J5&quot;, &quot;Connector_Generic:Conn_01x04&quot;, &quot;Enkoder sag&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;ENC_R_A&quot;, &quot;4&quot;: &quot;ENC_R_B&quot;}, 0),
-        (&quot;J6&quot;, &quot;Connector_Generic:Conn_01x03&quot;, &quot;IR sol&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;IR_L&quot;}, 0),
-        (&quot;J7&quot;, &quot;Connector_Generic:Conn_01x03&quot;, &quot;IR sag&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;IR_R&quot;}, 0),
-        (&quot;J9&quot;, &quot;Connector_Generic:Conn_01x02&quot;, &quot;Olcum klemens&quot;, {&quot;1&quot;: &quot;+12V&quot;, &quot;2&quot;: &quot;CHG+&quot;}, 0),
+        (&quot;J6&quot;, &quot;Connector_Generic:Conn_01x03&quot;, &quot;GENISLEME: IR goz sol (bos)&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;IR_L&quot;}, 0),
+        (&quot;J7&quot;, &quot;Connector_Generic:Conn_01x03&quot;, &quot;GENISLEME: IR goz sag (bos)&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;IR_R&quot;}, 0),
+        (&quot;J9&quot;, &quot;Connector_Generic:Conn_01x02&quot;, &quot;GENISLEME: sarj girisi (bos)&quot;, {&quot;1&quot;: &quot;+12V&quot;, &quot;2&quot;: &quot;CHG+&quot;}, 0),
+        (&quot;J13&quot;, &quot;Connector_Generic:Conn_01x04&quot;, &quot;GENISLEME: I2C (ekran, 2. sensor)&quot;, {&quot;1&quot;: &quot;+3V3&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;I2C_SCL&quot;, &quot;4&quot;: &quot;I2C_SDA&quot;}, 0),
         (&quot;J10&quot;, &quot;Connector_Generic:Conn_01x02&quot;, &quot;Motor hatti klemens&quot;, {&quot;1&quot;: &quot;+12V_MOT&quot;, &quot;2&quot;: NC}, 0),
         (&quot;R1&quot;, &quot;Device:R&quot;, &quot;100k&quot;, {&quot;1&quot;: &quot;+12V&quot;, &quot;2&quot;: &quot;VBAT_ADC&quot;}, 90),
         (&quot;R2&quot;, &quot;Device:R&quot;, &quot;27k&quot;, {&quot;1&quot;: &quot;VBAT_ADC&quot;, &quot;2&quot;: &quot;GND&quot;}, 90),
@@ -4025,15 +4037,14 @@ GRUPLAR = [
                                                             &quot;4&quot;: &quot;ENC_L_B&quot;, &quot;5&quot;: &quot;+3V3&quot;}, 0),
         (&quot;M2&quot;, &quot;cdtp:Motor_JGB37_Enkoder&quot;, &quot;JGB37-520 sag&quot;, {&quot;1&quot;: &quot;MOT_R+&quot;, &quot;6&quot;: &quot;MOT_R-&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;ENC_R_A&quot;,
                                                             &quot;4&quot;: &quot;ENC_R_B&quot;, &quot;5&quot;: &quot;+3V3&quot;}, 0),
-        (&quot;A4&quot;, &quot;cdtp:IR_Alici_VS1838B&quot;, &quot;IR goz sol (+15 deg)&quot;, {&quot;1&quot;: &quot;IR_L&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;+3V3&quot;}, 0),
-        (&quot;A5&quot;, &quot;cdtp:IR_Alici_VS1838B&quot;, &quot;IR goz sag (-15 deg)&quot;, {&quot;1&quot;: &quot;IR_R&quot;, &quot;2&quot;: &quot;GND&quot;, &quot;3&quot;: &quot;+3V3&quot;}, 0),
     ]),
 ]
 
 NOTLAR = [
     &quot;CDTP denge robotu - robot elektronigi (tek sayfa). Ayni adli etiketler ayni hattir.&quot;,
     &quot;Guc: pil -&gt; BMS -&gt; XT60 -&gt; F1 5 A -&gt; WAGO-12V. Acil stop (NC) yalniz motor hattini keser; ESP32 acik kalir.&quot;,
-    &quot;Sarj: pogo + -&gt; D1 SR5100 -&gt; BAT+ (sigortadan once). Robotta acikta pil gerilimi yok.&quot;,
+    &quot;KAPSAM: yalniz dengede kalan, pilli robot. GENISLEME konnektorleri (J6, J7, J9, J13) bos birakildi; sarj, IR goz, ekran sonradan buraya takilir.&quot;,
+    &quot;Sarj eklentisi (sonra): pogo + -&gt; SR5100 anot, katot -&gt; BAT+ (sigortadan once), pogo + ayrica J9-2. R3/R4 GPIO34&#x27;u 0 V&#x27;ta tutar.&quot;,
     &quot;JP1: kod yuklerken (USB takiliyken) cikarin; LM2596 ile USB 5 V&#x27;u cakismasin.&quot;,
     &quot;BTS7960 VCC = 3,3 V (ESP32 seviyesi). R_EN ve L_EN iki kartta GPIO4&#x27;e; R5 10k ile acilista motorlar kapali.&quot;,
     &quot;MPU6050 AD0 -&gt; GND (adres 0x68). GPIO36/39 yalniz giris (IR, PCNT 12,8 us suzgec).&quot;,
@@ -4249,7 +4260,7 @@ def denetle():
         &quot;PIN_MOTOR_EN&quot;: (&quot;MOTOR_EN&quot;, [(&quot;A2&quot;, &quot;3&quot;), (&quot;A2&quot;, &quot;4&quot;), (&quot;A3&quot;, &quot;3&quot;), (&quot;A3&quot;, &quot;4&quot;), (&quot;J3&quot;, &quot;3&quot;), (&quot;J8&quot;, &quot;3&quot;), (&quot;R5&quot;, &quot;1&quot;)]),
         &quot;PIN_ENC_L_A&quot;: (&quot;ENC_L_A&quot;, [(&quot;M1&quot;, &quot;3&quot;), (&quot;J4&quot;, &quot;3&quot;)]), &quot;PIN_ENC_L_B&quot;: (&quot;ENC_L_B&quot;, [(&quot;M1&quot;, &quot;4&quot;), (&quot;J4&quot;, &quot;4&quot;)]),
         &quot;PIN_ENC_R_A&quot;: (&quot;ENC_R_A&quot;, [(&quot;M2&quot;, &quot;3&quot;), (&quot;J5&quot;, &quot;3&quot;)]), &quot;PIN_ENC_R_B&quot;: (&quot;ENC_R_B&quot;, [(&quot;M2&quot;, &quot;4&quot;), (&quot;J5&quot;, &quot;4&quot;)]),
-        &quot;PIN_IR_L&quot;: (&quot;IR_L&quot;, [(&quot;A4&quot;, &quot;1&quot;), (&quot;J6&quot;, &quot;3&quot;)]), &quot;PIN_IR_R&quot;: (&quot;IR_R&quot;, [(&quot;A5&quot;, &quot;1&quot;), (&quot;J7&quot;, &quot;3&quot;)]),
+        &quot;PIN_IR_L&quot;: (&quot;IR_L&quot;, [(&quot;J6&quot;, &quot;3&quot;)]), &quot;PIN_IR_R&quot;: (&quot;IR_R&quot;, [(&quot;J7&quot;, &quot;3&quot;)]),
         &quot;PIN_VBAT&quot;: (&quot;VBAT_ADC&quot;, [(&quot;R1&quot;, &quot;2&quot;), (&quot;R2&quot;, &quot;1&quot;), (&quot;C2&quot;, &quot;1&quot;)]),
         &quot;PIN_VCHG&quot;: (&quot;VCHG_ADC&quot;, [(&quot;R3&quot;, &quot;2&quot;), (&quot;R4&quot;, &quot;1&quot;), (&quot;C3&quot;, &quot;1&quot;)]),
         &quot;PIN_MOTOR_SENSE&quot;: (&quot;MOTOR_SENSE&quot;, [(&quot;R6&quot;, &quot;2&quot;), (&quot;R7&quot;, &quot;1&quot;), (&quot;C4&quot;, &quot;1&quot;)]),
@@ -4276,18 +4287,18 @@ def denetle():
         &quot;W1 hucre1- -&gt; BMS B-&quot;: [(&quot;BT1&quot;, &quot;2&quot;), (&quot;U2&quot;, &quot;1&quot;)], &quot;W2 B1&quot;: [(&quot;BT1&quot;, &quot;1&quot;), (&quot;BT2&quot;, &quot;2&quot;), (&quot;U2&quot;, &quot;2&quot;)],
         &quot;W3 B2&quot;: [(&quot;BT2&quot;, &quot;1&quot;), (&quot;BT3&quot;, &quot;2&quot;), (&quot;U2&quot;, &quot;3&quot;)], &quot;W4/W5 B+ -&gt; XT60 disi +&quot;: [(&quot;BT3&quot;, &quot;1&quot;), (&quot;U2&quot;, &quot;4&quot;), (&quot;J11&quot;, &quot;1&quot;)],
         &quot;W6 P- -&gt; XT60 disi -&quot;: [(&quot;U2&quot;, &quot;5&quot;), (&quot;J11&quot;, &quot;2&quot;)],
-        &quot;W7/W21 XT60 erkek + -&gt; sigorta, diyot katot&quot;: [(&quot;J12&quot;, &quot;1&quot;), (&quot;F1&quot;, &quot;1&quot;), (&quot;D1&quot;, &quot;1&quot;)],
+        &quot;W7/W21 XT60 erkek + -&gt; sigorta, diyot katot&quot;: [(&quot;J12&quot;, &quot;1&quot;), (&quot;F1&quot;, &quot;1&quot;)],
         &quot;W8/W9/W12/W19 sigortali 12 V&quot;: [(&quot;F1&quot;, &quot;2&quot;), (&quot;S1&quot;, &quot;1&quot;), (&quot;U3&quot;, &quot;1&quot;), (&quot;J9&quot;, &quot;1&quot;), (&quot;R1&quot;, &quot;1&quot;), (&quot;X1&quot;, &quot;1&quot;)],
         &quot;W10/W11/W41/W43 acil stop sonrasi&quot;: [(&quot;S1&quot;, &quot;2&quot;), (&quot;A2&quot;, &quot;9&quot;), (&quot;A3&quot;, &quot;9&quot;), (&quot;C5&quot;, &quot;1&quot;), (&quot;J10&quot;, &quot;1&quot;), (&quot;R6&quot;, &quot;1&quot;)],
-        &quot;W13-W15/W22/W42 GND&quot;: [(&quot;J12&quot;, &quot;2&quot;), (&quot;A2&quot;, &quot;10&quot;), (&quot;A3&quot;, &quot;10&quot;), (&quot;U3&quot;, &quot;2&quot;), (&quot;P2&quot;, &quot;1&quot;), (&quot;C5&quot;, &quot;2&quot;), (&quot;X2&quot;, &quot;1&quot;),
+        &quot;W13-W15/W22/W42 GND&quot;: [(&quot;J12&quot;, &quot;2&quot;), (&quot;A2&quot;, &quot;10&quot;), (&quot;A3&quot;, &quot;10&quot;), (&quot;U3&quot;, &quot;2&quot;), (&quot;C5&quot;, &quot;2&quot;), (&quot;X2&quot;, &quot;1&quot;),
                                  (&quot;U3&quot;, &quot;4&quot;), (&quot;J1&quot;, &quot;2&quot;), (&quot;U1&quot;, &quot;14&quot;), (&quot;U1&quot;, &quot;20&quot;), (&quot;U1&quot;, &quot;26&quot;), (&quot;A1&quot;, &quot;7&quot;)],
         &quot;W16 sol motor&quot;: [(&quot;A2&quot;, &quot;11&quot;), (&quot;M1&quot;, &quot;1&quot;)], &quot;W16 sol motor -&quot;: [(&quot;A2&quot;, &quot;12&quot;), (&quot;M1&quot;, &quot;6&quot;)],
         &quot;W17 sag motor&quot;: [(&quot;A3&quot;, &quot;11&quot;), (&quot;M2&quot;, &quot;1&quot;)], &quot;W17 sag motor -&quot;: [(&quot;A3&quot;, &quot;12&quot;), (&quot;M2&quot;, &quot;6&quot;)],
         &quot;W18 LM2596 -&gt; J1 5 V -&gt; JP1&quot;: [(&quot;U3&quot;, &quot;3&quot;), (&quot;J1&quot;, &quot;1&quot;), (&quot;C1&quot;, &quot;1&quot;), (&quot;JP1&quot;, &quot;1&quot;)],
         &quot;JP1 -&gt; ESP32 5V&quot;: [(&quot;JP1&quot;, &quot;2&quot;), (&quot;U1&quot;, &quot;19&quot;)],
-        &quot;W20/W23 pogo + -&gt; diyot anot, J9-2&quot;: [(&quot;P1&quot;, &quot;1&quot;), (&quot;D1&quot;, &quot;2&quot;), (&quot;J9&quot;, &quot;2&quot;), (&quot;R3&quot;, &quot;1&quot;)],
-        &quot;3V3 hatti (IMU, BTS VCC, enkoder, IR)&quot;: [(&quot;U1&quot;, &quot;1&quot;), (&quot;A1&quot;, &quot;1&quot;), (&quot;A2&quot;, &quot;7&quot;), (&quot;A3&quot;, &quot;7&quot;), (&quot;M1&quot;, &quot;5&quot;), (&quot;M2&quot;, &quot;5&quot;),
-                                                  (&quot;A4&quot;, &quot;3&quot;), (&quot;A5&quot;, &quot;3&quot;), (&quot;J2&quot;, &quot;1&quot;), (&quot;J3&quot;, &quot;4&quot;), (&quot;J8&quot;, &quot;4&quot;),
+        &quot;W20/W23 sarj girisi (bos) J9-2 -&gt; R3&quot;: [(&quot;J9&quot;, &quot;2&quot;), (&quot;R3&quot;, &quot;1&quot;)],
+        &quot;3V3 hatti (IMU, BTS VCC, enkoder, genisleme)&quot;: [(&quot;U1&quot;, &quot;1&quot;), (&quot;A1&quot;, &quot;1&quot;), (&quot;A2&quot;, &quot;7&quot;), (&quot;A3&quot;, &quot;7&quot;), (&quot;M1&quot;, &quot;5&quot;), (&quot;M2&quot;, &quot;5&quot;),
+                                                  (&quot;J13&quot;, &quot;1&quot;), (&quot;J2&quot;, &quot;1&quot;), (&quot;J3&quot;, &quot;4&quot;), (&quot;J8&quot;, &quot;4&quot;),
                                                   (&quot;J4&quot;, &quot;1&quot;), (&quot;J5&quot;, &quot;1&quot;), (&quot;J6&quot;, &quot;1&quot;), (&quot;J7&quot;, &quot;1&quot;)],
     }
     hata2 = []
@@ -4300,7 +4311,7 @@ def denetle():
     for a, b in ayri:
         if a not in nets or b not in nets:
             hata2.append(f&quot;{a}/{b} hatti yok&quot;)
-    ekle(&quot;Guc ve kablo listesi (W1-W44)&quot;, not hata2, f&quot;{len(guc)} baglanti grubu dogru; acil stop, JP1, diyot ve XT60 hatlari ayri&quot;
+    ekle(&quot;Guc ve kablo listesi (W1-W44)&quot;, not hata2, f&quot;{len(guc)} baglanti grubu dogru; acil stop, JP1 ve XT60 hatlari ayri&quot;
          if not hata2 else &quot;; &quot;.join(hata2))
 
     # 3) bolucu oranlari (pins.h DIVIDER ile)

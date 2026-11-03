@@ -112,6 +112,20 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 </header>
 
 <!-- ================= PARÇALAR ================= -->
+<section id="kapsam">
+  <div class="sec-head"><span class="sec-num">00</span><h2>Kapsam: yalnız dengede kalan robot</h2></div>
+  <p>Bu dosyadaki robot, <b>pille çalışan, kendi başına dengede duran</b> robottur. Şarj istasyonu, IR göz, ilaç kutusu ve eldiven başka kişiler tarafından sonradan eklenecek. Onlar için kapı açık bırakıldı:</p>
+  <ul>
+    <li><b>J6, J7</b>: IR göz konnektörleri (3,3 V, GND, sinyal). Firmware pinleri hazır, göz takılmasa da çalışır.</li>
+    <li><b>J9</b>: şarj girişi, boş. Eklenti: pogo + → SR5100 anot, katot → pil + (sigortadan önce). R3/R4 bölücüsü GPIO34'ü 0 V'ta tutar; bağlı değilken robot “şarjda” sanmaz.</li>
+    <li><b>J13</b>: I2C genişleme (3,3 V, GND, SCL, SDA): ekran ya da ikinci sensör.</li>
+    <li><b>J1</b>: kalan 5 V çıkışı. LM2596 3 A; ESP32 ve sensörler çok az çeker.</li>
+    <li>Radyo (ESP-NOW, BLE) yazılımda hazır; ek donanım gerekmez.</li>
+    <li>3B baskıda V-yuva ve ilaç kutusu cebi <b>eklenti</b> parçalarıdır; denge için yalnız 3 kat ve 2 motor tutucu basılır.</li>
+  </ul>
+  <p>Robot parçaları 01'de; eklenti parçaları <a href="parca_listesi.html">parça listesi</a> sayfasının en altında ayrı ve toplama girmiyor.</p>
+</section>
+
 <section id="parcalar">
   <div class="sec-head"><span class="sec-num">01</span><h2>Robot parça listesi</h2></div>
   <p>Fiyatlar takım sitesinden (9–10 Ekim 2026, KDV dahil). "Yeni" işaretliler bu dosyanın eklemeleri. Kütleler tahmin; parça gelince tartıp <code>tools/mass_budget.py</code>'ye yazın.</p>
@@ -121,7 +135,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr class="grp"><td colspan="5">Beyin ve sensörler</td></tr>
       <tr><td>ESP32 WROOM-32D geliştirme kartı (38 pin)</td><td class="num">1</td><td class="num r">455</td><td>Robotistan</td><td>WROVER değil: GPIO16/17 kullanılıyor</td></tr>
       <tr><td>MPU6050 GY-521</td><td class="num">1</td><td class="num r">109</td><td>Robotzade</td><td>Kat 1 üstü, teker ekseni hizasında, ortada</td></tr>
-      <tr><td>38 kHz IR alıcı kartı (VS1838B)</td><td class="num">2</td><td class="num r">41</td><td>Robotistan</td><td>TSOP1838 almayın: 3,3 V'ta çalışmaz</td></tr>
+      <tr><td>38 kHz IR alıcı kartı (VS1838B) <span class="pill p-warn">eklenti</span></td><td class="num">2</td><td class="num r">41</td><td>Robotistan</td><td>TSOP1838 almayın: 3,3 V'ta çalışmaz</td></tr>
       <tr class="grp"><td colspan="5">Hareket</td></tr>
       <tr><td>JGB37-520 12 V 530 RPM, Hall enkoderli</td><td class="num">2</td><td class="num r">639</td><td>Direnc.net</td><td>6 mm D mil</td></tr>
       <tr><td>BTS7960 motor sürücü kartı</td><td class="num">2</td><td class="num r">162</td><td>Robotzade</td><td>VCC → 3,3 V</td></tr>
@@ -137,7 +151,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>Acil stop Chint NP2-BE102, NC, 10 A</td><td class="num">1</td><td class="num r">300</td><td>Motorobit</td><td>Zorunlu, kat 3'te</td></tr>
       <tr><td>WAGO 221-415 (5'li)</td><td class="num">2</td><td class="num r">30</td><td>Robotistan</td><td>WAGO-12V ve WAGO-GND</td></tr>
       <tr><td>XT60 takımı</td><td class="num">2</td><td class="num r">26</td><td>Direnc.net</td><td></td></tr>
-      <tr><td>SR5100 Schottky diyot</td><td class="num">3</td><td class="num r">6</td><td>Motorobit</td><td>Şarj girişi</td></tr>
+      <tr><td>SR5100 Schottky diyot <span class="pill p-warn">eklenti</span></td><td class="num">3</td><td class="num r">6</td><td>Motorobit</td><td>Şarj girişi</td></tr>
       <tr><td>1000 µF 25 V düşük ESR elektrolitik <span class="pill p-new">yeni</span></td><td class="num">1</td><td class="num r">~20</td><td>Karaköy</td><td>Motor hattı (C5)</td></tr>
       <tr><td>18 AWG silikon kablo kırmızı / siyah, 1 m</td><td class="num">2+2</td><td class="num r">35</td><td>Motorobit</td><td></td></tr>
       <tr class="grp"><td colspan="5">Ana kart ve bağlantı</td></tr>
@@ -152,12 +166,12 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>M3 30 mm + 50 mm dişi-dişi distans</td><td class="num">8+8</td><td class="num r">9,5 / 13,5</td><td>Motorobit</td><td>Her köşede 30+50 = 80 mm</td></tr>
       <tr><td>M3 10 mm vida (10'lu)</td><td class="num">4</td><td class="num r">7,5</td><td>Motorobit</td><td></td></tr>
       <tr><td>M3 10 mm naylon distans + M3 somun (10'lu) <span class="pill p-new">yeni</span></td><td class="num">4 + 1</td><td class="num r">~5 / ~5</td><td>Motorobit</td><td>Ana kart kat 2'nin altında; somunlar motor tutucu ve pil yuvası için</td></tr>
-      <tr><td>5 mm pogo pin (10'lu) <span class="pill p-new">robot tarafında</span></td><td class="num">1</td><td class="num r">87</td><td>Direnc.net</td><td>V-yuvada 2 adet, istasyonla paket ortak</td></tr>
-      <tr><td>Neodyum mıknatıs Ø10×3 mm N52 <span class="pill p-new">yeni</span></td><td class="num">2</td><td class="num r">~40</td><td>Trendyol</td><td>V-yuvanın arka şeridine, pimlerin arasına; direkteki çelik şeride tutunur</td></tr>
-      <tr><td>Kapaklı ilaç kutusu</td><td class="num">1</td><td class="num r">60</td><td>Eczane</td><td></td></tr>
+      <tr><td>5 mm pogo pin (10'lu) <span class="pill p-new">robot tarafında</span> <span class="pill p-warn">eklenti</span></td><td class="num">1</td><td class="num r">87</td><td>Direnc.net</td><td>V-yuvada 2 adet, istasyonla paket ortak</td></tr>
+      <tr><td>Neodyum mıknatıs Ø10×3 mm N52 <span class="pill p-new">yeni</span> <span class="pill p-warn">eklenti</span></td><td class="num">2</td><td class="num r">~40</td><td>Trendyol</td><td>V-yuvanın arka şeridine, pimlerin arasına; direkteki çelik şeride tutunur</td></tr>
+      <tr><td>Kapaklı ilaç kutusu <span class="pill p-warn">eklenti</span></td><td class="num">1</td><td class="num r">60</td><td>Eczane</td><td></td></tr>
     </tbody>
   </table></div>
-  <p>Robot tarafının toplamı yaklaşık <b>5.270 TL</b> (sarf malzemesi hariç, ~110 TL; fiyatlar 3 Kasım 2026 kontrolüne göre, seçilen satıcıya göre değişir; satır satır liste: parça listesi sayfası).</p>
+  <p>Dengede kalan robotun toplamı yaklaşık <b>4.970 TL</b> (sarf malzemesi hariç, ~110 TL; 3 Kasım 2026 fiyatları, seçilen satıcıya göre değişir). Aşağıdaki IR alıcı, SR5100, pogo, mıknatıs ve ilaç kutusu satırları <b>eklentidir</b> (~300 TL), toplama girmez.</p>
 </section>
 
 <!-- ================= BLOK ================= -->

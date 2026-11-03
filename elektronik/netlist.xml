@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>C:\Users\arda_\cdtp-denge-robotu\elektronik\cdtp_robot.kicad_sch</source>
-    <date>2026-10-29T20:32:16</date>
+    <date>2026-11-03T23:44:39</date>
     <tool>Eeschema 10.0.6</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -109,50 +109,6 @@
             <pin num="10"/>
             <pin num="11"/>
             <pin num="12"/>
-          </pins>
-        </unit>
-      </units>
-    </comp>
-    <comp ref="A4">
-      <value>IR goz sol (+15 deg)</value>
-      <fields>
-        <field name="Footprint"/>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <libsource lib="cdtp" part="IR_Alici_VS1838B" description="38 kHz IR alici modulu, VS1838B (3,3 V'ta calisir)"/>
-      <property name="Sheetname" value="cdtp_robot"/>
-      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>a8e02800-f4f1-5810-9479-4a738545455f</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="1"/>
-            <pin num="2"/>
-            <pin num="3"/>
-          </pins>
-        </unit>
-      </units>
-    </comp>
-    <comp ref="A5">
-      <value>IR goz sag (-15 deg)</value>
-      <fields>
-        <field name="Footprint"/>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <libsource lib="cdtp" part="IR_Alici_VS1838B" description="38 kHz IR alici modulu, VS1838B (3,3 V'ta calisir)"/>
-      <property name="Sheetname" value="cdtp_robot"/>
-      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>7b9693c8-5505-506a-8ab9-3b5da96d698e</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="1"/>
-            <pin num="2"/>
-            <pin num="3"/>
           </pins>
         </unit>
       </units>
@@ -338,29 +294,6 @@
         </unit>
       </units>
     </comp>
-    <comp ref="D1">
-      <value>SR5100</value>
-      <fields>
-        <field name="Footprint"/>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <libsource lib="Device" part="D_Schottky" description="Schottky diode"/>
-      <property name="Sheetname" value="cdtp_robot"/>
-      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
-      <property name="ki_keywords" value="diode Schottky"/>
-      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>aeab3b5a-c5e1-5a32-abdb-efdcc33b792b</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="1"/>
-            <pin num="2"/>
-          </pins>
-        </unit>
-      </units>
-    </comp>
     <comp ref="F1">
       <value>5 A bicak</value>
       <fields>
@@ -510,7 +443,7 @@
       </units>
     </comp>
     <comp ref="J6">
-      <value>IR sol</value>
+      <value>GENISLEME: IR goz sol (bos)</value>
       <fields>
         <field name="Footprint"/>
         <field name="Datasheet"/>
@@ -534,7 +467,7 @@
       </units>
     </comp>
     <comp ref="J7">
-      <value>IR sag</value>
+      <value>GENISLEME: IR goz sag (bos)</value>
       <fields>
         <field name="Footprint"/>
         <field name="Datasheet"/>
@@ -584,7 +517,7 @@
       </units>
     </comp>
     <comp ref="J9">
-      <value>Olcum klemens</value>
+      <value>GENISLEME: sarj girisi (bos)</value>
       <fields>
         <field name="Footprint"/>
         <field name="Datasheet"/>
@@ -671,6 +604,31 @@
         </unit>
       </units>
     </comp>
+    <comp ref="J13">
+      <value>GENISLEME: I2C (ekran, 2. sensor)</value>
+      <fields>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x04" description="Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value="cdtp_robot"/>
+      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8f67ca99-668e-5357-977b-84947bc574b3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
     <comp ref="JP1">
       <value>USB'de cikar</value>
       <fields>
@@ -740,46 +698,6 @@
             <pin num="3"/>
             <pin num="4"/>
             <pin num="5"/>
-          </pins>
-        </unit>
-      </units>
-    </comp>
-    <comp ref="P1">
-      <value>Pogo + (ust, zeminden 102)</value>
-      <fields>
-        <field name="Footprint"/>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <libsource lib="cdtp" part="Pogo_Pim" description="V-yuvadaki 5 mm pogo pim"/>
-      <property name="Sheetname" value="cdtp_robot"/>
-      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>934c2523-d05b-5c43-b783-276975bec288</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="1"/>
-          </pins>
-        </unit>
-      </units>
-    </comp>
-    <comp ref="P2">
-      <value>Pogo - (alt, zeminden 77)</value>
-      <fields>
-        <field name="Footprint"/>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <libsource lib="cdtp" part="Pogo_Pim" description="V-yuvadaki 5 mm pogo pim"/>
-      <property name="Sheetname" value="cdtp_robot"/>
-      <property name="Sheetfile" value="cdtp_robot.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>5b4bcdff-59ca-524e-b367-ad9c512b3070</tstamps>
-      <units>
-        <unit name="A">
-          <pins>
-            <pin num="1"/>
           </pins>
         </unit>
       </units>
@@ -1245,26 +1163,6 @@
         <pin num="2" name="" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="Device" part="D_Schottky">
-      <description>Schottky diode</description>
-      <footprints>
-        <fp>TO-???*</fp>
-        <fp>*_Diode_*</fp>
-        <fp>*SingleDiode*</fp>
-        <fp>D_*</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">D</field>
-        <field name="Value">D_Schottky</field>
-        <field name="Footprint"/>
-        <field name="Datasheet"/>
-        <field name="Description">Schottky diode</field>
-      </fields>
-      <pins>
-        <pin num="1" name="K" type="passive"/>
-        <pin num="2" name="A" type="passive"/>
-      </pins>
-    </libpart>
     <libpart lib="Device" part="Fuse">
       <description>Fuse</description>
       <footprints>
@@ -1443,21 +1341,6 @@
         <pin num="8" name="INT" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="cdtp" part="IR_Alici_VS1838B">
-      <description>38 kHz IR alici modulu, VS1838B (3,3 V'ta calisir)</description>
-      <fields>
-        <field name="Reference">A</field>
-        <field name="Value">IR_Alici_VS1838B</field>
-        <field name="Footprint"/>
-        <field name="Datasheet"/>
-        <field name="Description">38 kHz IR alici modulu, VS1838B (3,3 V'ta calisir)</field>
-      </fields>
-      <pins>
-        <pin num="1" name="OUT" type="passive"/>
-        <pin num="2" name="GND" type="passive"/>
-        <pin num="3" name="VCC" type="passive"/>
-      </pins>
-    </libpart>
     <libpart lib="cdtp" part="LM2596_Modul">
       <description>LM2596 3 A dusurucu, cikis 5,0 V'a ayarli</description>
       <fields>
@@ -1490,19 +1373,6 @@
         <pin num="4" name="C2" type="passive"/>
         <pin num="5" name="VCC" type="passive"/>
         <pin num="6" name="M2" type="passive"/>
-      </pins>
-    </libpart>
-    <libpart lib="cdtp" part="Pogo_Pim">
-      <description>V-yuvadaki 5 mm pogo pim</description>
-      <fields>
-        <field name="Reference">A</field>
-        <field name="Value">Pogo_Pim</field>
-        <field name="Footprint"/>
-        <field name="Datasheet"/>
-        <field name="Description">V-yuvadaki 5 mm pogo pim</field>
-      </fields>
-      <pins>
-        <pin num="1" name="" type="passive"/>
       </pins>
     </libpart>
     <libpart lib="cdtp" part="WAGO_221_415">
@@ -1556,8 +1426,7 @@
       <node ref="A1" pin="1" pinfunction="VCC_1" pintype="passive"/>
       <node ref="A2" pin="7" pinfunction="VCC_7" pintype="passive"/>
       <node ref="A3" pin="7" pinfunction="VCC_7" pintype="passive"/>
-      <node ref="A4" pin="3" pinfunction="VCC_3" pintype="passive"/>
-      <node ref="A5" pin="3" pinfunction="VCC_3" pintype="passive"/>
+      <node ref="J13" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
       <node ref="J2" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
       <node ref="J3" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
       <node ref="J4" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
@@ -1614,14 +1483,11 @@
       <node ref="U2" pin="3" pinfunction="B2_3" pintype="passive"/>
     </net>
     <net code="9" name="/BAT+" class="Default">
-      <node ref="D1" pin="1" pinfunction="K_1" pintype="passive"/>
       <node ref="F1" pin="1" pintype="passive"/>
       <node ref="J12" pin="1" pinfunction="+_1" pintype="passive"/>
     </net>
     <net code="10" name="/CHG+" class="Default">
-      <node ref="D1" pin="2" pinfunction="A_2" pintype="passive"/>
       <node ref="J9" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
-      <node ref="P1" pin="1" pintype="passive"/>
       <node ref="R3" pin="1" pintype="passive"/>
     </net>
     <net code="11" name="/ENC_L_A" class="Default">
@@ -1651,8 +1517,6 @@
       <node ref="A2" pin="8" pinfunction="GND_8" pintype="passive"/>
       <node ref="A3" pin="10" pinfunction="B-_10" pintype="passive"/>
       <node ref="A3" pin="8" pinfunction="GND_8" pintype="passive"/>
-      <node ref="A4" pin="2" pinfunction="GND_2" pintype="passive"/>
-      <node ref="A5" pin="2" pinfunction="GND_2" pintype="passive"/>
       <node ref="C1" pin="2" pintype="passive"/>
       <node ref="C2" pin="2" pintype="passive"/>
       <node ref="C3" pin="2" pintype="passive"/>
@@ -1660,6 +1524,7 @@
       <node ref="C5" pin="2" pintype="passive"/>
       <node ref="J1" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
       <node ref="J12" pin="2" pinfunction="-_2" pintype="passive"/>
+      <node ref="J13" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
       <node ref="J2" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
       <node ref="J3" pin="5" pinfunction="Pin_5_5" pintype="passive"/>
       <node ref="J4" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
@@ -1669,7 +1534,6 @@
       <node ref="J8" pin="5" pinfunction="Pin_5_5" pintype="passive"/>
       <node ref="M1" pin="2" pinfunction="GND_2" pintype="passive"/>
       <node ref="M2" pin="2" pinfunction="GND_2" pintype="passive"/>
-      <node ref="P2" pin="1" pintype="passive"/>
       <node ref="R2" pin="2" pintype="passive"/>
       <node ref="R4" pin="2" pintype="passive"/>
       <node ref="R5" pin="2" pintype="passive"/>
@@ -1687,11 +1551,13 @@
     </net>
     <net code="16" name="/I2C_SCL" class="Default">
       <node ref="A1" pin="3" pinfunction="SCL_3" pintype="passive"/>
+      <node ref="J13" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
       <node ref="J2" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
       <node ref="U1" pin="22" pinfunction="GPIO22_22" pintype="passive"/>
     </net>
     <net code="17" name="/I2C_SDA" class="Default">
       <node ref="A1" pin="4" pinfunction="SDA_4" pintype="passive"/>
+      <node ref="J13" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
       <node ref="J2" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
       <node ref="U1" pin="25" pinfunction="GPIO21_25" pintype="passive"/>
     </net>
@@ -1701,12 +1567,10 @@
       <node ref="U1" pin="27" pinfunction="GPIO19_27" pintype="passive"/>
     </net>
     <net code="19" name="/IR_L" class="Default">
-      <node ref="A4" pin="1" pinfunction="OUT_1" pintype="passive"/>
       <node ref="J6" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
       <node ref="U1" pin="3" pinfunction="GPIO36_VP_3" pintype="passive"/>
     </net>
     <net code="20" name="/IR_R" class="Default">
-      <node ref="A5" pin="1" pinfunction="OUT_1" pintype="passive"/>
       <node ref="J7" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
       <node ref="U1" pin="4" pinfunction="GPIO39_VN_4" pintype="passive"/>
     </net>
