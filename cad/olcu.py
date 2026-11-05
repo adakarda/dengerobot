@@ -1,10 +1,10 @@
 """3B baski parcalarinin tum olculeri (mm). Eksenler: X ileri, Y sol, Z yukari; orijin teker ekseninin ortasi.
-Zemin z = -32.5. Parca gelince kumpasla olcun; (OLC) isaretlileri saticiya gore degisir.
+Zemin z = -35. Parca gelince kumpasla olcun; (OLC) isaretlileri saticiya gore degisir.
 Degistirdikten sonra: python cad/robot_cad.py  (STL'ler ve kontrol raporu yeniden uretilir)."""
 
 # --- Genel ---
-R_TEKER = 32.5           # 65 mm teker
-TEKER_EN = 26.0          # (OLC) lastik genisligi
+R_TEKER = 35.0           # 70 mm teker (Pololu 3272)
+TEKER_EN = 25.0          # lastik genisligi
 IZ = 190.0               # iz genisligi; degisirse cdtp_config.h TRACK_WIDTH_M de degismeli
 ZEMIN = -R_TEKER
 BOSLUK = 0.3             # yuva bosluk payi (her yanda), PLA 0,4 mm nozul icin
@@ -22,7 +22,7 @@ DISTANS_AA = 5.5                     # M3 disi-disi distans altigen
 KAT1_Z, KAT2_Z, KAT3_Z = 22.0, 106.0, 190.0   # alt yuzler; 30+50 = 80 mm distans + 4 mm kat
 
 # --- Motor: JGB37-520, eksantrik mil ---
-MOTOR_SANZ_D, MOTOR_SANZ_L = 37.0, 22.0   # sanziman
+MOTOR_SANZ_D, MOTOR_SANZ_L = 37.0, 26.0   # sanziman (cizim: 26, oran ile 26-29 degisir)
 MOTOR_GOVDE_D, MOTOR_GOVDE_L = 33.0, 31.0  # motor + enkoder kapagi (OLC: toplam ~55)
 MOTOR_MIL_KACIK = 7.0                     # mil, motor ekseninin 7 mm ustunde (motor asagida)
 MOTOR_MIL_D, MOTOR_MIL_L = 6.0, 15.0

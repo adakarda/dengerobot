@@ -184,10 +184,20 @@ def goz_tutucu(sag):
     tup = kutu(0, o.GOZ_TUP_L, -w / 2 - d, w / 2 + d, K2U, zc + h / 2 + d) - kutu(-1, o.GOZ_TUP_L + 1, -w / 2, w / 2, zc - h / 2, zc + h / 2)
     cep_ic = (8.4, 16.0)
     arka = kutu(-cep_ic[0] - d, 0, -cep_ic[1] / 2 - d, cep_ic[1] / 2 + d, K2U, K2U + 14) - \
-        kutu(-cep_ic[0], 0.01, -cep_ic[1] / 2, cep_ic[1] / 2, K2U + 0.8, K2U + 20)
+        kutu(-cep_ic[0], 0.01, -cep_ic[1] / 2, cep_ic[1] / 2, K2U - 5, K2U + 20)
     # bag deligi (arka duvardan, modul kartini sarar)
     arka = arka - kutu(-cep_ic[0] - d - 1, -cep_ic[0] + 1, -2, 2, K2U + 6, K2U + 8.2)
     g = tup + arka
+    a = -o.GOZ_ACI if sag else o.GOZ_ACI
+    x, y = YER["goz"]
+    return g.rotate([0, 0, a]).translate([x, -y if sag else y, 0])
+
+
+def goz_kes(sag):
+    """Goz penceresinin kat 2'ye giren alt kismi (goz yuksekligi zeminden sabit; tekerlek buyuyunce plakaya iner)."""
+    w, h = o.GOZ_PENCERE
+    zc = Z_GOZ
+    g = kutu(-1, o.GOZ_TUP_L + 1, -w / 2, w / 2, zc - h / 2, K2U + 1) + kutu(-6.0, 0.5, -3.6, 3.6, zc - 4.0, K2U + 1)  # + modul basi cebi
     a = -o.GOZ_ACI if sag else o.GOZ_ACI
     x, y = YER["goz"]
     return g.rotate([0, 0, a]).translate([x, -y if sag else y, 0])
@@ -218,6 +228,7 @@ def kat2():
     for x, y in V_UST_VIDA:
         cik.append(sil_z(x, y, o.VIDA_D / 2, K2 - 1, K2U + 1))
     p = (p + birlesim(ekle)) - birlesim(cik)
+    p = p - goz_kes(False) - goz_kes(True)
     return p + goz_tutucu(False) + goz_tutucu(True)
 
 

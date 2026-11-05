@@ -38,7 +38,7 @@
 | Adim 0,5 m / 90 deg | 0.5 / 90 | 0.5 / 90 | uygun |
 | Sarj algilama esigi 9 V | 9 | 9.0 | uygun |
 | Butunlesik gorevde bos bekleme 6 s | 6 | 6.0 | uygun |
-| LQR kazanclari (gains.h <-> plan sayfasi) | u = 53,0·x + 65,6·v + 108,6·θ + 13,5·ω | plan sayfasinda var | uygun |
+| LQR kazanclari (gains.h <-> plan sayfasi) | u = 54,2·x + 66,5·v + 108,2·θ + 13,5·ω | plan sayfasinda var | uygun |
 | BLE CDTP_SVC_UUID | 6e400001-cd7b-4e3a-9a40-2026cd7b0001 | belgede var | uygun |
 | BLE CDTP_TELEM_UUID | 6e400002-cd7b-4e3a-9a40-2026cd7b0001 | belgede var | uygun |
 | BLE CDTP_CMD_UUID | 6e400003-cd7b-4e3a-9a40-2026cd7b0001 | belgede var | uygun |

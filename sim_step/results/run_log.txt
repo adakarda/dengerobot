@@ -1,0 +1,113 @@
+design:
+  17HS4401 K = [x, v, theta, omega] = [-1455.9 -1424.2 -3021.5  -403.2] th_per_acc 0.154
+  17HS3401S K = [x, v, theta, omega] = [-1457.2 -1428.5 -3038.7  -409.3] th_per_acc 0.1542
+acceptance done 9s
+sensitivity done 34s
+limit scan done 42s
+monte carlo done 199s
+## Acceptance results (nominal plant, formal seeds)
+
+### 17HS4401
+
+| ID | Test | Result | Key numbers | Torque per motor N.cm: peak / p99 / rms / pull-out at peak | Min margin | Lost-step events |
+|---|---|---|---|---|---|---|
+| ON | Unpowered +-10 deg must fall | PASS | time to 40 deg 0.22 s (rotor detent torque not modelled) | - | - | - |
+| C1.1 | 30 s static balance | PASS | max tilt 1.28 deg, max drift 1.9 cm | 8.8 / 6.5 / 1.8 / 39.1 | 0.78 | 0 |
+| C1.2 | 1 m forward + 3 s hold | PASS | travel 1.018 m, hold drift 26.5 mm (v peak 0.053 m/s), max tilt 4.0 deg, dead-reckoning error -0.0 mm | 8.2 / 6.1 / 1.7 / 38.8 | 0.79 | 0 |
+| C1.3 | 1 m back + 3 s hold | PASS | travel 0.995 m, hold drift 20.1 mm (v peak 0.079 m/s), max tilt 3.7 deg, dead-reckoning error 0.6 mm | 9.3 / 6.2 / 1.7 / 31.9 | 0.71 | 0 |
+| C1.4 | recovery +-10 deg within 10 s | PASS | +10: 0.86 s (travel 13 cm), -10: 0.79 s (travel 12 cm) | 9.4 / 7.1 / 1.8 / 35.5 | 0.72 | 0 |
+| GUV.2 | E-stop: balance released, drivers off | PASS | mode after stop STANDBY, stays off True | - | - | - |
+| C2.1 | Glove: forward ~0.5 m | PASS | response 0.79 s, travel 0.533 m | 9.0 / 6.0 / 1.7 / 39.1 | 0.77 | 0 |
+| C2.2 | Glove: back ~0.5 m | PASS | response 0.77 s, travel -0.491 m | 7.3 / 5.2 / 1.5 / 39.5 | 0.82 | 0 |
+| C2.3 | Glove: left ~90 deg | PASS | response 0.24 s, turn 90.0 deg | 9.4 / 7.1 / 1.8 / 39.5 | 0.76 | 0 |
+| C2.4 | Glove: right ~90 deg | PASS | response 0.24 s, turn -90.0 deg | 9.4 / 7.1 / 1.8 / 39.5 | 0.76 | 0 |
+| C2.5 | Stop: stays in place after all commands | PASS | last 3 s drift 12.0 mm, rotation 0.00 deg; end position error (dead-reckoned vs true) -0.3 mm | 9.2 / 6.1 / 1.7 / 39.2 | 0.76 | 0 |
+| GUV.1 | Glove lost (0.3 s): step cut, robot stops | PASS | stopped after 0.306 m (full step 0.5 m) | - | - | - |
+
+### 17HS3401S
+
+| ID | Test | Result | Key numbers | Torque per motor N.cm: peak / p99 / rms / pull-out at peak | Min margin | Lost-step events |
+|---|---|---|---|---|---|---|
+| ON | Unpowered +-10 deg must fall | PASS | time to 40 deg 0.22 s (rotor detent torque not modelled) | - | - | - |
+| C1.1 | 30 s static balance | PASS | max tilt 1.29 deg, max drift 2.9 cm | 7.1 / 4.8 / 1.3 / 27.1 | 0.74 | 0 |
+| C1.2 | 1 m forward + 3 s hold | PASS | travel 1.021 m, hold drift 26.3 mm (v peak 0.055 m/s), max tilt 3.5 deg, dead-reckoning error -0.1 mm | 6.6 / 4.7 / 1.2 / 27.3 | 0.76 | 0 |
+| C1.3 | 1 m back + 3 s hold | PASS | travel 0.993 m, hold drift 7.3 mm (v peak 0.045 m/s), max tilt 3.5 deg, dead-reckoning error -0.2 mm | 6.8 / 4.9 / 1.3 / 27.2 | 0.75 | 0 |
+| C1.4 | recovery +-10 deg within 10 s | PASS | +10: 0.79 s (travel 12 cm), -10: 0.79 s (travel 13 cm) | 11.5 / 5.5 / 1.4 / 26.2 | 0.56 | 0 |
+| GUV.2 | E-stop: balance released, drivers off | PASS | mode after stop STANDBY, stays off True | - | - | - |
+| C2.1 | Glove: forward ~0.5 m | PASS | response 0.79 s, travel 0.494 m | 5.4 / 4.6 / 1.2 / 27.2 | 0.80 | 0 |
+| C2.2 | Glove: back ~0.5 m | PASS | response 0.77 s, travel -0.491 m | 5.4 / 4.5 / 1.2 / 27.4 | 0.80 | 0 |
+| C2.3 | Glove: left ~90 deg | PASS | response 0.24 s, turn 90.0 deg | 6.2 / 5.5 / 1.5 / 27.4 | 0.78 | 0 |
+| C2.4 | Glove: right ~90 deg | PASS | response 0.24 s, turn -90.0 deg | 6.2 / 5.5 / 1.5 / 27.4 | 0.78 | 0 |
+| C2.5 | Stop: stays in place after all commands | PASS | last 3 s drift 0.6 mm, rotation 0.00 deg; end position error (dead-reckoned vs true) -0.3 mm | 6.7 / 4.6 / 1.3 / 27.1 | 0.75 | 0 |
+| GUV.1 | Glove lost (0.3 s): step cut, robot stops | PASS | stopped after 0.306 m (full step 0.5 m) | - | - | - |
+
+## Sensitivity (core tests C1.1-C1.4, C2.1-C2.4)
+
+### 17HS4401
+
+| Case | C1.1 | C1.2 | C1.3 | C1.4 | C2.1 | C2.2 | C2.3 | C2.4 | peak T N.cm | min margin | slips |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| base (torque x1.0, damp 0.010) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | 9.4 | 0.71 | 0 |
+| pull-out torque x0.70 | PASS | FAIL | PASS | PASS | PASS | PASS | PASS | PASS | 9.8 | 0.63 | 0 |
+| pull-out torque x0.50 | PASS | FAIL | PASS | PASS | PASS | PASS | PASS | PASS | 9.0 | 0.51 | 0 |
+| pull-out torque x0.35 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | 7.8 | 0.36 | 0 |
+| rotor damping 0.003 (very low) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | 30.7 | 0.20 | 0 |
+| rotor damping 0.030 (high) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | 9.8 | 0.74 | 0 |
+| vibration noise x3 (0.9 m/s2) | PASS | FAIL | FAIL | PASS | PASS | PASS | PASS | PASS | 10.9 | 0.72 | 0 |
+| battery 9.9 V (empty pack) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | 9.6 | 0.72 | 0 |
+| torque x0.70 + damping 0.003 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | 10.3 | 0.60 | 0 |
+
+### 17HS3401S
+
+| Case | C1.1 | C1.2 | C1.3 | C1.4 | C2.1 | C2.2 | C2.3 | C2.4 | peak T N.cm | min margin | slips |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| base (torque x1.0, damp 0.010) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | 11.5 | 0.56 | 0 |
+| pull-out torque x0.70 | PASS | FAIL | PASS | PASS | PASS | PASS | PASS | PASS | 10.1 | 0.44 | 0 |
+| pull-out torque x0.50 | PASS | FAIL | PASS | PASS | PASS | PASS | PASS | PASS | 8.0 | 0.37 | 0 |
+| pull-out torque x0.35 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | 8.3 | -0.10 | 0 |
+| rotor damping 0.003 (very low) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | 13.4 | 0.49 | 0 |
+| rotor damping 0.030 (high) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | 8.8 | 0.66 | 0 |
+| vibration noise x3 (0.9 m/s2) | PASS | FAIL | FAIL | PASS | PASS | PASS | PASS | PASS | 8.8 | 0.67 | 0 |
+| battery 9.9 V (empty pack) | PASS | FAIL | PASS | PASS | PASS | PASS | PASS | PASS | 11.0 | 0.57 | 0 |
+| torque x0.70 + damping 0.003 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | 8.6 | 0.47 | 0 |
+
+## Largest recovered initial tilt (deg, + / -) and peak torque at that tilt
+
+| Motor | torque scale | + tilt | - tilt | peak T at + (N.cm) | pull-out there |
+|---|---|---|---|---|---|
+| 17HS3401S | 0.50 | 22.5 | 20.0 | 11.2 | 12.8 |
+| 17HS3401S | 0.70 | 20.0 | 20.0 | 10.5 | 17.6 |
+| 17HS3401S | 1.00 | 20.0 | 20.0 | 11.4 | 25.0 |
+| 17HS4401 | 0.50 | 20.0 | 20.0 | 10.2 | 19.2 |
+| 17HS4401 | 0.70 | 20.0 | 20.0 | 14.0 | 25.8 |
+| 17HS4401 | 1.00 | 20.0 | 20.0 | 14.9 | 37.6 |
+
+## Robustness (20 randomised runs per case: static 15 s + recovery +-10 + 1 m forward/hold)
+
+### 17HS4401
+
+| Case | static | recovery | 1 m hold <5 cm | 1 m hold <3 cm | worst recovery s | peak T N.cm | min margin | runs with slips | max dead-reckoning err mm |
+|---|---|---|---|---|---|---|---|---|---|
+| nominal | 20/20 | 20/20 | 20/20 | 18/20 | 1.32 | 15.0 | 0.60 | 0 | 1.2 |
+| random | 20/20 | 20/20 | 18/20 | 14/20 | 0.98 | 14.9 | 0.59 | 0 | 1.8 |
+| mass-25% | 20/20 | 19/20 | 20/20 | 19/20 | 1.64 | 13.5 | 0.62 | 0 | 1.4 |
+| mass+25% | 20/20 | 20/20 | 20/20 | 18/20 | 0.91 | 15.9 | 0.56 | 0 | 1.7 |
+| COM-25% | 20/20 | 20/20 | 20/20 | 19/20 | 1.73 | 15.3 | 0.61 | 0 | 1.9 |
+| COM+60% | 20/20 | 20/20 | 18/20 | 13/20 | 1.32 | 13.3 | 0.64 | 0 | 2.3 |
+| mass+25%/COM+60% | 20/20 | 19/20 | 20/20 | 15/20 | 1.44 | 15.3 | 0.60 | 0 | 1.5 |
+| mass-25%/COM-25% | 20/20 | 20/20 | 18/20 | 15/20 | 1.79 | 14.6 | 0.59 | 0 | 1.0 |
+
+### 17HS3401S
+
+| Case | static | recovery | 1 m hold <5 cm | 1 m hold <3 cm | worst recovery s | peak T N.cm | min margin | runs with slips | max dead-reckoning err mm |
+|---|---|---|---|---|---|---|---|---|---|
+| nominal | 20/20 | 19/20 | 20/20 | 20/20 | 1.73 | 12.6 | 0.51 | 0 | 1.2 |
+| random | 20/20 | 20/20 | 19/20 | 19/20 | 0.96 | 12.2 | 0.54 | 0 | 1.5 |
+| mass-25% | 20/20 | 20/20 | 20/20 | 17/20 | 1.22 | 12.7 | 0.55 | 0 | 1.2 |
+| mass+25% | 20/20 | 20/20 | 20/20 | 19/20 | 0.93 | 13.2 | 0.51 | 0 | 1.4 |
+| COM-25% | 20/20 | 20/20 | 20/20 | 18/20 | 1.78 | 12.0 | 0.56 | 0 | 1.5 |
+| COM+60% | 20/20 | 19/20 | 19/20 | 16/20 | 1.52 | 11.3 | 0.56 | 0 | 1.3 |
+| mass+25%/COM+60% | 20/20 | 19/20 | 20/20 | 16/20 | 1.40 | 11.6 | 0.55 | 0 | 1.8 |
+| mass-25%/COM-25% | 20/20 | 20/20 | 20/20 | 17/20 | 0.89 | 11.5 | 0.55 | 0 | 1.1 |
+
+total 201 s

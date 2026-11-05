@@ -25,7 +25,7 @@ OUT.mkdir(parents=True, exist_ok=True)
 BRIDGE = ROOT / "build/twin_bridge.exe"
 
 # ---- fiziksel parametreler (lqr_design.py ile ayni kaynaklar; motor degerleri veri sayfasi tahmini) ----
-R_WHEEL, TRACK = 0.0325, 0.19
+R_WHEEL, TRACK = 0.035, 0.19
 KE, RA = 0.216, 4.5
 J_ROTOR, GEAR = 5.0e-7, 19.0
 B_VISC, TAU_C = 0.002, 0.02
@@ -109,11 +109,11 @@ def build_xml(post_xy=None, box=True):
       <site name="pin" pos="0.062 0 0.07"/>
       <body name="wheel_L" pos="0 {TRACK/2} 0">
         <joint name="wl" type="hinge" axis="0 1 0" armature="{arm}" damping="{B_VISC}" frictionloss="{TAU_C}"/>
-        <geom type="cylinder" size="{R_WHEEL} 0.013" euler="90 0 0" mass="0.045" rgba=".1 .1 .1 1"/>
+        <geom type="cylinder" size="{R_WHEEL} 0.0125" euler="90 0 0" mass="0.07" rgba=".1 .1 .1 1"/>
       </body>
       <body name="wheel_R" pos="0 {-TRACK/2} 0">
         <joint name="wr" type="hinge" axis="0 1 0" armature="{arm}" damping="{B_VISC}" frictionloss="{TAU_C}"/>
-        <geom type="cylinder" size="{R_WHEEL} 0.013" euler="90 0 0" mass="0.045" rgba=".1 .1 .1 1"/>
+        <geom type="cylinder" size="{R_WHEEL} 0.0125" euler="90 0 0" mass="0.07" rgba=".1 .1 .1 1"/>
       </body>
     </body>
     {box_body}

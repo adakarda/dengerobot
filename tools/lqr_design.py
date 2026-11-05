@@ -22,8 +22,8 @@ P = dict(
     m_body=round(mass_budget.m, 3),   # kg, tekerler haric her sey (motor govdeleri dahil)
     l_com=round(mass_budget.l, 4),    # m, teker ekseninden govde kutle merkezine
     I_body=round(mass_budget.I, 5),   # kg m^2, kutle merkezi etrafinda yunuslama ataleti
-    m_wheel=0.045,      # kg, tek teker + gobek
-    r=0.0325,           # m
+    m_wheel=0.070,      # kg, tek teker (60 g) + alüminyum adaptör
+    r=0.035,            # m (70 mm teker)
     J_rotor=5.0e-7,     # kg m^2, motor rotoru (disli oncesi)
     gear=19.0,          # JGB37-520 530 RPM ~ 1:19
     Ke=0.216,           # V s/rad (cikis mili) = Kt (N m/A)

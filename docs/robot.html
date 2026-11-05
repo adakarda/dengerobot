@@ -140,8 +140,8 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>JGB37-520 12 V 530 RPM, Hall enkoderli</td><td class="num">2</td><td class="num r">639</td><td>Direnc.net</td><td>6 mm D mil</td></tr>
       <tr><td>BTS7960 motor sürücü kartı</td><td class="num">2</td><td class="num r">162</td><td>Robotzade</td><td>VCC → 3,3 V</td></tr>
       <tr><td>Motor tutucu, 3B baskı <span class="pill p-new">yeni</span></td><td class="num">2</td><td class="num r">—</td><td>Kendi baskınız</td><td>L braket yerine; <code>cad/stl/motor_tutucu_*.stl</code></td></tr>
-      <tr><td>65 mm lastik tekerlek</td><td class="num">2</td><td class="num r">175</td><td>Robotistan</td><td>Göbek 6 mm D'ye uymalı</td></tr>
-      <tr><td>6 mm kaplin (2'li)</td><td class="num">1</td><td class="num r">170</td><td>Robotistan</td><td>Göbek mile doğrudan oturuyorsa alınmaz</td></tr>
+      <tr><td>Scooter/Kaykay tekerleği 70×25 mm, siyah, Pololu 3272 (60 g)</td><td class="num">2</td><td class="num r">?</td><td>Pololu / Türk satıcı</td><td>608 rulman uyumlu sert poliüretan. Fiyatı bakmadım</td></tr>
+      <tr><td>Pololu alüminyum scooter wheel adaptörü, 6 mm mil, PL2674</td><td class="num">2</td><td class="num r">~8 $</td><td>Pololu / RobotShop</td><td>Mile 2 M4 set vidası, tekerleği 3 M3 vidayla sıkıştırır; D mile düz yüzü denk getir</td></tr>
       <tr class="grp"><td colspan="5">Güç</td></tr>
       <tr><td>Orion 18650P 2450 mAh 12C</td><td class="num">3</td><td class="num r">201</td><td>Direnc.net</td><td>Üçü aynı partiden</td></tr>
       <tr><td>18650 3'lü pil yuvası</td><td class="num">1</td><td class="num r">47</td><td>Ulutaş</td><td>İçten seri</td></tr>
@@ -171,7 +171,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>Kapaklı ilaç kutusu <span class="pill p-warn">eklenti</span></td><td class="num">1</td><td class="num r">60</td><td>Eczane</td><td></td></tr>
     </tbody>
   </table></div>
-  <p>Dengede kalan robotun toplamı yaklaşık <b>4.970 TL</b> (sarf malzemesi hariç, ~110 TL; 3 Kasım 2026 fiyatları, seçilen satıcıya göre değişir). Aşağıdaki IR alıcı, SR5100, pogo, mıknatıs ve ilaç kutusu satırları <b>eklentidir</b> (~300 TL), toplama girmez.</p>
+  <p>Dengede kalan robotun toplamı yaklaşık <b>5.650 TL</b> (sarf malzemesi hariç, ~110 TL; 3 Kasım 2026 fiyatları, tekerlek ve adaptör fiyatı tahmin, seçilen satıcıya göre değişir). Aşağıdaki IR alıcı, SR5100, pogo, mıknatıs ve ilaç kutusu satırları <b>eklentidir</b> (~300 TL), toplama girmez.</p>
 </section>
 
 <!-- ================= BLOK ================= -->
@@ -528,7 +528,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
   <h3>3B montaj denetimi ve parçalar</h3>
 <div class="tbl"><table><thead><tr><th>Kontrol</th><th>Sonuc</th><th>Ayrinti</th></tr></thead><tbody>
 <tr><td>Carpisma (tum parcalar ikili)</td><td><span class="pill p-ok">geçti</span></td><td>38 parca, 703 cift; hic biri birbirine girmiyor</td></tr>
-<tr><td>Zemin payi (+-30 derece egim)</td><td><span class="pill p-ok">geçti</span></td><td>en alcak nokta zeminden 4.5 mm ([baski] motor_tutucu_sol)</td></tr>
+<tr><td>Zemin payi (+-30 derece egim)</td><td><span class="pill p-ok">geçti</span></td><td>en alcak nokta zeminden 7.0 mm ([baski] motor_tutucu_sol)</td></tr>
 <tr><td>Direk yanasmasi (O40, seride temas)</td><td><span class="pill p-ok">geçti</span></td><td>yalniz pogo pimler direge giriyor (yay payi 3 mm)</td></tr>
 <tr><td>V kanatlari direge degmiyor</td><td><span class="pill p-ok">geçti</span></td><td>kanat ic yuzu ile direk arasi 1.2 mm</td></tr>
 <tr><td>Pim, miknatis ve goz yukseklikleri</td><td><span class="pill p-ok">geçti</span></td><td>+ pim 102.0, - pim 77.0, miknatis 89.5 (celik serit 85-94), IR goz 147.0 mm (zeminden)</td></tr>
@@ -540,7 +540,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 </tbody></table></div>
 <div class="tbl"><table><thead><tr><th>Parca</th><th>Boyut (mm, baski yonu)</th><th>Hacim cm3</th><th>Kutle g (%60 dolu PLA)</th></tr></thead><tbody>
 <tr><td>kat1</td><td>110.0 x 150.0 x 12.0</td><td>67.9</td><td>51</td></tr>
-<tr><td>kat2</td><td>110.0 x 150.0 x 18.0</td><td>68.3</td><td>51</td></tr>
+<tr><td>kat2</td><td>110.0 x 150.0 x 18.0</td><td>67.1</td><td>50</td></tr>
 <tr><td>kat3</td><td>110.0 x 150.0 x 29.0</td><td>77.4</td><td>58</td></tr>
 <tr><td>motor_tutucu_sol</td><td>42.0 x 50.0 x 28.0</td><td>11.8</td><td>9</td></tr>
 <tr><td>motor_tutucu_sag</td><td>42.0 x 50.0 x 28.0</td><td>11.8</td><td>9</td></tr>
@@ -705,17 +705,17 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
   <div class="sec-head"><span class="sec-num">14</span><h2>Testler: C++ simülasyonu ve MuJoCo dijital ikizi</h2></div>
 <h3>C++ simülasyonu: 20/20</h3><div class="tbl"><table><thead><tr><th>Test</th><th>Ölçülen</th><th>Sonuç</th></tr></thead><tbody>
 <tr><td><b>ON</b> Enerjisiz +-10 deg&#x27;den dik kalmamali</td><td>40 deg&#x27;yi gecme suresi en fazla 0.30 s (sinir: 5 s icinde dusmeli)</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.1</b> 30 s statik denge (kutulu)</td><td>en buyuk egim 0.70 deg, en buyuk kayma 1.6 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.2</b> 1 m ileri + 3 s dur</td><td>yol 0.993 m, 3 s durmada en buyuk kayma 10.1 mm (hiz tepe 0.052 m/s), en buyuk egim 5.3 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.3</b> 1 m geri + 3 s dur</td><td>yol 1.005 m, 3 s durmada en buyuk kayma 9.7 mm (hiz tepe 0.049 m/s), en buyuk egim 5.0 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.4</b> +10 ve -10 deg&#x27;den 10 s icinde toparlanma</td><td>+10: 1.44 s (yol 14 cm), -10: 1.48 s (yol 13 cm)</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.1</b> 30 s statik denge (kutulu)</td><td>en buyuk egim 0.68 deg, en buyuk kayma 1.3 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.2</b> 1 m ileri + 3 s dur</td><td>yol 0.993 m, 3 s durmada en buyuk kayma 8.9 mm (hiz tepe 0.039 m/s), en buyuk egim 5.4 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.3</b> 1 m geri + 3 s dur</td><td>yol 1.002 m, 3 s durmada en buyuk kayma 9.7 mm (hiz tepe 0.034 m/s), en buyuk egim 5.1 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.4</b> +10 ve -10 deg&#x27;den 10 s icinde toparlanma</td><td>+10: 1.44 s (yol 13 cm), -10: 1.44 s (yol 13 cm)</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>GUV.2</b> Acil stop: denge birakilir, motorlar kapanir</td><td>stop sonrasi mod BEKLE, bekleme dogru</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C2.1</b> Eldiven: ileri ~0,5 m</td><td>tepki 0.75 s, yol 0.500 m</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C2.2</b> Eldiven: geri ~0,5 m</td><td>tepki 0.78 s, yol -0.492 m</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.1</b> Eldiven: ileri ~0,5 m</td><td>tepki 0.77 s, yol 0.504 m</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.2</b> Eldiven: geri ~0,5 m</td><td>tepki 0.77 s, yol -0.498 m</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C2.3</b> Eldiven: sola ~90 deg</td><td>tepki 0.29 s, donus 90.0 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C2.4</b> Eldiven: saga ~90 deg</td><td>tepki 0.29 s, donus -90.0 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C2.5</b> Dur: tum komutlardan sonra yerinde kalir</td><td>son 3 s kayma 12.4 mm, donme 0.43 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>GUV.1</b> Eldiven sustu (0,3 s): adim kesilir, robot durur</td><td>durdugu yol 0.305 m (tam adim 0,5 m)</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.5</b> Dur: tum komutlardan sonra yerinde kalir</td><td>son 3 s kayma 8.8 mm, donme 0.38 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>GUV.1</b> Eldiven sustu (0,3 s): adim kesilir, robot durur</td><td>durdugu yol 0.312 m (tam adim 0,5 m)</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C3.1-2</b> IR ile bul, hizalan, yerles (63 baslangic, 30 cm/90 deg)</td><td>63/63 basarili, en uzun 14.8 s</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C3.3</b> Temastan sonra sarj + motor durur &lt;= 5 s</td><td>temas -&gt; SARJ modu en fazla 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C3.x</b> Istasyon gorus disindayken arayip bulma</td><td>3/3 basarili (90, -90, 180 deg ters bakis)</td><td><span class="pill p-ok">geçti</span></td></tr>
@@ -723,19 +723,19 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 <tr><td><b>C5.2</b> Butunlesik gorev, tekrar 2</td><td>hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas-&gt;sarj 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C5.3</b> Butunlesik gorev, tekrar 3</td><td>hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas-&gt;sarj 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C5.4</b> Butunlesik gorev, tekrar 4</td><td>hedefte bekleme 5.6 s, erken yanasma yok, sarj basladi, temas-&gt;sarj 0.50 s</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>SAG</b> Belirsizlik: kutle +-25%, KM -25/+60%, ...</td><td>statik 40/40, toparlanma 40/40 (en uzun 1.7 s), 1 m: +-5 cm durmada 40/40, +-3 cm durmada 37/40</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>SAG</b> Belirsizlik: kutle +-25%, KM -25/+60%, ...</td><td>statik 40/40, toparlanma 40/40 (en uzun 1.6 s), 1 m: +-5 cm durmada 40/40, +-3 cm durmada 37/40</td><td><span class="pill p-ok">geçti</span></td></tr>
 </tbody></table></div>
 <h3>MuJoCo dijital ikizi: 11/11</h3><div class="tbl"><table><thead><tr><th>Test</th><th>Ölçülen</th><th>Sonuç</th></tr></thead><tbody>
 <tr><td><b>ON</b> Enerjisiz +-10 deg&#x27;den dik kalmamali</td><td>40 deg&#x27;ye en gec 0.30 s&#x27;de dustu</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.1</b> 30 s statik denge (kutulu)</td><td>en buyuk egim 0.45 deg, kayma 0.8 cm, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.2</b> 1 m ileri + 3 s dur</td><td>yol 1.005 m, 3 s durmada kayma 7.8 mm, egim tepe 5.0 deg, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.3</b> 1 m geri + 3 s dur</td><td>yol 0.996 m, 3 s durmada kayma 13.1 mm, egim tepe 5.3 deg, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C1.4</b> +10 ve -10 deg&#x27;den 10 s icinde toparlanma</td><td>+10: 1.45 s, -10: 1.46 s</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C2.3-4</b> Eldiven: sola / saga ~90 deg</td><td>sol +89.7 deg, sag -89.7 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.1</b> 30 s statik denge (kutulu)</td><td>en buyuk egim 0.46 deg, kayma 0.8 cm, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.2</b> 1 m ileri + 3 s dur</td><td>yol 1.004 m, 3 s durmada kayma 8.0 mm, egim tepe 5.0 deg, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.3</b> 1 m geri + 3 s dur</td><td>yol 1.000 m, 3 s durmada kayma 8.9 mm, egim tepe 5.4 deg, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C1.4</b> +10 ve -10 deg&#x27;den 10 s icinde toparlanma</td><td>+10: 1.44 s, -10: 1.45 s</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C2.3-4</b> Eldiven: sola / saga ~90 deg</td><td>sol +89.7 deg, sag -89.8 deg</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>GUV.2</b> Acil stop: denge birakilir, motorlar kapanir</td><td>mod=BEKLE</td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>REF</b> GitHub referans LQI kazanclari ikizde dengeliyor</td><td>baslangic 0 deg: dengede (son -0.1 deg), baslangic 8 deg: dengede (son -0.0 deg)</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>REF</b> GitHub referans LQI kazanclari ikizde dengeliyor</td><td>baslangic 0 deg: dengede (son -0.0 deg), baslangic 8 deg: dengede (son -0.0 deg)</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C3</b> IR ile yanasma, V-yuva + direk (30 baslangic)</td><td>30/30 basarili, en uzun temas 5.8 s, temas-&gt;sarj modu 0.50 s </td><td><span class="pill p-ok">geçti</span></td></tr>
-<tr><td><b>C3.5</b> Eldivenle &#x27;geri&#x27;: miknatistan kopup istasyondan ayrilir</td><td>once SARJ, sonra mod DENGE, direge uzaklik 52 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
+<tr><td><b>C3.5</b> Eldivenle &#x27;geri&#x27;: miknatistan kopup istasyondan ayrilir</td><td>once SARJ, sonra mod DENGE, direge uzaklik 51 cm</td><td><span class="pill p-ok">geçti</span></td></tr>
 <tr><td><b>C5</b> Butunlesik gorev (kutu, eldiven, yanasma)</td><td>son mod SARJ, erken yanasma yok, kutu yerinde</td><td><span class="pill p-ok">geçti</span></td></tr>
 </tbody></table></div>
   <div class="grid2">
@@ -751,7 +751,7 @@ footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padd
 <section id="kod">
   <div class="sec-head"><span class="sec-num">15</span><h2>Robotun bütün kodları</h2></div>
   <p>Robotta çalışan her dosya. Ortak çekirdek (<code>common/cdtp_core</code>) robot firmware'inin parçasıdır; <code>protocol.h</code> ve <code>gesture.h</code> eldivenle paylaşılır. Her dosya açılır ve kopyalanır.</p>
-<p class="mono">23 dosya, 3610 satır</p>
+<p class="mono">23 dosya, 3621 satır</p>
 <details class="code"><summary><b>firmware/robot/platformio.ini</b><span>PlatformIO ayarlari · 23 satır</span><button class="copy" data-target="src0" type="button">kopyala</button></summary><pre id="src0">; Robot ESP32 (ESP32-WROOM-32D gelistirme karti)
 ; VS Code + PlatformIO eklentisiyle bu klasoru acip &quot;Upload&quot; deyin.
 ; Kod yuklerken ana karttaki JP1 koprusunu cikarin (USB ve LM2596 5 V&#x27;u cakismasin).
@@ -1366,7 +1366,7 @@ namespace cdtp {
 namespace cfg {
 
 // ---- Mekanik (OLC) ----
-constexpr float WHEEL_RADIUS_M   = 0.0325f;  // 65 mm teker
+constexpr float WHEEL_RADIUS_M   = 0.035f;   // 70 mm teker (Pololu 3272)
 constexpr float TRACK_WIDTH_M    = 0.190f;   // iki teker temas noktasi arasi (sasi cizimi; OLC)
 constexpr float ENC_COUNTS_PER_REV = 836.0f; // 11 darbe x ~19 disli x 4 kenar (OLC: tekeri 10 tur cevir)
 constexpr bool  ENC_LEFT_INVERT  = false;
@@ -1444,14 +1444,14 @@ constexpr float GEST_NEUTRAL_S   = 0.20f;
 #pragma once
 namespace cdtp {
 namespace gains {
-constexpr float K_X = -53.04604f;
-constexpr float K_V = -65.55542f;
-constexpr float K_TH = -108.55007f;
-constexpr float K_OM = -13.48660f;
-constexpr float YAW_KP = 2.73684f;
-constexpr float YAW_KD = 0.61579f;
+constexpr float K_X = -54.19472f;
+constexpr float K_V = -66.49182f;
+constexpr float K_TH = -108.21176f;
+constexpr float K_OM = -13.45884f;
+constexpr float YAW_KP = 2.94737f;
+constexpr float YAW_KD = 0.66316f;
 // a_ref -&gt; egim on-besleme (rad / (m/s^2))
-constexpr float TH_PER_ACC = 0.15425f;
+constexpr float TH_PER_ACC = 0.16133f;
 }  // namespace gains
 }  // namespace cdtp
 </pre></details>
@@ -2342,8 +2342,8 @@ P = dict(
     m_body=round(mass_budget.m, 3),   # kg, tekerler haric her sey (motor govdeleri dahil)
     l_com=round(mass_budget.l, 4),    # m, teker ekseninden govde kutle merkezine
     I_body=round(mass_budget.I, 5),   # kg m^2, kutle merkezi etrafinda yunuslama ataleti
-    m_wheel=0.045,      # kg, tek teker + gobek
-    r=0.0325,           # m
+    m_wheel=0.070,      # kg, tek teker (60 g) + alüminyum adaptör
+    r=0.035,            # m (70 mm teker)
     J_rotor=5.0e-7,     # kg m^2, motor rotoru (disli oncesi)
     gear=19.0,          # JGB37-520 530 RPM ~ 1:19
     Ke=0.216,           # V s/rad (cikis mili) = Kt (N m/A)
@@ -2518,7 +2518,7 @@ OUT.mkdir(parents=True, exist_ok=True)
 BRIDGE = ROOT / &quot;build/twin_bridge.exe&quot;
 
 # ---- fiziksel parametreler (lqr_design.py ile ayni kaynaklar; motor degerleri veri sayfasi tahmini) ----
-R_WHEEL, TRACK = 0.0325, 0.19
+R_WHEEL, TRACK = 0.035, 0.19
 KE, RA = 0.216, 4.5
 J_ROTOR, GEAR = 5.0e-7, 19.0
 B_VISC, TAU_C = 0.002, 0.02
@@ -2602,11 +2602,11 @@ def build_xml(post_xy=None, box=True):
       &lt;site name=&quot;pin&quot; pos=&quot;0.062 0 0.07&quot;/&gt;
       &lt;body name=&quot;wheel_L&quot; pos=&quot;0 {TRACK/2} 0&quot;&gt;
         &lt;joint name=&quot;wl&quot; type=&quot;hinge&quot; axis=&quot;0 1 0&quot; armature=&quot;{arm}&quot; damping=&quot;{B_VISC}&quot; frictionloss=&quot;{TAU_C}&quot;/&gt;
-        &lt;geom type=&quot;cylinder&quot; size=&quot;{R_WHEEL} 0.013&quot; euler=&quot;90 0 0&quot; mass=&quot;0.045&quot; rgba=&quot;.1 .1 .1 1&quot;/&gt;
+        &lt;geom type=&quot;cylinder&quot; size=&quot;{R_WHEEL} 0.0125&quot; euler=&quot;90 0 0&quot; mass=&quot;0.07&quot; rgba=&quot;.1 .1 .1 1&quot;/&gt;
       &lt;/body&gt;
       &lt;body name=&quot;wheel_R&quot; pos=&quot;0 {-TRACK/2} 0&quot;&gt;
         &lt;joint name=&quot;wr&quot; type=&quot;hinge&quot; axis=&quot;0 1 0&quot; armature=&quot;{arm}&quot; damping=&quot;{B_VISC}&quot; frictionloss=&quot;{TAU_C}&quot;/&gt;
-        &lt;geom type=&quot;cylinder&quot; size=&quot;{R_WHEEL} 0.013&quot; euler=&quot;90 0 0&quot; mass=&quot;0.045&quot; rgba=&quot;.1 .1 .1 1&quot;/&gt;
+        &lt;geom type=&quot;cylinder&quot; size=&quot;{R_WHEEL} 0.0125&quot; euler=&quot;90 0 0&quot; mass=&quot;0.07&quot; rgba=&quot;.1 .1 .1 1&quot;/&gt;
       &lt;/body&gt;
     &lt;/body&gt;
     {box_body}
@@ -3181,12 +3181,12 @@ int main() {
 }
 </pre></details>
 <details class="code"><summary><b>cad/olcu.py</b><span>3B parca olculeri · 74 satır</span><button class="copy" data-target="src20" type="button">kopyala</button></summary><pre id="src20">&quot;&quot;&quot;3B baski parcalarinin tum olculeri (mm). Eksenler: X ileri, Y sol, Z yukari; orijin teker ekseninin ortasi.
-Zemin z = -32.5. Parca gelince kumpasla olcun; (OLC) isaretlileri saticiya gore degisir.
+Zemin z = -35. Parca gelince kumpasla olcun; (OLC) isaretlileri saticiya gore degisir.
 Degistirdikten sonra: python cad/robot_cad.py  (STL&#x27;ler ve kontrol raporu yeniden uretilir).&quot;&quot;&quot;
 
 # --- Genel ---
-R_TEKER = 32.5           # 65 mm teker
-TEKER_EN = 26.0          # (OLC) lastik genisligi
+R_TEKER = 35.0           # 70 mm teker (Pololu 3272)
+TEKER_EN = 25.0          # lastik genisligi
 IZ = 190.0               # iz genisligi; degisirse cdtp_config.h TRACK_WIDTH_M de degismeli
 ZEMIN = -R_TEKER
 BOSLUK = 0.3             # yuva bosluk payi (her yanda), PLA 0,4 mm nozul icin
@@ -3204,7 +3204,7 @@ DISTANS_AA = 5.5                     # M3 disi-disi distans altigen
 KAT1_Z, KAT2_Z, KAT3_Z = 22.0, 106.0, 190.0   # alt yuzler; 30+50 = 80 mm distans + 4 mm kat
 
 # --- Motor: JGB37-520, eksantrik mil ---
-MOTOR_SANZ_D, MOTOR_SANZ_L = 37.0, 22.0   # sanziman
+MOTOR_SANZ_D, MOTOR_SANZ_L = 37.0, 26.0   # sanziman (cizim: 26, oran ile 26-29 degisir)
 MOTOR_GOVDE_D, MOTOR_GOVDE_L = 33.0, 31.0  # motor + enkoder kapagi (OLC: toplam ~55)
 MOTOR_MIL_KACIK = 7.0                     # mil, motor ekseninin 7 mm ustunde (motor asagida)
 MOTOR_MIL_D, MOTOR_MIL_L = 6.0, 15.0
@@ -3254,7 +3254,7 @@ GOZ_Y = 14.0
 GOZ_PENCERE = (7.4, 7.4)        # VS1838B basi
 GOZ_TUP_L = 15.0
 </pre></details>
-<details class="code"><summary><b>cad/robot_cad.py</b><span>3B baski parcalari ve montaj denetimi · 544 satır</span><button class="copy" data-target="src21" type="button">kopyala</button></summary><pre id="src21">&quot;&quot;&quot;Denge robotu 3B baski parcalari ve montaj kontrolu.
+<details class="code"><summary><b>cad/robot_cad.py</b><span>3B baski parcalari ve montaj denetimi · 555 satır</span><button class="copy" data-target="src21" type="button">kopyala</button></summary><pre id="src21">&quot;&quot;&quot;Denge robotu 3B baski parcalari ve montaj kontrolu.
 Calistir: python cad/robot_cad.py
 Uretir: cad/stl/*.stl (baski yonunde), cad/montaj.glb, cad/kontrol.md, docs/img/cad_*.png
 Olculer cad/olcu.py&#x27;de. Kontrol: parcalar ve moduller birbirine girmiyor mu, zemin, direk, pim yukseklikleri.&quot;&quot;&quot;
@@ -3440,10 +3440,20 @@ def goz_tutucu(sag):
     tup = kutu(0, o.GOZ_TUP_L, -w / 2 - d, w / 2 + d, K2U, zc + h / 2 + d) - kutu(-1, o.GOZ_TUP_L + 1, -w / 2, w / 2, zc - h / 2, zc + h / 2)
     cep_ic = (8.4, 16.0)
     arka = kutu(-cep_ic[0] - d, 0, -cep_ic[1] / 2 - d, cep_ic[1] / 2 + d, K2U, K2U + 14) - \
-        kutu(-cep_ic[0], 0.01, -cep_ic[1] / 2, cep_ic[1] / 2, K2U + 0.8, K2U + 20)
+        kutu(-cep_ic[0], 0.01, -cep_ic[1] / 2, cep_ic[1] / 2, K2U - 5, K2U + 20)
     # bag deligi (arka duvardan, modul kartini sarar)
     arka = arka - kutu(-cep_ic[0] - d - 1, -cep_ic[0] + 1, -2, 2, K2U + 6, K2U + 8.2)
     g = tup + arka
+    a = -o.GOZ_ACI if sag else o.GOZ_ACI
+    x, y = YER[&quot;goz&quot;]
+    return g.rotate([0, 0, a]).translate([x, -y if sag else y, 0])
+
+
+def goz_kes(sag):
+    &quot;&quot;&quot;Goz penceresinin kat 2&#x27;ye giren alt kismi (goz yuksekligi zeminden sabit; tekerlek buyuyunce plakaya iner).&quot;&quot;&quot;
+    w, h = o.GOZ_PENCERE
+    zc = Z_GOZ
+    g = kutu(-1, o.GOZ_TUP_L + 1, -w / 2, w / 2, zc - h / 2, K2U + 1) + kutu(-6.0, 0.5, -3.6, 3.6, zc - 4.0, K2U + 1)  # + modul basi cebi
     a = -o.GOZ_ACI if sag else o.GOZ_ACI
     x, y = YER[&quot;goz&quot;]
     return g.rotate([0, 0, a]).translate([x, -y if sag else y, 0])
@@ -3474,6 +3484,7 @@ def kat2():
     for x, y in V_UST_VIDA:
         cik.append(sil_z(x, y, o.VIDA_D / 2, K2 - 1, K2U + 1))
     p = (p + birlesim(ekle)) - birlesim(cik)
+    p = p - goz_kes(False) - goz_kes(True)
     return p + goz_tutucu(False) + goz_tutucu(True)
 
 

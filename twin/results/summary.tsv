@@ -1,11 +1,11 @@
 ON	Enerjisiz +-10 deg'den dik kalmamali	GECTI	40 deg'ye en gec 0.30 s'de dustu
-C1.1	30 s statik denge (kutulu)	GECTI	en buyuk egim 0.45 deg, kayma 0.8 cm, kutu yerinde
-C1.2	1 m ileri + 3 s dur	GECTI	yol 1.005 m, 3 s durmada kayma 7.8 mm, egim tepe 5.0 deg, kutu yerinde
-C1.3	1 m geri + 3 s dur	GECTI	yol 0.996 m, 3 s durmada kayma 13.1 mm, egim tepe 5.3 deg, kutu yerinde
-C1.4	+10 ve -10 deg'den 10 s icinde toparlanma	GECTI	+10: 1.45 s, -10: 1.46 s
-C2.3-4	Eldiven: sola / saga ~90 deg	GECTI	sol +89.7 deg, sag -89.7 deg
+C1.1	30 s statik denge (kutulu)	GECTI	en buyuk egim 0.46 deg, kayma 0.8 cm, kutu yerinde
+C1.2	1 m ileri + 3 s dur	GECTI	yol 1.004 m, 3 s durmada kayma 8.0 mm, egim tepe 5.0 deg, kutu yerinde
+C1.3	1 m geri + 3 s dur	GECTI	yol 1.000 m, 3 s durmada kayma 8.9 mm, egim tepe 5.4 deg, kutu yerinde
+C1.4	+10 ve -10 deg'den 10 s icinde toparlanma	GECTI	+10: 1.44 s, -10: 1.45 s
+C2.3-4	Eldiven: sola / saga ~90 deg	GECTI	sol +89.7 deg, sag -89.8 deg
 GUV.2	Acil stop: denge birakilir, motorlar kapanir	GECTI	mod=BEKLE
-REF	GitHub referans LQI kazanclari ikizde dengeliyor	GECTI	baslangic 0 deg: dengede (son -0.1 deg), baslangic 8 deg: dengede (son -0.0 deg)
+REF	GitHub referans LQI kazanclari ikizde dengeliyor	GECTI	baslangic 0 deg: dengede (son -0.0 deg), baslangic 8 deg: dengede (son -0.0 deg)
 C3	IR ile yanasma, V-yuva + direk (30 baslangic)	GECTI	30/30 basarili, en uzun temas 5.8 s, temas->sarj modu 0.50 s 
-C3.5	Eldivenle 'geri': miknatistan kopup istasyondan ayrilir	GECTI	once SARJ, sonra mod DENGE, direge uzaklik 52 cm
+C3.5	Eldivenle 'geri': miknatistan kopup istasyondan ayrilir	GECTI	once SARJ, sonra mod DENGE, direge uzaklik 51 cm
 C5	Butunlesik gorev (kutu, eldiven, yanasma)	GECTI	son mod SARJ, erken yanasma yok, kutu yerinde
