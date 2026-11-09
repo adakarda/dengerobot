@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "harness.h"
+#include "mc_robots.h"
 
 using cdtp::Cmd;
 
@@ -28,39 +29,13 @@ struct Run {
   bool fell;
 };
 
-// SAG testindeki ayni dagilimlar ve tohum
-static std::vector<PlantParams> robots(int n) {
-  std::mt19937 g(2026);
-  auto U = [&](double a, double b) { return std::uniform_real_distribution<double>(a, b)(g); };
-  std::vector<PlantParams> out;
-  for (int i = 0; i < n; ++i) {
-    PlantParams p;
-    p.m_body *= U(0.75, 1.3);
-    p.l_com *= U(0.75, 1.6);
-    p.I_body *= U(0.7, 1.4);
-    p.R *= U(0.8, 1.25);
-    p.Ke *= U(0.9, 1.1);
-    p.tau_c *= U(0.5, 2.0);
-    p.b_visc *= U(0.5, 2.0);
-    p.voc = U(10.4, 12.6);
-    p.box_mass = U(0.03, 0.10);
-    p.imu_offset_deg = U(-1.5, 1.5);
-    p.gyro_bias_dps = U(-0.5, 0.5);
-    p.h_imu = U(0.0, 0.12);
-    out.push_back(p);
-  }
-  return out;
-}
-
 // 5 s dengede bekleme, sonra ileri-geri adimlar (ivmelenme ivme olcerin acisini bozar), toplam 30 s
 static Run simulate(const PlantParams& p, unsigned seed) {
   Run r{p, {}, false};
   Harness h(p, seed);
   h.logic.setTask(cdtp::Task::GUIDANCE);
   h.gloveOn = true;
-  h.glove = {{0, Cmd::STOP},   {6.0, Cmd::FWD},   {6.4, Cmd::STOP},  {9.5, Cmd::FWD},  {9.9, Cmd::STOP},
-             {14.0, Cmd::BACK}, {14.4, Cmd::STOP}, {18.0, Cmd::BACK}, {18.4, Cmd::STOP}, {22.0, Cmd::FWD},
-             {22.4, Cmd::STOP}};
+  h.glove = mcGloveScript();
   h.plant.initFilter();
   h.run(31.0, [&](Harness& hh) {
     r.s.push_back({hh.lastImu, hh.plant.th + p.imu_offset_deg * D2R, std::fabs(hh.plant.v) > 0.02});
@@ -130,7 +105,7 @@ int main(int argc, char** argv) {
   std::string out = argc > 1 ? argv[1] : "sim/results/";
   const int N = 40, NTRAIN = 20;
   std::printf("filtre: kapali dongu %s\n", CDTP_TILT_KALMAN ? "Kalman" : "tumleyen");
-  auto ps = robots(N);
+  auto ps = mcRobots(N);
   std::vector<Run> runs;
   int fell = 0;
   for (int i = 0; i < N; ++i) {

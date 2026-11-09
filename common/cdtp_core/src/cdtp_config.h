@@ -5,6 +5,11 @@
 #ifndef CDTP_TILT_KALMAN
 #define CDTP_TILT_KALMAN 0
 #endif
+// LQR girdisi. 0: enkoder farki + egim filtresi (varsayilan). 1: v, theta, omega duragan Kalman gozleyicisinden
+// (state_observer.h, LQG). 2: yalniz v gozleyiciden. 1 ve 2 simulasyonda kabul testlerini bozuyor: docs/KALMAN_FILTRE.md
+#ifndef CDTP_LQG
+#define CDTP_LQG 0
+#endif
 
 namespace cdtp {
 namespace cfg {

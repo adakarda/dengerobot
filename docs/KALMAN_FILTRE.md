@@ -65,3 +65,59 @@ C1.4'teki yavaşlama testin kendisinden geliyor, gerçek bir kötüleşme değil
   2. İki filtreyi aynı veride çevrimdışı koş (yol haritasında D3).
   3. Sonra firmware'de `build_flags`'e `-DCDTP_TILT_KALMAN=1` ekle.
 - Sonraki iş: tüm durumu `[x, v, θ, ω]` tek bir durağan Kalman ile kestirmek (LQG, yol haritasında D2). Girdiler enkoder ve IMU.
+
+---
+
+# Durum gözleyicisi (LQG): olumsuz sonuç
+
+Tarih: 2026-11-09. Yol haritasında D2. Simülasyon; varsayılan kapalı (`CDTP_LQG=0`), firmware değişmedi.
+
+## Ne denendi
+
+- `common/cdtp_core/src/state_observer.h`: durağan Kalman gözleyicisi.
+  - Durum `[x, v, θ, ω, d]`. d, girişe eklenen yavaş bir bozucu gerilim (V).
+  - Ölçümler: x (enkoder), θ (eğim filtresi), ω (jiroskop).
+  - Model: `lqr_design.py`'deki ayrık nominal model. Kazanç L çevrimdışı hesaplanıyor (`solve_discrete_are`, dual problem) ve `gains.h`'a yazılıyor.
+  - Ayrılma ilkesi gereği LQR K değişmedi.
+- d neden eklendi: d olmadan gözleyici, nominal robotta bile enkoder farkından kötüydü (v RMS 5.6 mm/s, enkoder farkı 4.1). Nominal modelde ilaç kutusu (60 g, eksenden 21 cm yukarıda) ve Coulomb sürtünmesi yok.
+- Seçim: `LQG=1 bash tools/run_sim.sh` (v, θ, ω gözleyiciden) veya `LQG=2` (yalnız v gözleyiciden).
+- Ayar: `sim/gozleyici_karsilastir.cpp` + `tools/run_gozleyici.sh`.
+  - Izgara 288 nokta: σ_a, σ_α, σ_d, r_x, r_θ.
+  - Ayar için robot 0–19, sınama için 20–39.
+  - Seçilen değerler: σ_a 4, σ_α 80, σ_d 4, r_x 2 mm, r_θ 0.1°.
+- Denenen ama işe yaramayan iki şey:
+  - Ölü bölge telafisini girişe katmak: daha kötü (v 9.5 mm/s).
+  - Hızlı gözleyiciler (LTR yönünde, σ_a 16–64): kapalı döngüde 6–11/20.
+
+## Sonuç: açık döngü kestirim (sınama robotları, Kalman eğim filtresiyle)
+
+| Kestirim | v RMS ort / en kötü | θ RMS | ω RMS |
+|---|---|---|---|
+| Enkoder farkı (4 örnek, 20 ms) | **4.58 / 7.81 mm/s** | 0.265° | 2.89 °/s |
+| Gözleyici, ızgaranın en iyisi | 5.20 / 7.83 mm/s | 0.265° | 2.89 °/s |
+| Gözleyici, nominal robotlarda | 4.72 mm/s (enkoder farkı 4.14) | 0.239° | 2.50 °/s |
+
+## Sonuç: kapalı döngü (20 kabul testi)
+
+| Yapılandırma | Geçen |
+|---|---|
+| Kalman eğim filtresi, gözleyici yok | **20/20** |
+| Kalman eğim filtresi + LQG=1 | 13/20 (statik eğim 7°, SAG statik 6/40) |
+| Kalman eğim filtresi + LQG=2 (yalnız v) | 13/20 |
+| Tümleyen filtre + LQG=1 | 5/20 |
+
+## Neden
+
+- Enkoder çözünürlüğü yüksek: 0.26 mm/sayım, 200 Hz. 20 ms'lik fark gürültüsü ile gecikmesi iyi bir noktada. Model tabanlı tahminin ekleyeceği bilgi az.
+- Nominal model gerçek robottan uzak: kütle ±%25, kütle merkezi −%25/+%60, kutu, sürtünme. Gözleyici bu hatayı kestirime taşıyor.
+- Kapalı döngüde iki seçenek var, ikisi de kötü:
+  - Yavaş gözleyici gecikme ekliyor ve K_V = −66'lık hız kazancıyla birleşince kararlılık payını yiyor.
+  - Hızlı gözleyici gürültülü v veriyor; bu gürültü motor gerilimine geçiyor.
+- Bu, LQG'nin bilinen zayıflığı: LQR'ın garanti ettiği kararlılık payları, araya Kalman gözleyicisi girince geçerli olmaz. Kaynak: Doyle, J.C., "Guaranteed margins for LQG regulators", IEEE Trans. Automatic Control 23(4), 1978.
+
+## Ne öğrenildi, sonraki adım
+
+- D1'deki eğim Kalman'ı işe yaradı, çünkü ölçülemeyen bir şeyi (jiroskop bias'ı) kestiriyor. Bu gözleyici ise zaten iyi ölçülen bir şeyi (v) modelden yeniden kestirmeye çalışıyor.
+- Denenebilecekler:
+  - Döngü transferi geri kazanımı (LTR, Doyle–Stein 1979), kazanç payı ölçülerek.
+  - Gözleyiciyi yalnız d kestirmek için kullanıp d'yi LQR girişinden çıkarmak (bozucu kompanzasyonu). Şu an kodda bunu `thTrim_` elle yapıyor.

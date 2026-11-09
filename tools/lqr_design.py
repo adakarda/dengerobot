@@ -108,6 +108,66 @@ def design(p, w=None):
     return A, B, K.flatten(), cl
 
 
+# ---- Durum gozleyicisi (LQG'nin Kalman yarisi) ----
+# Durum [x, v, theta, omega, d]: d girise eklenen yavas bozucu gerilim (V). Nominal modelde olmayan her sey
+# (ilac kutusu, Coulomb surtunmesi, kutle/KM hatasi) burada birikir; d olmadan gozleyici enkoder farkindan
+# kotu kestiriyordu (docs/KALMAN_FILTRE.md). Olcum z = [x (enkoder + r*theta), theta (egim filtresi),
+# omega (jiro, bias cikarilmis)], giris u (V). Ayrilma ilkesi: K degismez, L ayri tasarlanir.
+# Degerler sim/gozleyici_karsilastir.cpp izgarasiyla secildi (tools/run_gozleyici.sh).
+OBS = dict(sa=4.0, salpha=80.0, rx=0.002, rth_deg=0.1, rom_dps=0.3, sd=4.0)
+C_OBS = np.array([[1.0, 0, 0, 0, 0], [0, 0, 1.0, 0, 0], [0, 0, 0, 1.0, 0]])
+
+
+def augment(Ad, Bd):
+    """d'yi duruma ekler: s+ = Aa s + Ba u, Aa = [[Ad, Bd], [0, 1]]."""
+    Aa = np.zeros((5, 5))
+    Aa[:4, :4] = Ad
+    Aa[:4, 4] = Bd[:, 0]
+    Aa[4, 4] = 1.0
+    Ba = np.zeros((5, 1))
+    Ba[:4, 0] = Bd[:, 0]
+    return Aa, Ba
+
+
+def observer_gain(Aa, o=None, dt=DT):
+    """Duragan Kalman kazanci L (5x3), 'simdiki tahmin' bicimi: s = s- + L (z - C s-)."""
+    o = o or OBS
+    Qd = np.diag([0.0, o["sa"] ** 2 * dt, 0.0, o["salpha"] ** 2 * dt, max(o["sd"], 1e-4) ** 2 * dt])
+    Rd = np.diag([o["rx"] ** 2, math.radians(o["rth_deg"]) ** 2, math.radians(o["rom_dps"]) ** 2])
+    Pm = solve_discrete_are(Aa.T, C_OBS.T, Qd, Rd)  # a priori kovaryans
+    L = Pm @ C_OBS.T @ np.linalg.inv(C_OBS @ Pm @ C_OBS.T + Rd)
+    return L
+
+
+def c_float(v):
+    s = f"{v:.7g}"
+    return (s if any(ch in s for ch in ".e") else s + ".0") + "f"
+
+
+def c_matrix(name, M):
+    rows = ", ".join("{" + ", ".join(c_float(v) for v in row) + "}" for row in np.atleast_2d(M))
+    r, c = np.atleast_2d(M).shape
+    return f"constexpr float {name}[{r}][{c}] = {{{rows}}};\n"
+
+
+def write_observer_grid(Aa):
+    """sim/observer_grid.h: gozleyici_karsilastir.cpp'nin ayar izgarasi icin aday L'ler."""
+    import itertools
+    combos = list(itertools.product([0.5, 1.0, 2.0, 4.0], [5.0, 20.0, 80.0], [0.0005, 0.002, 0.008],
+                                    [0.1, 0.3], [0.0, 1.0, 4.0, 16.0]))
+    txt = "// OTOMATIK URETILDI: python tools/lqr_design.py --gozleyici-izgara\n#pragma once\n"
+    txt += f"constexpr int OBS_GRID_N = {len(combos)};\n"
+    for name, k in (("SA", 0), ("SAL", 1), ("RX", 2), ("RTH", 3), ("SD", 4)):
+        txt += f"constexpr float OBS_GRID_{name}[] = {{" + ", ".join(c_float(c[k]) for c in combos) + "};\n"
+    txt += "constexpr float OBS_GRID_L[][5][3] = {\n"
+    for a, b, rx, rth, sd in combos:
+        L = observer_gain(Aa, dict(OBS, sa=a, salpha=b, rx=rx, rth_deg=rth, sd=sd))
+        txt += "  {" + ", ".join("{" + ", ".join(c_float(v) for v in row) + "}" for row in L) + "},\n"
+    txt += "};\n"
+    (ROOT / "sim/observer_grid.h").write_text(txt, encoding="utf-8")
+    print("yazildi: sim/observer_grid.h")
+
+
 def yaw_gains(p):
     # yaw: I psi_dd = (track/2r) * 2*(Ke/R) * u_d - damping ; PD ile ~6 rad/s bant
     r, tr = p["r"], p["track"]
@@ -120,10 +180,19 @@ def yaw_gains(p):
 
 def main():
     import sys
+    grid = "--gozleyici-izgara" in sys.argv
     for arg in sys.argv[1:]:  # ornek: x=0.05 v=0.1
+        if arg.startswith("--"):
+            continue
         k, v = arg.split("=")
         W[k] = float(v)
     A, B, K, cl = design(P)
+    Aa, Ba = augment(*discretize(A, B, DT))
+    L = observer_gain(Aa)
+    print("gozleyici L (5x3) =\n", np.round(L, 4))
+    print("gozleyici kutuplari |z|:", np.round(np.abs(np.linalg.eigvals((np.eye(5) - L @ C_OBS) @ Aa)), 4))
+    if grid:
+        write_observer_grid(Aa)
     print("agirliklar:", W)
     kp_y, kd_y = yaw_gains(P)
     print("A =\n", np.round(A, 3))
@@ -147,7 +216,9 @@ constexpr float YAW_KP = {kp_y:.5f}f;
 constexpr float YAW_KD = {kd_y:.5f}f;
 // a_ref -> egim on-besleme (rad / (m/s^2))
 constexpr float TH_PER_ACC = {th_per_acc(P):.5f}f;
-}}  // namespace gains
+// Durum gozleyicisi (state_observer.h): s = [x, v, theta, omega, d]
+// s- = AD s + BD u ; s = s- + OBS_L (z - C s-), z = [x, theta, omega]. OBS = {OBS}
+{c_matrix("AD", Aa)}{c_matrix("BD", Ba.T)}{c_matrix("OBS_L", L)}}}  // namespace gains
 }}  // namespace cdtp
 """
     (ROOT / "common/cdtp_core/src/gains.h").write_text(gains, encoding="utf-8")

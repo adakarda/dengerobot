@@ -9,6 +9,7 @@
 #include "imu_filter.h"
 #include "ir_frame.h"
 #include "protocol.h"
+#include "state_observer.h"
 
 namespace cdtp {
 
@@ -58,6 +59,11 @@ class RobotLogic {
   float trimDeg() const { return thTrim_ / DEG; }
   float x() const { return x_; }
   float v() const { return v_; }
+  float vDiff() const { return vDiff_; }
+  float thetaRawRad() const { return tilt_.thetaRaw(); }
+  float thetaRad() const { return tilt_.theta(); }
+  float pitchRateRad() const { return tilt_.pitchRate(); }
+  float uLast() const { return uLast_; }
   float psiDeg() const { return psi_ / DEG; }
   bool charging() const { return charging_; }
   int batteryPct() const { return bat_.percent(); }
@@ -95,6 +101,11 @@ class RobotLogic {
   float x_ = 0, v_ = 0, psi_ = 0;
   float xHist_[4] = {0, 0, 0, 0};
   int histIdx_ = 0;
+  // durum gozleyicisi (CDTP_LQG=1): v, theta, omega LQR'a buradan gider
+  StateObserver obs_;
+  float vDiff_ = 0;            // enkoder farkindan hiz (gozleyicisiz yol)
+  float uLast_ = 0;            // son adimda motorlara verilen ortak gerilim (V)
+  float thCtl_ = 0, omCtl_ = 0;  // LQR'in kullandigi egim ve egim hizi
   // referanslar
   float xRaw_ = 0, vRaw_ = 0;  // bicimlendirme oncesi referans
   float thTrim_ = 0;           // ogrenilen denge acisi (rad); acilista sifir, cal komutu kalici ofseti verir

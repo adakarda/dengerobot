@@ -123,7 +123,7 @@ RobotOutputs RobotLogic::balanceControl(float vbat, float leanRad) {
   // bu hatayi sifirlayacak yone kaydirilir. Hareket, donus ve yanasmada donmus kalir.
   const bool still = !linActive_ && !rotActive_ && fabsf(vRef_) < 0.01f && fabsf(rRef_) < 0.05f && mode_ == Mode::BALANCE;
   if (still) thTrim_ = clampf(thTrim_ - cfg::TRIM_RATE * ex * cfg::DT, -cfg::TRIM_MAX_DEG * DEG, cfg::TRIM_MAX_DEG * DEG);
-  float u = -(K_X * ex + K_V * (v_ - vRef_) + K_TH * (tilt_.theta() - thRef - thTrim_) + K_OM * tilt_.pitchRate());
+  float u = -(K_X * ex + K_V * (v_ - vRef_) + K_TH * (thCtl_ - thRef - thTrim_) + K_OM * omCtl_);
   u += cfg::MOTOR_KE * vRef_ / r;  // zit-EMK on-beslemesi
   float ud = YAW_KP * wrapPi(psiRef_ - psi_) + YAW_KD * (rRef_ - tilt_.yawRate());
   ud += cfg::MOTOR_KE * (rRef_ * cfg::TRACK_WIDTH_M * 0.5f) / r;
@@ -131,6 +131,7 @@ RobotOutputs RobotLogic::balanceControl(float vbat, float leanRad) {
   vbat = fmaxf(vbat, 9.0f);
   const float vmax = cfg::DUTY_MAX * vbat;
   u = clampf(u, -vmax, vmax);
+  uLast_ = u;  // gozleyicinin bir sonraki adimdaki girdisi
   const float udMax = fmaxf(0.0f, vmax - fabsf(u));  // denge onceliklidir, donus payi kalandan
   ud = clampf(ud, -udMax, udMax);
 
@@ -189,8 +190,23 @@ RobotOutputs RobotLogic::step(const RobotInputs& in) {
   const float xOld = xHist_[histIdx_];
   xHist_[histIdx_] = x_;
   histIdx_ = (histIdx_ + 1) & 3;
-  v_ = (x_ - xOld) / (4 * dt);
+  vDiff_ = (x_ - xOld) / (4 * dt);
   psi_ += tilt_.yawRate() * dt;
+  // Gozleyici yalniz motorlar dengedeyken modelle uyumlu; digerinde olcumlere sifirlanir
+  const float uPrev = uLast_;
+  uLast_ = 0;
+  if (CDTP_LQG && (mode_ == Mode::BALANCE || mode_ == Mode::DOCK)) {
+    obs_.update(uPrev, x_, tilt_.theta(), tilt_.pitchRate());
+    v_ = obs_.v();
+    // CDTP_LQG=2: yalniz v gozleyiciden; theta ve omega dogrudan filtrelerden (modelin donguye girdigi yol kisalir)
+    thCtl_ = CDTP_LQG == 2 ? tilt_.theta() : obs_.theta();
+    omCtl_ = CDTP_LQG == 2 ? tilt_.pitchRate() : obs_.omega();
+  } else {
+    obs_.reset(x_, vDiff_, tilt_.theta(), tilt_.pitchRate());
+    v_ = vDiff_;
+    thCtl_ = tilt_.theta();
+    omCtl_ = tilt_.pitchRate();
+  }
 
   handleGlove(in);
 
