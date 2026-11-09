@@ -2,6 +2,10 @@
 // Bu dosya hem firmware'de hem simulasyonda ayni degerlerle kullanilir.
 #pragma once
 
+#ifndef CDTP_TILT_KALMAN
+#define CDTP_TILT_KALMAN 0
+#endif
+
 namespace cdtp {
 namespace cfg {
 
@@ -21,6 +25,15 @@ constexpr float DT      = 1.0f / LOOP_HZ;
 // ---- IMU filtresi ----
 constexpr float COMP_ALPHA = 0.98f;           // tumleyen filtre: 0.98 jiroskop, 0.02 ivme
 constexpr float PITCH_OFFSET_DEG_DEFAULT = 0.0f; // denge noktasi ofseti (NVS'ten yuklenir)
+// Kalman egim filtresi (imu_filter.h TiltKalman). Derlemede -DCDTP_TILT_KALMAN=1 ile secilir; varsayilan tumleyen.
+// Degerler sim/filtre_karsilastir.cpp izgara aramasiyla secildi (tools/run_filtre.sh): q_theta 1e-8..1e-7,
+// r_acc 0.0016..0.025, q_bias 1e-13..1e-9 arasi duz bir plato (~0.25 deg RMS). Platonun ortasi; q_bias gercek
+// robotta sicaklikla bias kaymasini izleyebilsin diye platonun ust ucunda.
+constexpr float KF_Q_THETA   = 1.0e-7f;   // rad^2/s (jiro gurultusu 0.05 deg/s -> sigma^2*dt ~ 4e-9)
+constexpr float KF_Q_BIAS    = 1.0e-9f;   // (rad/s)^2/s
+constexpr float KF_R_ACC     = 6.4e-3f;   // rad^2 (~4.6 deg: titresim + hareket ivmesi dahil)
+constexpr float KF_R_ACC_BAD = 1.0f;      // rad^2, ivme 1 g'den saparken
+constexpr float KF_P0_BIAS   = 7.6e-5f;   // (0.5 deg/s)^2
 
 // ---- Motor / guc ----
 constexpr float VBAT_NOMINAL   = 11.1f;

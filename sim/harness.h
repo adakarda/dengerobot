@@ -27,6 +27,7 @@ class Harness {
   cdtp::RobotOutputs out;
   std::vector<Trace> trace;
   bool record = false;
+  cdtp::ImuSample lastImu{};  // mantiga son verilen IMU ornegi (filtre karsilastirmasi icin)
 
   // istasyon: dunya orijininde, yuzu +X'e bakar
   bool stationOn = false;
@@ -55,6 +56,7 @@ class Harness {
       cdtp::RobotInputs in;
       in.t = (float)t;
       in.imu = plant.imu(out.motorEnable);
+      lastImu = in.imu;
       in.encL = plant.encCount(false);
       in.encR = plant.encCount(true);
       in.vbat = (float)(plant.vbat + noise() * 0.02);

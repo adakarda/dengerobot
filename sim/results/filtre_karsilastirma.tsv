@@ -1,0 +1,5 @@
+filtre	rms_ort_deg	rms_kotu_deg	max_kotu_deg	rms_hareket_deg	bias_ort_dps	bias_kotu_dps
+tumleyen (alpha 0.98)	0.8653	0.9818	2.7032	1.1064	0.0000	0.0000
+tumleyen, en iyi alpha	0.5744	0.6839	1.5446	0.6601	0.0000	0.0000
+Kalman, config degerleri	0.2649	0.4770	1.6835	0.3423	0.0020	0.0064
+Kalman, izgara en iyisi	0.2622	0.4750	1.6834	0.3384	0.0021	0.0086

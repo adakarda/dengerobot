@@ -77,7 +77,7 @@ class RobotLogic {
   void updateMotionState();
 
   AxisMap axes_;
-  TiltFilter tilt_;
+  TiltEstimator tilt_;
   BatteryMonitor bat_;
   IrFrameCounter irL_, irR_;
   DockFsm dock_;
