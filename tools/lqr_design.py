@@ -19,19 +19,20 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 # ---- Fiziksel model (OLC) ----
 P = dict(
     # govde degerleri tools/mass_budget.py'deki parca listesinden (kutu haric; kutuyu simulasyon ekler)
-    m_body=round(mass_budget.m, 3),   # kg, tekerler haric her sey (motor govdeleri dahil)
-    l_com=round(mass_budget.l, 4),    # m, teker ekseninden govde kutle merkezine
-    I_body=round(mass_budget.I, 5),   # kg m^2, kutle merkezi etrafinda yunuslama ataleti
-    m_wheel=0.070,      # kg, tek teker (60 g) + alüminyum adaptör
-    r=0.035,            # m (70 mm teker)
+    # OLCULDU 2026-11-11 (gercek robot; mass_budget.py'deki tahmin parcalari yerine):
+    m_body=1.119,       # kg, 1225 g toplam - 2 x 53 g (teker + kaplin); pil/adaptor dahil mi: DOGRULA
+    l_com=0.0875,       # m, zeminden 120 mm - teker yaricapi 32,5 mm (yandan olcum; ipten asarak dogrula)
+    I_body=0.0066,      # kg m^2, TAHMIN: eski 0,00737 x (1,119/1,245). Sarkac testiyle olcun (OLC)
+    m_wheel=0.053,      # kg, tek teker + kaplin (olculdu)
+    r=0.0325,           # m (65 mm x 28 mm kucuk arazi tekerlegi)
     J_rotor=5.0e-7,     # kg m^2, motor rotoru (disli oncesi)
     gear=19.0,          # JGB37-520 530 RPM ~ 1:19
     Ke=0.216,           # V s/rad (cikis mili) = Kt (N m/A)
     R=4.5,              # ohm, sargi + surucu
     b_visc=0.002,       # N m s/rad, disli viskoz surtunme (motor basina)
     tau_coulomb=0.02,   # N m, disli kuru surtunme (motor basina)
-    track=0.19,         # m, teker merkezleri arasi (sasi cizimi; OLC)
-    I_yaw=0.012,        # kg m^2
+    track=0.27,         # m, teker merkezleri arasi (olculdu 2026-11-11: en distan en disa 298 mm - teker genisligi 28 mm)
+    I_yaw=0.0066,       # kg m^2, TAHMIN: govde 10x20 cm plaka (m(L2+W2)/12) + 2 teker. Olcun (OLC)
     vbat=11.1,
 )
 

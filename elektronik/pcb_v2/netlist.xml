@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='utf-8'?>
+<export version="E">
+  <components>
+    <comp ref="U1">
+      <value>ESP32-WROOM-32D DevKitC 38 pin</value>
+    </comp>
+    <comp ref="A1">
+      <value>GY-521 MPU6050 (1x8 soket)</value>
+    </comp>
+    <comp ref="A2">
+      <value>TB6612FNG modul (2x8 soket)</value>
+    </comp>
+    <comp ref="U3">
+      <value>LM2596 mini 5,0 V (4 ped)</value>
+    </comp>
+    <comp ref="J1">
+      <value>12V ADAPTOR GIRIS klemens</value>
+    </comp>
+    <comp ref="F1">
+      <value>PTC sigorta 3 A</value>
+    </comp>
+    <comp ref="J2">
+      <value>ANAHTAR klemens</value>
+    </comp>
+    <comp ref="C1">
+      <value>1000uF 25V</value>
+    </comp>
+    <comp ref="R1">
+      <value>10k</value>
+    </comp>
+    <comp ref="JP1">
+      <value>USB'de cikar</value>
+    </comp>
+    <comp ref="J3">
+      <value>SOL MOTOR 6 pin</value>
+    </comp>
+    <comp ref="J4">
+      <value>SAG MOTOR 6 pin</value>
+    </comp>
+    <comp ref="J5">
+      <value>IR SOL</value>
+    </comp>
+    <comp ref="J6">
+      <value>IR SAG</value>
+    </comp>
+  </components>
+  <nets>
+    <net code="1" name="/+12V">
+      <node ref="A2" pin="9" />
+      <node ref="U3" pin="1" />
+      <node ref="J2" pin="2" />
+      <node ref="C1" pin="1" />
+    </net>
+    <net code="2" name="/+3V3">
+      <node ref="U1" pin="1" />
+      <node ref="A1" pin="1" />
+      <node ref="A2" pin="1" />
+      <node ref="A2" pin="7" />
+      <node ref="A2" pin="10" />
+      <node ref="J3" pin="5" />
+      <node ref="J4" pin="5" />
+      <node ref="J5" pin="1" />
+      <node ref="J6" pin="1" />
+    </net>
+    <net code="3" name="/+5V">
+      <node ref="U3" pin="3" />
+      <node ref="JP1" pin="1" />
+    </net>
+    <net code="4" name="/+5V_ESP">
+      <node ref="U1" pin="19" />
+      <node ref="JP1" pin="2" />
+    </net>
+    <net code="5" name="/ADP+">
+      <node ref="J1" pin="1" />
+      <node ref="F1" pin="1" />
+    </net>
+    <net code="6" name="/ENC_L_A">
+      <node ref="U1" pin="7" />
+      <node ref="J3" pin="3" />
+    </net>
+    <net code="7" name="/ENC_L_B">
+      <node ref="U1" pin="8" />
+      <node ref="J3" pin="4" />
+    </net>
+    <net code="8" name="/ENC_R_A">
+      <node ref="U1" pin="9" />
+      <node ref="J4" pin="3" />
+    </net>
+    <net code="9" name="/ENC_R_B">
+      <node ref="U1" pin="10" />
+      <node ref="J4" pin="4" />
+    </net>
+    <net code="10" name="/FUSED">
+      <node ref="F1" pin="2" />
+      <node ref="J2" pin="1" />
+    </net>
+    <net code="11" name="/GND">
+      <node ref="U1" pin="14" />
+      <node ref="U1" pin="20" />
+      <node ref="U1" pin="26" />
+      <node ref="A1" pin="2" />
+      <node ref="A1" pin="7" />
+      <node ref="A2" pin="8" />
+      <node ref="A2" pin="11" />
+      <node ref="A2" pin="16" />
+      <node ref="U3" pin="2" />
+      <node ref="U3" pin="4" />
+      <node ref="J1" pin="2" />
+      <node ref="C1" pin="2" />
+      <node ref="R1" pin="2" />
+      <node ref="J3" pin="2" />
+      <node ref="J4" pin="2" />
+      <node ref="J5" pin="2" />
+      <node ref="J6" pin="2" />
+    </net>
+    <net code="12" name="/I2C_SCL">
+      <node ref="U1" pin="22" />
+      <node ref="A1" pin="3" />
+    </net>
+    <net code="13" name="/I2C_SDA">
+      <node ref="U1" pin="25" />
+      <node ref="A1" pin="4" />
+    </net>
+    <net code="14" name="/IMU_INT">
+      <node ref="U1" pin="27" />
+      <node ref="A1" pin="8" />
+    </net>
+    <net code="15" name="/IR_L">
+      <node ref="U1" pin="3" />
+      <node ref="J5" pin="3" />
+    </net>
+    <net code="16" name="/IR_R">
+      <node ref="U1" pin="4" />
+      <node ref="J6" pin="3" />
+    </net>
+    <net code="17" name="/L_LPWM">
+      <node ref="U1" pin="12" />
+      <node ref="A2" pin="2" />
+    </net>
+    <net code="18" name="/L_RPWM">
+      <node ref="U1" pin="11" />
+      <node ref="A2" pin="3" />
+    </net>
+    <net code="19" name="/MOTOR_EN">
+      <node ref="U1" pin="32" />
+      <node ref="A2" pin="4" />
+      <node ref="R1" pin="1" />
+    </net>
+    <net code="20" name="/MOT_L+">
+      <node ref="A2" pin="12" />
+      <node ref="J3" pin="1" />
+    </net>
+    <net code="21" name="/MOT_L-">
+      <node ref="A2" pin="13" />
+      <node ref="J3" pin="6" />
+    </net>
+    <net code="22" name="/MOT_R+">
+      <node ref="A2" pin="15" />
+      <node ref="J4" pin="1" />
+    </net>
+    <net code="23" name="/MOT_R-">
+      <node ref="A2" pin="14" />
+      <node ref="J4" pin="6" />
+    </net>
+    <net code="24" name="/R_LPWM">
+      <node ref="U1" pin="30" />
+      <node ref="A2" pin="6" />
+    </net>
+    <net code="25" name="/R_RPWM">
+      <node ref="U1" pin="31" />
+      <node ref="A2" pin="5" />
+    </net>
+  </nets>
+</export>

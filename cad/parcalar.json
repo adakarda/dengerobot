@@ -1,8 +1,8 @@
 {
  "parca": {
   "kat1": {
-   "hacim_cm3": 67.9,
-   "kutle_g": 51.0,
+   "hacim_cm3": 67.7,
+   "kutle_g": 50.0,
    "boyut_mm": [
     110.0,
     150.0,
@@ -25,24 +25,6 @@
     110.0,
     150.0,
     29.0
-   ]
-  },
-  "motor_tutucu_sol": {
-   "hacim_cm3": 11.8,
-   "kutle_g": 9.0,
-   "boyut_mm": [
-    42.0,
-    50.0,
-    28.0
-   ]
-  },
-  "motor_tutucu_sag": {
-   "hacim_cm3": 11.8,
-   "kutle_g": 9.0,
-   "boyut_mm": [
-    42.0,
-    50.0,
-    28.0
    ]
   },
   "v_yuva": {
@@ -70,16 +52,6 @@
    2.2,
    5.9,
    194.4
-  ],
-  "motor_tutucu_sol": [
-   1.9,
-   72.5,
-   5.7
-  ],
-  "motor_tutucu_sag": [
-   1.9,
-   -72.5,
-   5.7
   ],
   "v_yuva": [
    63.8,

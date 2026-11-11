@@ -115,7 +115,7 @@ KAT_ON = o.KAT_X / 2
 
 YER = dict(
     bts=(-21.0, 38.0),
-    lm=(18.4, 43.4), wago12=(42.75, 41.0), sigorta=(18.4, -43.4), wagogn=(42.75, -41.0),
+    lm=(18.4, 38.0), wago12=(42.75, 41.0), sigorta=(18.4, -38.0), wagogn=(42.75, -41.0),
     c5=(21.0, 0.0), mpu=(0.0, 0.0),
     anakart=(-28.0, 0.0), bms=(18.9, -32.8), xt60=(18.0, 22.0),
     pil=(-23.0, 0.0), acil=(28.0, -46.0), kutu=(16.0, o.KUTU_Y),
@@ -124,7 +124,9 @@ YER = dict(
 KAT1_PENCERE = (-48, -28, -13, 13)
 KAT2_PENCERE = (30, 38, -58, -30)
 ANAKART_DISTANS = 10.0   # ana kart kat 2'nin altina asili (M3 naylon distans), ESP32 asagi bakar
-MOTOR_TAB_DELIK = [(-5.0, 70.0), (9.0, 70.0)]
+_AX, _AY, _A0 = o.BRK_AYAK_DELIK
+_YD = o.MOTOR_YUZ_Y + o.BRK_T          # dik plakanin dis yuzu
+MOTOR_TAB_DELIK = [(sx * _AX / 2, _YD - _A0 - k * _AY) for sx in (-1, 1) for k in (0, 1)]   # braket ayagi: motor basina 4 vida (x +-15, y 69 ve 45)
 V_ALT_VIDA = [(47.0, 14.0), (47.0, -14.0)]
 V_UST_VIDA = [(44.0, 0.0), (51.0, 0.0)]
 
@@ -266,6 +268,33 @@ def motor_tutucu(sol=True):
     for x, y in MOTOR_TAB_DELIK:
         cik.append(sil_z(x, y, o.VIDA_D / 2, K1 - 6, K1 + 1, seg=24))
         cik.append(altigen_z(x, y, o.SOMUN_AA, K1 - 6, K1 - 5 + 2.6))
+    m = m - birlesim(cik)
+    return m if sol else m.mirror([0, 1, 0])
+
+
+def braket(sol=True):
+    """37 mm alüminyum L braket (satin alinan parca): kat1'in altina asili."""
+    t = o.BRK_T
+    y_in = o.MOTOR_YUZ_Y
+    y_out = y_in + t
+    zf = K1 - o.BRK_PUL                 # ayagin dis yuzu (ust)
+    zm = -o.MOTOR_MIL_KACIK             # motor ekseni
+    w, h = o.BRK_PLAKA
+    r = o.BRK_KOSE_R
+    zb = zf - h
+    plaka = kutu(-w / 2, w / 2, y_in, y_out, zb + r, zf) + kutu(-(w / 2 - r), w / 2 - r, y_in, y_out, zb, zb + r) +         sil_y(-(w / 2 - r), zb + r, r, y_in, y_out, seg=32) + sil_y(w / 2 - r, zb + r, r, y_in, y_out, seg=32)
+    ayak = kutu(-o.BRK_AYAK[0] / 2, o.BRK_AYAK[0] / 2, y_out - o.BRK_AYAK[1], y_out, zf - t, zf)
+    m = plaka + ayak
+    cik = []
+    for x, y in MOTOR_TAB_DELIK:
+        cik.append(sil_z(x, y, o.BRK_AYAK_DELIK_D / 2, zf - t - 1, zf + 1, seg=24))
+    for k in range(6):
+        a = math.radians(o.MOTOR_DELIK_ACI0 + 60 * k)
+        cik.append(sil_y(o.MOTOR_DELIK_PCD / 2 * math.cos(a), zm + o.MOTOR_DELIK_PCD / 2 * math.sin(a),
+                         o.BRK_PLAKA_DELIK_D / 2, y_in - 1, y_out + 1, seg=24))
+    yw, yc = o.BRK_YUVA
+    cik += [sil_y(0, zm + yc, yw / 2, y_in - 1, y_out + 1, seg=32), sil_y(0, zm - yc, yw / 2, y_in - 1, y_out + 1, seg=32),
+            kutu(-yw / 2, yw / 2, y_in - 1, y_out + 1, zm - yc, zm + yc)]
     m = m - birlesim(cik)
     return m if sol else m.mirror([0, 1, 0])
 
@@ -496,10 +525,12 @@ def main():
     (OUT / "stl").mkdir(parents=True, exist_ok=True)
     basili = {
         "kat1": kat1(), "kat2": kat2(), "kat3": kat3(),
-        "motor_tutucu_sol": motor_tutucu(True), "motor_tutucu_sag": motor_tutucu(False),
         "v_yuva": v_yuva(),
     }
     bil = bilesenler()
+    bil["braket sol"], bil["braket sag"] = braket(True), braket(False)
+    t_b = tri(braket(True))
+    t_b.export(OUT / "stl" / "motor_braket_37mm.stl")
     bilgi = {}
     for ad, m in basili.items():
         assert m.status().name == "NoError", (ad, m.status())

@@ -25,7 +25,7 @@ OUT.mkdir(parents=True, exist_ok=True)
 BRIDGE = ROOT / "build/twin_bridge.exe"
 
 # ---- fiziksel parametreler (lqr_design.py ile ayni kaynaklar; motor degerleri veri sayfasi tahmini) ----
-R_WHEEL, TRACK = 0.035, 0.19
+R_WHEEL, TRACK = 0.0325, 0.27
 KE, RA = 0.216, 4.5
 J_ROTOR, GEAR = 5.0e-7, 19.0
 B_VISC, TAU_C = 0.002, 0.02

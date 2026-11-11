@@ -1,0 +1,185 @@
+<title>Breadboard Şeması</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f6f4ee; --fg:#1d2127; --mut:#5d6570; --card:#ffffff; --line:#d9d5c8;
+  --bb:#ebe7da; --bbline:#cfc9b6; --hole:#6b6f76; --gap:#d6d1c0; --rail:#e4dfce;
+  --v12:#d62828; --gnd:#2b2f36; --v5:#e8710a; --v33:#b5179e; --sig:#1b6ee0; --mot:#8a5a2b; --enc:#1f9d55; --i2c:#0e9aa7;
+  --blk:#f1efe6; --blkline:#b8b29c; --tb:#b3261e; --esp:#23272f; --mpu:#1f4f9e; --usb:#9aa0aa; --cap:#2d4a7a; --res:#d9b979;
+  --stp:#e04848; --stm:#3b6fd0; --pnlight:#ffffff; --tagt:#ffffff;
+  --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace; --sans:'IBM Plex Sans',system-ui,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14171c; --fg:#e8e6df; --mut:#9aa1ab; --card:#1c2027; --line:#323843;
+  --bb:#2a2d34; --bbline:#3d414a; --hole:#9096a1; --gap:#1d2026; --rail:#25282f;
+  --v12:#ff5c5c; --gnd:#d4d8df; --v5:#ffa04a; --v33:#e56bd0; --sig:#5aa0ff; --mot:#c9935a; --enc:#4cd68a; --i2c:#3fd4e0;
+  --blk:#23272f; --blkline:#4a505c; --usb:#6a707b; --cap:#4b78c0; --res:#a98c52;
+  --stp:#e05555; --stm:#5b8de0; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#14171c; --fg:#e8e6df; --mut:#9aa1ab; --card:#1c2027; --line:#323843;
+  --bb:#2a2d34; --bbline:#3d414a; --hole:#9096a1; --gap:#1d2026; --rail:#25282f;
+  --v12:#ff5c5c; --gnd:#d4d8df; --v5:#ffa04a; --v33:#e56bd0; --sig:#5aa0ff; --mot:#c9935a; --enc:#4cd68a; --i2c:#3fd4e0;
+  --blk:#23272f; --blkline:#4a505c; --usb:#6a707b; --cap:#4b78c0; --res:#a98c52;
+  --stp:#e05555; --stm:#5b8de0; color-scheme:dark;}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.55;font-size:15px;
+  padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1{font-size:clamp(26px,4vw,34px);margin:0;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:20px;margin:0 0 4px;text-wrap:balance}
+p{margin:0;max-width:68ch}
+.lead{color:var(--mut);font-size:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0;display:flex;flex-direction:column;gap:12px}
+.scroll{overflow-x:auto;border-radius:8px}
+.scroll>svg{display:block;min-width:860px;width:100%;height:auto}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.fact{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.fact b{font-family:var(--mono);font-size:22px;font-weight:500}
+.fact span{color:var(--mut);font-size:13px}
+.leg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--mut)}
+.leg i{display:inline-block;width:18px;height:4px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.t-v12{--c:var(--v12)}.t-gnd{--c:var(--gnd)}.t-v5{--c:var(--v5)}.t-v33{--c:var(--v33)}.t-sig{--c:var(--sig)}.t-mot{--c:var(--mot)}.t-enc{--c:var(--enc)}.t-i2c{--c:var(--i2c)}
+.leg i{background:var(--c)}
+/* svg */
+svg text{font-family:var(--mono)}
+.bb{fill:var(--bb);stroke:var(--bbline);stroke-width:1.5}
+.gap{fill:var(--gap)}
+.hole{fill:var(--hole);opacity:.55}
+.stp{stroke:var(--stp);stroke-width:2}.stm{stroke:var(--stm);stroke-width:2}
+.rlab{font-size:11px;fill:var(--fg);font-weight:500}.rlab.off{fill:var(--mut);font-weight:400}
+.rowl,.coll{font-size:10px;fill:var(--mut)}
+.blk{fill:var(--blk);stroke:var(--blkline);stroke-width:1.3}
+.bt{font-size:12.5px;fill:var(--fg);font-weight:500;font-family:var(--sans)}
+.bs{font-size:11.5px;fill:var(--mut);font-family:var(--sans)}
+.bs.w9{fill:#fff;font-size:11px}
+.mt{font-size:12px;fill:#fff;font-weight:500}
+.esp{fill:var(--esp)}.tb{fill:var(--tb)}.mpu{fill:var(--mpu)}.usb{fill:var(--usb)}
+.cap,.cp{fill:var(--cap)}.lm{fill:#1f7a4d}.kl{fill:#2f5fa8}.fz{fill:#8a6a1c}.capt{font-size:11px;fill:#fff}
+.res{fill:var(--res);stroke:#6d5420;stroke-width:1}
+.lead{stroke:var(--fg);stroke-width:1.4}
+.pin{fill:#e9c46a}
+.pn{font-size:9.5px;fill:var(--pnlight)}
+.pn2{font-size:10.5px;fill:var(--mut)}
+.pn3{font-size:9.5px;fill:var(--mut)}
+.note{font-size:11px;fill:var(--mut)}.note.c{font-size:12px}
+.w{fill:none;stroke:var(--c, var(--fg));stroke-width:3;stroke-linecap:round}
+.w.thick{stroke-width:5}
+.w-v12{stroke:var(--v12)}.w-gnd{stroke:var(--gnd)}.w-v5{stroke:var(--v5)}.w-v33{stroke:var(--v33)}.w-sig{stroke:var(--sig)}.w-mot{stroke:var(--mot)}.w-enc{stroke:var(--enc)}.w-i2c{stroke:var(--i2c)}
+.pl{stroke:var(--bb);stroke-width:1.2}
+.c-v12{fill:var(--v12)}.c-gnd{fill:var(--gnd)}.c-v5{fill:var(--v5)}.c-v33{fill:var(--v33)}.c-sig{fill:var(--sig)}.c-mot{fill:var(--mot)}.c-enc{fill:var(--enc)}.c-i2c{fill:var(--i2c)}
+.tg circle,.tg-c{fill:var(--c);stroke:var(--bb);stroke-width:1.5}
+.tg text,.tgt{font-size:10.5px;font-weight:500;fill:var(--bg)}
+.arh{fill:var(--fg)}
+/* tablo */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr.grp th{background:transparent;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);padding-top:16px;border-bottom:2px solid var(--line)}
+.sw{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);margin-right:8px}
+.no{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:13px;background:var(--c);color:var(--bg);font-family:var(--mono);font-size:12.5px;font-weight:500}
+td.num{width:44px}
+.kal{font-size:11px;font-weight:500;color:var(--v12);border:1px solid var(--v12);border-radius:4px;padding:0 5px;margin-left:4px}
+ol,ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:7px}
+.warn li::marker{color:var(--v5)}
+code{font-family:var(--mono);font-size:13px;background:var(--bb);padding:1px 5px;border-radius:4px}
+</style>
+
+<main>
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <h1>Breadboard şeması: tek tam boy kart</h1>
+    <p class="lead">Kanka, her şey tek kartın üstünde: klemens, sigorta, anahtar, LM2596, kondansatör, TB6612, MPU6050 ve ESP32. Kart dışında sadece adaptör, motorlar ve IR alıcılar kalır. Üst raylar 3,3 V ve GND olur. Alt raylar 12 V ve GND olur. Her kabloda bir numara var. Aynı numaralı iki uç birbirine gider. Tam liste en altta.</p>
+  </header>
+
+  <section class="card">
+    <h2>Bir breadboard'da kaç delik var</h2>
+    <div class="facts">
+      <div class="fact"><b>830</b><span>toplam bağlantı deliği (tam boy)</span></div>
+      <div class="fact"><b>63 × 10 = 630</b><span>63 sütun, her sütunda a–j satırı. Sütunun üst yarısı (a–e) kendi içinde bağlı. Alt yarısı (f–j) ayrı bağlı.</span></div>
+      <div class="fact"><b>4 × 50 = 200</b><span>4 ray (iki üstte, iki altta). Ray boydan boya yatay bağlı. Her rayda 5'li 10 grup.</span></div>
+      <div class="fact"><b>Ortadaki oluk</b><span>Üst yarı ile alt yarı birbirine bağlı değil. IC ve modüller oluğu geçer.</span></div>
+    </div>
+    <p>Bazı tam boy kartlarda ray ortada kopuktur. Multimetre ile bip testi yap. Kopuksa iki yarıyı kabloyla birleştir.</p>
+  </section>
+
+  <section class="card">
+    <h2>4 ray, 3 hat</h2>
+    <div class="facts">
+      <div class="fact"><b style="color:var(--v33)">+3,3 V</b><span>Üst dış ray. ESP32'nin 3V3 pininden beslenir (kablo 9).</span></div>
+      <div class="fact"><b style="color:var(--gnd)">GND</b><span>Üst iç ray. Alt iç ray ile 6 numaralı kalın kabloyla birleşir.</span></div>
+      <div class="fact"><b style="color:var(--gnd)">GND</b><span>Alt iç ray. Motor ve güç tarafının GND hattı.</span></div>
+      <div class="fact"><b style="color:var(--v12)">+12 V</b><span>Alt dış ray. Anahtardan gelir. TB6612 VM, kondansatör ve LM2596 buradan beslenir.</span></div>
+    </div>
+    <p>12 V rayı ile 3,3 V rayı kartın iki ayrı ucunda durur. Yanlış rayda kablo ESP32'yi yakar. 12 V için kırmızı kablo, 3,3 V için turuncu kablo kullan. Raylara bant yapıştırıp üstüne volt yaz.</p>
+  </section>
+
+  <section class="card">
+    <h2>Parçalar hangi sütunda</h2>
+    <div class="tw"><table>
+      <thead><tr><th>Parça</th><th>Sütun</th><th>Satır</th><th>Not</th></tr></thead>
+      <tbody>
+        <tr><td>Klemens (2 pin)</td><td>1 (+) ve 3 (−)</td><td>h</td><td>Vida deliği dışarı bakar. Adaptörün kırmızı ucu +, siyah ucu −.</td></tr>
+        <tr><td>3 A sigorta</td><td>4 ve 6</td><td>h</td><td>Yönü yok. Bacak aralığı 5 mm (2 delik).</td></tr>
+        <tr><td>Anahtar (3 bacak)</td><td>8, 10 (orta), 12</td><td>h</td><td>Orta bacak ortak. 12. sütun çıkış. 8. sütun boş kalır.</td></tr>
+        <tr><td>MPU6050</td><td>4–11</td><td>c (üst yarı)</td><td>VCC, GND, SCL, SDA, XDA, XCL, AD0, INT sırası.</td></tr>
+        <tr><td>LM2596 mini</td><td>15 ve 31</td><td>c ve i</td><td>İki − ped üstte (c), iki + ped altta (i). Orta oluğa yatar.</td></tr>
+        <tr><td>TB6612</td><td>33–40</td><td>d ve h</td><td>Orta oluğa yatar.</td></tr>
+        <tr><td>1000 µF kondansatör</td><td>41 (+) ve 43 (−)</td><td>g</td><td>Uzun bacak +. TB6612'nin hemen yanında.</td></tr>
+        <tr><td>ESP32 38 pin</td><td>44–62</td><td>a ve i</td><td>USB sağa bakar. Kartın sağ ucunda.</td></tr>
+      </tbody></table></div>
+    <p>Sıra: soldan sağa güç parçaları, sonra buck, sonra sürücü ve ESP32. Böylece 12 V kabloları kısa kalır.</p>
+  </section>
+
+  <section class="card">
+    <h2>Büyük resim</h2>
+    <div class="scroll">{{OVERVIEW}}</div>
+  </section>
+
+  <section class="card">
+    <h2>Tek breadboard: tüm bağlantılar</h2>
+    <p>ESP32 sağ uçta durur. USB karttan dışarı taşar. Kablo ucu pinle aynı sütunda, ESP32'nin dışında kalan deliğe takılır: üst pinler için b satırı (ESP32 altından), alt pinler için j satırı. Numara pinin yanında durur. Başka bir yerde aynı numarayı bul.</p>
+    <div class="scroll">{{SVG}}</div>
+    <div class="leg"><span class="t-v33"><i></i>3,3 V</span><span class="t-gnd"><i></i>GND</span><span class="t-v12"><i></i>12 V</span><span class="t-v5"><i></i>5 V</span><span class="t-sig"><i></i>TB6612 sinyali</span><span class="t-mot"><i></i>motor tel</span><span class="t-enc"><i></i>enkoder / IR</span><span class="t-i2c"><i></i>I²C</span></div>
+  </section>
+
+  <section class="card">
+    <h2>Tüm kablolar (47 adet)</h2>
+    <div class="tw"><table>
+      <thead><tr><th>No</th><th>Nereden</th><th>Nereye</th><th>Not</th></tr></thead>
+      <tbody>
+{{TABLE}}
+      </tbody></table></div>
+  </section>
+
+  <section class="card">
+    <h2>Açma sırası</h2>
+    <ol>
+      <li>Adaptörü takma. Anahtar kapalı olsun. Parçaları ve kabloları yerleştir ama 7 numaralı kabloyu (buck → ESP32) en son bağla.</li>
+      <li>LM2596 çıkışına (OUT+ ve OUT−) multimetre koy. Adaptörü klemense tak, anahtarı aç. Trimpotla çıkışı <b>5,0 V</b> yap. Kapat. Sonra 7 numaralı kabloyu bağla.</li>
+      <li>Multimetreyi bip testine al. 12 V rayı ile 3,3 V rayı arasında bip çalmamalı. 12 V rayı ile GND arasında da bip çalmamalı.</li>
+      <li>Kalan kabloları bağla. Önce GND kabloları, sonra gerilim kabloları.</li>
+      <li>Motorları yere koyma. Tekerlekler havada olsun. Aç. ESP32 açılmalı.</li>
+      <li>Yön ters çıkarsa o motorun M1 ve M2 kablosunu değiştir. Enkoder yönü ters çıkarsa A ve B kablosunu değiştir.</li>
+    </ol>
+  </section>
+
+  <section class="card warn">
+    <h2>Dikkat et</h2>
+    <ul class="warn">
+      <li><b>LM2596 ped aralığı varsayım.</b> İki ped satırı arası 8 delik (c ve i satırı), iki uç arası 16 sütun kabul ettim. Modülün pedlerini cetvelle ölç. Aralık uymuyorsa pedlere dupont tel bağla, modülü kartın dışına koy ve bana yaz.</li>
+      <li><b>LM2596 yönü.</b> IN+ ve OUT+ aynı kenarda olmalı. Kartın üstündeki yazıya bak. Ters bağlarsan modül yanar.</li>
+      <li><b>Lehimsiz pinler zayıf temas yapar.</b> Pinler pedlere sadece sıkışıyorsa akım dalgalanır. 12 V hattında ısınma ya da kopma olursa pinleri bantla sabitle, mümkünse bir arkadaştan lehimlet.</li>
+      <li><b>Sigorta ve anahtar bacak aralığı.</b> Sigorta 5 mm, anahtar yaklaşık 4,7 mm bacak aralıklıdır. Bacaklar delik aralığına tam oturmayabilir. Hafifçe bükerek tak.</li>
+      <li><b>USB ve 5 V aynı anda olmasın.</b> Yazılım yüklerken 7 numaralı kabloyu çıkar ya da adaptörü kapat.</li>
+      <li><b>9 ve 13 numaralı kablolar uzundur.</b> ESP32 ve TB6612 alt tarafta durur, 3,3 V rayı üstte. Bu iki kablo modülün yanından geçer. Uzun jumper kullan. Modülün üstünden geçirme: pin sıkışır.</li>
+      <li><b>TB6612 pin sırası varsayım.</b> Çizim Pololu tipi sırayı kullanır. Kartın üstündeki yazıya bak. Sıra farklıysa bana yaz, yeniden çizeyim.</li>
+      <li><b>ESP32 a ve i satırına takılır (25,4 mm).</b> Alt pinler için j satırı açıktır: kabloyu oraya tak. Üst pinlerde dışarıda delik yok. Kabloyu pinin sütunundaki b satırına tak ve ESP32'nin altından yan uca çıkar. Tek damarlı, ince, düz kablo kullan (yalıtım 1,5 mm kadar). Dupont ucu sığmaz.</li>
+      <li><b>Motor akımı.</b> Breadboard yaklaşık 1 A taşır. 1, 5 ve motor telleri kalın ve kısa olsun. Motoru durma noktasında (2,3 A) zorlama. TB6612 kanal başına 1,2 A sürekli verir.</li>
+      <li><b>Motor kablo renkleri satıcıya göre değişir.</b> Teli renge göre değil, motorun pinout etiketine göre bağla.</li>
+      <li><b>IR alıcı modülü.</b> İki alıcı 10×20 cm pleksinin ön kenarında (20 cm kenarın iki köşesi), ileri bakar. Her biri 3 telle breadboard'a gelir, tel boyu yaklaşık 15 cm olsun. Pin sırasını (VCC, GND, OUT) ve besleme aralığını ANEC kartının üstündeki yazıdan kontrol et. Sadece 5 V kabul ediyorsa OUT pini ESP32 için fazla yüksek olur, bana yaz.</li>
+      <li><b>Enkoder 3,3 V ile çalışır.</b> 5 V verme. ESP32 pinine 5 V girmemeli.</li>
+      <li><b>Üst GND pini (TB6612).</b> Sürücü kartının içinde iki GND pini ortaktır. 10 kΩ direnç üst GND pinine bağlanır, kablo 14 alt GND pinine gider.</li>
+      <li><b>Kondansatör yönü.</b> Şeritli bacak −, uzun bacak +. Ters takılırsa patlar. Bacakları kısa tut, TB6612'ye yakın tak.</li>
+    </ul>
+  </section>
+</main>

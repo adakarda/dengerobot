@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "cdtp")(type "KiCad")(uri "${KIPRJMOD}/cdtp.pretty")(options "")(descr "CDTP ozel ayak izleri"))
+)

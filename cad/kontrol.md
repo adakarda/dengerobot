@@ -5,7 +5,7 @@
 | Kontrol | Sonuc | Ayrinti |
 |---|---|---|
 | Carpisma (tum parcalar ikili) | GECTI | 38 parca, 703 cift; hic biri birbirine girmiyor |
-| Zemin payi (+-30 derece egim) | GECTI | en alcak nokta zeminden 7.0 mm ([baski] motor_tutucu_sol) |
+| Zemin payi (+-30 derece egim) | GECTI | en alcak nokta zeminden 4.0 mm (braket sol) |
 | Direk yanasmasi (O40, seride temas) | GECTI | yalniz pogo pimler direge giriyor (yay payi 3 mm) |
 | V kanatlari direge degmiyor | GECTI | kanat ic yuzu ile direk arasi 1.2 mm |
 | Pim, miknatis ve goz yukseklikleri | GECTI | + pim 102.0, - pim 77.0, miknatis 89.5 (celik serit 85-94), IR goz 147.0 mm (zeminden) |
@@ -17,9 +17,7 @@
 
 | Parca | Boyut (mm, baski yonu) | Hacim cm3 | Kutle g (%60 dolu PLA) |
 |---|---|---|---|
-| kat1 | 110.0 x 150.0 x 12.0 | 67.9 | 51 |
+| kat1 | 110.0 x 150.0 x 12.0 | 67.7 | 50 |
 | kat2 | 110.0 x 150.0 x 18.0 | 67.1 | 50 |
 | kat3 | 110.0 x 150.0 x 29.0 | 77.4 | 58 |
-| motor_tutucu_sol | 42.0 x 50.0 x 28.0 | 11.8 | 9 |
-| motor_tutucu_sag | 42.0 x 50.0 x 28.0 | 11.8 | 9 |
 | v_yuva | 47.7 x 83.6 x 80.0 | 36.5 | 27 |

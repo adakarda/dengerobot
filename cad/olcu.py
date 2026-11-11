@@ -29,7 +29,7 @@ MOTOR_MIL_D, MOTOR_MIL_L = 6.0, 15.0
 MOTOR_BURC_D = 12.5                       # (OLC) mil burcu cikintisi icin delik
 MOTOR_DELIK_PCD, MOTOR_DELIK_ACI0 = 31.0, 0.0   # 6 x M3, 31 mm daire; (OLC) delik acisi
 MOTOR_YUZ_Y = 75.0                        # sanziman on yuzu |Y|
-TUTUCU_T = 5.0                            # motor tutucu on plaka kalinligi
+TUTUCU_T = 3.0                            # motor tutucu (alüminyum braket) dik plaka kalinligi
 
 # --- Moduller (en, boy, yukseklik); delikler (OLC) ---
 BTS = (50.0, 50.0, 35.0)
@@ -71,3 +71,16 @@ GOZ_ACI = 15.0
 GOZ_Y = 14.0
 GOZ_PENCERE = (7.4, 7.4)        # VS1838B basi
 GOZ_TUP_L = 15.0
+
+# --- Motor braketi: 37 mm L klemens, aluminyum 3 mm (Technobotix BBX-MTG-006 cizimi) ---
+# Braket kat1'in ALTINA asilir: ayak plakanin alt yuzune (BRK_PUL aralikla), dik plaka asagi iner, motor ekseni ayagin dis yuzunden 28 mm asagida.
+BRK_T = 3.0
+BRK_AYAK = (40.0, 41.0)            # genislik (x), derinlik (y; dik plakanin dis yuzunden icerige)
+BRK_AYAK_DELIK = (30.0, 24.0, 9.0) # delik araligi x, y ve dik plakanin dis yuzunden ilk delige uzaklik
+BRK_AYAK_DELIK_D = 3.4
+BRK_PLAKA = (40.0, 48.0)           # genislik, yukseklik (ayagin dis yuzunden asagi)
+BRK_KOSE_R = 6.5
+BRK_MERKEZ_YUK = 28.0              # motor ekseni, ayagin dis yuzunden
+BRK_PLAKA_DELIK_D = 3.2            # 6 delik, 31 mm daire
+BRK_YUVA = (13.0, 10.5)            # (OLC) ortadaki yuvanin genisligi ve yay merkezlerinin motor ekseninden uzakligi; cizimde yazmiyor
+BRK_PUL = 1.0                      # ayak ile kat1 arasi aralik (2 adet M3 pul): motor ekseni z = KAT1_Z - 1 - 28 = -7 olsun

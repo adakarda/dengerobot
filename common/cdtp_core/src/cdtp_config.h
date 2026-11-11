@@ -15,8 +15,8 @@ namespace cdtp {
 namespace cfg {
 
 // ---- Mekanik (OLC) ----
-constexpr float WHEEL_RADIUS_M   = 0.035f;   // 70 mm teker (Pololu 3272)
-constexpr float TRACK_WIDTH_M    = 0.190f;   // iki teker temas noktasi arasi (sasi cizimi; OLC)
+constexpr float WHEEL_RADIUS_M   = 0.0325f;  // 65 mm x 28 mm kucuk arazi tekerlegi (olculdu)
+constexpr float TRACK_WIDTH_M    = 0.270f;   // iki teker orta cizgisi arasi (olculdu: en distan en disa 298 mm - 28 mm)
 constexpr float ENC_COUNTS_PER_REV = 836.0f; // 11 darbe x ~19 disli x 4 kenar (OLC: tekeri 10 tur cevir)
 constexpr bool  ENC_LEFT_INVERT  = false;
 constexpr bool  ENC_RIGHT_INVERT = true;     // sag motor ayna takili
