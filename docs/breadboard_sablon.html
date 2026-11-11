@@ -88,7 +88,7 @@ code{font-family:var(--mono);font-size:13px;background:var(--bb);padding:1px 5px
 <main>
   <header style="display:flex;flex-direction:column;gap:8px">
     <h1>Breadboard şeması: tek tam boy kart</h1>
-    <p class="lead">Kanka, her şey tek kartın üstünde: klemens, sigorta, anahtar, LM2596, kondansatör, TB6612, MPU6050 ve ESP32. Kart dışında sadece adaptör, motorlar ve IR alıcılar kalır. Üst raylar 3,3 V ve GND olur. Alt raylar 12 V ve GND olur. Her kabloda bir numara var. Aynı numaralı iki uç birbirine gider. Tam liste en altta.</p>
+    <p class="lead">Kanka, bu şema senin gerçek kartının düzeni: ESP32 21→3. sütun, MPU6050 23–30, TB6612 39→32, LM2596 41 ve 57, 3 pinli klemens 60–62. Sigorta, anahtar ve kondansatör şu an kartta yok. Kart dışında sadece adaptör, motorlar ve IR alıcılar kalır. Üst raylar 12 V ve GND olur. Alt raylar GND ve 3,3 V olur. Her kabloda bir numara var. Aynı numaralı iki uç birbirine gider. Tam liste en altta.</p>
   </header>
 
   <section class="card">
@@ -105,10 +105,10 @@ code{font-family:var(--mono);font-size:13px;background:var(--bb);padding:1px 5px
   <section class="card">
     <h2>4 ray, 3 hat</h2>
     <div class="facts">
-      <div class="fact"><b style="color:var(--v33)">+3,3 V</b><span>Üst dış ray. ESP32'nin 3V3 pininden beslenir (kablo 9).</span></div>
+      <div class="fact"><b style="color:var(--v33)">+3,3 V</b><span>Alt dış ray. ESP32'nin 3V3 pininden beslenir (kablo 9).</span></div>
       <div class="fact"><b style="color:var(--gnd)">GND</b><span>Üst iç ray. Alt iç ray ile 6 numaralı kalın kabloyla birleşir.</span></div>
       <div class="fact"><b style="color:var(--gnd)">GND</b><span>Alt iç ray. Motor ve güç tarafının GND hattı.</span></div>
-      <div class="fact"><b style="color:var(--v12)">+12 V</b><span>Alt dış ray. Anahtardan gelir. TB6612 VM, kondansatör ve LM2596 buradan beslenir.</span></div>
+      <div class="fact"><b style="color:var(--v12)">+12 V</b><span>Üst dış ray. Klemensten gelir. TB6612 VM ve LM2596 girişi buradan beslenir.</span></div>
     </div>
     <p>12 V rayı ile 3,3 V rayı kartın iki ayrı ucunda durur. Yanlış rayda kablo ESP32'yi yakar. 12 V için kırmızı kablo, 3,3 V için turuncu kablo kullan. Raylara bant yapıştırıp üstüne volt yaz.</p>
   </section>
@@ -118,16 +118,13 @@ code{font-family:var(--mono);font-size:13px;background:var(--bb);padding:1px 5px
     <div class="tw"><table>
       <thead><tr><th>Parça</th><th>Sütun</th><th>Satır</th><th>Not</th></tr></thead>
       <tbody>
-        <tr><td>Klemens (2 pin)</td><td>1 (+) ve 3 (−)</td><td>h</td><td>Vida deliği dışarı bakar. Adaptörün kırmızı ucu +, siyah ucu −.</td></tr>
-        <tr><td>3 A sigorta</td><td>4 ve 6</td><td>h</td><td>Yönü yok. Bacak aralığı 5 mm (2 delik).</td></tr>
-        <tr><td>Anahtar (3 bacak)</td><td>8, 10 (orta), 12</td><td>h</td><td>Orta bacak ortak. 12. sütun çıkış. 8. sütun boş kalır.</td></tr>
-        <tr><td>MPU6050</td><td>4–11</td><td>c (üst yarı)</td><td>VCC, GND, SCL, SDA, XDA, XCL, AD0, INT sırası.</td></tr>
-        <tr><td>LM2596 mini</td><td>15 ve 31</td><td>c ve i</td><td>İki − ped üstte (c), iki + ped altta (i). Orta oluğa yatar.</td></tr>
-        <tr><td>TB6612</td><td>33–40</td><td>d ve h</td><td>Orta oluğa yatar.</td></tr>
-        <tr><td>1000 µF kondansatör</td><td>41 (+) ve 43 (−)</td><td>g</td><td>Uzun bacak +. TB6612'nin hemen yanında.</td></tr>
-        <tr><td>ESP32 38 pin</td><td>44–62</td><td>a ve i</td><td>USB sağa bakar. Kartın sağ ucunda.</td></tr>
+        <tr><td>ESP32 38 pin</td><td>21 → 3</td><td>a ve i</td><td>Sol pin (GND ve 3V3) 21'de. Sütun numarası azalarak 3'e gider. USB sol uçta.</td></tr>
+        <tr><td>MPU6050</td><td>23–30</td><td>c (üst yarı)</td><td>VCC 23'te, INT 30'da. Modülün üstündeki yazıya bak: sıra ters ise bana yaz.</td></tr>
+        <tr><td>TB6612</td><td>39 → 32</td><td>d ve h</td><td>VM ve PWMA 39'da. GND 32'de. Orta oluğa yatar.</td></tr>
+        <tr><td>LM2596 mini</td><td>41 (OUT) ve 57 (IN)</td><td>c ve i</td><td>+ pedler c satırında, − pedler i satırında (OUT+ üst-sol dedin). Pedlerin yazısını kontrol et.</td></tr>
+        <tr><td>Klemens (3 pin)</td><td>60, 61, 62</td><td>h</td><td>60 = +, 62 = −, ortadaki boş. Kartın üstündeki işarete bak.</td></tr>
       </tbody></table></div>
-    <p>Sıra: soldan sağa güç parçaları, sonra buck, sonra sürücü ve ESP32. Böylece 12 V kabloları kısa kalır.</p>
+    <p>Sıra soldan sağa: ESP32, MPU6050, TB6612, LM2596, klemens.</p>
   </section>
 
   <section class="card">
@@ -137,13 +134,13 @@ code{font-family:var(--mono);font-size:13px;background:var(--bb);padding:1px 5px
 
   <section class="card">
     <h2>Tek breadboard: tüm bağlantılar</h2>
-    <p>ESP32 sağ uçta durur. USB karttan dışarı taşar. Kablo ucu pinle aynı sütunda, ESP32'nin dışında kalan deliğe takılır: üst pinler için b satırı (ESP32 altından), alt pinler için j satırı. Numara pinin yanında durur. Başka bir yerde aynı numarayı bul.</p>
+    <p>ESP32 sol uçta durur. USB karttan dışarı taşar. Kablo ucu pinle aynı sütunda, ESP32'nin dışında kalan deliğe takılır: üst pinler için b satırı (ESP32 altından), alt pinler için j satırı. Numara pinin yanında durur. Başka bir yerde aynı numarayı bul.</p>
     <div class="scroll">{{SVG}}</div>
     <div class="leg"><span class="t-v33"><i></i>3,3 V</span><span class="t-gnd"><i></i>GND</span><span class="t-v12"><i></i>12 V</span><span class="t-v5"><i></i>5 V</span><span class="t-sig"><i></i>TB6612 sinyali</span><span class="t-mot"><i></i>motor tel</span><span class="t-enc"><i></i>enkoder / IR</span><span class="t-i2c"><i></i>I²C</span></div>
   </section>
 
   <section class="card">
-    <h2>Tüm kablolar (47 adet)</h2>
+    <h2>Tüm kablolar ({{COUNT}} adet)</h2>
     <div class="tw"><table>
       <thead><tr><th>No</th><th>Nereden</th><th>Nereye</th><th>Not</th></tr></thead>
       <tbody>
@@ -154,8 +151,8 @@ code{font-family:var(--mono);font-size:13px;background:var(--bb);padding:1px 5px
   <section class="card">
     <h2>Açma sırası</h2>
     <ol>
-      <li>Adaptörü takma. Anahtar kapalı olsun. Parçaları ve kabloları yerleştir ama 7 numaralı kabloyu (buck → ESP32) en son bağla.</li>
-      <li>LM2596 çıkışına (OUT+ ve OUT−) multimetre koy. Adaptörü klemense tak, anahtarı aç. Trimpotla çıkışı <b>5,0 V</b> yap. Kapat. Sonra 7 numaralı kabloyu bağla.</li>
+      <li>Adaptörü takma. Parçaları ve kabloları yerleştir ama 7 numaralı kabloyu (buck → ESP32) en son bağla.</li>
+      <li>LM2596 çıkışına (OUT+ ve OUT−) multimetre koy. Adaptörü klemense tak. Trimpotla çıkışı <b>5,0 V</b> yap. Kapat. Sonra 7 numaralı kabloyu bağla.</li>
       <li>Multimetreyi bip testine al. 12 V rayı ile 3,3 V rayı arasında bip çalmamalı. 12 V rayı ile GND arasında da bip çalmamalı.</li>
       <li>Kalan kabloları bağla. Önce GND kabloları, sonra gerilim kabloları.</li>
       <li>Motorları yere koyma. Tekerlekler havada olsun. Aç. ESP32 açılmalı.</li>
@@ -166,20 +163,19 @@ code{font-family:var(--mono);font-size:13px;background:var(--bb);padding:1px 5px
   <section class="card warn">
     <h2>Dikkat et</h2>
     <ul class="warn">
-      <li><b>LM2596 ped aralığı varsayım.</b> İki ped satırı arası 8 delik (c ve i satırı), iki uç arası 16 sütun kabul ettim. Modülün pedlerini cetvelle ölç. Aralık uymuyorsa pedlere dupont tel bağla, modülü kartın dışına koy ve bana yaz.</li>
-      <li><b>LM2596 yönü.</b> IN+ ve OUT+ aynı kenarda olmalı. Kartın üstündeki yazıya bak. Ters bağlarsan modül yanar.</li>
+      <li><b>LM2596 pedleri.</b> IN pedleri 57. sütunda, OUT pedleri 41. sütunda. + pedler c, − pedler i satırında kabul ettim. Modülün yazısına bak. IN+ ve OUT+ aynı kenarda olmalı. Ters bağlarsan modül yanar.</li>
       <li><b>Lehimsiz pinler zayıf temas yapar.</b> Pinler pedlere sadece sıkışıyorsa akım dalgalanır. 12 V hattında ısınma ya da kopma olursa pinleri bantla sabitle, mümkünse bir arkadaştan lehimlet.</li>
-      <li><b>Sigorta ve anahtar bacak aralığı.</b> Sigorta 5 mm, anahtar yaklaşık 4,7 mm bacak aralıklıdır. Bacaklar delik aralığına tam oturmayabilir. Hafifçe bükerek tak.</li>
+      <li><b>Kartta sigorta, anahtar ve kondansatör yok.</b> Çalışır ama önerilir: 12 V hattına 3 A sigorta ve TB6612 yanına 1000 µF kondansatör. Gelince şemaya eklerim.</li>
       <li><b>USB ve 5 V aynı anda olmasın.</b> Yazılım yüklerken 7 numaralı kabloyu çıkar ya da adaptörü kapat.</li>
-      <li><b>9 ve 13 numaralı kablolar uzundur.</b> ESP32 ve TB6612 alt tarafta durur, 3,3 V rayı üstte. Bu iki kablo modülün yanından geçer. Uzun jumper kullan. Modülün üstünden geçirme: pin sıkışır.</li>
+      <li><b>3, 7, 9 ve 13 numaralı kablolar uzundur.</b> Pedler ve alt pinler bir yarıda, rayları öbür yarıda. Bu kablolar modülün yanından geçer. Uzun jumper kullan. Modülün üstünden geçirme: pin sıkışır.</li>
       <li><b>TB6612 pin sırası varsayım.</b> Çizim Pololu tipi sırayı kullanır. Kartın üstündeki yazıya bak. Sıra farklıysa bana yaz, yeniden çizeyim.</li>
       <li><b>ESP32 a ve i satırına takılır (25,4 mm).</b> Alt pinler için j satırı açıktır: kabloyu oraya tak. Üst pinlerde dışarıda delik yok. Kabloyu pinin sütunundaki b satırına tak ve ESP32'nin altından yan uca çıkar. Tek damarlı, ince, düz kablo kullan (yalıtım 1,5 mm kadar). Dupont ucu sığmaz.</li>
-      <li><b>Motor akımı.</b> Breadboard yaklaşık 1 A taşır. 1, 5 ve motor telleri kalın ve kısa olsun. Motoru durma noktasında (2,3 A) zorlama. TB6612 kanal başına 1,2 A sürekli verir.</li>
+      <li><b>Motor akımı.</b> Breadboard yaklaşık 1 A taşır. 1, 2, 5 ve motor telleri kalın ve kısa olsun. Motoru durma noktasında (2,3 A) zorlama. TB6612 kanal başına 1,2 A sürekli verir.</li>
       <li><b>Motor kablo renkleri satıcıya göre değişir.</b> Teli renge göre değil, motorun pinout etiketine göre bağla.</li>
       <li><b>IR alıcı modülü.</b> İki alıcı 10×20 cm pleksinin ön kenarında (20 cm kenarın iki köşesi), ileri bakar. Her biri 3 telle breadboard'a gelir, tel boyu yaklaşık 15 cm olsun. Pin sırasını (VCC, GND, OUT) ve besleme aralığını ANEC kartının üstündeki yazıdan kontrol et. Sadece 5 V kabul ediyorsa OUT pini ESP32 için fazla yüksek olur, bana yaz.</li>
       <li><b>Enkoder 3,3 V ile çalışır.</b> 5 V verme. ESP32 pinine 5 V girmemeli.</li>
       <li><b>Üst GND pini (TB6612).</b> Sürücü kartının içinde iki GND pini ortaktır. 10 kΩ direnç üst GND pinine bağlanır, kablo 14 alt GND pinine gider.</li>
-      <li><b>Kondansatör yönü.</b> Şeritli bacak −, uzun bacak +. Ters takılırsa patlar. Bacakları kısa tut, TB6612'ye yakın tak.</li>
+      
     </ul>
   </section>
 </main>

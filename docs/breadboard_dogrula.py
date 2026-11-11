@@ -24,15 +24,15 @@ pins = {}
 def esp_name(n):
     return "ESP." + (GPIO.get(n) or ("GPIO" + n if n.isdigit() else n))
 for i, n in enumerate(B.ESP_T):
-    pins[(B.C_ESP + i, "a")] = esp_name(n)
+    pins[(B.ecol(i), "a")] = esp_name(n)
 for i, n in enumerate(B.ESP_B):
-    pins[(B.C_ESP + i, "i")] = esp_name(n)
+    pins[(B.ecol(i), "i")] = esp_name(n)
 for i, n in enumerate(B.TB_T):
-    pins[(B.C_TB + i, "d")] = "TB." + n
+    pins[(B.tcol(i), "d")] = "TB." + n
 for i, n in enumerate(B.TB_B):
-    pins[(B.C_TB + i, "h")] = "TB." + n
+    pins[(B.tcol(i), "h")] = "TB." + n
 for i, n in enumerate(B.MPU):
-    pins[(B.C_MPU + i, "c")] = "MPU." + n
+    pins[(B.mcol(i), "c")] = "MPU." + n
 pins.update(B.EXTRA_PINS)
 
 # kart disi uclar: kablo no -> terminal
@@ -72,8 +72,6 @@ def tie(names):
 # adaptor kablolari klemense vidalanir
 terms["ADP.+"] = strip(B.K_P, "h"); terms["ADP.-"] = strip(B.K_M, "h")
 tie({"TB.GND"})
-tie({"F.A", "F.B"})        # sigorta: iki bacak arasi iletken
-tie({"SW.C", "SW.2"})      # anahtar acik: orta bacak ile cikis bacagi bagli
 tie({"ESP.GND"})
 
 nets = {}
@@ -82,8 +80,8 @@ for t, s in terms.items():
 
 # ---- beklenen aglar ----
 EXP = {
-    "V12": ["ADP.+", "K.+", "F.A", "F.B", "SW.C", "SW.2", "TB.VM", "CAP.+", "LM.IN+"],
-    "GND": ["ADP.-", "K.-", "TB.GND", "ESP.GND", "MPU.GND", "MPU.AD0", "ENCL.GND", "ENCR.GND", "IRL.GND", "IRR.GND", "CAP.-", "LM.IN-", "LM.OUT-"],
+    "V12": ["ADP.+", "K.+", "TB.VM", "LM.IN+"],
+    "GND": ["ADP.-", "K.-", "TB.GND", "ESP.GND", "MPU.GND", "MPU.AD0", "ENCL.GND", "ENCR.GND", "IRL.GND", "IRR.GND", "LM.IN-", "LM.OUT-"],
     "V33": ["ESP.3V3", "TB.PWMA", "TB.PWMB", "TB.VCC", "MPU.VCC", "ENCL.VCC", "ENCR.VCC", "IRL.VCC", "IRR.VCC"],
     "V5": ["LM.OUT+", "ESP.5V"],
     "STBY": ["TB.STBY", "ESP.GPIO4"], "AIN1": ["TB.AIN1", "ESP.GPIO27"], "AIN2": ["TB.AIN2", "ESP.GPIO14"],
@@ -136,8 +134,8 @@ for key, ns in seen.items():
     if key in pins:
         fail.append(f"PIN DELIGI: {key} zaten {pins[key]} pini")
 # 4) 10 kohm: STBY seridi (24,b) ve ust GND pini seridi (28,b)
-rs = [strip(B.C_TB + 3, "b"), strip(B.C_TB + 7, "b")]
-if find(rs[0]) == find(terms[f"TB.STBY@{B.C_TB+3}d"]) and find(rs[1]) == find(terms[f"TB.GND@{B.C_TB+7}d"]):
+rs = [strip(B.tcol(3), "b"), strip(B.tcol(7), "b")]
+if find(rs[0]) == find(terms[f"TB.STBY@{B.tcol(3)}d"]) and find(rs[1]) == find(terms[f"TB.GND@{B.tcol(7)}d"]):
     ok += 1
 else:
     fail.append("DIRENC: 10 kohm STBY ve GND serilerine oturmuyor")
