@@ -11,7 +11,7 @@ farklar `docs/` altındaki plan sayfasında "değişiklik önerisi" olarak işar
 | Klasör | İçerik |
 |---|---|
 | `common/cdtp_core/` | Donanımdan bağımsız çekirdek: mod makinesi, LQR denge, hareket adımları, IR yanaşma, eldiven jesti, paket. **Robot, eldiven ve simülasyon aynı kodu kullanır.** |
-| `firmware/robot/` | Robot ESP32 (WROOM-32D): MPU6050, PCNT enkoder/IR, BTS7960, ESP-NOW, BLE |
+| `firmware/robot/` | Robot ESP32 (WROOM-32D): MPU6050, PCNT enkoder/IR, BTS7960, ESP-NOW, Wi-Fi WebSocket |
 | `firmware/glove/` | Eldiven ESP32-C3 Super Mini: MPU6050 → 5 komut → ESP-NOW 20 Hz |
 | `tools/lqr_design.py` | Fiziksel model + LQR. `gains.h` ve simülasyon modelini üretir |
 | `sim/` | Ters sarkaç + motor + sensör gürültüsü + IR istasyon simülasyonu, kabul testleri |

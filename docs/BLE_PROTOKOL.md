@@ -1,3 +1,5 @@
+> **ESKI (kullanimdan kalkti, 2026-11-12).** Robot firmware'i artik takimin kararina uygun **Wi-Fi WebSocket** kullanir (ADR-0003, shared/protocol/messages.md): robot `CDTP-ROBOT` agini acar, sunucu `ws://192.168.4.1:81/`, telemetri 5 Hz JSON, `cmd` ve `ping` mesajlari. Bu dosya sadece tarihce icin duruyor.
+
 # Robot ↔ telefon BLE protokolü (Bilgisayar ekibi için)
 
 Robot kendini **`CDTP-Robot`** adıyla duyurur. Tek servis, iki karakteristik:

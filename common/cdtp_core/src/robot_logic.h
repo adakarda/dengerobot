@@ -73,6 +73,8 @@ class RobotLogic {
   Cmd lastGloveCmd() const { return gloveCmd_; }
   bool gloveAlive() const { return gloveAlive_; }
   int telemetryJson(char* buf, int len, uint32_t seq) const;
+  // Takim protokolu (shared/protocol/messages.md): WebSocket telemetri cercevesi
+  int telemetryJsonWs(char* buf, int len, uint32_t seq) const;
 
  private:
   void enterBalance();

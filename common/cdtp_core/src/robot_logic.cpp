@@ -1,6 +1,7 @@
 #include "robot_logic.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "gains.h"
 
@@ -335,6 +336,28 @@ int RobotLogic::telemetryJson(char* buf, int len, uint32_t seq) const {
                   charging_ ? 1 : 0, modeName(mode_), motionName(motion_), dir_, taskName(task_),
                   dockName(dock_.state()), x_, psiDeg(), gloveAlive_ ? cmdName(gloveCmd_) : "yok", irL_.n(),
                   irR_.n());
+}
+
+// shared/protocol/messages.md: type, t, seq, tilt, charging, battery, voltage, state, cmd, docked
+int RobotLogic::telemetryJsonWs(char* buf, int len, uint32_t seq) const {
+  const char* state = "IDLE";
+  switch (mode_) {
+    case Mode::STANDBY: state = "IDLE"; break;
+    case Mode::BALANCE: state = strcmp(dir_, "-") ? "MANUAL" : "BALANCING"; break;
+    case Mode::DOCK: state = "DOCKING"; break;
+    case Mode::CHARGING: state = "CHARGING"; break;
+    case Mode::FALLEN: state = "FAULT"; break;
+  }
+  const char* cmd = "-";
+  if (!strcmp(dir_, "ileri")) cmd = "F";
+  else if (!strcmp(dir_, "geri")) cmd = "B";
+  else if (!strcmp(dir_, "sol")) cmd = "L";
+  else if (!strcmp(dir_, "sag")) cmd = "R";
+  return snprintf(buf, len,
+                  "{\"type\":\"telemetry\",\"t\":%lu,\"seq\":%lu,\"tilt\":%.1f,\"charging\":%s,\"battery\":%d,"
+                  "\"voltage\":%.2f,\"state\":\"%s\",\"cmd\":\"%s\",\"docked\":%s}",
+                  (unsigned long)(t_ * 1000.0f), (unsigned long)(seq & 0xFFFF), thetaDeg(), charging_ ? "true" : "false",
+                  batteryPct(), batteryV(), state, cmd, mode_ == Mode::CHARGING ? "true" : "false");
 }
 
 }  // namespace cdtp

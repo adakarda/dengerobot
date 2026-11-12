@@ -94,6 +94,12 @@ static int runUnitTests() {
     EXPECT(n > 0 && n < (int)sizeof buf && buf[0] == '{' && std::strstr(buf, "\"tilt\":") && std::strstr(buf, "\"chg\":"),
            "telemetri JSON");
     std::printf("  ornek telemetri (%d bayt): %s\n", n, buf);
+    char ws[320];
+    int m = lg.telemetryJsonWs(ws, sizeof ws, 70000);
+    EXPECT(m > 0 && m < (int)sizeof ws && std::strstr(ws, "\"type\":\"telemetry\"") && std::strstr(ws, "\"charging\":false") &&
+               std::strstr(ws, "\"state\":\"IDLE\"") && std::strstr(ws, "\"seq\":4464") && std::strstr(ws, "\"docked\":false"),
+           "WebSocket telemetri (shared/protocol/messages.md alanlari, seq 65536 ile sarar)");
+    std::printf("  ornek WS telemetri (%d bayt): %s\n", m, ws);
   }
   std::printf("  birim testleri: %s\n", g_fail ? "HATA VAR" : "hepsi gecti");
   return g_fail;

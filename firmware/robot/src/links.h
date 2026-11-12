@@ -1,7 +1,7 @@
-// Kablosuz baglantilar: eldivenden ESP-NOW, telefona BLE.
+// Kablosuz baglantilar: eldivenden ESP-NOW, telefona Wi-Fi WebSocket (shared/protocol/messages.md).
 #pragma once
 #include <Arduino.h>
-#include <NimBLEDevice.h>
+#include <WebSocketsServer.h>
 #include <WiFi.h>
 #include <esp_now.h>
 #include <esp_wifi.h>
@@ -38,9 +38,9 @@ static void cb(const uint8_t*, const uint8_t* d, int n) { onPacket(d, n); }
 #endif
 
 inline bool begin() {
-  WiFi.mode(WIFI_STA);
-  WiFi.disconnect();
-  esp_wifi_set_channel(ESPNOW_CHANNEL, WIFI_SECOND_CHAN_NONE);
+  // Robot kendi agini acar (AP) ve ESP-NOW ayni kanalda calisir: eldiven + telefon birlikte.
+  WiFi.mode(WIFI_AP_STA);
+  WiFi.softAP("CDTP-ROBOT", nullptr, ESPNOW_CHANNEL);  // IP 192.168.4.1
   if (esp_now_init() != ESP_OK) return false;
   esp_now_register_recv_cb(cb);
   return true;
@@ -59,55 +59,56 @@ inline bool poll(cdtp::GlovePacket& out) {
 }
 }  // namespace gloverx
 
-// ---------------- BLE: telefon uygulamasi ----------------
-// Servis ve karakteristik UUID'leri uygulama ekibiyle paylasilir (docs/BLE_PROTOKOL.md).
-#define CDTP_SVC_UUID "6e400001-cd7b-4e3a-9a40-2026cd7b0001"
-#define CDTP_TELEM_UUID "6e400002-cd7b-4e3a-9a40-2026cd7b0001"  // notify + read, JSON, 1 Hz
-#define CDTP_CMD_UUID "6e400003-cd7b-4e3a-9a40-2026cd7b0001"    // write, metin komut
+// ---------------- Wi-Fi WebSocket: telefon uygulamasi ----------------
+// Sunucu port 81, yol "/", her cerceve bir JSON nesnesi. Alanlar: shared/protocol/messages.md
+namespace ws {
+static WebSocketsServer server(81);
+static volatile uint8_t appCmd = 0;     // cdtp::Cmd, 0 = yok
+static volatile bool appCmdFresh = false;
+static volatile uint32_t clients = 0;
 
-namespace ble {
-static NimBLECharacteristic* telem = nullptr;
-static volatile bool connected = false;
-static char cmdBuf[64];
-static volatile bool cmdReady = false;
-
-class ServerCb : public NimBLEServerCallbacks {
-  void onConnect(NimBLEServer*) override { connected = true; }
-  void onDisconnect(NimBLEServer*) override {
-    connected = false;
-    NimBLEDevice::startAdvertising();
-  }
-};
-class CmdCb : public NimBLECharacteristicCallbacks {
-  void onWrite(NimBLECharacteristic* c) override {
-    std::string v = c->getValue();
-    if (cmdReady) return;  // onceki komut islenmedi
-    size_t n = v.size() < sizeof(cmdBuf) - 1 ? v.size() : sizeof(cmdBuf) - 1;
-    memcpy(cmdBuf, v.data(), n);
-    cmdBuf[n] = 0;
-    cmdReady = true;
-  }
-};
-
-inline void begin(const char* name) {
-  NimBLEDevice::init(name);
-  NimBLEDevice::setMTU(247);
-  NimBLEDevice::setPower(ESP_PWR_LVL_P9);
-  NimBLEServer* s = NimBLEDevice::createServer();
-  s->setCallbacks(new ServerCb());
-  NimBLEService* svc = s->createService(CDTP_SVC_UUID);
-  telem = svc->createCharacteristic(CDTP_TELEM_UUID, NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY);
-  NimBLECharacteristic* cmd = svc->createCharacteristic(CDTP_CMD_UUID, NIMBLE_PROPERTY::WRITE | NIMBLE_PROPERTY::WRITE_NR);
-  cmd->setCallbacks(new CmdCb());
-  svc->start();
-  NimBLEAdvertising* adv = NimBLEDevice::getAdvertising();
-  adv->addServiceUUID(CDTP_SVC_UUID);
-  adv->setScanResponse(true);
-  adv->start();
+// "key":"value" icinde ilk harfi / "id": sayisini ayiklayan kucuk ayristirici (ArduinoJson gerekmez)
+static bool hasType(const char* js, const char* type) {
+  char pat[40];
+  snprintf(pat, sizeof pat, "\"type\":\"%s\"", type);
+  return strstr(js, pat) != nullptr;
 }
+static char cmdLetter(const char* js) {
+  const char* p = strstr(js, "\"cmd\":\"");
+  return p ? p[7] : 0;
+}
+static void onEvent(uint8_t num, WStype_t type, uint8_t* payload, size_t len) {
+  if (type == WStype_CONNECTED) clients = clients + 1;
+  if (type == WStype_DISCONNECTED && clients > 0) clients = clients - 1;
+  if (type != WStype_TEXT || len == 0 || len > 120) return;
+  char js[128];
+  memcpy(js, payload, len);
+  js[len] = 0;
+  if (hasType(js, "ping")) {
+    const char* p = strstr(js, "\"id\":");
+    char out[64];
+    snprintf(out, sizeof out, "{\"type\":\"pong\",\"id\":%ld,\"t\":%lu}", p ? atol(p + 5) : 0L, (unsigned long)millis());
+    server.sendTXT(num, out);
+  } else if (hasType(js, "cmd")) {
+    cdtp::Cmd c = cdtp::Cmd::NONE;
+    switch (cmdLetter(js)) {
+      case 'F': c = cdtp::Cmd::FWD; break;
+      case 'B': c = cdtp::Cmd::BACK; break;
+      case 'L': c = cdtp::Cmd::LEFT; break;
+      case 'R': c = cdtp::Cmd::RIGHT; break;
+      case 'S': c = cdtp::Cmd::STOP; break;
+      default: return;
+    }
+    appCmd = (uint8_t)c;
+    appCmdFresh = true;
+  }
+}
+inline void begin() {
+  server.begin();
+  server.onEvent(onEvent);
+}
+inline void loop() { server.loop(); }
 inline void publish(const char* json) {
-  if (!telem) return;
-  telem->setValue((const uint8_t*)json, strlen(json));
-  if (connected) telem->notify();
+  if (clients) server.broadcastTXT(json);
 }
-}  // namespace ble
+}  // namespace ws

@@ -1,6 +1,6 @@
 // CDTP iki tekerlekli hasta destek robotu: robot ESP32 firmware'i.
 // Cekirdek 1: 200 Hz denge dongusu (MPU6050 veri-hazir kesmesiyle tetiklenir).
-// Cekirdek 0: ESP-NOW (eldiven), BLE (telefon), seri konsol.
+// Cekirdek 0: ESP-NOW (eldiven), Wi-Fi WebSocket (telefon, 192.168.4.1:81), seri konsol.
 // Tum karar mantigi common/cdtp_core/RobotLogic'tedir; PC simulasyonu ayni kodu test eder.
 #include <Arduino.h>
 #include <Preferences.h>
@@ -11,7 +11,7 @@
 
 using namespace cdtp;
 
-// ---- Finalde true yapin: BLE/seri uzerinden ayar degisikligi kapanir (sartname: finalde parametre degismez) ----
+// ---- Finalde true yapin: seri uzerinden ayar degisikligi kapanir (sartname: finalde parametre degismez) ----
 static bool FREEZE = false;
 
 static Mpu6050 imu;
@@ -22,7 +22,7 @@ static Preferences prefs;
 
 static SemaphoreHandle_t imuSem;
 static portMUX_TYPE telemMux = portMUX_INITIALIZER_UNLOCKED;
-static char telemJson[2][320];
+static char telemJson[2][240];
 static volatile int telemIdx = 0;
 static volatile uint32_t loopMaxUs = 0, imuErrors = 0, overruns = 0;
 static volatile int pendingTask = -1, pendingGlove = -1;
@@ -69,6 +69,19 @@ static void controlTask(void*) {
     in.vcharge = vchg;
     in.motorPower = !HAS_MOTOR_SENSE || digitalRead(PIN_MOTOR_SENSE);
     in.gloveNew = gloverx::poll(in.glove);
+    // Telefon komutu (gelistirme): eldiven son 1 s icinde konustuysa eldivenin onceligi var
+    static uint32_t lastGloveMs = 0;
+    static uint16_t appSeq = 0;
+    if (in.gloveNew) {
+      lastGloveMs = millis();
+    } else if (ws::appCmdFresh && millis() - lastGloveMs > 1000) {
+      GlovePacket p{};
+      p.cmd = ws::appCmd;
+      p.seq = appSeq++;
+      in.glove = p;
+      in.gloveNew = true;
+    }
+    ws::appCmdFresh = false;
 
     if (pendingTask >= 0) { logic.setTask((Task)pendingTask); pendingTask = -1; }
     if (pendingGlove >= 0) { logic.setGloveMode((GloveMode)pendingGlove); pendingGlove = -1; }
@@ -88,10 +101,10 @@ static void controlTask(void*) {
     }
     motors.set(out.motorEnable, out.dutyL, out.dutyR);
 
-    // 1 Hz telemetri: JSON'u burada uret, radyo gorevi kopyalar
-    if (++tick % 200 == 0) {
+    // 5 Hz telemetri (sartname en az 1 Hz): JSON'u burada uret, radyo gorevi kopyalar
+    if (++tick % 40 == 0) {
       int w = telemIdx ^ 1;
-      logic.telemetryJson(telemJson[w], sizeof(telemJson[w]), seq++);
+      logic.telemetryJsonWs(telemJson[w], sizeof(telemJson[w]), seq++);
       portENTER_CRITICAL(&telemMux);
       telemIdx = w;
       portEXIT_CRITICAL(&telemMux);
@@ -178,7 +191,7 @@ void setup() {
 
   if (!gloverx::begin()) Serial.println("HATA: ESP-NOW baslatilamadi");
   Serial.printf("Robot MAC (eldiven firmware'ine yazin): %s, kanal %d\n", WiFi.macAddress().c_str(), ESPNOW_CHANNEL);
-  ble::begin("CDTP-Robot");
+  ws::begin();
 
   snprintf(telemJson[0], sizeof telemJson[0], "{}");
   imuSem = xSemaphoreCreateBinary();
@@ -192,19 +205,17 @@ void loop() {
   static uint32_t lastTel = 0;
   static char line[64];
   static int n = 0;
-  // 1 Hz: BLE bildirimi + seri kopya
-  if (millis() - lastTel >= 1000) {
+  ws::loop();
+  // 5 Hz: WebSocket yayini, 1 Hz: seri kopya
+  if (millis() - lastTel >= 200) {
     lastTel = millis();
-    char buf[320];
+    static int n5 = 0;
+    char buf[240];
     portENTER_CRITICAL(&telemMux);
     memcpy(buf, telemJson[telemIdx], sizeof buf);
     portEXIT_CRITICAL(&telemMux);
-    ble::publish(buf);
-    Serial.println(buf);
-  }
-  if (ble::cmdReady) {
-    handleCommand(ble::cmdBuf, Serial);
-    ble::cmdReady = false;
+    ws::publish(buf);
+    if (++n5 % 5 == 0) Serial.println(buf);
   }
   while (Serial.available()) {
     char ch = Serial.read();
