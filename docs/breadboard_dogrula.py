@@ -24,7 +24,7 @@ pins = {}
 def esp_name(n):
     return "ESP." + (GPIO.get(n) or ("GPIO" + n if n.isdigit() else n))
 for i, n in enumerate(B.ESP_T):
-    pins[(B.ecol(i), "a")] = esp_name(n)
+    pins[(B.ecol(i), B.ROW_T)] = esp_name(n)
 for i, n in enumerate(B.ESP_B):
     pins[(B.ecol(i), "i")] = esp_name(n)
 for i, n in enumerate(B.TB_T):

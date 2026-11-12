@@ -5,7 +5,10 @@ LM2596 41 (OUT) ve 57 (IN), 3 pinli klemens 60-62.
 Raylar: ust dis +12 V, ust ic GND, alt ic GND, alt dis +3,3 V. GND'ler 6 numarali kablo ile (22. sutun) birlesir.
 Sigorta, anahtar ve kondansator kartta YOK (sonradan eklenebilir)."""
 import html
+import os
 import pathlib
+
+V30 = os.environ.get("ESP30") == "1"   # 1: 30 pinli ESP32 DevKit (DOIT V1 / ESP-32S), 0: 38 pinli
 
 P, X0 = 14, 64                                   # delik araligi (2,54 mm), 1. sutunun x'i
 ROWS = {"a": 60, "b": 74, "c": 88, "d": 102, "e": 116, "f": 158, "g": 172, "h": 186, "i": 200, "j": 214}
@@ -143,8 +146,26 @@ class Svg:
 TB_T = ["PWMA", "AIN2", "AIN1", "STBY", "BIN1", "BIN2", "PWMB", "GND"]
 TB_B = ["VM", "VCC", "GND", "AO1", "AO2", "BO2", "BO1", "GND"]
 MPU = ["VCC", "GND", "SCL", "SDA", "XDA", "XCL", "AD0", "INT"]
-ESP_T = ["GND", "23", "22", "TX", "RX", "21", "GND", "19", "18", "5", "17", "16", "4", "0", "2", "15", "D1", "D0", "CLK"]
-ESP_B = ["3V3", "EN", "VP", "VN", "34", "35", "32", "33", "25", "26", "27", "14", "12", "GND", "13", "D2", "D3", "CMD", "5V"]
+if V30:   # DOIT DevKit V1, anten ucu ilk pin. Pin satirlari b ve i (22,86 mm), a ve j satiri disarida bos
+    ESP_T = ["23", "22", "TX", "RX", "21", "19", "18", "5", "17", "16", "4", "2", "15", "GND", "3V3"]
+    ESP_B = ["EN", "VP", "VN", "34", "35", "32", "33", "25", "26", "27", "14", "12", "13", "GND", "5V"]
+    ROW_T, STUB_T, ESP_MIN = "b", "a", C_ESP - 14
+else:
+    ESP_T = ["GND", "23", "22", "TX", "RX", "21", "GND", "19", "18", "5", "17", "16", "4", "0", "2", "15", "D1", "D0", "CLK"]
+    ESP_B = ["3V3", "EN", "VP", "VN", "34", "35", "32", "33", "25", "26", "27", "14", "12", "GND", "13", "D2", "D3", "CMD", "5V"]
+    ROW_T, STUB_T, ESP_MIN = "a", "b", C_ESP - 18
+
+
+def esp_find(name, bottom=False):
+    """ESP32 pini -> (sutun, kablo deligi satiri, pin satiri)"""
+    if not bottom and name in ESP_T:
+        return ecol(ESP_T.index(name)), STUB_T, ROW_T
+    return ecol(ESP_B.index(name)), "j", "i"
+
+
+def esp_loc(name, bottom=False):
+    c, r, _ = esp_find(name, bottom)
+    return f"{c}. sütun, {r} satırı"
 
 # (no, kategori, nereden, nereye, not, kalin)
 W_ = [
@@ -196,6 +217,22 @@ CAT = {"v12": "12 V hattı", "gnd": "GND (toprak)", "v5": "5 V", "v33": "3,3 V",
        "mot": "Motor güç telleri", "enc": "Enkoder ve IR sinyalleri", "i2c": "I²C (MPU6050)"}
 
 
+_E = {7: (3, "5V", "ESP32 5V pini"), 9: (2, "3V3", "ESP32 3V3 pini"), 10: (2, "GND", "ESP32 GND pini"),
+      15: (3, "4", "ESP32 GPIO4"), 16: (3, "27", "ESP32 GPIO27"), 17: (3, "14", "ESP32 GPIO14"), 18: (3, "16", "ESP32 GPIO16"),
+      19: (3, "17", "ESP32 GPIO17"), 26: (3, "32", "ESP32 GPIO32"), 27: (3, "33", "ESP32 GPIO33"), 30: (3, "25", "ESP32 GPIO25"),
+      31: (3, "26", "ESP32 GPIO26"), 34: (3, "22", "ESP32 GPIO22"), 35: (3, "21", "ESP32 GPIO21"), 37: (3, "19", "ESP32 GPIO19"),
+      40: (3, "VP", "ESP32 GPIO36 (VP)"), 43: (3, "VN", "ESP32 GPIO39 (VN)")}
+_W2 = []
+for _w in W_:
+    if _w[0] in _E:
+        _i, _n, _t = _E[_w[0]]
+        _w = list(_w)
+        _w[_i] = f"{_t} ({esp_loc(_n, bottom=_n in ('GND', '5V'))})"
+        _w = tuple(_w)
+    _W2.append(_w)
+W_ = _W2
+
+
 def body(s, c1, c2, r1, r2, cls, title, sub=None, small=False, m=12):
     y0 = s.y0
     x1, x2 = cx(c1) - m, cx(c2) + m
@@ -214,12 +251,12 @@ def svg_main():
     y0 = s.y0
     s.board()
     # --- ESP32 (USB solda, 21 -> 3) ---
-    xa, xb = cx(3) - 9, cx(21) + 9
+    xa, xb = cx(ESP_MIN) - 9, cx(21) + 9
     s.add(f'<rect class="usb" x="{xa-32}" y="{y0+ROWS["c"]+14}" width="34" height="{ROWS["i"]-ROWS["c"]-28}" rx="3"/>')
     s.add(f'<text class="bs w9" transform="translate({xa-14},{y0+ROWS["e"]+24}) rotate(-90)" text-anchor="middle">USB</text>')
-    s.add(f'<rect class="esp" x="{xa}" y="{y0+ROWS["a"]-8}" width="{xb-xa}" height="{ROWS["i"]-ROWS["a"]+16}" rx="4"/>')
-    s.add(f'<text class="mt" x="{(xa+xb)/2}" y="{y0+ROWS["e"]+26}" text-anchor="middle">ESP32 DevKit 38 pin · USB solda · 21 → 3</text>')
-    s.pins(ecol, ESP_T, "a", +1, "light")
+    s.add(f'<rect class="esp" x="{xa}" y="{y0+ROWS[ROW_T]-8}" width="{xb-xa}" height="{ROWS["i"]-ROWS[ROW_T]+16}" rx="4"/>')
+    s.add(f'<text class="mt" x="{(xa+xb)/2}" y="{y0+ROWS["e"]+26}" text-anchor="middle">ESP32 DevKit {"30" if V30 else "38"} pin · USB solda · 21 → {ESP_MIN if V30 else 3}</text>')
+    s.pins(ecol, ESP_T, ROW_T, +1, "light")
     s.pins(ecol, ESP_B, "i", -1, "light")
     # --- TB6612 (39 -> 32) ---
     xa, xb = cx(32) - 9, cx(39) + 9
@@ -259,9 +296,10 @@ def svg_main():
     s.rail(LM_R, "j", "B-", 4, "gnd", rcol=57)
     s.rail(LM_L, "j", "B-", 8, "gnd", rcol=41)
     s.rail(tcol(1), "j", "B+", 13, "v33", rcol=37)
-    s.rail(ecol(0), "j", "B+", 9, "v33", rcol=21)
+    if not V30:
+        s.rail(ecol(0), "j", "B+", 9, "v33", rcol=21)
     s.rail(tcol(2), "j", "B-", 14, "gnd", rcol=37)
-    s.rail(ecol(13), "j", "B-", 10, "gnd", rcol=9)
+    s.rail(esp_find("GND", True)[0], "j", "B-", 10, "gnd", rcol=9)
     # GND koprusu (ust ic ray - alt ic ray), 22. sutun
     x = cx(22)
     s.line(x, s.hy("T-"), x, s.hy("B-"), "gnd", True)
@@ -272,20 +310,26 @@ def svg_main():
     up = [(tcol(3), "a", 66, 15, "sig"), (tcol(2), "a", 88, 16, "sig"), (tcol(1), "a", 66, 17, "sig"), (tcol(4), "a", 88, 18, "sig"), (tcol(5), "a", 66, 19, "sig"),
           (mcol(2), "a", 66, 34, "i2c"), (mcol(3), "a", 88, 35, "i2c"), (mcol(7), "a", 66, 37, "i2c"),
           (LM_L, "a", 66, 7, "v5"), (mcol(0), "a", 66, 32, "v33"), (tcol(0), "a", 66, 11, "v33"), (tcol(6), "a", 66, 12, "v33"),
-          (ecol(2), "b", 66, 34, "i2c"), (ecol(5), "b", 88, 35, "i2c"), (ecol(7), "b", 66, 37, "i2c"),
-          (ecol(10), "b", 66, 19, "sig"), (ecol(11), "b", 88, 18, "sig"), (ecol(12), "b", 66, 15, "sig")]
+          ]
+    for nm, ln, n, cat in (("22", 66, 34, "i2c"), ("21", 88, 35, "i2c"), ("19", 66, 37, "i2c"), ("17", 66, 19, "sig"), ("16", 88, 18, "sig"), ("4", 66, 15, "sig")):
+        c, r, _ = esp_find(nm)
+        up.append((c, r, ln, n, cat))
+    if V30:
+        c, r, _ = esp_find("3V3")
+        up.append((c, r, 66, 9, "v33"))
     for col, row, ln, n, cat in up:
         s.stub(col, row, "up", ln, n, cat)
     # alt sira etiketli kablolar (asagi): TB6612 (j satiri), ESP32 alt pinleri (j satiri)
     dn = [(tcol(3), 68, 20, "mot", True), (tcol(4), 90, 21, "mot", True), (tcol(5), 68, 23, "mot", True), (tcol(6), 90, 22, "mot", True),
           (K_P, 66, 1, "v12", True), (tcol(0), 66, 5, "v12", True),
-          (ecol(2), 66, 40, "enc", False), (ecol(3), 88, 43, "enc", False),
-          (ecol(6), 66, 26, "enc", False), (ecol(7), 88, 27, "enc", False), (ecol(8), 66, 30, "enc", False), (ecol(9), 88, 31, "enc", False),
-          (ecol(10), 66, 16, "sig", False), (ecol(11), 88, 17, "sig", False), (ecol(18), 66, 7, "v5", False)]
+          ]
+    for nm, ln, n, cat in (("VP", 66, 40, "enc"), ("VN", 88, 43, "enc"), ("32", 66, 26, "enc"), ("33", 88, 27, "enc"), ("25", 66, 30, "enc"),
+                           ("26", 88, 31, "enc"), ("27", 66, 16, "sig"), ("14", 88, 17, "sig"), ("5V", 66, 7, "v5")):
+        dn.append((esp_find(nm)[0], ln, n, cat, False))
     for col, ln, n, cat, th in dn:
         s.stub(col, "j", "down", ln, n, cat, th)
     # 3,3 V ucu: alt dis rayda
-    for rcol, n in ((23, 32), (39, 11), (33, 12), (3, 38), (9, 41), (51, 25), (57, 29)):
+    for rcol, n in ((23, 32), (39, 11), (33, 12), (3, 38), (9, 41), (51, 25), (57, 29)) + (((21, 9),) if V30 else ()):
         s.on_rail(rcol, "B+", n, "v33")
     # 12 V ucu: ust dis rayda (klemens + ve TB6612 VM)
     for rcol, n in ((59, 1), (39, 5)):
@@ -343,8 +387,8 @@ def overview():
          '<rect class="c-gnd" x="36" y="70" width="928" height="14" rx="7"/><text class="pn" x="52" y="80.5" style="fill:var(--bg)">üst iç ray · GND</text>',
          '<rect class="c-gnd" x="36" y="202" width="928" height="14" rx="7"/><text class="pn" x="52" y="212.5" style="fill:var(--bg)">alt iç ray · GND</text>',
          '<rect class="c-v33" x="36" y="220" width="928" height="14" rx="7"/><text class="pn" x="52" y="230.5">alt dış ray · +3,3 V</text>']
-    o.append(f'<rect class="blk" x="{ox(3)-38:.0f}" y="124" width="34" height="42" rx="4"/><text class="bs" x="{ox(3)-21:.0f}" y="148" text-anchor="middle">USB</text>')
-    o.append(box("esp", 3, 21, 98, 94, "ESP32 DevKit", "sütun 21 → 3"))
+    o.append(f'<rect class="blk" x="{ox(ESP_MIN if V30 else 3)-38:.0f}" y="124" width="34" height="42" rx="4"/><text class="bs" x="{ox(ESP_MIN if V30 else 3)-21:.0f}" y="148" text-anchor="middle">USB</text>')
+    o.append(box("esp", ESP_MIN if V30 else 3, 21, 98, 94, f"ESP32 DevKit {30 if V30 else 38} pin", f"pinler: sütun 21 → {ESP_MIN if V30 else 3}"))
     o.append(box("mpu", 23, 30, 98, 94, "MPU6050", "23–30"))
     o.append(box("tb", 32, 39, 98, 94, "TB6612", "39 → 32"))
     o.append(box("lm", 41, 57, 98, 94, "LM2596 mini buck", "OUT 41 · IN 57 · 12 V → 5,0 V"))
@@ -367,10 +411,27 @@ def table():
     return "\n".join(r)
 
 
+V30_TEXT = [
+    ("<h1>Breadboard şeması: tek tam boy kart</h1>", "<h1>Breadboard şeması: 30 pinli ESP32 sürümü</h1>"),
+    ("ESP32 21→3. sütun,", "ESP32 (30 pin) pinleri 21→7. sütun,"),
+    ("<tr><td>ESP32 38 pin</td><td>21 → 3</td><td>a ve i</td><td>Sol pin (GND ve 3V3) 21'de. Sütun numarası azalarak 3'e gider. USB sol uçta.</td></tr>",
+     "<tr><td>ESP32 DevKit 30 pin (ESP-32S / DOIT V1)</td><td>21 → 7</td><td>b ve i</td><td>Anten ucundaki pinler 21'de, sütun numarası azalarak 7'ye gider. USB sol uçta. a ve j satırı dışarıda açık kalır.</td></tr>"),
+    ("üst pinler için b satırı (ESP32 altından), alt pinler için j satırı", "üst pinler için a satırı, alt pinler için j satırı (ikisi de ESP32'nin dışında açık kalır)"),
+    ("<li><b>ESP32 a ve i satırına takılır (25,4 mm).</b>", "<li><b>30 pinli ESP32 b ve i satırına takılır (22,86 mm = 9 delik).</b> Pin satırı aralığını kartınla cetvelle doğrula. Şema DOIT DevKit V1 pin sırasını kullanır: karttaki yazıyı kontrol et."),
+    ("Alt pinler için j satırı açıktır: kabloyu oraya tak. Üst pinlerde dışarıda delik yok. Kabloyu pinin sütunundaki b satırına tak ve ESP32'nin altından yan uca çıkar. Tek damarlı, ince, düz kablo kullan (yalıtım 1,5 mm kadar). Dupont ucu sığmaz.", "Üst pinler için a, alt pinler için j satırı açıktır: kabloyu oraya tak. Dupont ucu sığar."),
+]
+
+
 if __name__ == "__main__":
     here = pathlib.Path(__file__).resolve().parent
     tpl = (here / "breadboard_sablon.html").read_text(encoding="utf-8")
     out = (tpl.replace("{{OVERVIEW}}", overview()).replace("{{SVG}}", svg_main()).replace("{{TABLE}}", table())
            .replace("{{COUNT}}", str(len(W_))))
-    (here / "breadboard_sema.html").write_text(out, encoding="utf-8")
+    name = "breadboard_sema.html"
+    if V30:
+        name = "breadboard_sema_30pin.html"
+        for a, b in V30_TEXT:
+            assert a in out, a[:50]
+            out = out.replace(a, b)
+    (here / name).write_text(out, encoding="utf-8")
     print("ok", len(out), "bayt;", len(W_), "kablo")
