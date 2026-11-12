@@ -18,7 +18,7 @@ farklar `docs/` altındaki plan sayfasında "değişiklik önerisi" olarak işar
 | `twin/` | MuJoCo dijital ikizi: robot firmware mantığı + 3B gövde, V-yuva, direk |
 | `cad/` | 3B baskı: `olcu.py` (bütün ölçüler), `robot_cad.py` (STL + montaj denetimi), `stl/` (6 parça), `montaj.glb` |
 | `elektronik/` | KiCad 10 projesi: `cdtp_robot.kicad_pro`, şema PDF/SVG, ERC ve netlist; `tools/kicad_sema.py` üretir |
-| `docs/` | Robot yapım dosyası, PDF kitap, BLE protokolü, grafikler |
+| `docs/` | Robot yapım dosyası, PDF kitap, eski BLE protokolü (yerine WebSocket), grafikler |
 
 ## Hızlı başlangıç
 
@@ -49,6 +49,6 @@ Kod yüklerken robotta **JP1 köprüsünü çıkarın**, eldivende **SW1'i kapat
 6. **Denge noktası:** robotu elle en rahat durduğu açıda tutun, seri porta `cal` yazın.
 7. Tamamen bitince `main.cpp` içinde `FREEZE = true` (finalde parametre değiştirilemez).
 
-## Seri / BLE komutları
+## Seri komutlar
 
 `stat` · `mtest` · `task=0..3` · `glove=step|cont` · `cal` · `vscale=1.000`
